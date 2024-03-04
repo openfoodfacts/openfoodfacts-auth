@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.2
 
-ARG DEPENDENCY_KEYCLOAK_VERSION=23.0.7
+ARG DEPENDENCY_KEYCLOAK_VERSION=24.0.0
 
 # build a custom extensions for keycloak using maven
 FROM maven:3-eclipse-temurin-17 AS builder

@@ -3,5 +3,5 @@ echo "*** Starting background process ***"
 sh /opt/keycloak/after_startup.sh &
 echo "*** Starting keycloak ***"
 # TODO: Remove "dev"
-/opt/keycloak/bin/kc.sh start-dev --import-realm --features="account3,declarative-user-profile"
+/opt/keycloak/bin/kc.sh start-dev --import-realm
 
