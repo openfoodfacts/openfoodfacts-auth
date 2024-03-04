@@ -220,22 +220,22 @@ class Utils {
                 final RealmModel theRealm = new RealmModel() {
 
                     @Override
-                    public RoleModel getRole(String name) {
+                    public RoleModel getRole(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'getRole'");
                     }
 
                     @Override
-                    public RoleModel addRole(String name) {
+                    public RoleModel addRole(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'addRole'");
                     }
 
                     @Override
-                    public RoleModel addRole(String id, String name) {
+                    public RoleModel addRole(final String id, final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'addRole'");
                     }
 
                     @Override
-                    public boolean removeRole(RoleModel role) {
+                    public boolean removeRole(final RoleModel role) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeRole'");
                     }
 
@@ -245,12 +245,13 @@ class Utils {
                     }
 
                     @Override
-                    public Stream<RoleModel> getRolesStream(Integer firstResult, Integer maxResults) {
+                    public Stream<RoleModel> getRolesStream(final Integer firstResult, final Integer maxResults) {
                         throw new UnsupportedOperationException("Unimplemented method 'getRolesStream'");
                     }
 
                     @Override
-                    public Stream<RoleModel> searchForRolesStream(String search, Integer first, Integer max) {
+                    public Stream<RoleModel> searchForRolesStream(final String search, final Integer first,
+                            final Integer max) {
                         throw new UnsupportedOperationException("Unimplemented method 'searchForRolesStream'");
                     }
 
@@ -265,7 +266,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setName(String name) {
+                    public void setName(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'setName'");
                     }
 
@@ -275,7 +276,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDisplayName(String displayName) {
+                    public void setDisplayName(final String displayName) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDisplayName'");
                     }
 
@@ -285,7 +286,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDisplayNameHtml(String displayNameHtml) {
+                    public void setDisplayNameHtml(final String displayNameHtml) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDisplayNameHtml'");
                     }
 
@@ -295,7 +296,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEnabled(boolean enabled) {
+                    public void setEnabled(final boolean enabled) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEnabled'");
                     }
 
@@ -305,7 +306,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSslRequired(SslRequired sslRequired) {
+                    public void setSslRequired(final SslRequired sslRequired) {
                         throw new UnsupportedOperationException("Unimplemented method 'setSslRequired'");
                     }
 
@@ -315,7 +316,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setRegistrationAllowed(boolean registrationAllowed) {
+                    public void setRegistrationAllowed(final boolean registrationAllowed) {
                         throw new UnsupportedOperationException("Unimplemented method 'setRegistrationAllowed'");
                     }
 
@@ -325,7 +326,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setRegistrationEmailAsUsername(boolean registrationEmailAsUsername) {
+                    public void setRegistrationEmailAsUsername(final boolean registrationEmailAsUsername) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setRegistrationEmailAsUsername'");
                     }
@@ -336,7 +337,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setRememberMe(boolean rememberMe) {
+                    public void setRememberMe(final boolean rememberMe) {
                         throw new UnsupportedOperationException("Unimplemented method 'setRememberMe'");
                     }
 
@@ -346,7 +347,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEditUsernameAllowed(boolean editUsernameAllowed) {
+                    public void setEditUsernameAllowed(final boolean editUsernameAllowed) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEditUsernameAllowed'");
                     }
 
@@ -356,22 +357,22 @@ class Utils {
                     }
 
                     @Override
-                    public void setUserManagedAccessAllowed(boolean userManagedAccessAllowed) {
+                    public void setUserManagedAccessAllowed(final boolean userManagedAccessAllowed) {
                         throw new UnsupportedOperationException("Unimplemented method 'setUserManagedAccessAllowed'");
                     }
 
                     @Override
-                    public void setAttribute(String name, String value) {
+                    public void setAttribute(final String name, final String value) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAttribute'");
                     }
 
                     @Override
-                    public void removeAttribute(String name) {
+                    public void removeAttribute(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeAttribute'");
                     }
 
                     @Override
-                    public String getAttribute(String name) {
+                    public String getAttribute(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'getAttribute'");
                     }
 
@@ -386,7 +387,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setBruteForceProtected(boolean value) {
+                    public void setBruteForceProtected(final boolean value) {
                         throw new UnsupportedOperationException("Unimplemented method 'setBruteForceProtected'");
                     }
 
@@ -396,7 +397,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setPermanentLockout(boolean val) {
+                    public void setPermanentLockout(final boolean val) {
                         throw new UnsupportedOperationException("Unimplemented method 'setPermanentLockout'");
                     }
 
@@ -406,7 +407,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setMaxFailureWaitSeconds(int val) {
+                    public void setMaxFailureWaitSeconds(final int val) {
                         throw new UnsupportedOperationException("Unimplemented method 'setMaxFailureWaitSeconds'");
                     }
 
@@ -416,7 +417,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setWaitIncrementSeconds(int val) {
+                    public void setWaitIncrementSeconds(final int val) {
                         throw new UnsupportedOperationException("Unimplemented method 'setWaitIncrementSeconds'");
                     }
 
@@ -427,7 +428,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setMinimumQuickLoginWaitSeconds(int val) {
+                    public void setMinimumQuickLoginWaitSeconds(final int val) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setMinimumQuickLoginWaitSeconds'");
                     }
@@ -439,7 +440,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setQuickLoginCheckMilliSeconds(long val) {
+                    public void setQuickLoginCheckMilliSeconds(final long val) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setQuickLoginCheckMilliSeconds'");
                     }
@@ -450,7 +451,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setMaxDeltaTimeSeconds(int val) {
+                    public void setMaxDeltaTimeSeconds(final int val) {
                         throw new UnsupportedOperationException("Unimplemented method 'setMaxDeltaTimeSeconds'");
                     }
 
@@ -460,7 +461,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setFailureFactor(int failureFactor) {
+                    public void setFailureFactor(final int failureFactor) {
                         throw new UnsupportedOperationException("Unimplemented method 'setFailureFactor'");
                     }
 
@@ -470,7 +471,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setVerifyEmail(boolean verifyEmail) {
+                    public void setVerifyEmail(final boolean verifyEmail) {
                         throw new UnsupportedOperationException("Unimplemented method 'setVerifyEmail'");
                     }
 
@@ -480,7 +481,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setLoginWithEmailAllowed(boolean loginWithEmailAllowed) {
+                    public void setLoginWithEmailAllowed(final boolean loginWithEmailAllowed) {
                         throw new UnsupportedOperationException("Unimplemented method 'setLoginWithEmailAllowed'");
                     }
 
@@ -490,7 +491,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDuplicateEmailsAllowed(boolean duplicateEmailsAllowed) {
+                    public void setDuplicateEmailsAllowed(final boolean duplicateEmailsAllowed) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDuplicateEmailsAllowed'");
                     }
 
@@ -500,7 +501,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setResetPasswordAllowed(boolean resetPasswordAllowed) {
+                    public void setResetPasswordAllowed(final boolean resetPasswordAllowed) {
                         throw new UnsupportedOperationException("Unimplemented method 'setResetPasswordAllowed'");
                     }
 
@@ -510,7 +511,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDefaultSignatureAlgorithm(String defaultSignatureAlgorithm) {
+                    public void setDefaultSignatureAlgorithm(final String defaultSignatureAlgorithm) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDefaultSignatureAlgorithm'");
                     }
 
@@ -520,7 +521,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setRevokeRefreshToken(boolean revokeRefreshToken) {
+                    public void setRevokeRefreshToken(final boolean revokeRefreshToken) {
                         throw new UnsupportedOperationException("Unimplemented method 'setRevokeRefreshToken'");
                     }
 
@@ -530,7 +531,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setRefreshTokenMaxReuse(int revokeRefreshTokenCount) {
+                    public void setRefreshTokenMaxReuse(final int revokeRefreshTokenCount) {
                         throw new UnsupportedOperationException("Unimplemented method 'setRefreshTokenMaxReuse'");
                     }
 
@@ -540,7 +541,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSsoSessionIdleTimeout(int seconds) {
+                    public void setSsoSessionIdleTimeout(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setSsoSessionIdleTimeout'");
                     }
 
@@ -550,7 +551,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSsoSessionMaxLifespan(int seconds) {
+                    public void setSsoSessionMaxLifespan(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setSsoSessionMaxLifespan'");
                     }
 
@@ -561,7 +562,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSsoSessionIdleTimeoutRememberMe(int seconds) {
+                    public void setSsoSessionIdleTimeoutRememberMe(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setSsoSessionIdleTimeoutRememberMe'");
                     }
@@ -573,7 +574,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSsoSessionMaxLifespanRememberMe(int seconds) {
+                    public void setSsoSessionMaxLifespanRememberMe(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setSsoSessionMaxLifespanRememberMe'");
                     }
@@ -584,7 +585,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setOfflineSessionIdleTimeout(int seconds) {
+                    public void setOfflineSessionIdleTimeout(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setOfflineSessionIdleTimeout'");
                     }
 
@@ -600,7 +601,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setOfflineSessionMaxLifespanEnabled(boolean offlineSessionMaxLifespanEnabled) {
+                    public void setOfflineSessionMaxLifespanEnabled(final boolean offlineSessionMaxLifespanEnabled) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setOfflineSessionMaxLifespanEnabled'");
                     }
@@ -611,7 +612,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setOfflineSessionMaxLifespan(int seconds) {
+                    public void setOfflineSessionMaxLifespan(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setOfflineSessionMaxLifespan'");
                     }
 
@@ -621,7 +622,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setClientSessionIdleTimeout(int seconds) {
+                    public void setClientSessionIdleTimeout(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setClientSessionIdleTimeout'");
                     }
 
@@ -631,7 +632,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setClientSessionMaxLifespan(int seconds) {
+                    public void setClientSessionMaxLifespan(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setClientSessionMaxLifespan'");
                     }
 
@@ -642,7 +643,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setClientOfflineSessionIdleTimeout(int seconds) {
+                    public void setClientOfflineSessionIdleTimeout(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setClientOfflineSessionIdleTimeout'");
                     }
@@ -654,13 +655,13 @@ class Utils {
                     }
 
                     @Override
-                    public void setClientOfflineSessionMaxLifespan(int seconds) {
+                    public void setClientOfflineSessionMaxLifespan(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setClientOfflineSessionMaxLifespan'");
                     }
 
                     @Override
-                    public void setAccessTokenLifespan(int seconds) {
+                    public void setAccessTokenLifespan(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAccessTokenLifespan'");
                     }
 
@@ -671,7 +672,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAccessTokenLifespanForImplicitFlow(int seconds) {
+                    public void setAccessTokenLifespanForImplicitFlow(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setAccessTokenLifespanForImplicitFlow'");
                     }
@@ -682,7 +683,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAccessCodeLifespan(int seconds) {
+                    public void setAccessCodeLifespan(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAccessCodeLifespan'");
                     }
 
@@ -693,7 +694,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAccessCodeLifespanUserAction(int seconds) {
+                    public void setAccessCodeLifespanUserAction(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setAccessCodeLifespanUserAction'");
                     }
@@ -724,7 +725,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAccessCodeLifespanLogin(int seconds) {
+                    public void setAccessCodeLifespanLogin(final int seconds) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAccessCodeLifespanLogin'");
                     }
 
@@ -735,7 +736,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setActionTokenGeneratedByAdminLifespan(int seconds) {
+                    public void setActionTokenGeneratedByAdminLifespan(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setActionTokenGeneratedByAdminLifespan'");
                     }
@@ -747,19 +748,20 @@ class Utils {
                     }
 
                     @Override
-                    public void setActionTokenGeneratedByUserLifespan(int seconds) {
+                    public void setActionTokenGeneratedByUserLifespan(final int seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setActionTokenGeneratedByUserLifespan'");
                     }
 
                     @Override
-                    public int getActionTokenGeneratedByUserLifespan(String actionTokenType) {
+                    public int getActionTokenGeneratedByUserLifespan(final String actionTokenType) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getActionTokenGeneratedByUserLifespan'");
                     }
 
                     @Override
-                    public void setActionTokenGeneratedByUserLifespan(String actionTokenType, Integer seconds) {
+                    public void setActionTokenGeneratedByUserLifespan(final String actionTokenType,
+                            final Integer seconds) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setActionTokenGeneratedByUserLifespan'");
                     }
@@ -770,7 +772,7 @@ class Utils {
                     }
 
                     @Override
-                    public void addRequiredCredential(String cred) {
+                    public void addRequiredCredential(final String cred) {
                         throw new UnsupportedOperationException("Unimplemented method 'addRequiredCredential'");
                     }
 
@@ -780,7 +782,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setPasswordPolicy(PasswordPolicy policy) {
+                    public void setPasswordPolicy(final PasswordPolicy policy) {
                         throw new UnsupportedOperationException("Unimplemented method 'setPasswordPolicy'");
                     }
 
@@ -790,7 +792,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setOTPPolicy(OTPPolicy policy) {
+                    public void setOTPPolicy(final OTPPolicy policy) {
                         throw new UnsupportedOperationException("Unimplemented method 'setOTPPolicy'");
                     }
 
@@ -800,7 +802,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setWebAuthnPolicy(WebAuthnPolicy policy) {
+                    public void setWebAuthnPolicy(final WebAuthnPolicy policy) {
                         throw new UnsupportedOperationException("Unimplemented method 'setWebAuthnPolicy'");
                     }
 
@@ -810,12 +812,12 @@ class Utils {
                     }
 
                     @Override
-                    public void setWebAuthnPolicyPasswordless(WebAuthnPolicy policy) {
+                    public void setWebAuthnPolicyPasswordless(final WebAuthnPolicy policy) {
                         throw new UnsupportedOperationException("Unimplemented method 'setWebAuthnPolicyPasswordless'");
                     }
 
                     @Override
-                    public RoleModel getRoleById(String id) {
+                    public RoleModel getRoleById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getRoleById'");
                     }
 
@@ -825,12 +827,12 @@ class Utils {
                     }
 
                     @Override
-                    public void addDefaultGroup(GroupModel group) {
+                    public void addDefaultGroup(final GroupModel group) {
                         throw new UnsupportedOperationException("Unimplemented method 'addDefaultGroup'");
                     }
 
                     @Override
-                    public void removeDefaultGroup(GroupModel group) {
+                    public void removeDefaultGroup(final GroupModel group) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeDefaultGroup'");
                     }
 
@@ -840,7 +842,7 @@ class Utils {
                     }
 
                     @Override
-                    public Stream<ClientModel> getClientsStream(Integer firstResult, Integer maxResults) {
+                    public Stream<ClientModel> getClientsStream(final Integer firstResult, final Integer maxResults) {
                         throw new UnsupportedOperationException("Unimplemented method 'getClientsStream'");
                     }
 
@@ -856,51 +858,52 @@ class Utils {
                     }
 
                     @Override
-                    public ClientModel addClient(String name) {
+                    public ClientModel addClient(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'addClient'");
                     }
 
                     @Override
-                    public ClientModel addClient(String id, String clientId) {
+                    public ClientModel addClient(final String id, final String clientId) {
                         throw new UnsupportedOperationException("Unimplemented method 'addClient'");
                     }
 
                     @Override
-                    public boolean removeClient(String id) {
+                    public boolean removeClient(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeClient'");
                     }
 
                     @Override
-                    public ClientModel getClientById(String id) {
+                    public ClientModel getClientById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getClientById'");
                     }
 
                     @Override
-                    public ClientModel getClientByClientId(String clientId) {
+                    public ClientModel getClientByClientId(final String clientId) {
                         throw new UnsupportedOperationException("Unimplemented method 'getClientByClientId'");
                     }
 
                     @Override
-                    public Stream<ClientModel> searchClientByClientIdStream(String clientId, Integer firstResult,
-                            Integer maxResults) {
+                    public Stream<ClientModel> searchClientByClientIdStream(final String clientId,
+                            final Integer firstResult,
+                            final Integer maxResults) {
                         throw new UnsupportedOperationException("Unimplemented method 'searchClientByClientIdStream'");
                     }
 
                     @Override
-                    public Stream<ClientModel> searchClientByAttributes(Map<String, String> attributes,
-                            Integer firstResult, Integer maxResults) {
+                    public Stream<ClientModel> searchClientByAttributes(final Map<String, String> attributes,
+                            final Integer firstResult, final Integer maxResults) {
                         throw new UnsupportedOperationException("Unimplemented method 'searchClientByAttributes'");
                     }
 
                     @Override
                     public Stream<ClientModel> searchClientByAuthenticationFlowBindingOverrides(
-                            Map<String, String> overrides, Integer firstResult, Integer maxResults) {
+                            final Map<String, String> overrides, final Integer firstResult, final Integer maxResults) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'searchClientByAuthenticationFlowBindingOverrides'");
                     }
 
                     @Override
-                    public void updateRequiredCredentials(Set<String> creds) {
+                    public void updateRequiredCredentials(final Set<String> creds) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateRequiredCredentials'");
                     }
 
@@ -910,7 +913,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setBrowserSecurityHeaders(Map<String, String> headers) {
+                    public void setBrowserSecurityHeaders(final Map<String, String> headers) {
                         throw new UnsupportedOperationException("Unimplemented method 'setBrowserSecurityHeaders'");
                     }
 
@@ -920,7 +923,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSmtpConfig(Map<String, String> smtpConfig) {
+                    public void setSmtpConfig(final Map<String, String> smtpConfig) {
                         throw new UnsupportedOperationException("Unimplemented method 'setSmtpConfig'");
                     }
 
@@ -930,7 +933,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setBrowserFlow(AuthenticationFlowModel flow) {
+                    public void setBrowserFlow(final AuthenticationFlowModel flow) {
                         throw new UnsupportedOperationException("Unimplemented method 'setBrowserFlow'");
                     }
 
@@ -940,7 +943,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setRegistrationFlow(AuthenticationFlowModel flow) {
+                    public void setRegistrationFlow(final AuthenticationFlowModel flow) {
                         throw new UnsupportedOperationException("Unimplemented method 'setRegistrationFlow'");
                     }
 
@@ -950,7 +953,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDirectGrantFlow(AuthenticationFlowModel flow) {
+                    public void setDirectGrantFlow(final AuthenticationFlowModel flow) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDirectGrantFlow'");
                     }
 
@@ -960,7 +963,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setResetCredentialsFlow(AuthenticationFlowModel flow) {
+                    public void setResetCredentialsFlow(final AuthenticationFlowModel flow) {
                         throw new UnsupportedOperationException("Unimplemented method 'setResetCredentialsFlow'");
                     }
 
@@ -970,7 +973,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setClientAuthenticationFlow(AuthenticationFlowModel flow) {
+                    public void setClientAuthenticationFlow(final AuthenticationFlowModel flow) {
                         throw new UnsupportedOperationException("Unimplemented method 'setClientAuthenticationFlow'");
                     }
 
@@ -980,7 +983,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDockerAuthenticationFlow(AuthenticationFlowModel flow) {
+                    public void setDockerAuthenticationFlow(final AuthenticationFlowModel flow) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDockerAuthenticationFlow'");
                     }
 
@@ -990,60 +993,61 @@ class Utils {
                     }
 
                     @Override
-                    public AuthenticationFlowModel getFlowByAlias(String alias) {
+                    public AuthenticationFlowModel getFlowByAlias(final String alias) {
                         throw new UnsupportedOperationException("Unimplemented method 'getFlowByAlias'");
                     }
 
                     @Override
-                    public AuthenticationFlowModel addAuthenticationFlow(AuthenticationFlowModel model) {
+                    public AuthenticationFlowModel addAuthenticationFlow(final AuthenticationFlowModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addAuthenticationFlow'");
                     }
 
                     @Override
-                    public AuthenticationFlowModel getAuthenticationFlowById(String id) {
+                    public AuthenticationFlowModel getAuthenticationFlowById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getAuthenticationFlowById'");
                     }
 
                     @Override
-                    public void removeAuthenticationFlow(AuthenticationFlowModel model) {
+                    public void removeAuthenticationFlow(final AuthenticationFlowModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeAuthenticationFlow'");
                     }
 
                     @Override
-                    public void updateAuthenticationFlow(AuthenticationFlowModel model) {
+                    public void updateAuthenticationFlow(final AuthenticationFlowModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateAuthenticationFlow'");
                     }
 
                     @Override
-                    public Stream<AuthenticationExecutionModel> getAuthenticationExecutionsStream(String flowId) {
+                    public Stream<AuthenticationExecutionModel> getAuthenticationExecutionsStream(final String flowId) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getAuthenticationExecutionsStream'");
                     }
 
                     @Override
-                    public AuthenticationExecutionModel getAuthenticationExecutionById(String id) {
+                    public AuthenticationExecutionModel getAuthenticationExecutionById(final String id) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getAuthenticationExecutionById'");
                     }
 
                     @Override
-                    public AuthenticationExecutionModel getAuthenticationExecutionByFlowId(String flowId) {
+                    public AuthenticationExecutionModel getAuthenticationExecutionByFlowId(final String flowId) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getAuthenticationExecutionByFlowId'");
                     }
 
                     @Override
-                    public AuthenticationExecutionModel addAuthenticatorExecution(AuthenticationExecutionModel model) {
+                    public AuthenticationExecutionModel addAuthenticatorExecution(
+                            final AuthenticationExecutionModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addAuthenticatorExecution'");
                     }
 
                     @Override
-                    public void updateAuthenticatorExecution(AuthenticationExecutionModel model) {
+                    public void updateAuthenticatorExecution(final AuthenticationExecutionModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateAuthenticatorExecution'");
                     }
 
                     @Override
-                    public void removeAuthenticatorExecution(AuthenticationExecutionModel model) {
+                    public void removeAuthenticatorExecution(final AuthenticationExecutionModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeAuthenticatorExecution'");
                     }
 
@@ -1053,27 +1057,27 @@ class Utils {
                     }
 
                     @Override
-                    public AuthenticatorConfigModel addAuthenticatorConfig(AuthenticatorConfigModel model) {
+                    public AuthenticatorConfigModel addAuthenticatorConfig(final AuthenticatorConfigModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addAuthenticatorConfig'");
                     }
 
                     @Override
-                    public void updateAuthenticatorConfig(AuthenticatorConfigModel model) {
+                    public void updateAuthenticatorConfig(final AuthenticatorConfigModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateAuthenticatorConfig'");
                     }
 
                     @Override
-                    public void removeAuthenticatorConfig(AuthenticatorConfigModel model) {
+                    public void removeAuthenticatorConfig(final AuthenticatorConfigModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeAuthenticatorConfig'");
                     }
 
                     @Override
-                    public AuthenticatorConfigModel getAuthenticatorConfigById(String id) {
+                    public AuthenticatorConfigModel getAuthenticatorConfigById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getAuthenticatorConfigById'");
                     }
 
                     @Override
-                    public AuthenticatorConfigModel getAuthenticatorConfigByAlias(String alias) {
+                    public AuthenticatorConfigModel getAuthenticatorConfigByAlias(final String alias) {
                         throw new UnsupportedOperationException("Unimplemented method 'getAuthenticatorConfigByAlias'");
                     }
 
@@ -1084,27 +1088,28 @@ class Utils {
                     }
 
                     @Override
-                    public RequiredActionProviderModel addRequiredActionProvider(RequiredActionProviderModel model) {
+                    public RequiredActionProviderModel addRequiredActionProvider(
+                            final RequiredActionProviderModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addRequiredActionProvider'");
                     }
 
                     @Override
-                    public void updateRequiredActionProvider(RequiredActionProviderModel model) {
+                    public void updateRequiredActionProvider(final RequiredActionProviderModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateRequiredActionProvider'");
                     }
 
                     @Override
-                    public void removeRequiredActionProvider(RequiredActionProviderModel model) {
+                    public void removeRequiredActionProvider(final RequiredActionProviderModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeRequiredActionProvider'");
                     }
 
                     @Override
-                    public RequiredActionProviderModel getRequiredActionProviderById(String id) {
+                    public RequiredActionProviderModel getRequiredActionProviderById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getRequiredActionProviderById'");
                     }
 
                     @Override
-                    public RequiredActionProviderModel getRequiredActionProviderByAlias(String alias) {
+                    public RequiredActionProviderModel getRequiredActionProviderByAlias(final String alias) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getRequiredActionProviderByAlias'");
                     }
@@ -1115,22 +1120,22 @@ class Utils {
                     }
 
                     @Override
-                    public IdentityProviderModel getIdentityProviderByAlias(String alias) {
+                    public IdentityProviderModel getIdentityProviderByAlias(final String alias) {
                         throw new UnsupportedOperationException("Unimplemented method 'getIdentityProviderByAlias'");
                     }
 
                     @Override
-                    public void addIdentityProvider(IdentityProviderModel identityProvider) {
+                    public void addIdentityProvider(final IdentityProviderModel identityProvider) {
                         throw new UnsupportedOperationException("Unimplemented method 'addIdentityProvider'");
                     }
 
                     @Override
-                    public void removeIdentityProviderByAlias(String alias) {
+                    public void removeIdentityProviderByAlias(final String alias) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeIdentityProviderByAlias'");
                     }
 
                     @Override
-                    public void updateIdentityProvider(IdentityProviderModel identityProvider) {
+                    public void updateIdentityProvider(final IdentityProviderModel identityProvider) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateIdentityProvider'");
                     }
 
@@ -1142,70 +1147,72 @@ class Utils {
 
                     @Override
                     public Stream<IdentityProviderMapperModel> getIdentityProviderMappersByAliasStream(
-                            String brokerAlias) {
+                            final String brokerAlias) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getIdentityProviderMappersByAliasStream'");
                     }
 
                     @Override
-                    public IdentityProviderMapperModel addIdentityProviderMapper(IdentityProviderMapperModel model) {
+                    public IdentityProviderMapperModel addIdentityProviderMapper(
+                            final IdentityProviderMapperModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addIdentityProviderMapper'");
                     }
 
                     @Override
-                    public void removeIdentityProviderMapper(IdentityProviderMapperModel mapping) {
+                    public void removeIdentityProviderMapper(final IdentityProviderMapperModel mapping) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeIdentityProviderMapper'");
                     }
 
                     @Override
-                    public void updateIdentityProviderMapper(IdentityProviderMapperModel mapping) {
+                    public void updateIdentityProviderMapper(final IdentityProviderMapperModel mapping) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateIdentityProviderMapper'");
                     }
 
                     @Override
-                    public IdentityProviderMapperModel getIdentityProviderMapperById(String id) {
+                    public IdentityProviderMapperModel getIdentityProviderMapperById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getIdentityProviderMapperById'");
                     }
 
                     @Override
-                    public IdentityProviderMapperModel getIdentityProviderMapperByName(String brokerAlias,
-                            String name) {
+                    public IdentityProviderMapperModel getIdentityProviderMapperByName(final String brokerAlias,
+                            final String name) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getIdentityProviderMapperByName'");
                     }
 
                     @Override
-                    public ComponentModel addComponentModel(ComponentModel model) {
+                    public ComponentModel addComponentModel(final ComponentModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addComponentModel'");
                     }
 
                     @Override
-                    public ComponentModel importComponentModel(ComponentModel model) {
+                    public ComponentModel importComponentModel(final ComponentModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'importComponentModel'");
                     }
 
                     @Override
-                    public void updateComponent(ComponentModel component) {
+                    public void updateComponent(final ComponentModel component) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateComponent'");
                     }
 
                     @Override
-                    public void removeComponent(ComponentModel component) {
+                    public void removeComponent(final ComponentModel component) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeComponent'");
                     }
 
                     @Override
-                    public void removeComponents(String parentId) {
+                    public void removeComponents(final String parentId) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeComponents'");
                     }
 
                     @Override
-                    public Stream<ComponentModel> getComponentsStream(String parentId, String providerType) {
+                    public Stream<ComponentModel> getComponentsStream(final String parentId,
+                            final String providerType) {
                         throw new UnsupportedOperationException("Unimplemented method 'getComponentsStream'");
                     }
 
                     @Override
-                    public Stream<ComponentModel> getComponentsStream(String parentId) {
+                    public Stream<ComponentModel> getComponentsStream(final String parentId) {
                         throw new UnsupportedOperationException("Unimplemented method 'getComponentsStream'");
                     }
 
@@ -1215,7 +1222,7 @@ class Utils {
                     }
 
                     @Override
-                    public ComponentModel getComponent(String id) {
+                    public ComponentModel getComponent(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getComponent'");
                     }
 
@@ -1225,7 +1232,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setLoginTheme(String name) {
+                    public void setLoginTheme(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'setLoginTheme'");
                     }
 
@@ -1235,7 +1242,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAccountTheme(String name) {
+                    public void setAccountTheme(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAccountTheme'");
                     }
 
@@ -1245,7 +1252,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAdminTheme(String name) {
+                    public void setAdminTheme(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAdminTheme'");
                     }
 
@@ -1255,7 +1262,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEmailTheme(String name) {
+                    public void setEmailTheme(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEmailTheme'");
                     }
 
@@ -1265,7 +1272,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setNotBefore(int notBefore) {
+                    public void setNotBefore(final int notBefore) {
                         throw new UnsupportedOperationException("Unimplemented method 'setNotBefore'");
                     }
 
@@ -1275,7 +1282,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEventsEnabled(boolean enabled) {
+                    public void setEventsEnabled(final boolean enabled) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEventsEnabled'");
                     }
 
@@ -1285,7 +1292,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEventsExpiration(long expiration) {
+                    public void setEventsExpiration(final long expiration) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEventsExpiration'");
                     }
 
@@ -1295,7 +1302,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEventsListeners(Set<String> listeners) {
+                    public void setEventsListeners(final Set<String> listeners) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEventsListeners'");
                     }
 
@@ -1305,7 +1312,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setEnabledEventTypes(Set<String> enabledEventTypes) {
+                    public void setEnabledEventTypes(final Set<String> enabledEventTypes) {
                         throw new UnsupportedOperationException("Unimplemented method 'setEnabledEventTypes'");
                     }
 
@@ -1315,7 +1322,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAdminEventsEnabled(boolean enabled) {
+                    public void setAdminEventsEnabled(final boolean enabled) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAdminEventsEnabled'");
                     }
 
@@ -1325,7 +1332,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setAdminEventsDetailsEnabled(boolean enabled) {
+                    public void setAdminEventsDetailsEnabled(final boolean enabled) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAdminEventsDetailsEnabled'");
                     }
 
@@ -1335,7 +1342,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setMasterAdminClient(ClientModel client) {
+                    public void setMasterAdminClient(final ClientModel client) {
                         throw new UnsupportedOperationException("Unimplemented method 'setMasterAdminClient'");
                     }
 
@@ -1345,7 +1352,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setDefaultRole(RoleModel role) {
+                    public void setDefaultRole(final RoleModel role) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDefaultRole'");
                     }
 
@@ -1360,7 +1367,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setInternationalizationEnabled(boolean enabled) {
+                    public void setInternationalizationEnabled(final boolean enabled) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'setInternationalizationEnabled'");
                     }
@@ -1371,7 +1378,7 @@ class Utils {
                     }
 
                     @Override
-                    public void setSupportedLocales(Set<String> locales) {
+                    public void setSupportedLocales(final Set<String> locales) {
                         throw new UnsupportedOperationException("Unimplemented method 'setSupportedLocales'");
                     }
 
@@ -1381,17 +1388,17 @@ class Utils {
                     }
 
                     @Override
-                    public void setDefaultLocale(String locale) {
+                    public void setDefaultLocale(final String locale) {
                         throw new UnsupportedOperationException("Unimplemented method 'setDefaultLocale'");
                     }
 
                     @Override
-                    public GroupModel createGroup(String id, String name, GroupModel toParent) {
+                    public GroupModel createGroup(final String id, final String name, final GroupModel toParent) {
                         throw new UnsupportedOperationException("Unimplemented method 'createGroup'");
                     }
 
                     @Override
-                    public GroupModel getGroupById(String id) {
+                    public GroupModel getGroupById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getGroupById'");
                     }
 
@@ -1401,12 +1408,12 @@ class Utils {
                     }
 
                     @Override
-                    public Long getGroupsCount(Boolean onlyTopGroups) {
+                    public Long getGroupsCount(final Boolean onlyTopGroups) {
                         throw new UnsupportedOperationException("Unimplemented method 'getGroupsCount'");
                     }
 
                     @Override
-                    public Long getGroupsCountByNameContaining(String search) {
+                    public Long getGroupsCountByNameContaining(final String search) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getGroupsCountByNameContaining'");
                     }
@@ -1419,17 +1426,17 @@ class Utils {
 
                     @Override
                     @Deprecated
-                    public Stream<GroupModel> getTopLevelGroupsStream(Integer first, Integer max) {
+                    public Stream<GroupModel> getTopLevelGroupsStream(final Integer first, final Integer max) {
                         throw new UnsupportedOperationException("Unimplemented method 'getTopLevelGroupsStream'");
                     }
 
                     @Override
-                    public boolean removeGroup(GroupModel group) {
+                    public boolean removeGroup(final GroupModel group) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeGroup'");
                     }
 
                     @Override
-                    public void moveGroup(GroupModel group, GroupModel toParent) {
+                    public void moveGroup(final GroupModel group, final GroupModel toParent) {
                         throw new UnsupportedOperationException("Unimplemented method 'moveGroup'");
                     }
 
@@ -1439,44 +1446,44 @@ class Utils {
                     }
 
                     @Override
-                    public ClientScopeModel addClientScope(String name) {
+                    public ClientScopeModel addClientScope(final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'addClientScope'");
                     }
 
                     @Override
-                    public ClientScopeModel addClientScope(String id, String name) {
+                    public ClientScopeModel addClientScope(final String id, final String name) {
                         throw new UnsupportedOperationException("Unimplemented method 'addClientScope'");
                     }
 
                     @Override
-                    public boolean removeClientScope(String id) {
+                    public boolean removeClientScope(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeClientScope'");
                     }
 
                     @Override
-                    public ClientScopeModel getClientScopeById(String id) {
+                    public ClientScopeModel getClientScopeById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getClientScopeById'");
                     }
 
                     @Override
-                    public void addDefaultClientScope(ClientScopeModel clientScope, boolean defaultScope) {
+                    public void addDefaultClientScope(final ClientScopeModel clientScope, final boolean defaultScope) {
                         throw new UnsupportedOperationException("Unimplemented method 'addDefaultClientScope'");
                     }
 
                     @Override
-                    public void removeDefaultClientScope(ClientScopeModel clientScope) {
+                    public void removeDefaultClientScope(final ClientScopeModel clientScope) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeDefaultClientScope'");
                     }
 
                     @Override
-                    public void createOrUpdateRealmLocalizationTexts(String locale,
-                            Map<String, String> localizationTexts) {
+                    public void createOrUpdateRealmLocalizationTexts(final String locale,
+                            final Map<String, String> localizationTexts) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'createOrUpdateRealmLocalizationTexts'");
                     }
 
                     @Override
-                    public boolean removeRealmLocalizationTexts(String locale) {
+                    public boolean removeRealmLocalizationTexts(final String locale) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeRealmLocalizationTexts'");
                     }
 
@@ -1486,29 +1493,30 @@ class Utils {
                     }
 
                     @Override
-                    public Map<String, String> getRealmLocalizationTextsByLocale(String locale) {
+                    public Map<String, String> getRealmLocalizationTextsByLocale(final String locale) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getRealmLocalizationTextsByLocale'");
                     }
 
                     @Override
-                    public Stream<ClientScopeModel> getDefaultClientScopesStream(boolean defaultScope) {
+                    public Stream<ClientScopeModel> getDefaultClientScopesStream(final boolean defaultScope) {
                         throw new UnsupportedOperationException("Unimplemented method 'getDefaultClientScopesStream'");
                     }
 
                     @Override
-                    public ClientInitialAccessModel createClientInitialAccessModel(int expiration, int count) {
+                    public ClientInitialAccessModel createClientInitialAccessModel(final int expiration,
+                            final int count) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'createClientInitialAccessModel'");
                     }
 
                     @Override
-                    public ClientInitialAccessModel getClientInitialAccessModel(String id) {
+                    public ClientInitialAccessModel getClientInitialAccessModel(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getClientInitialAccessModel'");
                     }
 
                     @Override
-                    public void removeClientInitialAccessModel(String id) {
+                    public void removeClientInitialAccessModel(final String id) {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'removeClientInitialAccessModel'");
                     }
@@ -1519,8 +1527,28 @@ class Utils {
                     }
 
                     @Override
-                    public void decreaseRemainingCount(ClientInitialAccessModel clientInitialAccess) {
+                    public void decreaseRemainingCount(final ClientInitialAccessModel clientInitialAccess) {
                         throw new UnsupportedOperationException("Unimplemented method 'decreaseRemainingCount'");
+                    }
+
+                    @Override
+                    public AuthenticationFlowModel getFirstBrokerLoginFlow() {
+                        throw new UnsupportedOperationException("Unimplemented method 'getFirstBrokerLoginFlow'");
+                    }
+
+                    @Override
+                    public int getMaxTemporaryLockouts() {
+                        throw new UnsupportedOperationException("Unimplemented method 'getMaxTemporaryLockouts'");
+                    }
+
+                    @Override
+                    public void setFirstBrokerLoginFlow(final AuthenticationFlowModel arg0) {
+                        throw new UnsupportedOperationException("Unimplemented method 'setFirstBrokerLoginFlow'");
+                    }
+
+                    @Override
+                    public void setMaxTemporaryLockouts(final int arg0) {
+                        throw new UnsupportedOperationException("Unimplemented method 'setMaxTemporaryLockouts'");
                     }
 
                 };
