@@ -1554,7 +1554,8 @@
   "accountTheme": "off",
   "eventsEnabled": false,
   "eventsListeners": [
-    "jboss-logging"
+    "jboss-logging",
+    "redis-event-listener"
   ],
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
@@ -2405,6 +2406,5 @@
   },
   "clientPolicies": {
     "policies": []
-  },
-  "redisUrl": "${REDIS_URL}"
+  }
 }

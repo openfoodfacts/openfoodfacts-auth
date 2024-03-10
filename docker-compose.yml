@@ -22,6 +22,8 @@ services:
     depends_on:
       keycloak_postgres:
         condition: service_started
+      keycloak_redis:
+        condition: service_started
 
 
   keycloak_postgres:
@@ -35,5 +37,12 @@ services:
       - 5601:5432
 
 
+  keycloak_redis:
+    image: redis:7-alpine
+    volumes:
+      - redisdata:/data
+
+
 volumes:
   dbdata:
+  redisdata:
