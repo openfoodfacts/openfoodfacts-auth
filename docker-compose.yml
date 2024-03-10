@@ -1,7 +1,7 @@
 services:
   keycloak:
     # FIXME: Add keycloak to docker-compose.yml and/or docker/prod.yml
-    image: ghcr.io/openfoodfacts/scrypt-password-hash-provider:dev
+    image: ghcr.io/openfoodfacts/openfoodfacts-auth:main
     build:
       context: .
       dockerfile: Dockerfile

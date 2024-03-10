@@ -13,5 +13,12 @@
                 "vscjava.vscode-java-pack"
             ]
         }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack"
+            ]
+        }
     }
 }
