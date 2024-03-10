@@ -6,5 +6,12 @@
             "installMaven": "true"
         },
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack"
+            ]
+        }
     }
 }
