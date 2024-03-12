@@ -51,6 +51,10 @@ import org.keycloak.models.UserSessionProvider;
 import org.keycloak.models.WebAuthnPolicy;
 import org.keycloak.provider.InvalidationHandler.InvalidableObjectType;
 import org.keycloak.provider.Provider;
+import org.keycloak.provider.ProviderEvent;
+import org.keycloak.provider.ProviderEventListener;
+import org.keycloak.provider.ProviderFactory;
+import org.keycloak.provider.Spi;
 import org.keycloak.services.clientpolicy.ClientPolicyManager;
 import org.keycloak.sessions.AuthenticationSessionProvider;
 import org.keycloak.vault.VaultTranscriber;
@@ -2118,6 +2122,84 @@ class Utils {
             @Override
             public ClientPolicyManager clientPolicy() {
                 throw new UnsupportedOperationException("Unimplemented method 'clientPolicy'");
+            }
+
+        };
+    }
+
+    public static KeycloakSessionFactory createKeycloakSessionFactory() {
+        return new KeycloakSessionFactory() {
+            private ProviderEventListener listener;
+
+            @Override
+            public void register(ProviderEventListener listener) {
+                this.listener = listener;
+            }
+
+            @Override
+            public void unregister(ProviderEventListener listener) {
+                if (this.listener == listener) {
+                    this.listener = null;
+                }
+            }
+
+            @Override
+            public void publish(ProviderEvent event) {
+                if (this.listener != null) {
+                    this.listener.onEvent(event);
+                }
+            }
+
+            @Override
+            public void invalidate(KeycloakSession session, InvalidableObjectType type, Object... params) {
+                throw new UnsupportedOperationException("Unimplemented method 'invalidate'");
+            }
+
+            @Override
+            public KeycloakSession create() {
+                return createKeycloakSession();
+            }
+
+            @Override
+            public Set<Spi> getSpis() {
+                throw new UnsupportedOperationException("Unimplemented method 'getSpis'");
+            }
+
+            @Override
+            public Spi getSpi(Class<? extends Provider> providerClass) {
+                throw new UnsupportedOperationException("Unimplemented method 'getSpi'");
+            }
+
+            @Override
+            public <T extends Provider> ProviderFactory<T> getProviderFactory(Class<T> clazz) {
+                throw new UnsupportedOperationException("Unimplemented method 'getProviderFactory'");
+            }
+
+            @Override
+            public <T extends Provider> ProviderFactory<T> getProviderFactory(Class<T> clazz, String id) {
+                throw new UnsupportedOperationException("Unimplemented method 'getProviderFactory'");
+            }
+
+            @Override
+            public <T extends Provider> ProviderFactory<T> getProviderFactory(Class<T> clazz, String realmId,
+                    String componentId, Function<KeycloakSessionFactory, ComponentModel> modelGetter) {
+                throw new UnsupportedOperationException("Unimplemented method 'getProviderFactory'");
+            }
+
+            @SuppressWarnings("rawtypes")
+            @Override
+            public Stream<ProviderFactory> getProviderFactoriesStream(Class<? extends Provider> clazz) {
+                throw new UnsupportedOperationException("Unimplemented method 'getProviderFactoriesStream'");
+            }
+
+            @Override
+            public long getServerStartupTimestamp() {
+                throw new UnsupportedOperationException("Unimplemented method 'getServerStartupTimestamp'");
+            }
+
+            @Override
+            public void close() {
+                throw new UnsupportedOperationException("Unimplemented method 'close'");
             }
 
         };

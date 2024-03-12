@@ -6,44 +6,49 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
-import org.keycloak.events.EventListenerProvider;
+import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.KeycloakSessionFactory;
 import redis.clients.jedis.params.XReadParams;
 import redis.clients.jedis.resps.StreamEntry;
 
 import com.redis.testcontainers.*;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.keycloak.events.admin.AdminEvent;
-import org.keycloak.events.admin.OperationType;
-import org.keycloak.events.admin.ResourceType;
 import redis.clients.jedis.*;
 
 @Testcontainers
 @DisabledIfEnvironmentVariable(named = "SKIP_INTEGRATION_TESTS", matches = "true")
-public class IncorrectOnAdminEventIsForwardedToRedisTest {
+public class IncorrectProviderEventIsForwardedToRedisTest {
 
     @Container
     private static RedisContainer container = new RedisContainer(
             RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
 
     @Test
-    void testIncorrectOnAdminEventIsNotForwarded() {
+    void testIncorrectProviderEventEventIsNotForwarded() {
         // Arrange
         String redisURI = container.getRedisURI();
         openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory factory = new openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory();
         factory.init(Utils.createScope(redisURI));
 
-        KeycloakSession session = Utils.createKeycloakSession();
-        EventListenerProvider eventListenerProvider = factory.create(session);
+        KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory();
+        factory.postInit(sessionFactory);
         try (JedisPooled jedis = new JedisPooled(redisURI)) {
             // Act
-            AdminEvent adminEvent = new AdminEvent();
-            adminEvent.setOperationType(OperationType.DELETE);
-            adminEvent.setResourceType(ResourceType.CLIENT);
-            adminEvent.setRealmId("open-products-facts");
-            adminEvent.setResourcePath("client/theUserId");
-            eventListenerProvider.onEvent(adminEvent, false);
+            sessionFactory.publish(new ClientModel.ClientRemovedEvent() {
+
+                @Override
+                public ClientModel getClient() {
+                    throw new UnsupportedOperationException("Unimplemented method 'getClient'");
+                }
+
+                @Override
+                public KeycloakSession getKeycloakSession() {
+                    throw new UnsupportedOperationException("Unimplemented method 'getKeycloakSession'");
+                }
+
+            });
 
             // Assert
             Map<String, StreamEntryID> streamQuery = new HashMap<>();

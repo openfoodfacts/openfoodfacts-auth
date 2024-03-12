@@ -6,44 +6,58 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
-import org.keycloak.events.EventListenerProvider;
 import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserModel;
+
 import redis.clients.jedis.params.XReadParams;
 import redis.clients.jedis.resps.StreamEntry;
 
 import com.redis.testcontainers.*;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.keycloak.events.admin.AdminEvent;
-import org.keycloak.events.admin.OperationType;
-import org.keycloak.events.admin.ResourceType;
 import redis.clients.jedis.*;
 
 @Testcontainers
 @DisabledIfEnvironmentVariable(named = "SKIP_INTEGRATION_TESTS", matches = "true")
-public class CorrectOnAdminEventIsForwardedToRedisTest {
+public class CorrectProviderEventIsForwardedToRedisTest {
 
     @Container
     private static RedisContainer container = new RedisContainer(
             RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
 
     @Test
-    void testCorrectOnAdminEventIsForwarded() {
+    void testCorrectProviderEventIsForwarded() {
         // Arrange
         String redisURI = container.getRedisURI();
         openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory factory = new openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory();
         factory.init(Utils.createScope(redisURI));
 
-        KeycloakSession session = Utils.createKeycloakSession();
-        EventListenerProvider eventListenerProvider = factory.create(session);
+        KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory();
+        KeycloakSession session = sessionFactory.create();
+        factory.postInit(sessionFactory);
         try (JedisPooled jedis = new JedisPooled(redisURI)) {
             // Act
-            AdminEvent adminEvent = new AdminEvent();
-            adminEvent.setOperationType(OperationType.DELETE);
-            adminEvent.setResourceType(ResourceType.USER);
-            adminEvent.setRealmId("open-products-facts");
-            adminEvent.setResourcePath("users/theUserId");
-            eventListenerProvider.onEvent(adminEvent, false);
+            sessionFactory.publish(new UserModel.UserRemovedEvent() {
+
+                @Override
+                public RealmModel getRealm() {
+                    return session.realms().getRealmByName("open-products-facts");
+                }
+
+                @Override
+                public UserModel getUser() {
+                    return session.users().getUserById(session.realms().getRealmByName("open-products-facts"),
+                            "theUserId");
+                }
+
+                @Override
+                public KeycloakSession getKeycloakSession() {
+                    return session;
+                }
+
+            });
 
             // Assert
             Map<String, StreamEntryID> streamQuery = new HashMap<>();
