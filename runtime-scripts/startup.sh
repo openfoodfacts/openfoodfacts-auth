@@ -3,5 +3,5 @@ echo "*** Starting background process ***"
 sh /opt/keycloak/after_startup.sh &
 echo "*** Starting keycloak ***"
 # TODO: Remove "dev"
-/opt/keycloak/bin/kc.sh start-dev --import-realm --spi-events-listener-redis-event-listener-redis-url=${REDIS_URL}
+/opt/keycloak/bin/kc.sh start-dev --import-realm
 

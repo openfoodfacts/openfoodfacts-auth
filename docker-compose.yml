@@ -14,6 +14,7 @@ services:
       - KC_DB_URL_HOST=keycloak_postgres
       - KC_DB_USERNAME
       - KC_DB_PASSWORD
+      - KC_SPI_EVENTS_LISTENER_REDIS_EVENT_LISTENER_REDIS_URL=${REDIS_URL}
     
     ports:
       - "127.0.0.1:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
