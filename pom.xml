@@ -18,7 +18,7 @@
     <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
     <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
 
-    <revision>24.0.0</revision>
+    <revision>24.0.1</revision>
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
 
