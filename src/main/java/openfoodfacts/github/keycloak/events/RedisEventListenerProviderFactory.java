@@ -19,7 +19,7 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
 
     @Override
     public EventListenerProvider create(final KeycloakSession keycloakSession) {
-        return new RedisEventListenerProvider(keycloakSession, this.client);
+        return null;
     }
 
     @Override

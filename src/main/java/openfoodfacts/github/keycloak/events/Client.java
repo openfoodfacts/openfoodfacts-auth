@@ -29,10 +29,11 @@ public class Client implements AutoCloseable {
         }
 
         HashMap<String, String> data = new HashMap<>();
-        data.put("id", user.getId());
-        data.put("email", user.getEmail());
-        data.put("userName", user.getUsername());
-        data.put("realm", realm.getName());
+        putIfNotNull(data, "id", user.getId());
+        putIfNotNull(data, "id", user.getId());
+        putIfNotNull(data, "email", user.getEmail());
+        putIfNotNull(data, "userName", user.getUsername());
+        putIfNotNull(data, "realm", realm.getName());
 
         try {
             this.postUserDeleted(data);
@@ -53,6 +54,12 @@ public class Client implements AutoCloseable {
     @Override
     public void close() throws Exception {
         this.jedis.close();
+    }
+
+    private static void putIfNotNull(final HashMap<String, String> data, final String key, final String value) {
+        if (value != null) {
+            data.put(key, value);
+        }
     }
 
 }
