@@ -1,4 +1,4 @@
-package de.hangy.keycloak.policy;
+package openfoodfacts.github.keycloak.policy;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>

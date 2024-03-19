@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <name>scrypt Password Hash Provider</name>
+  <name>ProductOpener Keycloak extensions</name>
 
-  <groupId>de.hangy.keycloak</groupId>
-  <artifactId>keycloak-scrypt</artifactId>
+  <groupId>openfoodfacts.github.keycloak</groupId>
+  <artifactId>keycloak-extensions</artifactId>
   <version>${revision}${sha1}${changelist}</version>
   <packaging>jar</packaging>
 
@@ -17,6 +17,7 @@
     <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
     <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
+    <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
 
     <revision>24.0.1</revision>
     <changelist>-SNAPSHOT</changelist>
@@ -27,7 +28,7 @@
   </properties>
 
   <build>
-    <finalName>keycloak-scrypt-${project.version}</finalName>
+    <finalName>keycloak-extensions-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -79,6 +80,25 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven-assembly-plugin.version}</version>
+        <configuration>
+            <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+        </configuration>
+        <executions>
+            <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -120,6 +140,34 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>5.1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>1.19.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>1.19.6</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.redis</groupId>
+      <artifactId>testcontainers-redis</artifactId>
+      <version>2.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
 </project>

@@ -1,6 +1,6 @@
-package de.hangy.keycloak.utils;
+package openfoodfacts.github.keycloak.utils;
 
-import de.hangy.keycloak.exceptions.ScryptRuntimeException;
+import openfoodfacts.github.keycloak.exceptions.ScryptRuntimeException;
 import org.bouncycastle.crypto.generators.SCrypt;
 import org.bouncycastle.util.Strings;
 import org.jboss.logging.Logger;

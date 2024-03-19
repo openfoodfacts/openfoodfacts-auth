@@ -1,11 +1,10 @@
-package de.hangy.keycloak.credential.hash;
+package openfoodfacts.github.keycloak.credential.hash;
 
-import de.hangy.keycloak.policy.*;
-import de.hangy.keycloak.utils.ScryptEncodingUtils;
-import de.hangy.keycloak.utils.ScryptHelper;
+import openfoodfacts.github.keycloak.policy.*;
+import openfoodfacts.github.keycloak.utils.ScryptEncodingUtils;
+import openfoodfacts.github.keycloak.utils.ScryptHelper;
 
 import org.jboss.logging.Logger;
-import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.credential.hash.PasswordHashProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.PasswordPolicy;

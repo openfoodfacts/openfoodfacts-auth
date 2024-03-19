@@ -1,4 +1,4 @@
-package de.hangy.keycloak.credential.hash;
+package openfoodfacts.github.keycloak.credential.hash;
 
 import org.keycloak.Config;
 import org.keycloak.credential.hash.PasswordHashProvider;
