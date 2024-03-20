@@ -1,4 +1,6 @@
-# Keycloak scrypt
+# Keycloak extensions
+
+## Keycloak scrypt
 
 This is a password hash provider for Keycloak 20+ to support scrypt hashes.
 
@@ -11,3 +13,7 @@ The [original README is here](README.original.md).
 I has no long-term plan to support this fork; rather it's mainly a migration helper for a small subset of users in our systems using those systems.
 
 However PRs etc are still welcome.
+
+## Redis event listener providers
+
+Forwards user deletion events to Redis.

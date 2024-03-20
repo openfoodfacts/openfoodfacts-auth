@@ -1,4 +1,4 @@
-package de.hangy.keycloak.policy;
+package openfoodfacts.github.keycloak.policy;
 
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;

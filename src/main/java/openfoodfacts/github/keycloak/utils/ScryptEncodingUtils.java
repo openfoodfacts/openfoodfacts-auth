@@ -1,9 +1,9 @@
-package de.hangy.keycloak.utils;
+package openfoodfacts.github.keycloak.utils;
 
-import de.hangy.keycloak.credential.hash.ScryptPasswordHashProviderFactory;
-import de.hangy.keycloak.exceptions.ScryptRuntimeException;
-import de.hangy.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
-import de.hangy.keycloak.policy.ScryptSaltLengthPasswordPolicyProviderFactory;
+import openfoodfacts.github.keycloak.credential.hash.ScryptPasswordHashProviderFactory;
+import openfoodfacts.github.keycloak.exceptions.ScryptRuntimeException;
+import openfoodfacts.github.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
+import openfoodfacts.github.keycloak.policy.ScryptSaltLengthPasswordPolicyProviderFactory;
 
 import java.io.IOException;
 import java.util.Base64;

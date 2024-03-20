@@ -1,4 +1,4 @@
-package de.hangy.keycloak.utils;
+package openfoodfacts.github.keycloak.utils;
 
 import java.util.Base64;
 
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.function.Executable;
 import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.models.credential.PasswordCredentialModel;
 
-import de.hangy.keycloak.credential.hash.ScryptPasswordHashProviderFactory;
-import de.hangy.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
+import openfoodfacts.github.keycloak.credential.hash.ScryptPasswordHashProviderFactory;
+import openfoodfacts.github.keycloak.policy.ScryptHashLengthPasswordPolicyProviderFactory;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>

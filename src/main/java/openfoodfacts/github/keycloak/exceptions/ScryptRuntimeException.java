@@ -1,4 +1,4 @@
-package de.hangy.keycloak.exceptions;
+package openfoodfacts.github.keycloak.exceptions;
 
 /**
  * @author <a href="mailto:dries.eestermans@is4u.be">Dries Eestermans</a>
