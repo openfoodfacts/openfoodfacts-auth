@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+  <changeSet author="Open Food Facts" id="openfoodfacts-auth-0.1-a">
+    <createTable tableName="DELETED_USER">
+      <column name="ID" type="VARCHAR(36)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="USER_ID" type="VARCHAR(36)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="USERNAME" type="NVARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="EMAIL" type="NVARCHAR(255)"/>
+    </createTable>
+    <addPrimaryKey columnNames="ID" constraintName="PK_DELETED_USER_ID" tableName="DELETED_USER"/>
+  </changeSet>
+</databaseChangeLog>
