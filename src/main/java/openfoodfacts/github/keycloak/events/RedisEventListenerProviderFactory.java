@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.keycloak.Config;
+import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
+import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.UserModel;
@@ -19,7 +21,24 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
 
     @Override
     public EventListenerProvider create(final KeycloakSession keycloakSession) {
-        return null;
+        return new EventListenerProvider() {
+
+            @Override
+            public void close() {
+                // No-op. All processing is done in the postInit method.
+            }
+
+            @Override
+            public void onEvent(Event event) {
+                // No-op. All processing is done in the postInit method.
+            }
+
+            @Override
+            public void onEvent(AdminEvent event, boolean includeRepresentation) {
+                // No-op. All processing is done in the postInit method.
+            }
+            
+        };
     }
 
     @Override
