@@ -4,6 +4,16 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      actions:
+        patterns:
+          - "actions/*"
+      docker:
+        patterns:
+          - "docker/*"
+      github:
+        patterns:
+          - "github/*"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -12,3 +22,13 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      apache-maven-plugins:
+        patterns:
+          - "org.apache.maven.plugins:*"
+      keycloak:
+        patterns:
+          - "org.keycloak:*"
+      testcontainers:
+        patterns:
+          - "org.testcontainers:*"
