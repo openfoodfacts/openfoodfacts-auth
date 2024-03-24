@@ -1,1 +1,2 @@
+openfoodfacts.github.keycloak.events.PersistDeletedUserEventListenerProviderFactory
 openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory
