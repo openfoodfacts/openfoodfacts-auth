@@ -1,9 +1,11 @@
 package openfoodfacts.github.keycloak.events;
 
-import java.util.List;
+import java.util.UUID;
 
 import org.jboss.logging.Logger;
 import org.keycloak.Config;
+import org.keycloak.common.util.Time;
+import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
@@ -11,13 +13,11 @@ import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.UserModel;
-import org.keycloak.provider.ProviderConfigProperty;
-import org.keycloak.provider.ProviderConfigurationBuilder;
+import org.keycloak.models.UserModel.UserRemovedEvent;
+import openfoodfacts.github.keycloak.jpa.DeletedUserEntity;
 
-public class RedisEventListenerProviderFactory implements EventListenerProviderFactory {
-    private static final Logger log = Logger.getLogger(RedisEventListenerProviderFactory.class);
-
-    private Client client;
+public class PersistDeletedUserEventListenerProviderFactory implements EventListenerProviderFactory {
+    private static final Logger log = Logger.getLogger(PersistDeletedUserEventListenerProviderFactory.class);
 
     @Override
     public EventListenerProvider create(final KeycloakSession keycloakSession) {
@@ -37,14 +37,13 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
                 // No-op. All processing is done in the postInit method.
             }
-            
+
         };
     }
 
     @Override
     public void init(Config.Scope scope) {
-        final String redisUrl = scope.get("redisUrl");
-        this.client = new Client(redisUrl);
+        // No-op. All processing is done in the postInit method.
     }
 
     @Override
@@ -54,35 +53,34 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
                     log.debugf("New %s Event", event.getClass().getName());
 
                     if (event instanceof UserModel.UserRemovedEvent userRemovedEvent) {
-                        this.client.postUserDeleted(userRemovedEvent.getUser(), userRemovedEvent.getRealm());
+                        this.storeDeletedUser(userRemovedEvent);
                     }
                 });
     }
 
     @Override
     public void close() {
-        try {
-            if (client != null) {
-                this.client.close();
-            }
-        } catch (Exception e) {
-            log.errorf("Failed to close client: %s", e);
-        }
+        // No-op. All processing is done in the postInit method.
     }
 
     @Override
     public String getId() {
-        return "redis-event-listener";
+        return "persist-deleted-user-event-listener";
     }
 
-    @Override
-    public List<ProviderConfigProperty> getConfigMetadata() {
-        return ProviderConfigurationBuilder.create()
-                .property()
-                .name("redis-url")
-                .type("string")
-                .helpText("URL to the redis instance that should receive all events.")
-                .add()
-                .build();
+    private void storeDeletedUser(final UserRemovedEvent userRemovedEvent) {
+        final DeletedUserEntity entity = new DeletedUserEntity();
+        final UserModel user = userRemovedEvent.getUser();
+        entity.setId(UUID.randomUUID().toString());
+        entity.setUserId(user.getId());
+        entity.setUsername(user.getUsername());
+        entity.setEmail(user.getEmail());
+        entity.setCreatedTimestamp(user.getCreatedTimestamp());
+        entity.setDeletedTimestamp(Time.currentTimeMillis());
+        userRemovedEvent.getKeycloakSession()
+                .getProvider(JpaConnectionProvider.class)
+                .getEntityManager()
+                .persist(entity);
     }
+
 }
