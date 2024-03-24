@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.jboss.logging.Logger;
 import org.keycloak.Config;
+import org.keycloak.common.util.Time;
 import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
@@ -74,6 +75,8 @@ public class PersistDeletedUserEventListenerProviderFactory implements EventList
         entity.setUserId(user.getId());
         entity.setUsername(user.getUsername());
         entity.setEmail(user.getEmail());
+        entity.setCreatedTimestamp(user.getCreatedTimestamp());
+        entity.setDeletedTimestamp(Time.currentTimeMillis());
         userRemovedEvent.getKeycloakSession()
                 .getProvider(JpaConnectionProvider.class)
                 .getEntityManager()

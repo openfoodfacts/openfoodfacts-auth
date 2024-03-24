@@ -19,6 +19,12 @@ public class DeletedUserEntity {
     @Column(name = "EMAIL")
     protected String email;
 
+    @Column(name = "CREATED_TIMESTAMP")
+    private Long createdTimestamp;
+
+    @Column(name = "DELETED_TIMESTAMP")
+    private Long deletedTimestamp;
+
     public String getId() {
         return id;
     }
@@ -49,6 +55,22 @@ public class DeletedUserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(Long createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
+    }
+
+    public Long getDeletedTimestamp() {
+        return deletedTimestamp;
+    }
+
+    public void setDeletedTimestamp(Long deletedTimestamp) {
+        this.deletedTimestamp = deletedTimestamp;
     }
 
     @Override

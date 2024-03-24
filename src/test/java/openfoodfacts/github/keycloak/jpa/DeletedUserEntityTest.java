@@ -12,18 +12,24 @@ public class DeletedUserEntityTest {
         String userId = "456";
         String username = "testuser";
         String email = "testuser@example.com";
+        long createdTimestamp = 42;
+        long deletedTimestamp = 69;
 
         // Act
         entity.setId(id);
         entity.setUserId(userId);
         entity.setUsername(username);
         entity.setEmail(email);
+        entity.setCreatedTimestamp(createdTimestamp);
+        entity.setDeletedTimestamp(deletedTimestamp);
 
         // Assert
         Assertions.assertEquals(id, entity.getId());
         Assertions.assertEquals(userId, entity.getUserId());
         Assertions.assertEquals(username, entity.getUsername());
         Assertions.assertEquals(email, entity.getEmail());
+        Assertions.assertEquals(createdTimestamp, entity.getCreatedTimestamp());
+        Assertions.assertEquals(deletedTimestamp, entity.getDeletedTimestamp());
     }
 
     @Test
