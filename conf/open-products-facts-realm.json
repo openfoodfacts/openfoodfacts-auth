@@ -1550,7 +1550,17 @@
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
-  "smtpServer": {},
+  "smtpServer": {
+    "replyToDisplayName": "",
+    "starttls": "false",
+    "auth": "",
+    "replyTo": "",
+    "host": "smtp",
+    "from": "open-products-facts@example.org",
+    "fromDisplayName": "Open Products Facts",
+    "envelopeFrom": "",
+    "ssl": "false"
+  },
   "loginTheme": "off",
   "accountTheme": "off",
   "eventsEnabled": true,
