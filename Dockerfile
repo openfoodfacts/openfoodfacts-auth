@@ -9,7 +9,7 @@ ARG DEPENDENCY_KEYCLOAK_VERSION
 WORKDIR /build
 COPY ./src /build/src
 COPY ./pom.xml /build
-RUN set -x && \
+RUN --mount=type=cache,target=/root/.m2 set -x && \
     export SKIP_INTEGRATION_TESTS=true && \
     mvn -B package -Drevision=${DEPENDENCY_KEYCLOAK_VERSION}
 
