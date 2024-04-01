@@ -23,7 +23,7 @@
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
 
-    <keycloak.version>${revision}</keycloak.version>
+    <keycloak.version>24.0.2</keycloak.version>
     <junit.version>5.10.2</junit.version>
   </properties>
 
