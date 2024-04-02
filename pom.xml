@@ -19,7 +19,7 @@
     <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
     <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
 
-    <revision>24.0.1</revision>
+    <revision>24.0.2</revision>
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
 
