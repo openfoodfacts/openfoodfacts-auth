@@ -13,7 +13,7 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
         if (key === 'en:unknown-language') continue;
 
         const code = language.language_code_2.en;
-        const name = language.name?.[code] ?? language.name.en ?? key;
+        const name = (language.name?.[code] ?? language.name.en ?? key).replaceAll("'","''");
         languageList[code] = name;
 
         const countryMessages = [];
@@ -22,7 +22,7 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
                 continue;
             }
             const countryCode = country.country_code_2.en;
-            const countryName = country.name[code] ?? country.name.en;
+            const countryName = (country.name[code] ?? country.name.en).replaceAll("'","''");
             countryMessages.push(`country_${countryCode}=${countryName}`);
         }
         writeFileSync(`${themeDir}/messages/messages_${code}.properties`, countryMessages.sort().join('\n') + '\n');
