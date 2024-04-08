@@ -1,3 +1,5 @@
+include .env
+
 SHELL := /bin/bash
 
 build:
@@ -8,3 +10,13 @@ up:
 	docker compose up -d --build
 
 dev: build up
+
+refresh_themes:
+	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
+	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4
+	rm -rf theme/base
+	rm -rf theme/keycloak
+	rm -rf theme/keycloak.v2
+	jar xf org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar theme
+	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
+	rm org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar

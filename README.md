@@ -86,8 +86,6 @@ Currently the common.css file has to be copied between theme pages (account, log
 
 We will need to ensure that all of the current OFF locales are covered with suitable translations.
 
-Note that the default account theme, keycloak.v3, doesn't support localization properly. This is [fixed](https://github.com/keycloak/keycloak/issues/22507) but won't be available until verison 24.0.0. Still using keycloack.v3 for now though as it supports declarative user properties without having to build a custom UI.
-
 [ ] Setup Crowdin yaml and GitHub actions
 [ ] Ensure language parameter is passed to Keycloak and back to calling app
 
