@@ -1,19 +1,25 @@
+/**
+ * This utility will add existing keycloak translations, if available
+ * when new localized keywords are added to the messages_en.properties file
+ * Any existing translations are not overwritten
+ */ 
+
 import { writeFileSync, readFileSync, existsSync, readdirSync } from 'fs';
 
 const baseThemeDir = 'theme';
-const offMessagesDir = `${baseThemeDir}/off/common/messages`;
+const offMessagesDir = `src/messages`;
 
-const messages = [];
+const enMessages = [];
 const allKeycloakMessages = {};
 const themeTypes = ['login', 'account', 'admin', 'email'];
 const sourceThemes = ['base', 'keycloak', 'keycloak.v2'];
 
 const sourceFile = `${offMessagesDir}/messages_en.properties`;
-messages.enMessages.push(...readFileSync(sourceFile, 'utf-8').split('\n'));
+enMessages.push(...readFileSync(sourceFile, 'utf-8').split('\n'));
 for (const theme of sourceThemes) {
     for (const keycloakThemeType of themeTypes) {
         const messagesDir = `${baseThemeDir}/${theme}/${keycloakThemeType}/messages`;
-        if (!existsSync(messagesDir)) return;
+        if (!existsSync(messagesDir)) continue;
         const messageFiles = readdirSync(messagesDir);
         for (const messageFile of messageFiles) {
             const twoLetterIndex = messageFile.indexOf('messages_') + 9;
@@ -30,7 +36,7 @@ for (const [code, keycloakMessages] of Object.entries(allKeycloakMessages)) {
     if (code === 'en') continue;
     const existingMessageFile = `${offMessagesDir}/messages_${code}.properties`;
     const existingMessages = existsSync(existingMessageFile) ? readFileSync(existingMessageFile, 'utf-8').split('\n') : [];
-    for (const enMessage of messages.enMessages) {
+    for (const enMessage of enMessages) {
         const messageKey = enMessage.split('=')[0];
         if (!messageKey.length) continue;
         const messageSearch = `${messageKey}=`;

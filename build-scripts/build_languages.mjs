@@ -1,7 +1,7 @@
-import { writeFileSync, appendFileSync, readFileSync } from 'fs';
+import { writeFileSync, appendFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
 
 const runtimeDir = 'runtime-scripts';
-const themeDir = 'theme/off/from-off';
+const themeDir = 'theme/off/common';
 
 
 fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(async (response) => {
@@ -9,6 +9,7 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     const countries = await (await fetch('https://static.openfoodfacts.org/data/taxonomies/countries.json')).json();
 
     const languageList = {};
+    mkdirSync(`${themeDir}/messages`, {recursive: true});
     for (const [ key, language ] of Object.entries(languages)) {
         if (key === 'en:unknown-language') continue;
 
@@ -25,7 +26,13 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
             const countryName = (country.name[code] ?? country.name.en).replaceAll("'","''");
             countryMessages.push(`country_${countryCode}=${countryName}`);
         }
-        writeFileSync(`${themeDir}/messages/messages_${code}.properties`, countryMessages.sort().join('\n') + '\n');
+        const customMessageFile = `src/messages/messages_${code}.properties`;
+        const customMessages = existsSync(customMessageFile) ? readFileSync(customMessageFile, 'utf-8').split('/n') : [];
+        writeFileSync(`${themeDir}/messages/messages_${code}.properties`, 
+            customMessages.join('/n') +
+            '\n# The following are obtained from the OFF countries taxonomy\n' + 
+            countryMessages.sort().join('\n') + 
+            '\n');
     }
 
     const countryOptions = {};
@@ -50,13 +57,14 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     }
     writeFileSync(`runtime-scripts/realm_settings.json`,JSON.stringify(realmSettings, undefined, 2));
     writeFileSync(`${themeDir}/theme.properties`,`locales=${sortedLanguageCodes.join(',')}\n`);
-    appendFileSync(`${themeDir}/messages/messages_en.properties`,Object.entries(languageList).map(([key,value]) => `locale_${key}=${value}`).sort().join('\n') + '\n');
+    appendFileSync(`${themeDir}/messages/messages_en.properties`, 
+        '\n# The following are obtained from the OFF languages taxonomy\n' + 
+        Object.entries(languageList).map(([key,value]) => `locale_${key}=${value}`).sort().join('\n') + 
+        '\n');
 
     const userProfile = JSON.parse(readFileSync(`${runtimeDir}/users_profile.json`));
     const countryAttribute = userProfile.attributes.find((a) => a.name === 'country');
     countryAttribute.validations.options.options = sortedCountryCodes;
     countryAttribute.annotations.inputOptionLabels = countryOptions;
     writeFileSync(`${runtimeDir}/users_profile.json`, JSON.stringify(userProfile, undefined, 2));
-    //writeFileSync(`${baseDir}/countries.json`, JSON.stringify(countryList, Object.keys(countryList).sort()));
-    //writeFileSync(`${baseDir}/languages.json`, JSON.stringify(languageList, Object.keys(languageList).sort()));
 });
