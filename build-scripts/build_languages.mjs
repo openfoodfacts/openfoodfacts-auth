@@ -1,7 +1,7 @@
 import { writeFileSync, appendFileSync, readFileSync } from 'fs';
 
 const runtimeDir = 'runtime-scripts';
-const themeDir = 'theme/off/common';
+const themeDir = 'theme/off/from-off';
 
 
 fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(async (response) => {
@@ -48,7 +48,7 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     const realmSettings = {
         supportedLocales: sortedLanguageCodes
     }
-    writeFileSync(`runtime-scripts/realm_settings.json`,JSON.stringify(realmSettings));
+    writeFileSync(`runtime-scripts/realm_settings.json`,JSON.stringify(realmSettings, undefined, 2));
     writeFileSync(`${themeDir}/theme.properties`,`locales=${sortedLanguageCodes.join(',')}\n`);
     appendFileSync(`${themeDir}/messages/messages_en.properties`,Object.entries(languageList).map(([key,value]) => `locale_${key}=${value}`).sort().join('\n') + '\n');
 
@@ -56,7 +56,7 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     const countryAttribute = userProfile.attributes.find((a) => a.name === 'country');
     countryAttribute.validations.options.options = sortedCountryCodes;
     countryAttribute.annotations.inputOptionLabels = countryOptions;
-    writeFileSync(`${runtimeDir}/users_profile.json`, JSON.stringify(userProfile));
+    writeFileSync(`${runtimeDir}/users_profile.json`, JSON.stringify(userProfile, undefined, 2));
     //writeFileSync(`${baseDir}/countries.json`, JSON.stringify(countryList, Object.keys(countryList).sort()));
     //writeFileSync(`${baseDir}/languages.json`, JSON.stringify(languageList, Object.keys(languageList).sort()));
 });
