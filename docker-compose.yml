@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args: 
+        - KEYCLOAK_VERSION
+
     environment:
       - KEYCLOAK_ADMIN
       - KEYCLOAK_ADMIN_PASSWORD
@@ -19,7 +22,7 @@ services:
     ports:
       - "127.0.0.1:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
     volumes:
-      - ./themes/off:/opt/keycloak/themes/off
+      - ./theme/off:/opt/keycloak/themes/off
     depends_on:
       keycloak_postgres:
         condition: service_started

@@ -1,20 +1,20 @@
 # syntax = docker/dockerfile:1.2
 
-ARG DEPENDENCY_KEYCLOAK_VERSION=24.0.2
+ARG KEYCLOAK_VERSION
 
 # build a custom extensions for keycloak using maven
 FROM maven:3-eclipse-temurin-17 AS builder
 
-ARG DEPENDENCY_KEYCLOAK_VERSION
+ARG KEYCLOAK_VERSION
 WORKDIR /build
 COPY ./src /build/src
 COPY ./pom.xml /build
 RUN --mount=type=cache,target=/root/.m2 set -x && \
     export SKIP_INTEGRATION_TESTS=true && \
-    mvn -B package -Drevision=${DEPENDENCY_KEYCLOAK_VERSION}
+    mvn -B package -Drevision=${KEYCLOAK_VERSION}
 
-ARG DEPENDENCY_KEYCLOAK_VERSION
-FROM quay.io/keycloak/keycloak:${DEPENDENCY_KEYCLOAK_VERSION}
+ARG KEYCLOAK_VERSION
+FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 
 USER root
 
@@ -30,7 +30,7 @@ COPY --chown=keycloak:keycloak runtime-scripts/* /opt/keycloak
 RUN chown -R keycloak:root /opt/keycloak
 
 # Copy in the themes. Comment this out to use the volume mapping in docker-compose.yml
-COPY --chown=keycloak:keycloak themes/off /opt/keycloak/themes/off
+COPY --chown=keycloak:keycloak theme/off /opt/keycloak/themes/off
 
 USER keycloak
 

@@ -1,7 +1,7 @@
 import { writeFileSync, appendFileSync, readFileSync } from 'fs';
 
 const runtimeDir = 'runtime-scripts';
-const themeDir = 'themes/off/common';
+const themeDir = 'theme/off/common';
 
 
 fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(async (response) => {
