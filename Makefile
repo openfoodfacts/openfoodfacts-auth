@@ -20,3 +20,4 @@ refresh_themes:
 	jar xf org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar theme
 	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 	rm org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar
+	node build-scripts/refresh_messages.mjs
