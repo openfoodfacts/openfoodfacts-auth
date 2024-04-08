@@ -45,3 +45,52 @@ a {
 .login-pf-page .card-pf {
     margin-top: 64px;
 }
+
+/* Prevent the locale selector from jumping into the title logo on small screens */
+#kc-locale {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+    text-align: right;
+    z-index: 9999;
+}
+
+/* Move the "back to login" link to the top of the form */
+#kc-content {
+    position: relative;
+    padding-top: 1em;
+}
+#kc-form-options {
+    position: absolute;
+    top: 0;
+}
+
+/* Prevent Register from getting misaligned */
+.col-md-10 {
+    width: 100%;
+}
+
+/* Display password reset info at the top of the form */
+#kc-content-wrapper {
+    display:flex;
+    flex-flow: column;
+}
+#kc-info {
+    order: 1;
+    margin: 0
+}
+#kc-reset-password-form {
+    order: 2;
+}
+#kc-info-wrapper {
+    padding: 15px 0;
+    background-color: transparent;
+    text-align: initial;
+}
+
+/* Preserve title font size */
+.login-pf-page .login-pf-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
