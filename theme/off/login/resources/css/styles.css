@@ -94,3 +94,11 @@ a {
     font-size: 24px;
     font-weight: bold;
 }
+
+/* Ensure red border covers whole of password fields */
+.pf-c-input-group > .pf-c-form-control[aria-invalid=true] {
+    border-bottom-width: 0;
+}
+.pf-c-input-group:has(> .pf-c-form-control[aria-invalid=true]) {
+    border-bottom: var(--pf-global--BorderWidth--md) solid var(--pf-global--danger-color--100)
+}
