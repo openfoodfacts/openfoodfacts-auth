@@ -30,29 +30,29 @@
 
 		<#nested "beforeField" attribute>
 		<div class="${properties.kcFormGroupClass!}">
-				<label for="${attribute.name}" class="${properties.kcLabelClass!}">
-					<span class="pf-v5-c-form__label-text">
-						${advancedMsg(attribute.displayName!'')}
-						<#if attribute.required>
-							<span class="pf-v5-c-form__label-required" aria-hidden="true">&#42;</span>
-						</#if>
-					</span>
-				</label>
+			<label for="${attribute.name}" class="${properties.kcLabelClass!}">
+				<span class="pf-v5-c-form__label-text">
+					${advancedMsg(attribute.displayName!'')}
+					<#if attribute.required>
+						<span class="pf-v5-c-form__label-required" aria-hidden="true">&#42;</span>
+					</#if>
+				</span>
+			</label>
+			<#if attribute.annotations.inputHelperTextBefore??>
+				<div class="${properties.kcInputHelperTextBeforeClass!}" id="form-help-text-before-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextBefore))?no_esc}</div>
+			</#if>
 			<span class="${properties.kcInputClass!}">
-				<#if attribute.annotations.inputHelperTextBefore??>
-					<div class="${properties.kcInputHelperTextBeforeClass!}" id="form-help-text-before-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextBefore))?no_esc}</div>
-				</#if>
 				<@inputFieldByType attribute=attribute/>
-				<#if messagesPerField.existsError('${attribute.name}')>
-					<span id="input-error-${attribute.name}" class="${properties.kcInputErrorMessageClass!}" aria-live="polite">
-						${kcSanitize(messagesPerField.get('${attribute.name}'))?no_esc}
-					</span>
-				</#if>
-				<#if attribute.annotations.inputHelperTextAfter??>
-					<div class="${properties.kcInputHelperTextAfterClass!}" id="form-help-text-after-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextAfter))?no_esc}</div>
-				</#if>
-			</div>
-		</span>
+			</span>
+			<#if messagesPerField.existsError('${attribute.name}')>
+				<span id="input-error-${attribute.name}" class="${properties.kcInputErrorMessageClass!}" aria-live="polite">
+					${kcSanitize(messagesPerField.get('${attribute.name}'))?no_esc}
+				</span>
+			</#if>
+			<#if attribute.annotations.inputHelperTextAfter??>
+				<div class="${properties.kcInputHelperTextAfterClass!}" id="form-help-text-after-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextAfter))?no_esc}</div>
+			</#if>
+		</div>
 		<#nested "afterField" attribute>
 	</#list>
 
@@ -141,11 +141,44 @@
 	</#if>
 
 	<#if options??>
+		<#assign sortableOptions=[]>
 		<#list options as option>
-		<option value="${option}" <#if attribute.values?seq_contains(option)>selected</#if>><@selectOptionLabelText attribute=attribute option=option/></option>
+			<#assign label = option>
+			<#if attribute.annotations.inputOptionLabels??>
+				<#assign label = advancedMsg(attribute.annotations.inputOptionLabels[option]!option)>
+			<#else>
+				<#if attribute.annotations.inputOptionLabelsI18nPrefix??>
+					<#assign label = msg(attribute.annotations.inputOptionLabelsI18nPrefix + '.' + option)>
+				</#if>
+			</#if>
+
+			<#assign sortableOption = {"value":option, "label":label}>
+			<#assign sortableOptions = sortableOptions+[sortableOption]>
+		</#list>
+
+		<#list sortableOptions?sort_by("label") as option>
+			<option value="${option.value}" <#if attribute.values?seq_contains(option.value)>selected</#if>>${option.label}</option>
 		</#list>
 	</#if>	
 	</select>
+	<span class="pf-v5-c-form-control__utilities">
+		<span class="pf-v5-c-form-control__toggle-icon">
+		<svg
+			class="pf-v5-svg"
+			viewBox="0 0 320 512"
+			fill="currentColor"
+			aria-hidden="true"
+			role="img"
+			width="1em"
+			height="1em"
+		>
+			<path
+			d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+			>
+			</path>
+		</svg>
+		</span>
+	</span>
 </#macro>
 
 <#macro inputTagSelects attribute>
