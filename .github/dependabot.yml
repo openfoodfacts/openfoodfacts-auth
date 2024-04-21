@@ -26,9 +26,8 @@ updates:
       apache-maven-plugins:
         patterns:
           - "org.apache.maven.plugins:*"
-      keycloak:
-        patterns:
-          - "org.keycloak:*"
       testcontainers:
         patterns:
           - "org.testcontainers:*"
+    ignore:
+      - dependency-name: "org.keycloak:*"
