@@ -1,6 +1,7 @@
 {
     "name": "Java",
     "image": "mcr.microsoft.com/vscode/devcontainers/java:1-17",
+    "runArgs": ["--env-file", ".env"],
     "features": {
         "ghcr.io/devcontainers/features/java:1": {
             "installMaven": "true"
