@@ -56,4 +56,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args:
-            - KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
+            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
