@@ -56,3 +56,7 @@
     --pf-v5-global--BorderWidth--sm: var(--off-input-border-width);
     --pf-v5-global--spacer--2xl: 2rem;
 }
+
+.pf-v5-c-button:not(.pf-m-control) {
+    line-height: 2em;
+}

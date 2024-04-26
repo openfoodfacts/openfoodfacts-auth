@@ -23,7 +23,7 @@
 /* Position language selector at top of form */
 .pf-v5-c-login__main-header {
     position: relative;
-    padding-top: 6rem;
+    padding-top: 5rem;
 }
 
 .pf-v5-c-login__main-header-utilities {
@@ -71,11 +71,31 @@
 
 /* Registration screen padding */
 .subtitle {
+    margin-bottom: -1rem;
     margin-top: 0;
 }
 /* Helper text font size */
 .pf-c-form__helper-text {
     font-size: 0.75rem;
+}
+
+/* Move the "back to login" link to the top of the form */
+.pf-v5-c-login__main-body {
+    position: relative;
+    padding-top: 1em;
+    margin-top: -0.5rem;
+}
+#kc-form-options {
+    position: absolute;
+    top: 0;
+}
+.pf-v5-c-form {
+    margin-top: 1rem;
+}
+
+/* Fix input height on forgot password */
+#kc-reset-password-form .pf-v5-c-form-control {
+    line-height: 2rem;
 }
 
 /* Ensure red border covers whole of password fields 
