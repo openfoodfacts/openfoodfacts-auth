@@ -64,9 +64,14 @@
     border-bottom-width: 0;
 }
 
-/* Info positioning */
+/* Info positioning an colour */
 #kc-info {
     margin: 20px -2rem -2rem;
+}
+#kc-info-wrapper {
+    font-size: inherit;
+    padding: 1rem 2rem;
+    background-color: var(--off-secondary-background);
 }
 
 /* Registration screen padding */
@@ -96,6 +101,21 @@
 /* Fix input height on forgot password */
 #kc-reset-password-form .pf-v5-c-form-control {
     line-height: 2rem;
+}
+
+/* Re-authenticate message position*/
+.pf-v5-c-alert.pf-m-inline {
+    margin-top: 1rem;
+}
+
+/* Fix cancel button positoin on delete confirmation */
+button[name=cancel-aia] {
+    margin-left: 2rem !important;
+}
+
+/* Remove excess spacing */
+#kc-form-buttons {
+    margin-top: 0;
 }
 
 /* Ensure red border covers whole of password fields 
