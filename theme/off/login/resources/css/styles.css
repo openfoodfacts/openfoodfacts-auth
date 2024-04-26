@@ -67,11 +67,12 @@
 /* Info positioning an colour */
 #kc-info {
     margin: 20px -2rem -2rem;
+    background-color: var(--off-secondary-background);
 }
 #kc-info-wrapper {
     font-size: inherit;
     padding: 1rem 2rem;
-    background-color: var(--off-secondary-background);
+    background-color: transparent;
 }
 
 /* Registration screen padding */
@@ -116,6 +117,19 @@ button[name=cancel-aia] {
 /* Remove excess spacing */
 #kc-form-buttons {
     margin-top: 0;
+}
+
+/* Move reset password instructions to top of form */
+.pf-v5-c-login__main-body {
+    display: grid;
+}
+#kc-reset-password-form {
+    order: 2;
+}
+#kc-reset-password-form + #kc-info {
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+    background-color: transparent;
 }
 
 /* Ensure red border covers whole of password fields 
