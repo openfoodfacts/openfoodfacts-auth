@@ -23,7 +23,7 @@
 /* Position language selector at top of form */
 .pf-v5-c-login__main-header {
     position: relative;
-    padding-top: 100px;
+    padding-top: 6rem;
 }
 
 .pf-v5-c-login__main-header-utilities {
@@ -50,11 +50,30 @@
     border: none;
 }
 
-.pf-v5-c-input-group.pf-m-error,
-.pf-v5-c-form-control.pf-m-error,
-.pf-v5-c-form-control.pf-m-error>:is(input,select,textarea)
+/* Error borders */
+.pf-v5-c-input-group:has(input[aria-invalid=true]),
+.pf-v5-c-form-control>:is(input,select,textarea)[aria-invalid=true]
 {
     border-bottom: var(--off-input-error-border-width) solid var(--off-error-color);
+}
+
+/* Ensure red border covers whole of password fields */
+.pf-v5-c-input-group input[aria-invalid=true] {
+    border-bottom-width: 0;
+}
+
+/* Info positioning */
+#kc-info {
+    margin: 20px -2rem -2rem;
+}
+
+/* Registration screen padding */
+.subtitle {
+    margin-top: 0;
+}
+/* Helper text font size */
+.pf-c-form__helper-text {
+    font-size: 0.75rem;
 }
 
 /* Ensure red border covers whole of password fields 

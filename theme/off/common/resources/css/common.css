@@ -54,4 +54,5 @@
     --pf-v5-global--primary-color--100: var(--off-primary-action);
     --pf-v5-global--BorderRadius--sm: var(--off-button-radius);
     --pf-v5-global--BorderWidth--sm: var(--off-input-border-width);
+    --pf-v5-global--spacer--2xl: 2rem;
 }
