@@ -13,6 +13,10 @@
     --off-input-radius: 8px;
 
     --off-input-border-width: 0px;
+
+    --off-input-error-border-width: 2px;
+    --off-error-color: #c9190b;
+
 }
 
 /* Light mode */
@@ -43,4 +47,11 @@
     --off-secondary-button-text: var(--white);
     --off-input-background: var(--macchiato);
     --off-notification-background: var(--cappuccino);
+}
+
+:root {
+    --pf-v5-global--link--Color: var(--off-primary-action);
+    --pf-v5-global--primary-color--100: var(--off-primary-action);
+    --pf-v5-global--BorderRadius--sm: var(--off-button-radius);
+    --pf-v5-global--BorderWidth--sm: var(--off-input-border-width);
 }

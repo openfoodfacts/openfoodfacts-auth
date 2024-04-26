@@ -1,5 +1,6 @@
 @import url('common.css');
 
+/* Top left logo */
 .login-pf body {
     background-color: var(--off-secondary-background);
     background-image: url('../img/off-logo-horizontal-light.svg');
@@ -8,6 +9,63 @@
     background-repeat: no-repeat;
 }
 
+/* Hide realm name */
+#kc-header {
+    display: none;
+}
+
+/* Align login box under logo */
+.pf-v5-c-login {
+    margin-top: 65px;
+    align-items: start;
+}
+
+/* Position language selector at top of form */
+.pf-v5-c-login__main-header {
+    position: relative;
+    padding-top: 100px;
+}
+
+.pf-v5-c-login__main-header-utilities {
+    position: absolute;
+    right: var(--pf-v5-c-login__main-body--PaddingRight);
+    top: var(--pf-v5-c-login__main-header--PaddingTop);
+    grid-column: auto;
+    grid-row: auto;
+    max-width: calc(100% - 2* var(--pf-v5-c-login__main-body--PaddingRight));
+}
+
+/* Input styling */
+.pf-v5-c-input-group,
+.pf-v5-c-form-control,
+.pf-v5-c-button.pf-m-control,
+.pf-v5-c-form-control>:is(input,select,textarea) {
+    border-radius: var(--off-input-radius);
+    background-color: var(--off-input-background);
+}
+
+.pf-v5-c-form-control:before,
+.pf-v5-c-form-control:after,
+.pf-v5-c-button:after {
+    border: none;
+}
+
+.pf-v5-c-input-group.pf-m-error,
+.pf-v5-c-form-control.pf-m-error,
+.pf-v5-c-form-control.pf-m-error>:is(input,select,textarea)
+{
+    border-bottom: var(--off-input-error-border-width) solid var(--off-error-color);
+}
+
+/* Ensure red border covers whole of password fields 
+
+.pf-c-input-group > .pf-c-form-control[aria-invalid=true] {
+    border-bottom-width: 0;
+}
+.pf-c-input-group:has(> .pf-c-form-control[aria-invalid=true]) {
+    border-bottom: var(--pf-global--BorderWidth--md) solid var(--pf-global--danger-color--100)
+}
+/*
 .card-pf {
     background-color: var(--off-primary-background);
 }
@@ -29,24 +87,18 @@ a {
     color: var(--off-primary-action-hover);
 }
 
-.pf-c-form-control, .pf-c-input-group, .pf-c-button.pf-m-control {
-    border-radius: var(--off-input-radius);
-}
+
 
 .pf-c-button.pf-m-block {
     border-radius: var(--off-button-radius);
     line-height: 2;
 }
 
-#kc-header {
-    display: none;
-}
-
 .login-pf-page .card-pf {
     margin-top: 64px;
 }
 
-/* Prevent the locale selector from jumping into the title logo on small screens */
+/* Prevent the locale selector from jumping into the title logo on small screens 
 #kc-locale {
     position: relative;
     top: auto;
@@ -56,7 +108,7 @@ a {
     z-index: 9999;
 }
 
-/* Move the "back to login" link to the top of the form */
+/* Move the "back to login" link to the top of the form 
 #kc-content {
     position: relative;
     padding-top: 1em;
@@ -66,12 +118,12 @@ a {
     top: 0;
 }
 
-/* Prevent Register from getting misaligned */
+/* Prevent Register from getting misaligned 
 .col-md-10 {
     width: 100%;
 }
 
-/* Display password reset info at the top of the form */
+/* Display password reset info at the top of the form 
 #kc-content-wrapper {
     display:flex;
     flex-flow: column;
@@ -89,16 +141,17 @@ a {
     text-align: initial;
 }
 
-/* Preserve title font size */
+/* Preserve title font size 
 .login-pf-page .login-pf-header h1 {
     font-size: 24px;
     font-weight: bold;
 }
 
-/* Ensure red border covers whole of password fields */
+/* Ensure red border covers whole of password fields 
 .pf-c-input-group > .pf-c-form-control[aria-invalid=true] {
     border-bottom-width: 0;
 }
 .pf-c-input-group:has(> .pf-c-form-control[aria-invalid=true]) {
     border-bottom: var(--pf-global--BorderWidth--md) solid var(--pf-global--danger-color--100)
 }
+*/
