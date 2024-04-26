@@ -38,10 +38,12 @@
 /* Input styling */
 .pf-v5-c-input-group,
 .pf-v5-c-form-control,
-.pf-v5-c-button.pf-m-control,
-.pf-v5-c-form-control>:is(input,select,textarea) {
+.pf-v5-c-button.pf-m-control {
     border-radius: var(--off-input-radius);
     background-color: var(--off-input-background);
+}
+.pf-v5-c-form-control>:is(input,select,textarea) {
+    border-radius: var(--off-input-radius);
 }
 
 .pf-v5-c-form-control:before,
