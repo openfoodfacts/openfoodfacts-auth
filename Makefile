@@ -21,3 +21,6 @@ refresh_themes:
 	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 	rm org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar
 	node build-scripts/refresh_messages.mjs
+
+run:
+	docker compose -f docker-compose-run.yml up -d
