@@ -23,4 +23,4 @@ refresh_themes:
 	node build-scripts/refresh_messages.mjs
 
 run:
-	docker compose -f docker-compose-run.yml up -d
+	docker compose -f docker-compose-run.yml -p ${KEYCLOAK_COMPOSE_PROJECT_NAME} up -d
