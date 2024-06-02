@@ -16,7 +16,7 @@
     <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
     <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-    <maven-site-plugin.version>4.0.0-M13</maven-site-plugin.version>
+    <maven-site-plugin.version>4.0.0-M15</maven-site-plugin.version>
     <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
 
     <revision>${env.KEYCLOAK_VERSION}</revision>
