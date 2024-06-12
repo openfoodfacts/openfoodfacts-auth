@@ -32,7 +32,7 @@ services:
         condition: service_started
 
   keycloak_postgres:
-    image: postgres:12-alpine
+    image: postgres:16-alpine
     environment:
       - POSTGRES_USER=${KC_DB_USERNAME}
       - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
@@ -47,7 +47,7 @@ services:
       - redisdata:/data
 
   smtp:
-    image: rnwood/smtp4dev:3.3.4-ci20240323113
+    image: rnwood/smtp4dev:latest
     volumes:
       - smtpdata:/smtp4dev
     ports:

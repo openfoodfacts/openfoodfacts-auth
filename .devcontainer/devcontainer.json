@@ -1,12 +1,13 @@
 {
     "name": "Java",
-    "image": "mcr.microsoft.com/vscode/devcontainers/java:1-17",
+    "image": "mcr.microsoft.com/vscode/devcontainers/java:1-21",
     "runArgs": ["--env-file", ".env"],
     "features": {
         "ghcr.io/devcontainers/features/java:1": {
             "installMaven": "true"
         },
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/node:1": {}
     },
     "customizations": {
         "vscode": {

@@ -35,6 +35,7 @@ import org.keycloak.models.PasswordPolicy;
 import org.keycloak.models.ProtocolMapperModel;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.RealmProvider;
+import org.keycloak.models.RequiredActionConfigModel;
 import org.keycloak.models.RequiredActionProviderModel;
 import org.keycloak.models.RequiredCredentialModel;
 import org.keycloak.models.RoleModel;
@@ -1555,6 +1556,44 @@ class Utils {
                         throw new UnsupportedOperationException("Unimplemented method 'setMaxTemporaryLockouts'");
                     }
 
+                    @Override
+                    public boolean isOrganizationsEnabled() {
+                        throw new UnsupportedOperationException("Unimplemented method 'isOrganizationsEnabled'");
+                    }
+
+                    @Override
+                    public void setOrganizationsEnabled(boolean organizationsEnabled) {
+                        throw new UnsupportedOperationException("Unimplemented method 'setOrganizationsEnabled'");
+                    }
+
+                    @Override
+                    public RequiredActionConfigModel getRequiredActionConfigById(String id) {
+                        throw new UnsupportedOperationException("Unimplemented method 'getRequiredActionConfigById'");
+                    }
+
+                    @Override
+                    public RequiredActionConfigModel getRequiredActionConfigByAlias(String alias) {
+                        throw new UnsupportedOperationException(
+                                "Unimplemented method 'getRequiredActionConfigByAlias'");
+                    }
+
+                    @Override
+                    public void removeRequiredActionProviderConfig(RequiredActionConfigModel model) {
+                        throw new UnsupportedOperationException(
+                                "Unimplemented method 'removeRequiredActionProviderConfig'");
+                    }
+
+                    @Override
+                    public void updateRequiredActionConfig(RequiredActionConfigModel model) {
+                        throw new UnsupportedOperationException("Unimplemented method 'updateRequiredActionConfig'");
+                    }
+
+                    @Override
+                    public Stream<RequiredActionConfigModel> getRequiredActionConfigsStream() {
+                        throw new UnsupportedOperationException(
+                                "Unimplemented method 'getRequiredActionConfigsStream'");
+                    }
+
                 };
 
                 return new RealmProvider() {
@@ -2122,6 +2161,11 @@ class Utils {
             @Override
             public ClientPolicyManager clientPolicy() {
                 throw new UnsupportedOperationException("Unimplemented method 'clientPolicy'");
+            }
+
+            @Override
+            public boolean isClosed() {
+                throw new UnsupportedOperationException("Unimplemented method 'isClosed'");
             }
 
         };

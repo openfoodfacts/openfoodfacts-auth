@@ -3,7 +3,7 @@
 ARG KEYCLOAK_VERSION
 
 # build a custom extensions for keycloak using maven
-FROM maven:3-eclipse-temurin-17 AS builder
+FROM maven:3-eclipse-temurin-21 AS builder
 
 ARG KEYCLOAK_VERSION
 WORKDIR /build
