@@ -13,6 +13,7 @@ RUN --mount=type=cache,target=/root/.m2 set -x && \
     export SKIP_INTEGRATION_TESTS=true && \
     mvn -B package -Drevision=${KEYCLOAK_VERSION}
 
+# TODO: Use a builder image for faster startup. e.g. https://www.keycloak.org/server/containers
 ARG KEYCLOAK_VERSION
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 
