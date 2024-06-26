@@ -1,25 +1,14 @@
 services:
   keycloak:
-    # FIXME: Add keycloak to docker-compose.yml and/or docker/prod.yml
-    image: ghcr.io/openfoodfacts/openfoodfacts-auth:${KEYCLOAK_TAG}
-
     environment:
-      - KEYCLOAK_ADMIN
-      - KEYCLOAK_ADMIN_PASSWORD
-      - KEYCLOAK_BASE_URL
-      - KEYCLOAK_REALM_NAME
       - KC_DB=postgres
       - KC_DB_URL_HOST=keycloak_postgres
       - KC_DB_USERNAME
       - KC_DB_PASSWORD
-      - KC_SPI_EVENTS_LISTENER_REDIS_EVENT_LISTENER_REDIS_URL=redis://${REDIS_URL}/0
-    
     ports:
       - "0.0.0.0:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
     depends_on:
       keycloak_postgres:
-        condition: service_started
-      redis:
         condition: service_started
       smtp:
         condition: service_started
@@ -33,11 +22,6 @@ services:
       - dbdata:/var/lib/postgresql/data
     ports:
       - 5601:5432
-
-  redis:
-    image: redis:7-alpine
-    volumes:
-      - redisdata:/data
 
   smtp:
     image: rnwood/smtp4dev:latest

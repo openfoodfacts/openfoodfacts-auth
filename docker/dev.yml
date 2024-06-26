@@ -1,0 +1,10 @@
+services:
+  keycloak:
+    image: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: 
+        - KEYCLOAK_VERSION
+    volumes:
+      - ./theme/off:/opt/keycloak/themes/off
