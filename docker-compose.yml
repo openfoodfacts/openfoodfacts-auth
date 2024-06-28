@@ -8,6 +8,3 @@ services:
       - KEYCLOAK_BASE_URL
       - KEYCLOAK_REALM_NAME
       - KC_SPI_EVENTS_LISTENER_REDIS_EVENT_LISTENER_REDIS_URL=redis://${REDIS_URL}/0
-    healthcheck:
-      test: timeout 10s bash -c ':> /dev/tcp/localhost/8080'
-      start_interval: 10s

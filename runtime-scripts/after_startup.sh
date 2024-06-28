@@ -21,6 +21,9 @@ function wait_for_keycloak() {
   echo "Keycloak is now up and running."
 }
 
+# Docker healthcheck waits for this file to appear and for port to be open
+rm -f /tmp/health
+
 # Waiting for Keycloak to start before proceeding with the configurations.
 wait_for_keycloak
 
@@ -33,3 +36,5 @@ echo "Calling configure_keycloak"
 /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /opt/keycloak/realm_settings.json
 /opt/keycloak/bin/kcadm.sh update users/profile -f /opt/keycloak/users_profile.json -r open-products-facts
 echo "End of configure_keycloak"
+
+echo Healthy > /tmp/health

@@ -42,5 +42,7 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 
 COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 
+HEALTHCHECK --start-period=60s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
+
 ENTRYPOINT [ "sh", "/opt/keycloak/startup.sh" ]
 
