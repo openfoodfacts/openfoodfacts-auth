@@ -5,3 +5,4 @@ jar-module/target/
 .idea/
 dependency-reduced-pom.xml
 node_modules
+.envrc

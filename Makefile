@@ -1,4 +1,6 @@
 include .env
+-include .envrc
+
 export
 
 SHELL := /bin/bash
