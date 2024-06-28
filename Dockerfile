@@ -20,8 +20,8 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} as keycloak_builder
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
 
-# Configure a database vendor
-ENV KC_DB=postgres
+# Don't configure a database vendor here as for tests we want to use the dev-file option
+# ENV KC_DB=postgres
 
 #USER root
 
