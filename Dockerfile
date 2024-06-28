@@ -16,10 +16,6 @@ RUN --mount=type=cache,target=/root/.m2 set -x && \
 # TODO: Use a builder image for faster startup. e.g. https://www.keycloak.org/server/containers
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} as keycloak_builder
 
-# Enable health and metrics support
-ENV KC_HEALTH_ENABLED=true
-ENV KC_METRICS_ENABLED=true
-
 # Don't configure a database vendor here as for tests we want to use the dev-file option
 # ENV KC_DB=postgres
 
