@@ -9,7 +9,7 @@ build:
 	node build-scripts/build_languages.mjs
 	mkdir -p target
 	set -o allexport; source .env; set +o allexport; envsubst \$$PRODUCT_OPENER_OIDC_CLIENT_ID,\$$PRODUCT_OPENER_DOMAIN,\$$PRODUCT_OPENER_OIDC_CLIENT_SECRET,\$$REDIS_URL < conf/open-products-facts-realm.json > target/open-products-facts-realm.json
-	docker compose up -d --build
+	COMPOSE_FILE=${COMPOSE_FILE},docker/dev.yml docker compose up -d --build
 
 up:
 	docker compose up -d

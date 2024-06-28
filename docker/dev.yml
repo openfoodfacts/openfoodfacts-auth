@@ -1,6 +1,5 @@
 services:
   keycloak:
-    image: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
     build:
       context: .
       dockerfile: Dockerfile
