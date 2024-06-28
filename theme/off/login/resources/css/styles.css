@@ -18,6 +18,8 @@
 .pf-v5-c-login {
     margin-top: 65px;
     align-items: start;
+    /* Ensure remains centred on wide screens */
+    --pf-v5-c-login__container--xl--MaxWidth: 31.25rem;
 }
 
 /* Position language selector at top of form */
