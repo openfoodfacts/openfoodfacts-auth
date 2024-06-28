@@ -13,5 +13,5 @@ pull_request_body: |
   ### Part of
   - Translations
 files:
-  - source: /themes/off/common/messages/messages_en.properties
-    translation: /themes/off/common/messages/messages_%two_letters_code%.properties
+  - source: /src/messages/messages_en.properties
+    translation: /src/messages/messages_%two_letters_code%.properties
