@@ -37,7 +37,8 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
 
     const countryOptions = {};
     const countryList = {};
-    for (const [ countryId, country ] of Object.entries(countries)) {
+    // Try and sort the country list to avoid excess diffs
+    for (const [ countryId, country ] of Object.entries(countries).sort((a,b) => a[0].localeCompare(b[0]))) {
         if (!country.country_code_2?.en) {
             console.warn(countryId);
             continue;

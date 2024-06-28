@@ -2,6 +2,6 @@
 echo "*** Starting background process ***"
 sh /opt/keycloak/after_startup.sh &
 echo "*** Starting keycloak ***"
-# TODO: Remove "dev"
-/opt/keycloak/bin/kc.sh start-dev --import-realm
+# TODO: Figure out how to secure properly for production
+/opt/keycloak/bin/kc.sh start --http-enabled=true --hostname-strict=false --cache=local --optimized --import-realm
 
