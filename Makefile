@@ -9,7 +9,7 @@ build:
 	node build-scripts/build_languages.mjs
 	mkdir -p target
 	set -o allexport; source .env; set +o allexport; envsubst \$$PRODUCT_OPENER_OIDC_CLIENT_ID,\$$PRODUCT_OPENER_DOMAIN,\$$PRODUCT_OPENER_OIDC_CLIENT_SECRET,\$$REDIS_URL < conf/open-products-facts-realm.json > target/open-products-facts-realm.json
-	COMPOSE_FILE=${COMPOSE_FILE},docker/dev.yml docker compose up -d --build
+	docker compose up -d --build
 
 up:
 	docker compose up -d
@@ -17,8 +17,10 @@ up:
 down:
 	docker compose down --remove-orphans
 
-dev: run_deps build up
+dev: run_deps build
 
+# We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
+# These themese aren't actually used in the deployment, they are just for reference
 refresh_themes:
 	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
 	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4
@@ -30,10 +32,9 @@ refresh_themes:
 	rm org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar
 	node build-scripts/refresh_messages.mjs
 
+# Called by other projects to start this project as a dependency
 run: run_deps
-# Don't include dev.yml in "run" mode so we use the pre-built image
-# Change the KEYCLOAK_TAG value to "dev" to use the dev image on run
-	COMPOSE_FILE=docker-compose.yml,docker-compose-run.yml docker compose up -d
+	COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose up -d
 
 # Space delimited list of dependant projects
 DEPS=openfoodfacts-shared-services

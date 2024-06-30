@@ -21,8 +21,6 @@ services:
       - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
     volumes:
       - dbdata:/var/lib/postgresql/data
-    ports:
-      - 5601:5432
 
   smtp:
     image: rnwood/smtp4dev:latest

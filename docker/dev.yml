@@ -1,9 +1,15 @@
 services:
   keycloak:
+    image: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
     build:
       context: .
       dockerfile: Dockerfile
-      args: 
+      args:
         - KEYCLOAK_VERSION
     volumes:
+      # Bind mount to theme folder so theme can be edited without rebuilding
       - ./theme/off:/opt/keycloak/themes/off
+
+  keycloak_postgres:
+    ports:
+      - 5601:5432
