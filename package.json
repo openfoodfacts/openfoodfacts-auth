@@ -1,0 +1,13 @@
+{
+  "name": "openfoodfacts-auth",
+  "version": "0.0.1",
+  "description": "Provides authentication services for Open Food Facts using Keycloak, backed by a PostgreSQL database",
+  "scripts": {},
+  "keywords": [],
+  "author": "Open Food Facts contributors",
+  "license": "AGPL-3.0-only",
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.14.9"
+  }
+}

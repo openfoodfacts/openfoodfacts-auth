@@ -5,11 +5,18 @@ export
 
 SHELL := /bin/bash
 
+# Initialises Playwright for tests. Note this requires sudo access
+init:
+	npm ci
+	npx playwright install --with-deps
+
 build:
 	node build-scripts/build_languages.mjs
 	mkdir -p target
 	set -o allexport; source .env; set +o allexport; envsubst \$$PRODUCT_OPENER_OIDC_CLIENT_ID,\$$PRODUCT_OPENER_DOMAIN,\$$PRODUCT_OPENER_OIDC_CLIENT_SECRET,\$$REDIS_URL < conf/open-products-facts-realm.json > target/open-products-facts-realm.json
 	docker compose up -d --build
+
+dev: init run_deps build
 
 up:
 	docker compose up -d
@@ -17,7 +24,8 @@ up:
 down:
 	docker compose down --remove-orphans
 
-dev: run_deps build
+test:
+	npx playwright test
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference

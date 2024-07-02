@@ -6,3 +6,7 @@ jar-module/target/
 dependency-reduced-pom.xml
 node_modules
 .envrc
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

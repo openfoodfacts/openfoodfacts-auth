@@ -1,3 +1,7 @@
+# Open Food Facts Auth
+
+This Project provides authentication services for Open Food Facts using Keycloak, backed by a PostgreSQL database.
+
 # Running Keycloak standalne
 
 First, run `make build` to create the realm.json file with variables substituted. It seems that the standalone import for keycloak does not interpolate variables https://github.com/keycloak/keycloak/issues/12069
@@ -5,6 +9,10 @@ First, run `make build` to create the realm.json file with variables substituted
 Then use `docker compose up -d --build` to build and run the container.
 
 To see how a user logs in you can navigate to: http://localhost:5600/realms/open-products-facts/account/#/
+
+# Tests
+
+We use Playwright to test the Keycloak user interface and styling. We recommend using the "Playwright Test for VSCode" plugin.
 
 # Major Workstreams
 
