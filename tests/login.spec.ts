@@ -36,6 +36,17 @@ test("login page", async ({ page }) => {
   );
 });
 
+test("locale selector supports incremental search", async ({ page }) => {
+  await page.goto("/realms/open-products-facts/account/#/");
+
+  const localeSelector = page.getByLabel("languages");
+  await localeSelector.click();
+  await localeSelector.pressSequentially("fr");
+  await localeSelector.press("Tab");
+
+  await expect(page.getByRole("button", { name: "Connexion" })).toBeVisible();
+});
+
 test("create account link", async ({ page }) => {
   await page.goto("/realms/open-products-facts/account/#/");
 
