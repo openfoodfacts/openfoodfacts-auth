@@ -55,6 +55,13 @@
     --pf-v5-global--BorderRadius--sm: var(--off-button-radius);
     --pf-v5-global--BorderWidth--sm: var(--off-input-border-width);
     --pf-v5-global--spacer--2xl: 2rem;
+
+    --pf-v5-global--primary-color--200: var(--off-primary-action-hover);
+/*
+    --pf-global--BackgroundColor--light-100: var(--off-input-background);
+
+    --pf-global--BorderWidth--sm: var(--off-input-border-width);
+    */
 }
 
 .pf-v5-c-button:not(.pf-m-control) {

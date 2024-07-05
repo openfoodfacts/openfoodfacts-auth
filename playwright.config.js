@@ -1,5 +1,8 @@
-// @ts-check
-const { defineConfig, devices } = require('@playwright/test');
+import { defineConfig, devices} from '@playwright/test';
+import dotenv from 'dotenv';
+
+// Read from ".env" file.
+dotenv.config({ path: ['.envrc','.env'] });
 
 /**
  * Read environment variables from file.
@@ -25,7 +28,7 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: process.env.KEYCLOAK_BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -70,10 +73,10 @@ module.exports = defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: {
+    command: 'make up',
+    url: process.env.KEYCLOAK_BASE_URL,
+    reuseExistingServer: !process.env.CI,
+  },
 });
 

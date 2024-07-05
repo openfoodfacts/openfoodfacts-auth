@@ -19,7 +19,7 @@ build:
 dev: init run_deps build
 
 up:
-	docker compose up -d
+	docker compose up --wait
 
 down:
 	docker compose down --remove-orphans

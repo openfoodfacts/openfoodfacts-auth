@@ -8,6 +8,7 @@
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@playwright/test": "^1.45.0",
-    "@types/node": "^20.14.9"
+    "@types/node": "^20.14.9",
+    "dotenv": "^16.4.5"
   }
 }
