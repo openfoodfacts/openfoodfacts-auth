@@ -31,7 +31,7 @@ services:
     volumes:
       - smtpdata:/smtp4dev
     ports:
-      - 2580:8080
+      - 2580:80
 
 volumes:
   dbdata:
