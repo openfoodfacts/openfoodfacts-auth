@@ -1,3 +1,5 @@
+/* Design guidelines here: https://www.figma.com/design/nFMjewFAOa8c4ahtob7CAB/Mobile-App-Design-(Quentin)?node-id=4200-14304 */
+
 :root {
     --black: #000000;
     --white: #ffffff;
@@ -57,6 +59,7 @@
     --pf-v5-global--spacer--2xl: 2rem;
 
     --pf-v5-global--primary-color--200: var(--off-primary-action-hover);
+    --pf-v5-global--Color--dark-100: var(--off-primary-text);
 /*
     --pf-global--BackgroundColor--light-100: var(--off-input-background);
 
