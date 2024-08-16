@@ -13,5 +13,21 @@ export const PRIMARY_BUTTON_HOVER = {
 export const INPUT_FIELD = {
     backgroundColor: 'var(--off-input-background)',
     borderRadius: 'var(--off-input-radius)',
-    color: 'var(--off-primary-text)',
+    color: 'var(--off-text)',
+};
+
+export const LINK = {
+    color: 'var(--off-primary-action)',
+};
+
+export const SECONDARY_BUTTON = {
+    backgroundColor: 'var(--off-secondary-action)',
+    color: 'var(--off-secondary-button-text)',
+    borderRadius: 'var(--off-button-radius)',
+};
+
+export const SECONDARY_BUTTON_HOVER = {
+    backgroundColor: 'var(--off-secondary-action-hover)',
+    color: 'var(--off-secondary-button-text)',
+    borderRadius: 'var(--off-button-radius)',
 };

@@ -1,4 +1,6 @@
-import { expect, Locator } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
+
+export const gotoHome = async (page: Page) => await page.goto("/realms/open-products-facts/account/#/");
 
 export const matchStyles = async (
     locator: Locator,

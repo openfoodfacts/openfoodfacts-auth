@@ -1,90 +1,43 @@
 @import url('common.css');
 
-:root {
-    /* Header background */
-    --pf-global--BackgroundColor--dark-100: var(--off-secondary-background);
-    /* Main background */
-    --pf-global--BackgroundColor--light-100: var(--off-primary-background);
-    --pf-global--Color--light-200: var(--off-primary-action);
-    --pf-global--primary-color--dark-100: var(--off-secondary-background);
-    --pf-global--primary-color--100: var(--off-primary-action);
-    --pf-global--primary-color--200: var(--off-primary-action-hover);
-    --pf-global--link--Color: var(--off-primary-action);
-    --pf-global--link--Color--hover: var(--off-primary-action-hover);
-
-    /* Sidebar background */
-    --pf-global--BackgroundColor--dark-300: var(--off-notification-background);
-    /* Sidebar active item background */
-    --pf-global--BackgroundColor--dark-400: var(--off-primary-action);
-    /* Sidebar active item hover */
-    --pf-global--BackgroundColor--dark-200: var(--off-primary-action-hover);
-
-    /* Sidebar active left border */
-    --pf-global--active-color--400: var(--off-primary-action);
-
-    --pf-global--BorderRadius--sm: var(--off-button-radius);
-    --pf-global--BorderWidth--sm: var(--off-input-border-width);
+.pf-v5-c-page__header {
+    background-color: var(--off-other-background);
 }
 
-.pf-c-button {
-    /* Cancel button background (hard-coded transparent) */
-    --pf-c-button--m-link--BackgroundColor: var(--off-secondary-action);
-    --pf-c-button--m-link--hover--BackgroundColor: var(--off-secondary-action-hover);
-
-    /* Cancel button text */
-    --pf-global--link--Color: var(--off-secondary-button-text);
-    --pf-global--link--Color--hover: var(--off-secondary-button-text);
+.pf-v5-c-button.pf-m-plain,
+.pf-v5-c-menu-toggle.pf-m-plain:not(.pf-m-text) {
+    color: var(--off-primary-action);
 }
 
-.pf-c-form-control, .pf-c-select {
-    /* Input background */
-    --pf-global--BackgroundColor--light-100: var(--off-input-background);
-
-    /* Disabled Input background */
-    --pf-global--disabled-color--300: var(--off-secondary-background);
-
-    --pf-c-form-control--BorderRadius: var(--off-input-radius);
-    --pf-c-select__toggle--before--BorderWidth: 0;
+/* Hide multiple sections for now */
+section h1 {
+    display: none;
 }
-
-.pf-m-typeahead, .pf-c-select .pf-c-select__toggle {
-    border-radius: var(--off-input-radius);
+.pf-v5-l-grid {
+    display: block;
 }
-
-.pf-m-expanded .pf-m-typeahead:before, .pf-m-expanded .pf-c-select__toggle:before {
-    inset: 0;
-    position: absolute;
-    content: "";
-    border: solid 2px #202020;
-    border-radius: var(--off-input-radius);
-}
-
-header {
-    --pf-global--Color--light-100: var(--off-primary-action-hover);
-    --pf-global--BackgroundColor--light-300: var(--off-primary-action-hover);
-}
-
-.pf-c-dropdown {
-    --pf-c-dropdown__menu-item--hover--BackgroundColor: var(--off-secondary-action-hover);
-}
-
-/* Hide "Jump to section" */
-.pf-l-grid>.pf-m-8-col-on-md {
-    --pf-l-grid__item--GridColumnEnd: span 12;
-}
-.pf-l-grid>.pf-m-4-col-on-md {
+.pf-v5-l-grid__item.pf-m-12-col-on-sm.pf-m-4-col-on-md {
     display: none;
 }
 
-/* Header logo */
-#brandLink {
-    width: 280px;
-    height: 48px;
-    background-image: url('https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg');
-    background-size: auto 48px;
-    background-repeat: no-repeat;
+.pf-v5-c-expandable-section__toggle-text {
+    color: var(--off-primary-action);
 }
 
-#brandLink img {
-    display: none;
+.pf-v5-c-page__sidebar-body {
+    background-color: var(--off-secondary-action);
+}
+.pf-v5-c-nav__link:focus,
+.pf-v5-c-nav__link:hover {
+    background-color: var(--off-secondary-action-hover);
+}
+.pf-v5-c-nav__link:focus,
+.pf-v5-c-nav__link:hover,
+.pf-v5-c-nav__link {
+    color: var(--off-secondary-button-text);
+}
+
+.pf-v5-c-nav__link:before,
+.pf-v5-c-nav__item.pf-m-expandable:before {
+    border-color: var(--off-secondary-action-hover);
 }

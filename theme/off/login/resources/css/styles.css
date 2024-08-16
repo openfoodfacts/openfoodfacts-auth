@@ -1,25 +1,24 @@
 @import url('common.css');
 
-/* Top left logo */
-.login-pf body {
-    background-color: var(--off-secondary-background);
-    background-image: url('../img/off-logo-horizontal-light.svg');
-    background-size: auto 48px;
-    background-position: 18px 18px;
-    background-repeat: no-repeat;
-}
-
 /* Hide realm name */
 #kc-header {
     display: none;
 }
 
-/* Align login box under logo */
 .pf-v5-c-login {
-    margin-top: 65px;
+    background-color: var(--off-other-background);
+    background-image: url('../img/off-logo-horizontal-light.svg');
+    background-size: auto 48px;
+    background-position: 18px 18px;
+    background-repeat: no-repeat;
     align-items: start;
+}
+.pf-v5-c-login__container {
+    margin-top: 65px;
     /* Ensure remains centred on wide screens */
-    --pf-v5-c-login__container--xl--MaxWidth: 31.25rem;
+    max-width: 36rem;
+    padding: 0;
+    display: block;
 }
 
 /* Position language selector at top of form */
@@ -27,54 +26,37 @@
     position: relative;
     padding-top: 5rem;
 }
-
 .pf-v5-c-login__main-header-utilities {
     position: absolute;
-    right: var(--pf-v5-c-login__main-body--PaddingRight);
-    top: var(--pf-v5-c-login__main-header--PaddingTop);
+    right: 3em;
+    top: 2em;
     grid-column: auto;
     grid-row: auto;
-    max-width: calc(100% - 2* var(--pf-v5-c-login__main-body--PaddingRight));
+    max-width: calc(100% - 2 * 3em);
 }
 
-/* Input styling */
-.pf-v5-c-input-group,
-.pf-v5-c-form-control,
-.pf-v5-c-button.pf-m-control {
-    border-radius: var(--off-input-radius);
-    background-color: var(--off-input-background);
-}
-.pf-v5-c-form-control>:is(input,select,textarea) {
-    border-radius: var(--off-input-radius);
+/* Prevent override */
+.login-pf a:hover {
+    color: var(--off-primary-action-hover);
 }
 
-.pf-v5-c-form-control:before,
-.pf-v5-c-form-control:after,
-.pf-v5-c-button:after {
-    border: none;
-}
-
-/* Error borders */
-.pf-v5-c-input-group:has(input[aria-invalid=true]),
-.pf-v5-c-form-control>:is(input,select,textarea)[aria-invalid=true]
-{
-    border-bottom: var(--off-input-error-border-width) solid var(--off-error-color);
-}
-
-/* Ensure red border covers whole of password fields */
-.pf-v5-c-input-group input[aria-invalid=true] {
-    border-bottom-width: 0;
+/* Remove extra padding */
+#kc-form-buttons {
+    margin-top: 0;
 }
 
 /* Info positioning an colour */
 #kc-info {
     margin: 20px -2rem -2rem;
-    background-color: var(--off-secondary-background);
+    background-color: var(--off-other-background);
 }
 #kc-info-wrapper {
     font-size: inherit;
     padding: 1rem 2rem;
     background-color: transparent;
+}
+#kc-registration-container {
+    border: none;
 }
 
 /* Registration screen padding */
@@ -82,6 +64,7 @@
     margin-bottom: -1rem;
     margin-top: 0;
 }
+
 /* Helper text font size */
 .pf-c-form__helper-text {
     font-size: 0.75rem;
@@ -90,7 +73,7 @@
 /* Move the "back to login" link to the top of the form */
 .pf-v5-c-login__main-body {
     position: relative;
-    padding-top: 1em;
+    padding: 1rem 2rem 0.75rem 2rem;
     margin-top: -0.5rem;
 }
 #kc-form-options {
@@ -100,28 +83,32 @@
 .pf-v5-c-form {
     margin-top: 1rem;
 }
+.pf-v5-c-login__main-footer-band {
+    border: 0;
+    padding: 0;
+}
 
-/* Fix input height on forgot password */
+/* Fix input height on forgot password *-
 #kc-reset-password-form .pf-v5-c-form-control {
     line-height: 2rem;
 }
 
-/* Re-authenticate message position*/
+/* Re-authenticate message position*-
 .pf-v5-c-alert.pf-m-inline {
     margin-top: 1rem;
 }
 
-/* Fix cancel button positoin on delete confirmation */
+/* Fix cancel button positoin on delete confirmation *-
 button[name=cancel-aia] {
     margin-left: 2rem !important;
 }
 
-/* Remove excess spacing */
+/* Remove excess spacing *-
 #kc-form-buttons {
     margin-top: 0;
 }
 
-/* Move reset password instructions to top of form */
+/* Move reset password instructions to top of form *-
 .pf-v5-c-login__main-body {
     display: grid;
 }
@@ -144,7 +131,7 @@ button[name=cancel-aia] {
 }
 /*
 .card-pf {
-    background-color: var(--off-primary-background);
+    background-color: var(--off-background);
 }
 
 :root {

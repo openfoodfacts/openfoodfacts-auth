@@ -1,10 +1,10 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
-import { INPUT_FIELD, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { matchStyles } from "./test-helper";
+import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
+import { gotoHome, matchStyles } from "./test-helper";
 
 test("login page", async ({ page }) => {
-  await page.goto("/realms/open-products-facts/account/#/");
+  await gotoHome(page);
 
   await expect(page).toHaveTitle("Sign in to Open Products Facts");
 
@@ -17,7 +17,7 @@ test("login page", async ({ page }) => {
 });
 
 test("locale selector supports incremental search", async ({ page }) => {
-  await page.goto("/realms/open-products-facts/account/#/");
+  await gotoHome(page);
 
   const localeSelector = page.getByLabel("languages");
   await localeSelector.click();
@@ -28,12 +28,13 @@ test("locale selector supports incremental search", async ({ page }) => {
 });
 
 test("create account link", async ({ page }) => {
-  await page.goto("/realms/open-products-facts/account/#/");
+  await gotoHome(page);
 
+  const link = page.getByRole("link", { name: "Create an Open Food Facts account" });
+  expect(await matchStyles(link, LINK)).toBeNull();
+  
   // Click the get started link.
-  await page
-    .getByRole("link", { name: "Create an Open Food Facts account" })
-    .click();
+  await link.click();
 
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole("heading", { name: "Register" })).toBeVisible();
