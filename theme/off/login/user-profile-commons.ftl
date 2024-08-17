@@ -111,7 +111,7 @@
 </#macro>
 
 <#macro inputTag attribute>
-	<input type="<@inputTagType attribute=attribute/>" :id="$id('name-${attribute.name}')" name="${attribute.name}" class="${properties.kcInputClass!}"
+	<input type="<@inputTagType attribute=attribute/>" id="${attribute.name}" name="${attribute.name}" class="${properties.kcInputClass!}"
 		aria-invalid="<#if messagesPerField.existsError('${attribute.name}')>true</#if>"
 		<#if attribute.readOnly>disabled</#if>
 		<#if attribute.autocomplete??>autocomplete="${attribute.autocomplete}"</#if>
