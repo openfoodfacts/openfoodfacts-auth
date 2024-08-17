@@ -1,13 +1,11 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
-import { gotoHome, matchStyles } from "./test-helper";
+import { gotoHome, matchStyles, registerLink } from "./test-helper";
 import { SECONDARY_BUTTON, SECONDARY_BUTTON_HOVER } from "./expected-styles";
 
 test("account personal info", async ({ page }) => {
   await gotoHome(page);
-
-  const link = page.getByRole("link", { name: "Create an Open Food Facts account" });
-  await link.click();
+  await registerLink(page).click();
 
   const randomUser = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
   const randomPassword = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);

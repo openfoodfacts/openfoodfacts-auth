@@ -34,6 +34,11 @@
     grid-row: auto;
     max-width: calc(100% - 2 * 3em);
 }
+/* Avoid gap between locale selector and dropdown arrow */
+.pf-v5-c-login__main-header-utilities .pf-v5-c-form-control {
+    background-color: var(--off-input-background);
+    border-radius: var(--off-input-radius);
+}
 
 /* Prevent override */
 .login-pf a:hover {
@@ -73,6 +78,7 @@
 /* Helper text font size */
 .pf-c-form__helper-text {
     font-size: 0.75rem;
+    color: var(--off-text);
 }
 
 /* Move the "back to login" link to the top of the form */

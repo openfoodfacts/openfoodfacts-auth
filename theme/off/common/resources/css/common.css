@@ -107,7 +107,6 @@ a:hover {
 /* Inputs */
 /**********/
 .pf-v5-c-input-group,
-.pf-v5-c-form-control,
 .pf-v5-c-button.pf-m-control,
 .pf-v5-c-menu-toggle,
 .pf-v5-c-form-control>:is(input,select,textarea),
@@ -116,12 +115,14 @@ a:hover {
     background-color: var(--off-input-background);
     border-radius: var(--off-input-radius);
 }
-/* Actual inputs are transparent where they have containing spans */
-.pf-v5-c-form-control>:is(input,select,textarea),
-.pf-v5-c-form-control>select {
+.pf-v5-c-form-control {
+    /* Prevent helper text from going to side of input */
+    grid-template-columns: none;
     background-color: transparent;
 }
-
+.pf-v5-c-form-control>:is(input,select,textarea) {
+    grid-row: initial;
+}
 
 /* Remove input underlines */
 .pf-v5-c-form-control:before,

@@ -31,3 +31,9 @@ export const SECONDARY_BUTTON_HOVER = {
     color: 'var(--off-secondary-button-text)',
     borderRadius: 'var(--off-button-radius)',
 };
+
+export const HELPER_TEXT = {
+    backgroundColor: 'var(--off-background)',
+    color: 'var(--off-text)',
+};
+
