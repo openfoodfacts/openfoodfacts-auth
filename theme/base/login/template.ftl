@@ -29,23 +29,26 @@
             <script src="${url.resourcesPath}/${script}" type="text/javascript"></script>
         </#list>
     </#if>
+    <script type="importmap">
+        {
+            "imports": {
+                "rfc4648": "${url.resourcesCommonPath}/node_modules/rfc4648/lib/rfc4648.js"
+            }
+        }
+    </script>
     <script src="${url.resourcesPath}/js/menu-button-links.js" type="module"></script>
     <#if scripts??>
         <#list scripts as script>
             <script src="${script}" type="text/javascript"></script>
         </#list>
     </#if>
-    <#if authenticationSession??>
-        <script type="module">
-            import { checkCookiesAndSetTimer } from "${url.resourcesPath}/js/authChecker.js";
+    <script type="module">
+        import { checkCookiesAndSetTimer } from "${url.resourcesPath}/js/authChecker.js";
 
-            checkCookiesAndSetTimer(
-              "${authenticationSession.authSessionId}",
-              "${authenticationSession.tabId}",
-              "${url.ssoLoginInOtherTabsUrl?no_esc}"
-            );
-        </script>
-    </#if>
+        checkCookiesAndSetTimer(
+          "${url.ssoLoginInOtherTabsUrl?no_esc}"
+        );
+    </script>
 </head>
 
 <body class="${properties.kcBodyClass!}">

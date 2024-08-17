@@ -4,7 +4,9 @@ The OpenFoodFacts theme is in the off directory. The other directories are a cop
 
 To refresh the default Keycloak themes run `make refresh_themes`
 
-Note that the messages in the from-off folder are refreshed automatically from the Open Food Facts language and country taxonomies and should not be manually edited.
+Note that the messages in the theme/off/common/messages folder are refreshed automatically from the Open Food Facts language and country taxonomies and should not be manually edited.
 
-Only the messages in the common folder should be translated with Crowdin.
+Only the messages in the src/messages folder should be translated with Crowdin.
+
+The basic theme templates are used wherever possible, but currently user-profile-commons.ftl is overridden to sort country codes correctly.
 

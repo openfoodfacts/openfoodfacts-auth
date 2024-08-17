@@ -3,7 +3,11 @@
 <#import "register-commons.ftl" as registerCommons>
 <@layout.registrationLayout displayMessage=messagesPerField.exists('global') displayRequiredFields=true; section>
     <#if section = "header">
-        ${msg("registerTitle")}
+        <#if messageHeader??>
+            ${kcSanitize(msg("${messageHeader}"))?no_esc}
+        <#else>
+            ${msg("registerTitle")}
+        </#if>
     <#elseif section = "form">
         <form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}" method="post">
 
@@ -16,7 +20,7 @@
                                 <span class="pf-v5-c-form__label-text">
                                     ${msg("password")}
                                     <span class="pf-v5-c-form__label-required" aria-hidden="true">&#42;</span>
-                                <span>
+                                </span>
                             </label>
                             <span class="${properties.kcInputGroup!}">
                                 <span class="${properties.kcInputClass!}">
@@ -84,17 +88,17 @@
                 </div>
             </#if>
 
-            <div class="${properties.kcFormGroupClass!}">
-                <div id="kc-form-options" class="${properties.kcFormOptionsClass!}">
+            <div id="kc-form-buttons" class="${properties.kcFormButtonsClass!}">
+                <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("doRegister")}"/>
+            </div>
+            <div class="${properties.kcFormGroupClass!} pf-v5-c-login__main-footer-band">
+                <div id="kc-form-options" class="${properties.kcFormOptionsClass!} pf-v5-c-login__main-footer-band-item">
                     <div class="${properties.kcFormOptionsWrapperClass!}">
                         <span><a href="${url.loginUrl}">${kcSanitize(msg("backToLogin"))?no_esc}</a></span>
                     </div>
                 </div>
-
-                <div id="kc-form-buttons" class="${properties.kcFormButtonsClass!}">
-                    <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("doRegister")}"/>
-                </div>
             </div>
+
         </form>
         <script type="module" src="${url.resourcesPath}/js/passwordVisibility.js"></script>
     </#if>
