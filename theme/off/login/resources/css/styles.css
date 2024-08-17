@@ -47,7 +47,7 @@
 
 /* Info positioning an colour */
 #kc-info {
-    margin: 20px -2rem -2rem;
+    margin: 20px -2rem 0;
     background-color: var(--off-other-background);
 }
 #kc-info-wrapper {
@@ -57,6 +57,11 @@
 }
 #kc-registration-container {
     border: none;
+}
+
+/* Social login section */
+.pf-v5-c-login__main-footer-links {
+    padding-bottom: 0.5rem;
 }
 
 /* Registration screen padding */
