@@ -12,4 +12,7 @@ test("registration page", async ({ page }) => {
   const afterHelper = page.locator('.pf-c-form__helper-text-after:has-text("username"):below(#username)');
   expect(await matchStyles(afterHelper, HELPER_TEXT)).toBeNull();
 
+
+  // TODO: Drop-down icon visible on country select
+  // TODO: Countries are sorted by localized value
 });

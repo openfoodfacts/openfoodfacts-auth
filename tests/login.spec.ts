@@ -27,6 +27,23 @@ test("locale selector supports incremental search", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Connexion" })).toBeVisible();
 });
 
+test("locale selector always shows in same language", async ({ page }) => {
+  await gotoHome(page);
+
+  const localeSelector = page.getByLabel("languages");
+  await localeSelector.click();
+  await localeSelector.pressSequentially("fr");
+  await localeSelector.press("Tab");
+
+  await expect(page.getByRole("button", { name: "Connexion" })).toBeVisible();
+
+  await localeSelector.click();
+  await localeSelector.pressSequentially("eng");
+  await localeSelector.press("Tab");
+
+  await expect(page.getByRole("button", { name: "Sign In" })).toBeVisible();
+});
+
 test("create account link", async ({ page }) => {
   await gotoHome(page);
 
