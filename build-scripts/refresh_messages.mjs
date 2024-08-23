@@ -12,7 +12,7 @@ const offMessagesDir = `src/messages`;
 const enMessages = [];
 const allKeycloakMessages = {};
 const themeTypes = ['login', 'account', 'admin', 'email'];
-const sourceThemes = ['base', 'keycloak', 'keycloak.v2'];
+const sourceThemes = ['base', 'keycloak', 'keycloak.v2', 'keycloak.v3'];
 
 const sourceFile = `${offMessagesDir}/messages_en.properties`;
 enMessages.push(...readFileSync(sourceFile, 'utf-8').split('\n'));
