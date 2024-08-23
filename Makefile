@@ -18,7 +18,7 @@ build:
 
 dev: init run_deps build
 
-up:
+up: run_deps
 	docker compose up --wait
 
 down:
