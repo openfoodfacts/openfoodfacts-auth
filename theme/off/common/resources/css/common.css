@@ -143,3 +143,8 @@ a:hover {
 .pf-v5-c-input-group input[aria-invalid=true] {
     border-bottom-width: 0;
 }
+
+/* Make sure inline messages don't overlap other stuff */
+.pf-m-inline {
+    margin-top: 10px;
+}
