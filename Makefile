@@ -48,6 +48,8 @@ refresh_themes:
 	$(MAKE) refresh_messages
 
 # This will find any existing Keycloak translations for messages defined in the messages_en file
+# It also downloads the current languages and countries taxonomies from openfoodfacts-server and
+# adds any new languages or countries to the keycloak configuration.
 refresh_messages:
 	node build-scripts/refresh_messages.mjs
 
