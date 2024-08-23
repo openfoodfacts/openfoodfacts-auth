@@ -46,7 +46,20 @@ jobs:
 
       - name: Prepare Docker build
         run: mkdir target && make build
-
+      
+      - name: Push changes if needed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Combining translations with languages and countries"
+          branch: ${{ github.event.pull_request.head.ref }}
+          commit_user_name: Open Food Facts Bot
+          commit_user_email: contact@openfoodfacts.org
+          commit_author: Open Food Facts Bot <contact@openfoodfacts.org>
+          push_options: ""
+          status_options: '--untracked-files=no'
+          skip_dirty_check: false
+          create_branch: no
+  
       - name: Build and push Docker image
         uses: docker/build-push-action@5176d81f87c23d6fc96624dfdbcd9f3830bbe445
         with:
