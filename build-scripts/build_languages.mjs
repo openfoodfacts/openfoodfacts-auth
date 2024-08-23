@@ -58,6 +58,10 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     // Currently sort countries by english name until keycloak supports sorting by localized name
     const sortedCountryCodes = Object.entries(countryList).sort((a,b) => a[1].localeCompare(b[1])).map((entry) => entry[0]);
     const sortedLanguageCodes = Object.entries(languageList).sort((a,b) => a[1].localeCompare(b[1])).map((entry) => entry[0]);
+
+    // Add dummy language to show property names
+    sortedLanguageCodes.push('xx');
+
     const realmSettings = {
         supportedLocales: sortedLanguageCodes
     }

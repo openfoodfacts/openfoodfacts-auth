@@ -30,14 +30,25 @@ test:
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
 refresh_themes:
-	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
-	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4
 	rm -rf theme/base
 	rm -rf theme/keycloak
 	rm -rf theme/keycloak.v2
+	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
+
+	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4
 	jar xf org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar theme
-	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 	rm org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar
+
+	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar --strip-components=4
+	jar xf org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar theme
+	rm org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar
+
+	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
+
+	$(MAKE) refresh_messages
+
+# This will find any existing Keycloak translations for messages defined in the messages_en file
+refresh_messages:
 	node build-scripts/refresh_messages.mjs
 
 # Called by other projects to start this project as a dependency
