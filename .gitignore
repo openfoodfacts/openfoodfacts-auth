@@ -10,4 +10,5 @@ node_modules
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-/theme/off/messages/
+# These are generated at build time by the build_languages script
+/theme/off/common/messages/
