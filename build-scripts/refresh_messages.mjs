@@ -43,6 +43,7 @@ for (const [code, keycloakMessages] of Object.entries(allKeycloakMessages)) {
         if (existingMessages.find(m => m.startsWith(messageSearch))) continue;
 
         const keycloakTranslation = keycloakMessages.find(m => m.startsWith(messageSearch));
+        // TODO replace ([^'])'([^']) with $1''$2
         if (keycloakTranslation) existingMessages.push(keycloakTranslation);
     }
     writeFileSync(existingMessageFile, existingMessages.join('\n'));
@@ -68,4 +69,9 @@ for (const message of allKeycloakMessages.en) {
     if (!enMessages.find(m => m.startsWith(messageSearch))) xxMessages.push(`${parts[0]}=[*${parts[0]}*]`);
 }
 
-writeFileSync('theme/off/common/messages/messages_xx.properties', xxMessages.join('\n'));
+writeFileSync('build-scripts/messages_xx.properties', xxMessages.join('\n'));
+
+fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(async (response) => {
+    writeFileSync('build-scripts/languages.json', await response.text());
+    writeFileSync('build-scripts/countries.json', await (await fetch('https://static.openfoodfacts.org/data/taxonomies/countries.json')).text());
+});
