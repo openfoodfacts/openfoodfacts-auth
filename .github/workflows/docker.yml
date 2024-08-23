@@ -48,6 +48,7 @@ jobs:
         run: mkdir target && make build
       
       - name: Push changes if needed
+        if: github.event_name == 'pull_request'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Combining translations with languages and countries"
