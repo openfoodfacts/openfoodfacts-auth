@@ -15,3 +15,5 @@ pull_request_body: |
 files:
   - source: /src/messages/messages_en.properties
     translation: /src/messages/messages_%two_letters_code%.properties
+    escape_quotes: 1
+    escape_special_characters: 0
