@@ -1,0 +1,3 @@
+i18n:
+  - changed-files:
+      - any-glob-to-any-file: "src/messages/**/*"
