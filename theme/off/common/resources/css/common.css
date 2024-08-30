@@ -110,11 +110,18 @@ a:hover {
 .pf-v5-c-button.pf-m-control,
 .pf-v5-c-menu-toggle,
 .pf-v5-c-form-control>:is(input,select,textarea),
+.pf-v5-c-form-control:is(input,select,textarea),
 .pf-v5-c-form-control>select {
     color: var(--off-text);
     background-color: var(--off-input-background);
     border-radius: var(--off-input-radius);
 }
+
+/* Workaround where Keycloak template does not surround an input with a pf-v5-c-form-control span */
+.pf-v5-c-form-control:is(input,select,textarea) {
+    padding: calc(0.375rem - 2px) calc(0.5rem - 2px);
+}
+
 .pf-v5-c-form-control {
     /* Prevent helper text from going to side of input */
     grid-template-columns: none;

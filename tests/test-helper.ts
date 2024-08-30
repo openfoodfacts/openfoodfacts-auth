@@ -1,8 +1,8 @@
 import { Locator, Page } from "@playwright/test";
 
 export const gotoHome = async (page: Page) => await page.goto("/realms/open-products-facts/account/#/");
-
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
+export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "Forgot Password?" });
 
 export const matchStyles = async (
     locator: Locator,
