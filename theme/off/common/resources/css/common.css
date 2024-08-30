@@ -119,9 +119,17 @@ a:hover {
     /* Prevent helper text from going to side of input */
     grid-template-columns: none;
     background-color: transparent;
+    /* Below allows dropdown icon to be absolute and to the right */
+    position: relative;
 }
 .pf-v5-c-form-control>:is(input,select,textarea) {
     grid-row: initial;
+}
+
+/* Ensure drop down arrow floats to right of select input */
+.pf-v5-c-form-control__utilities {
+    position: absolute;
+    right: 0;
 }
 
 /* Remove input underlines */
