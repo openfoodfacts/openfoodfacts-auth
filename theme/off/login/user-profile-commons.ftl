@@ -173,8 +173,23 @@
 		<#assign options=[]>
 	</#if>
 
+	<#assign sortableOptions=[]>
 	<#list options as option>
-		<option value="${option}" <#if attribute.values?seq_contains(option)>selected</#if>><@selectOptionLabelText attribute=attribute option=option/></option>
+		<#assign label = option>
+		<#if attribute.annotations.inputOptionLabels??>
+			<#assign label = advancedMsg(attribute.annotations.inputOptionLabels[option]!option)>
+		<#else>
+			<#if attribute.annotations.inputOptionLabelsI18nPrefix??>
+				<#assign label = msg(attribute.annotations.inputOptionLabelsI18nPrefix + '.' + option)>
+			</#if>
+		</#if>
+
+		<#assign sortableOption = {"value":option, "label":label}>
+		<#assign sortableOptions = sortableOptions+[sortableOption]>
+	</#list>
+
+	<#list sortableOptions?sort_by("label") as option>
+		<option value="${option.value}" <#if attribute.values?seq_contains(option.value)>selected</#if>>${option.label}</option>
 	</#list>
 	</select>
 	<span class="pf-v5-c-form-control__utilities">
