@@ -6,6 +6,7 @@
 
 import { writeFileSync, readFileSync, existsSync, readdirSync } from 'fs';
 import { getLanguages } from './utils.mjs';
+import stringify from 'json-stable-stringify';
 
 const baseThemeDir = 'theme';
 const offMessagesDir = `src/messages`;
@@ -73,8 +74,8 @@ for (const message of allKeycloakMessages.en) {
 writeFileSync('build-scripts/messages_xx.properties', xxMessages.join('\n'));
 
 fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(async (response) => {
-    writeFileSync('build-scripts/languages.json', await response.text());
-    writeFileSync('build-scripts/countries.json', await (await fetch('https://static.openfoodfacts.org/data/taxonomies/countries.json')).text());
+    writeFileSync('build-scripts/languages.json', stringify(await response.json(), {space: 2}));
+    writeFileSync('build-scripts/countries.json', stringify(await (await fetch('https://static.openfoodfacts.org/data/taxonomies/countries.json')).json(), {space: 2}));
 
     const runtimeDir = 'runtime-scripts';
     const themeDir = 'theme/off/common';
