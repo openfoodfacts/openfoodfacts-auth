@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { gotoHome, matchStyles, registerLink } from "./test-helper";
+import { createUser, deleteEmails, gotoHome, matchStyles, registerLink } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -36,4 +36,13 @@ test("localization", async ({ page }) => {
   await countryInput.press("Tab");
 
   await expect(countryInput).toHaveValue('DE');
+});
+
+test("verification email", async ({ page }) => {
+  // Delete messages from smtp4dev
+  await deleteEmails();
+
+  await createUser(page);
+
+  // TODO: Check the email
 });

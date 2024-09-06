@@ -10,8 +10,10 @@ init:
 	npm ci
 	npx playwright install --with-deps
 
-build:
+build_languages:
 	node build-scripts/build_languages.mjs
+
+build: build_languages
 	mkdir -p target
 	set -o allexport; source .env; set +o allexport; envsubst \$$PRODUCT_OPENER_OIDC_CLIENT_ID,\$$PRODUCT_OPENER_DOMAIN,\$$PRODUCT_OPENER_OIDC_CLIENT_SECRET,\$$REDIS_URL < conf/open-products-facts-realm.json > target/open-products-facts-realm.json
 	docker compose build
