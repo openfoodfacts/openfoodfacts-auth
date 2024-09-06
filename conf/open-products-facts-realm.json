@@ -1563,6 +1563,7 @@
   },
   "loginTheme": "off",
   "accountTheme": "off",
+  "emailTheme": "off",
   "eventsEnabled": true,
   "eventsExpiration": 7776000,
   "eventsListeners": [
