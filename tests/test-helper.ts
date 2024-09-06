@@ -2,7 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export const gotoHome = async (page: Page) => await page.goto("/realms/open-products-facts/account/#/");
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
-export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "[doForgotPassword]" });
+export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "^doForgotPassword^" });
 
 export const matchStyles = async (
     locator: Locator,
@@ -53,15 +53,15 @@ export const createUser = async (page: Page) => {
 
   const randomUser = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
   const randomPassword = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
-  await page.getByLabel('[username]').fill(randomUser);
-  await page.getByRole('textbox', {name:'[password]', exact: true}).fill(randomPassword);
-  await page.getByLabel('[passwordConfirm]').fill(randomPassword);
-  await page.getByLabel('[email]').fill(`${randomUser}@openfoodfacts.org`);
+  await page.getByLabel('^username^').fill(randomUser);
+  await page.getByRole('textbox', {name:'^password^', exact: true}).fill(randomPassword);
+  await page.getByLabel('^passwordConfirm^').fill(randomPassword);
+  await page.getByLabel('^email^').fill(`${randomUser}@openfoodfacts.org`);
 
-  await page.getByRole("button", { name: "[doRegister]" }).click();
+  await page.getByRole("button", { name: "^doRegister^" }).click();
 
   // Account page will now load
-  await expect(page.getByText('[personalInfoDescription]')).toBeVisible();
+  await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
 
   return randomUser;
 }

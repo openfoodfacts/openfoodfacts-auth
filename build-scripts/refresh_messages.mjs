@@ -56,10 +56,26 @@ const xxMessages = ['# The following are used for translation test purposes',
     '# If items surrounded by ** appear in the UI then we need to add that property into the',
     '# messages_en file so that translations can be done in Crowdin'];
 
+const makeDummyValue = (parts) => {
+    const placeholders = [];
+    const value = parts.slice(1).join('=');
+    let index = value.indexOf('{');
+    while (index >= 0) {
+        let endIndex = value.indexOf('}', index);
+        // Sometime we get two sets of brackets
+        if (value[endIndex + 1] === '}') endIndex++;
+        const placeholder = value.slice(index, endIndex + 1);
+        const label = placeholder.replace(/[\{\}]/g, '').split(',')[0]; // Get rid of brackets and don't include comma separated arguments
+        placeholders.push(`${label}=${placeholder}`);
+        index = value.indexOf('{', endIndex);
+    }
+    return parts[0] + (placeholders.length ? ' ' : '') + placeholders.sort().join(', ');
+}
+
 // First add all the messages we've identified
 for (const message of enMessages) {
     const parts = message.split('=');
-    xxMessages.push(parts.length > 1 ? `${parts[0]}=[${parts[0]}]` : message);
+    xxMessages.push(parts.length > 1 ? `${parts[0]}=^${makeDummyValue(parts)}^` : message);
 }
 
 // Then add any keycloak ones that we don't already list
@@ -68,7 +84,7 @@ for (const message of allKeycloakMessages.en) {
     const parts = message.split('=');
     if (parts.length < 2) continue;
     const messageSearch = `${parts[0]}=`;
-    if (!enMessages.find(m => m.startsWith(messageSearch))) xxMessages.push(`${parts[0]}=[*${parts[0]}*]`);
+    if (!enMessages.find(m => m.startsWith(messageSearch))) xxMessages.push(`${parts[0]}=*${makeDummyValue(parts)}*`);
 }
 
 writeFileSync('build-scripts/messages_xx.properties', xxMessages.join('\n'));
