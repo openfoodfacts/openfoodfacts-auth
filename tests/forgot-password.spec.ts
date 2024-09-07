@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { INPUT_FIELD } from "./expected-styles";
-import { createUser, deleteEmails, forgotPasswordLink, getLastEmail, gotoHome, matchStyles, selectDummyLocale } from "./test-helper";
+import { createAndVerifyUser, deleteEmails, forgotPasswordLink, getLastEmail, gotoHome, matchStyles, selectDummyLocale } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -11,14 +11,14 @@ test("general layout", async ({ page }) => {
 });
 
 test("email", async ({ page }) => {
-  await deleteEmails();
-  const userName = await createUser(page);
+  const userName = await createAndVerifyUser(page);
 
   // Log out
   await page.getByTestId('options-toggle').click();
   await page.getByRole('menuitem', {name: '^signOut^'}).click();
 
   // Click forgot password link
+  await deleteEmails();
   await forgotPasswordLink(page).click();
   await page.getByLabel('^usernameOrEmail^').fill(userName);
   await page.getByRole("button", { name: '^doSubmit^' }).click();

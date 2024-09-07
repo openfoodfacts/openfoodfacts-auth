@@ -45,6 +45,7 @@ export const matchStyles = async (
   };
  
 export const createUser = async (page: Page) => {
+  await deleteEmails();
   await gotoHome(page);
   await registerLink(page).click();
 
@@ -60,10 +61,19 @@ export const createUser = async (page: Page) => {
 
   await page.getByRole("button", { name: "^doRegister^" }).click();
 
-  // Account page will now load
-  await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
+  // Verify email page will now load
+  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
 
   return randomUser;
+}
+
+export const createAndVerifyUser = async(page: Page) => {
+  const userName = await createUser(page);
+  const message = await getLastEmail();
+  const verifyUrl = message.plaintext.split('0=')[1].split(', 2=')[0];
+  await page.goto(verifyUrl);
+  await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
+  return userName;
 }
 
 export const selectDummyLocale = async(page: Page) => {

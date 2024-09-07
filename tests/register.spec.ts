@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createUser, deleteEmails, gotoHome, matchStyles, registerLink } from "./test-helper";
+import { createUser, deleteEmails, getLastEmail, gotoHome, matchStyles, registerLink } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -39,10 +39,10 @@ test("localization", async ({ page }) => {
 });
 
 test("verification email", async ({ page }) => {
-  // Delete messages from smtp4dev
-  await deleteEmails();
+  const userName = await createUser(page);
 
-  await createUser(page);
-
-  // TODO: Check the email
+  const message = await getLastEmail();
+  expect(message.to[0]).toBe(`${userName}@openfoodfacts.org`);
+  expect(message.plaintext).toContain('^emailVerificationBody 0=');
+  expect(message.html).toContain('^emailVerificationBodyHtml 0');
 });
