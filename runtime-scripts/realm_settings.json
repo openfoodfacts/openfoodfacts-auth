@@ -189,5 +189,6 @@
     "ja",
     "zh",
     "xx"
-  ]
+  ],
+  "verifyEmail": true
 }

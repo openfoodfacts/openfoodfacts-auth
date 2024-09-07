@@ -120,16 +120,16 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     
     // Add dummy language to show property names
     sortedLanguageCodes.push('xx');
-    
-    const realmSettings = {
-        supportedLocales: sortedLanguageCodes
-    }
-    writeFileSync(`runtime-scripts/realm_settings.json`,JSON.stringify(realmSettings, undefined, 2));
+
+    const realmSettings = JSON.parse(readFileSync(`${runtimeDir}/realm_settings.json`));
+    realmSettings.supportedLocales = sortedLanguageCodes;
+    writeFileSync(`${runtimeDir}/realm_settings.json`,stringify(realmSettings, {space: 2}));
+
     writeFileSync(`${themeDir}/theme.properties`,`locales=${sortedLanguageCodes.join(',')}\n`);
     
     const userProfile = JSON.parse(readFileSync(`${runtimeDir}/users_profile.json`));
     const countryAttribute = userProfile.attributes.find((a) => a.name === 'country');
     countryAttribute.validations.options.options = sortedCountryCodes;
     countryAttribute.annotations.inputOptionLabels = countryOptions;
-    writeFileSync(`${runtimeDir}/users_profile.json`, JSON.stringify(userProfile, undefined, 2));
+    writeFileSync(`${runtimeDir}/users_profile.json`, stringify(userProfile, {space: 2}));
 });
