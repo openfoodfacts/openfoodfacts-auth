@@ -8,6 +8,7 @@ services:
       - KEYCLOAK_STARTUP
     ports:
       - "0.0.0.0:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
+      - "0.0.0.0:${KEYCLOAK_MANAGEMENT_PORT:-5602}:9000"
     depends_on:
       keycloak_postgres:
         condition: service_started
