@@ -11,6 +11,6 @@ elif [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     /opt/keycloak/bin/kc.sh start-dev --import-realm --health-enabled=true --metrics-enabled=true
 else
     # Use pre-optimized version for tests for faster startup
-    /opt/keycloak/bin/kc.sh start --http-enabled=true --hostname-strict=false --cache=local --optimized --import-realm --health-enabled=true --metrics-enabled=true
+    /opt/keycloak/bin/kc.sh start --http-enabled=true --hostname-strict=false --cache=local --optimized --import-realm
 fi
 
