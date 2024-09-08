@@ -27,6 +27,9 @@ rm -f /tmp/health
 # Waiting for Keycloak to start before proceeding with the configurations.
 wait_for_keycloak
 
+# Force the admin user to be email verified
+/opt/keycloak/bin/kcadm.sh update users/$KEYCLOAK_ADMIN -s 'emailVerified=true'
+
 # Keycloak is running.
 
 echo "Calling configure_keycloak"
