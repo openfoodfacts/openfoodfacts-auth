@@ -56,3 +56,5 @@ test("create account link", async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole("heading", { name: "Register" })).toBeVisible();
 });
+
+// TODO: Test that locale passed in URL is respected

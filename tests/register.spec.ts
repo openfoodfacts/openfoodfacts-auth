@@ -46,3 +46,5 @@ test("verification email", async ({ page }) => {
   expect(message.plaintext).toContain('^emailVerificationBody 0=');
   expect(message.html).toContain('^emailVerificationBodyHtml 0');
 });
+
+// TODO: Seem to be some scenarios where the language is not set against the user if they don't set it explicitly
