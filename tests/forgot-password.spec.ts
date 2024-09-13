@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { INPUT_FIELD } from "./expected-styles";
-import { createAndVerifyUser, deleteEmails, forgotPasswordLink, getLastEmail, gotoHome, matchStyles, selectDummyLocale } from "./test-helper";
+import { createAndVerifyUser, forgotPasswordLink, getLastEmail, gotoHome, matchStyles, selectDummyLocale } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -18,15 +18,13 @@ test("email", async ({ page }) => {
   await page.getByRole('menuitem', {name: '^signOut^'}).click();
 
   // Click forgot password link
-  await deleteEmails();
   await forgotPasswordLink(page).click();
   await page.getByLabel('^usernameOrEmail^').fill(userName);
   await page.getByRole("button", { name: '^doSubmit^' }).click();
 
   await expect(page.getByText('^emailSentMessage^')).toBeVisible();
 
-  const message = await getLastEmail();
-  expect(message.to[0]).toBe(`${userName}@openfoodfacts.org`);
+  const message = await getLastEmail(userName);
   expect(message.plaintext).toContain('^passwordResetBody 0=');
   expect(message.html).toContain('^passwordResetBodyHtml 0');
 

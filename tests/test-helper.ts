@@ -45,7 +45,6 @@ export const matchStyles = async (
   };
  
 export const createUser = async (page: Page) => {
-  await deleteEmails();
   await gotoHome(page);
   await registerLink(page).click();
 
@@ -69,7 +68,7 @@ export const createUser = async (page: Page) => {
 
 export const createAndVerifyUser = async(page: Page) => {
   const userName = await createUser(page);
-  const message = await getLastEmail();
+  const message = await getLastEmail(userName);
   const verifyUrl = message.plaintext.split('0=')[1].split(', 2=')[0];
   await page.goto(verifyUrl);
   await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
@@ -89,10 +88,12 @@ export const deleteEmails = async() => {
   await fetch('http://localhost:2580/api/Messages/*', {method: 'DELETE'});
 }
 
-export const getLastEmail = async() => {
+export const getLastEmail = async(userName: string) => {
   // Get most recent message
   const messages = await (await fetch('http://localhost:2580/api/Messages/new')).json();
-  const messageId = messages.pop().id;
+  const lastMessage = messages.filter((m) => m.to[0] === `${userName}@openfoodfacts.org`).sort((a, b) => a.receivedDate.localeCompare(b.receivedDate)).pop();
+  expect(lastMessage).toBeTruthy();
+  const messageId = lastMessage.id;
   const message = await (await fetch(`http://localhost:2580/api/Messages/${messageId}`)).json();
   message.plaintext = await (await fetch(`http://localhost:2580/api/Messages/${messageId}/plaintext`)).text();
   message.html = await (await fetch(`http://localhost:2580/api/Messages/${messageId}/html`)).text();
