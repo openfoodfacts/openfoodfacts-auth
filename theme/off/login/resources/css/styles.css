@@ -50,18 +50,28 @@
     margin-top: 0;
 }
 
-/* Info positioning an colour */
+/* Move the new user actions above the login button */
+#kc-registration-container {
+    position: absolute;
+    bottom: 5.5rem;
+    border: none;
+}
+
+/* Move sign-in button to account for new user moving up */
+#kc-form-login > #kc-form-buttons {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Info positioning an colour. Note this is effectively hidden at the moment */
 #kc-info {
     margin: 20px -2rem -2rem;
     background-color: var(--off-other-background);
 }
 #kc-info-wrapper {
     font-size: inherit;
-    padding: 1rem 2rem;
+    padding: 0rem 2rem;
     background-color: transparent;
-}
-#kc-registration-container {
-    border: none;
 }
 
 /* Social login section */
@@ -77,7 +87,7 @@
 
 /* Helper text font size */
 .pf-c-form__helper-text {
-    font-size: 0.75rem;
+    font-size: 1rem;
     color: var(--off-text);
 }
 
@@ -97,6 +107,11 @@
 .pf-v5-c-login__main-footer-band {
     border: 0;
     padding: 0;
+}
+#form-help-text-before-username:before {
+    content: url("data:image/svg+xml,%3Csvg%20width%3D%2220px%22%20height%3D%2220px%22%20viewBox%3D%220%200%2064%2064%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5.9%2062c-3.3%200-4.8-2.4-3.3-5.3L29.3%204.2c1.5-2.9%203.9-2.9%205.4%200l26.7%2052.5c1.5%202.9%200%205.3-3.3%205.3H5.9z%22%20fill%3D%22%23ffce31%22%3E%3C%2Fpath%3E%3Cg%20fill%3D%22%23231f20%22%3E%3Cpath%20d%3D%22M27.8%2023.6l2.8%2018.5c.3%201.8%202.6%201.8%202.9%200l2.7-18.5c.5-7.2-8.9-7.2-8.4%200%22%3E%3C%2Fpath%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2249.6%22%20r%3D%224.2%22%3E%3C%2Fcircle%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    width: 20px;
+    height: 20px;
 }
 
 /* Fix input height on forgot password *-
