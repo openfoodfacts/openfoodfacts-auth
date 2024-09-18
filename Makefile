@@ -21,7 +21,7 @@ build: build_languages
 dev: init run_deps build
 
 up: run_deps
-	docker compose up --wait
+	docker compose up --pull=always --wait
 
 down:
 	docker compose down --remove-orphans
