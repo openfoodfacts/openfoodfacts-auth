@@ -13,7 +13,7 @@ test("login page", async ({ page }) => {
   await signInButton.hover();
   expect(await matchStyles(signInButton, PRIMARY_BUTTON_HOVER)).toBeNull();
 
-  expect(await matchStyles(page.getByLabel('Username or email'), INPUT_FIELD)).toBeNull();
+  expect(await matchStyles(page.getByLabel('Public user id or email'), INPUT_FIELD)).toBeNull();
 });
 
 test("locale selector supports incremental search", async ({ page }) => {
