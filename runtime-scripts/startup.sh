@@ -6,9 +6,9 @@ echo "*** Starting keycloak ***"
 if [[ "$KEYCLOAK_STARTUP" == "prod" ]]; then
     # TODO: Figure out how to secure properly for production
     # Note can't use optiomized option as pre-built image isn't configured for postgres
-    /opt/keycloak/bin/kc.sh start --import-realm --health-enabled=true --metrics-enabled=true
+    /opt/keycloak/bin/kc.sh start --http-enabled=true --import-realm --health-enabled=true --metrics-enabled=true
 elif [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
-    /opt/keycloak/bin/kc.sh start-dev --import-realm --health-enabled=true --metrics-enabled=true
+    /opt/keycloak/bin/kc.sh start-dev --http-enabled=true --import-realm --health-enabled=true --metrics-enabled=true
 else
     # Use pre-optimized version for tests for faster startup
     /opt/keycloak/bin/kc.sh start --http-enabled=true --hostname-strict=false --cache=local --optimized --import-realm
