@@ -23,6 +23,7 @@ import org.keycloak.models.GroupModel;
 import org.keycloak.models.GroupProvider;
 import org.keycloak.models.IdentityProviderMapperModel;
 import org.keycloak.models.IdentityProviderModel;
+import org.keycloak.models.IdentityProviderStorageProvider;
 import org.keycloak.models.KeyManager;
 import org.keycloak.models.KeycloakContext;
 import org.keycloak.models.KeycloakSession;
@@ -2166,6 +2167,11 @@ class Utils {
             @Override
             public boolean isClosed() {
                 throw new UnsupportedOperationException("Unimplemented method 'isClosed'");
+            }
+
+            @Override
+            public IdentityProviderStorageProvider identityProviders() {
+                throw new UnsupportedOperationException("Unimplemented method 'identityProviders'");
             }
 
         };
