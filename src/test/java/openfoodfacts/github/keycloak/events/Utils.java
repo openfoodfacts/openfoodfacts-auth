@@ -1121,37 +1121,44 @@ class Utils {
                     }
 
                     @Override
+                    @Deprecated
                     public Stream<IdentityProviderModel> getIdentityProvidersStream() {
                         throw new UnsupportedOperationException("Unimplemented method 'getIdentityProvidersStream'");
                     }
 
                     @Override
+                    @Deprecated
                     public IdentityProviderModel getIdentityProviderByAlias(final String alias) {
                         throw new UnsupportedOperationException("Unimplemented method 'getIdentityProviderByAlias'");
                     }
 
                     @Override
+                    @Deprecated
                     public void addIdentityProvider(final IdentityProviderModel identityProvider) {
                         throw new UnsupportedOperationException("Unimplemented method 'addIdentityProvider'");
                     }
 
                     @Override
+                    @Deprecated
                     public void removeIdentityProviderByAlias(final String alias) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeIdentityProviderByAlias'");
                     }
 
                     @Override
+                    @Deprecated
                     public void updateIdentityProvider(final IdentityProviderModel identityProvider) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateIdentityProvider'");
                     }
 
                     @Override
+                    @Deprecated
                     public Stream<IdentityProviderMapperModel> getIdentityProviderMappersStream() {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getIdentityProviderMappersStream'");
                     }
 
                     @Override
+                    @Deprecated
                     public Stream<IdentityProviderMapperModel> getIdentityProviderMappersByAliasStream(
                             final String brokerAlias) {
                         throw new UnsupportedOperationException(
@@ -1159,27 +1166,32 @@ class Utils {
                     }
 
                     @Override
+                    @Deprecated
                     public IdentityProviderMapperModel addIdentityProviderMapper(
                             final IdentityProviderMapperModel model) {
                         throw new UnsupportedOperationException("Unimplemented method 'addIdentityProviderMapper'");
                     }
 
                     @Override
+                    @Deprecated
                     public void removeIdentityProviderMapper(final IdentityProviderMapperModel mapping) {
                         throw new UnsupportedOperationException("Unimplemented method 'removeIdentityProviderMapper'");
                     }
 
                     @Override
+                    @Deprecated
                     public void updateIdentityProviderMapper(final IdentityProviderMapperModel mapping) {
                         throw new UnsupportedOperationException("Unimplemented method 'updateIdentityProviderMapper'");
                     }
 
                     @Override
+                    @Deprecated
                     public IdentityProviderMapperModel getIdentityProviderMapperById(final String id) {
                         throw new UnsupportedOperationException("Unimplemented method 'getIdentityProviderMapperById'");
                     }
 
                     @Override
+                    @Deprecated
                     public IdentityProviderMapperModel getIdentityProviderMapperByName(final String brokerAlias,
                             final String name) {
                         throw new UnsupportedOperationException(
@@ -1363,6 +1375,7 @@ class Utils {
                     }
 
                     @Override
+                    @Deprecated
                     public boolean isIdentityFederationEnabled() {
                         throw new UnsupportedOperationException("Unimplemented method 'isIdentityFederationEnabled'");
                     }
