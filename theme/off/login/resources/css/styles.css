@@ -50,28 +50,31 @@
     margin-top: 0;
 }
 
-/* Move the new user actions above the login button */
-#kc-registration-container {
-    position: absolute;
-    bottom: 5.5rem;
-    border: none;
-}
-
 /* Move sign-in button to account for new user moving up */
 #kc-form-login > #kc-form-buttons {
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
 }
 
-/* Info positioning an colour. Note this is effectively hidden at the moment */
+/* Info positioning an colour. Note this is effectively hidden at the moment on the main login screen */
 #kc-info {
     margin: 20px -2rem -2rem;
     background-color: var(--off-other-background);
 }
 #kc-info-wrapper {
     font-size: inherit;
-    padding: 0rem 2rem;
+    padding: 1rem 2rem;
     background-color: transparent;
+}
+
+/* Move the new user actions above the login button */
+#kc-registration-container {
+    position: absolute;
+    bottom: 5.5rem;
+    border: none;
+}
+#kc-info-wrapper:has(#kc-registration-container:only-child) {
+    padding: 0 2rem;
 }
 
 /* Social login section */
