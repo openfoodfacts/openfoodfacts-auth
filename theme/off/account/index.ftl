@@ -25,12 +25,20 @@
       .keycloak__loading-container {
         height: 100vh;
         width: 100%;
-        background-color: #f0f0f0;
+        color: #151515;
+        background-color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         margin: 0;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .keycloak__loading-container {
+          color: #e0e0e0;
+          background-color: #1b1d21;
+        }
       }
 
       #loading-text {
@@ -49,6 +57,9 @@
         }
       }
     </script>
+    <#if !isSecureContext>
+      <script type="module" src="${resourceCommonUrl}/vendor/web-crypto-shim/web-crypto-shim.js"></script>
+    </#if>
     <#if devServerUrl?has_content>
       <script type="module">
         import { injectIntoGlobalHook } from "${devServerUrl}/@react-refresh";
@@ -130,6 +141,7 @@
           "isInternationalizationEnabled": ${realm.isInternationalizationEnabled()?c},
           "isLinkedAccountsEnabled": ${realm.identityFederationEnabled?c},
           "isMyResourcesEnabled": ${(realm.userManagedAccessAllowed && isAuthorizationEnabled)?c},
+          "isViewOrganizationsEnabled": ${isViewOrganizationsEnabled?c},
           "deleteAccountAllowed": ${deleteAccountAllowed?c},
           "updateEmailFeatureEnabled": ${updateEmailFeatureEnabled?c},
           "updateEmailActionEnabled": ${updateEmailActionEnabled?c},

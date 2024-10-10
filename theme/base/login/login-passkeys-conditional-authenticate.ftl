@@ -79,7 +79,8 @@
                                         class="${properties.kcInputClass!}" name="username"
                                         value="${(login.username!'')}"
                                         autocomplete="username webauthn"
-                                        type="text" autofocus autocomplete="off"/>
+                                        type="text" autofocus autocomplete="off"
+                                        dir="ltr"/>
                                     <#if messagesPerField.existsError('username')>
                                         <span id="input-error-username" class="${properties.kcInputErrorMessageClass!}" aria-live="polite">
                                             ${kcSanitize(messagesPerField.get('username'))?no_esc}
@@ -89,11 +90,6 @@
                             </#if>
                         </form>
                     </#if>
-                    <div id="kc-form-passkey-button" class="${properties.kcFormButtonsClass!}" style="display:none">
-                        <input id="authenticateWebAuthnButton" type="button" onclick="doAuthenticate([], "${rpId}", "${challenge}", ${isUserIdentified}, ${createTimeout}, "${userVerification}", "${msg("passkey-unsupported-browser-text")?no_esc}")" autofocus="autofocus"
-                            value="${kcSanitize(msg("passkey-doAuthenticate"))}"
-                            class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}"/>
-                    </div>
                     <div id="kc-form-passkey-button" class="${properties.kcFormButtonsClass!}" style="display:none">
                         <input id="authenticateWebAuthnButton" type="button" autofocus="autofocus"
                             value="${kcSanitize(msg("passkey-doAuthenticate"))}"
