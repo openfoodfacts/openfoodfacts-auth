@@ -119,6 +119,7 @@
       </main>
     </div>
     <noscript>JavaScript is required to use the Account Console.</noscript>
+    <!-- OFF specific changes: In code below logUrl uses referrer uri if present -->
     <script id="environment" type="application/json">
       {
         "serverBaseUrl": "${serverBaseUrl}",
@@ -128,9 +129,7 @@
         "clientId": "${clientId}",
         "resourceUrl": "${resourceUrl}",
         "logo": "${properties.logo!""}",
-        // OFF specific changes: Redirect to the referrer uri if present 
         "logoUrl": "${referrer_uri!properties.logoUrl!""}",
-        // End of OFF specific changes: Redirect to the referrer uri if present 
         "baseUrl": "${baseUrl}",
         "locale": "${locale}",
         "referrerName": "${referrerName!""}",
