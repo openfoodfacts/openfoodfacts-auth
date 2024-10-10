@@ -1,3 +1,4 @@
+<#import "field.ftl" as field>
 <#macro userProfileFormFields>
 	<#assign currentGroup="">
 	
@@ -35,55 +36,18 @@
 		</#if>
 
 		<#nested "beforeField" attribute>
-		<div class="${properties.kcFormGroupClass!}" x-data="{
-				values: [{ value: '${(attribute.value!'')}' }],
-				kcMultivalued: ${attribute.html5DataAnnotations?keys?seq_contains('kcMultivalued')?string('true', 'false')}
-			}"
-		>
-			<label for="${attribute.name}" class="${properties.kcLabelClass!}">
-				<span class="pf-v5-c-form__label-text">
-					${advancedMsg(attribute.displayName!'')}
-					<#if attribute.required>
-						<span class="pf-v5-c-form__label-required" aria-hidden="true">&#42;</span>
-					</#if>
-				</span>
-			</label>
-			<template x-for="(item, index) in values">
-			<div :class="kcMultivalued ? 'pf-v5-c-input-group' : ''">
-				<div :class="kcMultivalued ? 'pf-v5-c-input-group__item pf-m-fill' : ''">
-					<span class="${properties.kcInputClass!}" >
-						<#if attribute.annotations.inputHelperTextBefore??>
-							<div class="${properties.kcInputHelperTextBeforeClass!}" id="form-help-text-before-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextBefore))?no_esc}</div>
-						</#if>
-							<@inputFieldByType attribute=attribute/>
-						<#if messagesPerField.existsError('${attribute.name}')>
-							<span id="input-error-${attribute.name}" class="${properties.kcInputErrorMessageClass!}" aria-live="polite">
-								${kcSanitize(messagesPerField.get('${attribute.name}'))?no_esc}
-							</span>
-						</#if>
-						<#if attribute.annotations.inputHelperTextAfter??>
-							<div class="${properties.kcInputHelperTextAfterClass!}" id="form-help-text-after-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextAfter))?no_esc}</div>
-						</#if>
-					</span>
-				</div>
-				<div class="pf-v5-c-input-group__item" x-show="kcMultivalued">
-					<button
-						class="pf-v5-c-button pf-m-control"
-						type="button"
-						:id="$id('add-name-${attribute.name}')"
-						x-bind:disabled="index == 0 && values.length == 1"
-						x-on:click="values.splice(index, 1); $dispatch('bind')"
-					>
-						<svg fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zM124 296c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h264c6.6 0 12 5.4 12 12v56c0 6.6-5.4 12-12 12H124z"></path></svg>
-					</button>
-				</div>
+
+		<@field.group name=attribute.name label=advancedMsg(attribute.displayName!'') error=kcSanitize(messagesPerField.get('${attribute.name}'))?no_esc required=attribute.required>
+			<div class="${properties.kcInputWrapperClass!}">
+				<#if attribute.annotations.inputHelperTextBefore??>
+					<div class="${properties.kcInputHelperTextBeforeClass!}" id="form-help-text-before-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextBefore))?no_esc}</div>
+				</#if>
+				<@inputFieldByType attribute=attribute/>
+				<#if attribute.annotations.inputHelperTextAfter??>
+					<div class="${properties.kcInputHelperTextAfterClass!}" id="form-help-text-after-${attribute.name}" aria-live="polite">${kcSanitize(advancedMsg(attribute.annotations.inputHelperTextAfter))?no_esc}</div>
+				</#if>
 			</div>
-			</template>
-			<button type="button" class="pf-v5-c-button pf-m-link" x-show="kcMultivalued" x-on:click="values.push({ value: '' }); $dispatch('bind')">
-				<svg fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg>
-				Add ${advancedMsg(attribute.displayName!'')}
-			</button>
-		</div>
+		</@field.group>
 		<#nested "afterField" attribute>
 	</#list>
 
@@ -106,28 +70,36 @@
 		<@inputTagSelects attribute=attribute/>
 		<#break>
 	<#default>
-		<@inputTag attribute=attribute/>
+		<#if attribute.multivalued && attribute.values?has_content>
+			<#list attribute.values as value>
+				<@inputTag attribute=attribute value=value!''/>
+			</#list>
+		<#else>
+			<@inputTag attribute=attribute value=attribute.value!''/>
+		</#if>
 	</#switch>
 </#macro>
 
-<#macro inputTag attribute>
-	<input type="<@inputTagType attribute=attribute/>" id="${attribute.name}" name="${attribute.name}" class="${properties.kcInputClass!}"
-		aria-invalid="<#if messagesPerField.existsError('${attribute.name}')>true</#if>"
-		<#if attribute.readOnly>disabled</#if>
-		<#if attribute.autocomplete??>autocomplete="${attribute.autocomplete}"</#if>
-		<#if attribute.annotations.inputTypePlaceholder??>placeholder="${advancedMsg(attribute.annotations.inputTypePlaceholder)}"</#if>
-		<#if attribute.annotations.inputTypePattern??>pattern="${attribute.annotations.inputTypePattern}"</#if>
-		<#if attribute.annotations.inputTypeSize??>size="${attribute.annotations.inputTypeSize}"</#if>
-		<#if attribute.annotations.inputTypeMaxlength??>maxlength="${attribute.annotations.inputTypeMaxlength}"</#if>
-		<#if attribute.annotations.inputTypeMinlength??>minlength="${attribute.annotations.inputTypeMinlength}"</#if>
-		<#if attribute.annotations.inputTypeMax??>max="${attribute.annotations.inputTypeMax}"</#if>
-		<#if attribute.annotations.inputTypeMin??>min="${attribute.annotations.inputTypeMin}"</#if>
-		<#if attribute.annotations.inputTypeStep??>step="${attribute.annotations.inputTypeStep}"</#if>
-		<#if attribute.annotations.inputTypeStep??>step="${attribute.annotations.inputTypeStep}"</#if>
-		<#list attribute.html5DataAnnotations as key, value>
-				data-${key}="${value}"
-		</#list>
-	/>
+<#macro inputTag attribute value>
+	<span class="${properties.kcInputClass} <#if error?has_content>${properties.kcError}</#if>">
+		<input type="<@inputTagType attribute=attribute/>" id="${attribute.name}" name="${attribute.name}" value="${(value!'')}" class="${properties.kcInputClass!}"
+			aria-invalid="<#if messagesPerField.existsError('${attribute.name}')>true</#if>"
+			<#if attribute.readOnly>disabled</#if>
+			<#if attribute.autocomplete??>autocomplete="${attribute.autocomplete}"</#if>
+			<#if attribute.annotations.inputTypePlaceholder??>placeholder="${advancedMsg(attribute.annotations.inputTypePlaceholder)}"</#if>
+			<#if attribute.annotations.inputTypePattern??>pattern="${attribute.annotations.inputTypePattern}"</#if>
+			<#if attribute.annotations.inputTypeSize??>size="${attribute.annotations.inputTypeSize}"</#if>
+			<#if attribute.annotations.inputTypeMaxlength??>maxlength="${attribute.annotations.inputTypeMaxlength}"</#if>
+			<#if attribute.annotations.inputTypeMinlength??>minlength="${attribute.annotations.inputTypeMinlength}"</#if>
+			<#if attribute.annotations.inputTypeMax??>max="${attribute.annotations.inputTypeMax}"</#if>
+			<#if attribute.annotations.inputTypeMin??>min="${attribute.annotations.inputTypeMin}"</#if>
+			<#if attribute.annotations.inputTypeStep??>step="${attribute.annotations.inputTypeStep}"</#if>
+			<#if attribute.annotations.inputTypeStep??>step="${attribute.annotations.inputTypeStep}"</#if>
+			<#list attribute.html5DataAnnotations as key, value>
+					data-${key}="${value}"
+			</#list>
+		/>
+	</span>
 </#macro>
 
 <#macro inputTagType attribute>
@@ -155,24 +127,26 @@
 </#macro>
 
 <#macro selectTag attribute>
-	<select id="${attribute.name}" name="${attribute.name}" class="${properties.kcInputClass!}"
-		aria-invalid="<#if messagesPerField.existsError('${attribute.name}')>true</#if>"
-		<#if attribute.readOnly>disabled</#if>
-		<#if attribute.annotations.inputType=='multiselect'>multiple</#if>
-		<#if attribute.annotations.inputTypeSize??>size="${attribute.annotations.inputTypeSize}"</#if>
-	>
-	<#if attribute.annotations.inputType=='select'>
-		<option value=""></option>
-	</#if>
+	<div class="${properties.kcInputClass!}">
+		<select id="${attribute.name}" name="${attribute.name}"
+			aria-invalid="<#if messagesPerField.existsError('${attribute.name}')>true</#if>"
+			<#if attribute.readOnly>disabled</#if>
+			<#if attribute.annotations.inputType=='multiselect'>multiple</#if>
+			<#if attribute.annotations.inputTypeSize??>size="${attribute.annotations.inputTypeSize}"</#if>
+		>
+			<#if attribute.annotations.inputType=='select'>
+				<option value=""></option>
+			</#if>
 
-	<#if attribute.annotations.inputOptionsFromValidation?? && attribute.validators[attribute.annotations.inputOptionsFromValidation]?? && attribute.validators[attribute.annotations.inputOptionsFromValidation].options??>
-		<#assign options=attribute.validators[attribute.annotations.inputOptionsFromValidation].options>
-	<#elseif attribute.validators.options?? && attribute.validators.options.options??>
-		<#assign options=attribute.validators.options.options>
-	<#else>
-		<#assign options=[]>
-	</#if>
+			<#if attribute.annotations.inputOptionsFromValidation?? && attribute.validators[attribute.annotations.inputOptionsFromValidation]?? && attribute.validators[attribute.annotations.inputOptionsFromValidation].options??>
+				<#assign options=attribute.validators[attribute.annotations.inputOptionsFromValidation].options>
+			<#elseif attribute.validators.options?? && attribute.validators.options.options??>
+				<#assign options=attribute.validators.options.options>
+			<#else>
+				<#assign options=[]>
+			</#if>
 
+	<!-- OFF specific changes: Sort lists by localized field label -->
 	<#assign sortableOptions=[]>
 	<#list options as option>
 		<#assign label = option>
@@ -191,15 +165,28 @@
 	<#list sortableOptions?sort_by("label") as option>
 		<option value="${option.value}" <#if attribute.values?seq_contains(option.value)>selected</#if>>${option.label}</option>
 	</#list>
-	</select>
-	<span class="pf-v5-c-form-control__utilities">
-		<span class="pf-v5-c-form-control__toggle-icon">
-		<svg class="pf-v5-svg" viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" role="img" width="1em" height="1em">
-			<path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-			</path>
-		</svg>
+	<!-- End of OFF specific changes: Sort lists by localized field label -->
+
+		</select>
+		<span class="${properties.kcFormControlUtilClass}">
+			<span class="${properties.kcFormControlToggleIcon!}">
+				<svg
+					class="pf-v5-svg"
+					viewBox="0 0 320 512"
+					fill="currentColor"
+					aria-hidden="true"
+					role="img"
+					width="1em"
+					height="1em"
+				>
+					<path
+						d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+					>
+					</path>
+				</svg>
+			</span>
 		</span>
-	</span>
+	</div>
 </#macro>
 
 <#macro inputTagSelects attribute>

@@ -14,6 +14,32 @@ To see how a user logs in you can navigate to: http://localhost:5600/realms/open
 
 We use Playwright to test the Keycloak user interface and styling. We recommend using the "Playwright Test for VSCode" plugin.
 
+# Applying Keycloak Updates
+
+The Keycloak version to be used is specified in the .env file. However, in addition to updating this there are a number of other steps that need to be completed:
+
+## Refresh Themes
+
+We keep a copy of the Keycloak themes in Git so that we can see what has changed between versions. Run `make refresh_themes` to refresh this copy (stored in the `theme` folder).
+
+## Refresh Overridden Templates
+
+We have overridden a small number of standard Keycloak templates where needed. Make sure you refresh these templates from the original Keycloak ones if they have changed and re-apply our overrides if they are still needed. All templates containing overrides will contain a comment like:
+
+```
+<!-- OFF specific changes: ...
+```
+
+Please try and write a Playwright test to cover any specific overrides, so we know when it is safe to remove them.
+
+## Make sure you have refreshed Playwright
+
+Run `make init` to refresh any Playwright binaries. Note you may need to restart VSCode if you are using the Playwright extension.
+
+## Build
+
+Run `make build` to finally update the container images.
+
 # Major Workstreams
 
 ## First Release

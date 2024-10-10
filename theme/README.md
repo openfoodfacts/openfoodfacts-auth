@@ -8,5 +8,5 @@ Note that the messages in the theme/off/common/messages folder are refreshed aut
 
 Only the messages in the src/messages folder should be translated with Crowdin.
 
-The basic theme templates are used wherever possible, but currently user-profile-commons.ftl is overridden to sort country codes correctly.
+See the root [README](../README.md) for details of specific templates that have been overridden that need to be checked when applying Keycloak updates.
 
