@@ -607,6 +607,35 @@
           ]
         }
       }
+    },
+    {
+      "annotations": {
+        "inputHelperTextAfter": "${unsubscribe_info}",
+        "inputOptionLabels": {
+          "subscribe": "${newsletter_description}"
+        },
+        "inputType": "multiselect-checkboxes"
+      },
+      "displayName": "${please_leave_empty}",
+      "multivalued": false,
+      "name": "newsletter",
+      "permissions": {
+        "edit": [
+          "admin",
+          "user"
+        ],
+        "view": [
+          "admin",
+          "user"
+        ]
+      },
+      "validations": {
+        "options": {
+          "options": [
+            "subscribe"
+          ]
+        }
+      }
     }
   ],
   "groups": [

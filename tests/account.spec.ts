@@ -11,4 +11,6 @@ test("account personal info", async ({ page }) => {
   await cancelButton.hover();
   expect(await matchStyles(cancelButton, SECONDARY_BUTTON_HOVER)).toBeNull();
 
+  // Newsletter field should be hidden on edit
+  await expect(page.getByLabel('^newsletter_description^')).not.toBeVisible();
 });

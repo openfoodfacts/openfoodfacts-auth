@@ -41,3 +41,8 @@ section h1 {
 .pf-v5-c-nav__item.pf-m-expandable:before {
     border-color: var(--off-secondary-action-hover);
 }
+
+/* Hide the subscribe to newsletter option */
+.pf-v5-c-form__group:has(#subscribe) {
+    display: none;
+}

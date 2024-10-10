@@ -15,6 +15,10 @@ test("general layout", async ({ page }) => {
   // Check dropdown icons are being displayed
   await expect(page.locator('.pf-v5-c-form-control__toggle-icon:near(#login-select-toggle)')).toBeVisible();
   await expect(page.locator('.pf-v5-c-form-control__toggle-icon:near(#country)')).toBeVisible();
+
+  // Check each field
+  await page.getByLabel('Subscribe to the newsletter (2 emails per month maximum)').click();
+
 });
 
 test("localization", async ({ page }) => {
