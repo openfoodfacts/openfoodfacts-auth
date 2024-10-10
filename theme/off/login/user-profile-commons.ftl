@@ -111,7 +111,9 @@
 </#macro>
 
 <#macro inputTag attribute>
+	<!-- OFF specific changes: Id should be attribute.name to match the label -->
 	<input type="<@inputTagType attribute=attribute/>" id="${attribute.name}" name="${attribute.name}" class="${properties.kcInputClass!}"
+		<!-- End of OFF specific changes: Id should be attribute.name to match the label -->
 		aria-invalid="<#if messagesPerField.existsError('${attribute.name}')>true</#if>"
 		<#if attribute.readOnly>disabled</#if>
 		<#if attribute.autocomplete??>autocomplete="${attribute.autocomplete}"</#if>
@@ -173,6 +175,7 @@
 		<#assign options=[]>
 	</#if>
 
+	<!-- OFF specific changes: Sort lists by localized field label -->
 	<#assign sortableOptions=[]>
 	<#list options as option>
 		<#assign label = option>
@@ -191,7 +194,11 @@
 	<#list sortableOptions?sort_by("label") as option>
 		<option value="${option.value}" <#if attribute.values?seq_contains(option.value)>selected</#if>>${option.label}</option>
 	</#list>
+	<!-- End of OFF specific changes: Sort lists by localized field label -->
+
 	</select>
+
+	<!-- OFF specific changes: Drop down arrow not showing -->
 	<span class="pf-v5-c-form-control__utilities">
 		<span class="pf-v5-c-form-control__toggle-icon">
 		<svg class="pf-v5-svg" viewBox="0 0 320 512" fill="currentColor" aria-hidden="true" role="img" width="1em" height="1em">
@@ -200,6 +207,8 @@
 		</svg>
 		</span>
 	</span>
+	<!-- End of OFF specific changes: Drop down arrow not showing -->
+
 </#macro>
 
 <#macro inputTagSelects attribute>

@@ -117,7 +117,9 @@
         "clientId": "${clientId}",
         "resourceUrl": "${resourceUrl}",
         "logo": "${properties.logo!""}",
+        // OFF specific changes: Redirect to the referrer uri if present 
         "logoUrl": "${referrer_uri!properties.logoUrl!""}",
+        // End of OFF specific changes: Redirect to the referrer uri if present 
         "baseUrl": "${baseUrl}",
         "locale": "${locale}",
         "referrerName": "${referrerName!""}",
