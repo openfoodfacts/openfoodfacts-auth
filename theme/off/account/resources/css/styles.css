@@ -46,3 +46,8 @@ section h1 {
 .pf-v5-c-form__group:has(#subscribe) {
     display: none;
 }
+
+/* Hide the requested org */
+.pf-v5-c-form__group:has(#requested_org) {
+    display: none;
+}

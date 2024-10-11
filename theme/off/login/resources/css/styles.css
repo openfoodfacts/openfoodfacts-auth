@@ -16,7 +16,7 @@
 .pf-v5-c-login__container {
     margin-top: 65px;
     /* Ensure remains centred on wide screens */
-    max-width: 36rem;
+    max-width: 50rem;
     padding: 0;
     display: block;
 }
@@ -90,7 +90,7 @@
 
 /* Helper text font size */
 .pf-c-form__helper-text {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: var(--off-text);
 }
 

@@ -13,4 +13,5 @@ test("account personal info", async ({ page }) => {
 
   // Newsletter field should be hidden on edit
   await expect(page.getByLabel('^newsletter_description^')).not.toBeVisible();
+  await expect(page.getByLabel('^this_is_a_pro_account^')).not.toBeVisible();
 });
