@@ -72,7 +72,9 @@
 }
 /* Set height except for password visibility toggle buttons */
 .pf-v5-c-button:not(.pf-m-control) {
-    line-height: 2em;
+    text-wrap: wrap;
+    padding: 0.75rem 1rem;
+    line-height: 1rem;
 }
 
 /* Primary buttons */
@@ -131,8 +133,12 @@ a:hover {
 }
 .pf-v5-c-form-control>:is(input,select,textarea) {
     grid-row: initial;
+    width: 100%;
 }
-
+.pf-c-check {
+    font-weight: 700;
+    font-size: 0.875rem;
+}
 /* Ensure drop down arrow floats to right of select input */
 .pf-v5-c-form-control__utilities {
     position: absolute;

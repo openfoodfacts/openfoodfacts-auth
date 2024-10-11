@@ -24,12 +24,12 @@
 /* Position language selector at top of form */
 .pf-v5-c-login__main-header {
     position: relative;
-    padding-top: 5rem;
+    padding-top: 4.5rem;
 }
 .pf-v5-c-login__main-header-utilities {
     position: absolute;
     right: 3em;
-    top: 2em;
+    top: 1.5em;
     grid-column: auto;
     grid-row: auto;
     max-width: calc(100% - 2 * 3em);
@@ -116,6 +116,15 @@
     width: 20px;
     height: 20px;
 }
+
+/* Reduce spacing between fields */
+#kc-register-form {
+    --pf-v5-global--gutter--md: 0.5rem;
+}
+h1#kc-page-title {
+    margin-top: 0;
+}
+
 
 /* Fix input height on forgot password *-
 #kc-reset-password-form .pf-v5-c-form-control {
