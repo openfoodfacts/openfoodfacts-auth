@@ -7,9 +7,11 @@ import org.keycloak.Config;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
+import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderConfigurationBuilder;
@@ -17,7 +19,7 @@ import org.keycloak.provider.ProviderConfigurationBuilder;
 public class RedisEventListenerProviderFactory implements EventListenerProviderFactory {
     private static final Logger log = Logger.getLogger(RedisEventListenerProviderFactory.class);
 
-    private Client client;
+    private RedisClient client;
 
     @Override
     public EventListenerProvider create(final KeycloakSession keycloakSession) {
@@ -30,21 +32,67 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
 
             @Override
             public void onEvent(Event event) {
-                // No-op. All processing is done in the postInit method.
+                if (event == null) {
+                    return;
+                }
+
+                final RealmModel realm = keycloakSession.realms().getRealm(event.getRealmId());
+                if (realm == null) {
+                    log.errorf("Failed to find realm: %s", event.getRealmId());
+                    return;
+                }
+
+                final EventType eventType = event.getType();
+                if (eventType == null) {
+                    log.errorf("Failed to find event type: %s", event.getType());
+                    return;
+                }
+
+                boolean isUserRegistrationEvent = isUserRegistrationEvent(event, realm);
+                if (isUserRegistrationEvent) {
+                    final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
+                    RedisEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                }
             }
 
             @Override
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
                 // No-op. All processing is done in the postInit method.
             }
-            
+
+            private boolean isUserRegistrationEvent(final Event event, final RealmModel realm) {
+                final EventType eventType = event.getType();
+                if (EventType.REGISTER.equals(eventType)) {
+                    if (realm.isVerifyEmail()) {
+                        final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
+                        if (user == null) {
+                            log.errorf("Failed to find user: %s", event.getUserId());
+                            return false;
+                        }
+
+                        if (user.isEmailVerified()) {
+                            // Mail address validation is enabled, but user has already validated it according to API
+                            return true;
+                        }
+                    } else {
+                        // Mail address validation is disabled
+                        return true;
+                    }
+                } else if (EventType.VERIFY_EMAIL.equals(eventType)
+                        && realm.isVerifyEmail()) {
+                    return true;
+                }
+
+                return false;
+            }
+
         };
     }
 
     @Override
     public void init(Config.Scope scope) {
         final String redisUrl = scope.get("redisUrl");
-        this.client = new Client(redisUrl);
+        this.client = new RedisClient(redisUrl);
     }
 
     @Override

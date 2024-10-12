@@ -125,7 +125,8 @@ class Utils {
         };
     }
 
-    public static KeycloakSession createKeycloakSession() {
+    public static KeycloakSession createKeycloakSession(final boolean isVerifyEmail, final boolean isEmailVerified,
+            final String userNewsletterAttribute) {
         return new KeycloakSession() {
 
             @Override
@@ -473,7 +474,7 @@ class Utils {
 
                     @Override
                     public boolean isVerifyEmail() {
-                        throw new UnsupportedOperationException("Unimplemented method 'isVerifyEmail'");
+                        return isVerifyEmail;
                     }
 
                     @Override
@@ -1850,7 +1851,11 @@ class Utils {
 
                                 @Override
                                 public String getFirstAttribute(String name) {
-                                    throw new UnsupportedOperationException("Unimplemented method 'getFirstAttribute'");
+                                    if ("newsletter".equals(name)) {
+                                        return userNewsletterAttribute;
+                                    }
+
+                                    return null;
                                 }
 
                                 @Override
@@ -1913,7 +1918,7 @@ class Utils {
 
                                 @Override
                                 public boolean isEmailVerified() {
-                                    throw new UnsupportedOperationException("Unimplemented method 'isEmailVerified'");
+                                    return isEmailVerified;
                                 }
 
                                 @Override
@@ -2191,6 +2196,16 @@ class Utils {
     }
 
     public static KeycloakSessionFactory createKeycloakSessionFactory() {
+        return createKeycloakSessionFactory(true, false, null);
+    }
+
+    public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail,
+            final boolean isEmailVerified) {
+        return createKeycloakSessionFactory(isVerifyEmail, isEmailVerified, null);
+    }
+
+    public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail,
+            final boolean isEmailVerified, final String userNewsletterAttribute) {
         return new KeycloakSessionFactory() {
             private ProviderEventListener listener;
 
@@ -2220,7 +2235,7 @@ class Utils {
 
             @Override
             public KeycloakSession create() {
-                return createKeycloakSession();
+                return createKeycloakSession(isVerifyEmail, isEmailVerified, userNewsletterAttribute);
             }
 
             @Override
