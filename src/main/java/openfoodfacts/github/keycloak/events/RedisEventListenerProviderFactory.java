@@ -7,9 +7,11 @@ import org.keycloak.Config;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
+import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderConfigurationBuilder;
@@ -30,7 +32,31 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
 
             @Override
             public void onEvent(Event event) {
-                // No-op. All processing is done in the postInit method.
+                if (event == null) {
+                    return;
+                }
+
+                final RealmModel realm = keycloakSession.realms().getRealm(event.getRealmId());
+                if (realm == null) {
+                    log.errorf("Failed to find realm: %s", event.getRealmId());
+                    return;
+                }
+
+                final EventType eventType = event.getType();
+                if (eventType == null) {
+                    log.errorf("Failed to find event type: %s", event.getType());
+                    return;
+                }
+
+                final boolean isUserInitialRegistrationEvent = EventType.REGISTER.equals(eventType)
+                        && !realm.isVerifyEmail();
+                final boolean isUserEmailVerificationEvent = EventType.VERIFY_EMAIL.equals(eventType)
+                        && realm.isVerifyEmail();
+                final boolean isUserRegistrationEvent = isUserInitialRegistrationEvent || isUserEmailVerificationEvent;
+                if (isUserRegistrationEvent) {
+                    final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
+                    RedisEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                }
             }
 
             @Override
