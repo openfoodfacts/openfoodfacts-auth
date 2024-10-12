@@ -17,7 +17,7 @@ import org.keycloak.provider.ProviderConfigurationBuilder;
 public class RedisEventListenerProviderFactory implements EventListenerProviderFactory {
     private static final Logger log = Logger.getLogger(RedisEventListenerProviderFactory.class);
 
-    private Client client;
+    private RedisClient client;
 
     @Override
     public EventListenerProvider create(final KeycloakSession keycloakSession) {
@@ -37,14 +37,14 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
                 // No-op. All processing is done in the postInit method.
             }
-            
+
         };
     }
 
     @Override
     public void init(Config.Scope scope) {
         final String redisUrl = scope.get("redisUrl");
-        this.client = new Client(redisUrl);
+        this.client = new RedisClient(redisUrl);
     }
 
     @Override
