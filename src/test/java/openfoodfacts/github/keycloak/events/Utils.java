@@ -125,7 +125,7 @@ class Utils {
         };
     }
 
-    public static KeycloakSession createKeycloakSession() {
+    public static KeycloakSession createKeycloakSession(final boolean isVerifyEmail) {
         return new KeycloakSession() {
 
             @Override
@@ -473,7 +473,7 @@ class Utils {
 
                     @Override
                     public boolean isVerifyEmail() {
-                        throw new UnsupportedOperationException("Unimplemented method 'isVerifyEmail'");
+                        return isVerifyEmail;
                     }
 
                     @Override
@@ -2191,6 +2191,10 @@ class Utils {
     }
 
     public static KeycloakSessionFactory createKeycloakSessionFactory() {
+        return createKeycloakSessionFactory(true);
+    }
+
+    public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail) {
         return new KeycloakSessionFactory() {
             private ProviderEventListener listener;
 
@@ -2220,7 +2224,7 @@ class Utils {
 
             @Override
             public KeycloakSession create() {
-                return createKeycloakSession();
+                return createKeycloakSession(isVerifyEmail);
             }
 
             @Override
