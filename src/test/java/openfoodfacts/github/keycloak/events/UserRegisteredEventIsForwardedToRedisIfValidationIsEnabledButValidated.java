@@ -21,7 +21,7 @@ import redis.clients.jedis.*;
 
 @Testcontainers
 @DisabledIfEnvironmentVariable(named = "SKIP_INTEGRATION_TESTS", matches = "true")
-public class UserRegisteredEventIsNotForwardedToRedisIfValidationIsEnabledTest {
+public class UserRegisteredEventIsForwardedToRedisIfValidationIsEnabledButValidated {
 
     @Container
     private static RedisContainer container = new RedisContainer(
@@ -34,7 +34,7 @@ public class UserRegisteredEventIsNotForwardedToRedisIfValidationIsEnabledTest {
         openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory factory = new openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory();
         factory.init(Utils.createScope(redisURI));
 
-        KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory(true, false);
+        KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory(true, true);
         KeycloakSession session = sessionFactory.create();
         factory.postInit(sessionFactory);
         EventListenerProvider eventListenerProvider = factory.create(session);
@@ -63,7 +63,17 @@ public class UserRegisteredEventIsNotForwardedToRedisIfValidationIsEnabledTest {
             Map<String, StreamEntryID> streamQuery = new HashMap<>();
             streamQuery.put("user-registered", new StreamEntryID());
             List<Map.Entry<String, List<StreamEntry>>> result = jedis.xread(XReadParams.xReadParams(), streamQuery);
-            Assertions.assertNull(result);
+            Assertions.assertEquals(1, result.size());
+            final Map.Entry<String, List<StreamEntry>> entry = result.get(0);
+            Assertions.assertEquals("user-registered", entry.getKey());
+            final List<StreamEntry> streamEntries = entry.getValue();
+            Assertions.assertEquals(1, streamEntries.size());
+            final StreamEntry streamEntry = streamEntries.get(0);
+            final Map<String, String> fields = streamEntry.getFields();
+            Assertions.assertEquals("theUserId", fields.get("id"));
+            Assertions.assertEquals("someUser@example.org", fields.get("email"));
+            Assertions.assertEquals("theUserName", fields.get("userName"));
+            Assertions.assertEquals("open-products-facts", fields.get("realm"));
         }
     }
 

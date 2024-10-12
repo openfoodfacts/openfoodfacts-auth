@@ -48,11 +48,7 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
                     return;
                 }
 
-                final boolean isUserInitialRegistrationEvent = EventType.REGISTER.equals(eventType)
-                        && !realm.isVerifyEmail();
-                final boolean isUserEmailVerificationEvent = EventType.VERIFY_EMAIL.equals(eventType)
-                        && realm.isVerifyEmail();
-                final boolean isUserRegistrationEvent = isUserInitialRegistrationEvent || isUserEmailVerificationEvent;
+                boolean isUserRegistrationEvent = isUserRegistrationEvent(event, realm);
                 if (isUserRegistrationEvent) {
                     final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
                     RedisEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
@@ -62,6 +58,32 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
             @Override
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
                 // No-op. All processing is done in the postInit method.
+            }
+
+            private boolean isUserRegistrationEvent(final Event event, final RealmModel realm) {
+                final EventType eventType = event.getType();
+                if (EventType.REGISTER.equals(eventType)) {
+                    if (realm.isVerifyEmail()) {
+                        final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
+                        if (user == null) {
+                            log.errorf("Failed to find user: %s", event.getUserId());
+                            return false;
+                        }
+
+                        if (user.isEmailVerified()) {
+                            // Mail address validation is enabled, but user has already validated it according to API
+                            return true;
+                        }
+                    } else {
+                        // Mail address validation is disabled
+                        return true;
+                    }
+                } else if (EventType.VERIFY_EMAIL.equals(eventType)
+                        && realm.isVerifyEmail()) {
+                    return true;
+                }
+
+                return false;
             }
 
         };
