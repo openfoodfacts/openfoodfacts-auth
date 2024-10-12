@@ -1,5 +1,8 @@
 package openfoodfacts.github.keycloak.utils;
 
-public class UserAttributes {
+public final class UserAttributes {
     public static final String NEWSLETTER = "newsletter";
+
+    private UserAttributes() {
+    }
 }
