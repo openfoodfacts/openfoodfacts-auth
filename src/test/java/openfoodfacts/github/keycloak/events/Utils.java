@@ -125,7 +125,8 @@ class Utils {
         };
     }
 
-    public static KeycloakSession createKeycloakSession(final boolean isVerifyEmail, final boolean isEmailVerified) {
+    public static KeycloakSession createKeycloakSession(final boolean isVerifyEmail, final boolean isEmailVerified,
+            final String userNewsletterAttribute) {
         return new KeycloakSession() {
 
             @Override
@@ -1850,7 +1851,11 @@ class Utils {
 
                                 @Override
                                 public String getFirstAttribute(String name) {
-                                    throw new UnsupportedOperationException("Unimplemented method 'getFirstAttribute'");
+                                    if ("newsletter".equals(name)) {
+                                        return userNewsletterAttribute;
+                                    }
+
+                                    return null;
                                 }
 
                                 @Override
@@ -2191,11 +2196,16 @@ class Utils {
     }
 
     public static KeycloakSessionFactory createKeycloakSessionFactory() {
-        return createKeycloakSessionFactory(true, false);
+        return createKeycloakSessionFactory(true, false, null);
     }
 
     public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail,
             final boolean isEmailVerified) {
+        return createKeycloakSessionFactory(isVerifyEmail, isEmailVerified, null);
+    }
+
+    public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail,
+            final boolean isEmailVerified, final String userNewsletterAttribute) {
         return new KeycloakSessionFactory() {
             private ProviderEventListener listener;
 
@@ -2225,7 +2235,7 @@ class Utils {
 
             @Override
             public KeycloakSession create() {
-                return createKeycloakSession(isVerifyEmail, isEmailVerified);
+                return createKeycloakSession(isVerifyEmail, isEmailVerified, userNewsletterAttribute);
             }
 
             @Override

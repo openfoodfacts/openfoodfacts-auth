@@ -7,6 +7,7 @@ import org.jboss.logging.Logger;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 
+import openfoodfacts.github.keycloak.utils.UserAttributes;
 import redis.clients.jedis.JedisPooled;
 import redis.clients.jedis.StreamEntryID;
 
@@ -28,7 +29,10 @@ public class RedisClient implements AutoCloseable {
             throw new IllegalArgumentException("realm");
         }
 
-        postUserEvent("user-registered", user, realm);
+        final String newsletter = user.getFirstAttribute(UserAttributes.NEWSLETTER);
+        final HashMap<String, String> additionalData = new HashMap<>();
+        putIfNotNull(additionalData, "newsletter", newsletter);
+        postUserEvent("user-registered", user, realm, additionalData);
     }
 
     public void postUserDeleted(final UserModel user, final RealmModel realm) {
@@ -40,10 +44,11 @@ public class RedisClient implements AutoCloseable {
             throw new IllegalArgumentException("realm");
         }
 
-        postUserEvent("user-deleted", user, realm);
+        postUserEvent("user-deleted", user, realm, null);
     }
 
-    private void postUserEvent(final String key, final UserModel user, final RealmModel realm) {
+    private void postUserEvent(final String key, final UserModel user, final RealmModel realm,
+            final HashMap<String, String> additionalData) {
         if (key == null) {
             throw new IllegalArgumentException("key");
         }
@@ -61,6 +66,10 @@ public class RedisClient implements AutoCloseable {
         putIfNotNull(data, "email", user.getEmail());
         putIfNotNull(data, "userName", user.getUsername());
         putIfNotNull(data, "realm", realm.getName());
+
+        if (additionalData != null) {
+            data.putAll(additionalData);
+        }
 
         try {
             this.addEntriesToRedisStream(key, data);

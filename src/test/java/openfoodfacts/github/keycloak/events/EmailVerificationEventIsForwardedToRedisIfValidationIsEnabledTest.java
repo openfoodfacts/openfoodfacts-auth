@@ -34,7 +34,7 @@ public class EmailVerificationEventIsForwardedToRedisIfValidationIsEnabledTest {
         openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory factory = new openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory();
         factory.init(Utils.createScope(redisURI));
 
-        KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory(true, false);
+        KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory(true, false, "subscribe");
         KeycloakSession session = sessionFactory.create();
         factory.postInit(sessionFactory);
         EventListenerProvider eventListenerProvider = factory.create(session);
@@ -74,6 +74,7 @@ public class EmailVerificationEventIsForwardedToRedisIfValidationIsEnabledTest {
             Assertions.assertEquals("someUser@example.org", fields.get("email"));
             Assertions.assertEquals("theUserName", fields.get("userName"));
             Assertions.assertEquals("open-products-facts", fields.get("realm"));
+            Assertions.assertEquals("subscribe", fields.get("newsletter"));
         }
     }
 
