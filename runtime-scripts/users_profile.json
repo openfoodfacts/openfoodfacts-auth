@@ -610,7 +610,6 @@
     },
     {
       "annotations": {
-        "inputHelperTextAfter": "${email_warning}",
         "inputHelperTextBefore": "${if_you_work_for_a_producer}"
       },
       "displayName": "${this_is_a_pro_account}",
