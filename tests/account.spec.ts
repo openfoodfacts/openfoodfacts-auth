@@ -1,10 +1,16 @@
 // @ts-check
 import { test, expect } from "@playwright/test";
-import { createAndVerifyUser, matchStyles } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, matchStyles } from "./test-helper";
 import { SECONDARY_BUTTON, SECONDARY_BUTTON_HOVER } from "./expected-styles";
 
 test("account personal info", async ({ page }) => {
-  await createAndVerifyUser(page);
+  // Get the redis client before test so we have the current stream id
+  const redisClient = await createRedisClient('user-registered');
+
+  const userName = await createAndVerifyUser(page);
+
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeTruthy();
 
   const cancelButton = page.getByRole("button", { name: "^cancel^" });
   expect(await matchStyles(cancelButton, SECONDARY_BUTTON)).toBeNull();

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createUser, getLastEmail, gotoHome, matchStyles, registerLink } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, getLastEmail, gotoHome, matchStyles, registerLink } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -43,11 +43,33 @@ test("localization", async ({ page }) => {
 });
 
 test("verification email", async ({ page }) => {
+  const redisClient = await createRedisClient('user-registered');
+
   const userName = await createUser(page);
+
+  // Redis event should not be created before the email has been verified
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeFalsy();
 
   const message = await getLastEmail(userName);
   expect(message.plaintext).toContain('^emailVerificationBody 0=');
   expect(message.html).toContain('^emailVerificationBodyHtml 0');
+});
+
+test("newsletter and producer fields", async ({ page }) => {
+  // Get the redis client before test so we have the current stream id
+  const redisClient = await createRedisClient('user-registered');
+
+  const userName = await createAndVerifyUser(page, true);
+
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeTruthy();
+  expect(myMessage?.message.newsletter).toBe('subscribe');
+  expect(myMessage?.message.requested_org).toBe('carrefour');
+
+  // Newsletter field should be hidden on edit
+  await expect(page.getByLabel('^newsletter_description^')).not.toBeVisible();
+  await expect(page.getByLabel('^this_is_a_pro_account^')).not.toBeVisible();
 });
 
 // TODO: Seem to be some scenarios where the language is not set against the user if they don't set it explicitly

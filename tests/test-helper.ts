@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { createClient } from "redis";
 
 export const gotoHome = async (page: Page) => await page.goto("/realms/open-products-facts/account/#/");
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
@@ -44,7 +45,7 @@ export const matchStyles = async (
     );
   };
  
-export const createUser = async (page: Page) => {
+export const createUser = async (page: Page, allFields = false) => {
   await gotoHome(page);
   await registerLink(page).click();
 
@@ -58,6 +59,11 @@ export const createUser = async (page: Page) => {
   await page.getByLabel('^passwordConfirm^').fill(randomPassword);
   await page.getByLabel('^email^').fill(`${randomUser}@openfoodfacts.org`);
 
+  if (allFields) {
+    await page.getByLabel('^newsletter_description^').click();
+    await page.getByLabel('^this_is_a_pro_account^').fill('carrefour');
+  }
+
   await page.getByRole("button", { name: "^doRegister^" }).click();
 
   // Verify email page will now load
@@ -66,8 +72,8 @@ export const createUser = async (page: Page) => {
   return randomUser;
 }
 
-export const createAndVerifyUser = async(page: Page) => {
-  const userName = await createUser(page);
+export const createAndVerifyUser = async(page: Page, allFields = false) => {
+  const userName = await createUser(page, allFields);
   const message = await getLastEmail(userName);
   const verifyUrl = message.plaintext.split('0=')[1].split(', 2=')[0];
   await page.goto(verifyUrl);
@@ -98,4 +104,18 @@ export const getLastEmail = async(userName: string) => {
   message.plaintext = await (await fetch(`http://localhost:2580/api/Messages/${messageId}/plaintext`)).text();
   message.html = await (await fetch(`http://localhost:2580/api/Messages/${messageId}/html`)).text();
   return message;
+}
+
+export const createRedisClient = async(stream: string) => {
+  const redisClient = createClient();
+  await redisClient.connect();
+  const range = await redisClient.xRevRange(stream, '+', '-', {COUNT: 1});
+  const start = range[0]?.id || '0-0';
+
+  return {
+    getMessageForUser: async(userName: string) => {
+      const newMessages = await redisClient.xRead({key: stream, id: start}, {BLOCK: 1, COUNT: 100});
+      return newMessages?.[0].messages.find((m) => m.message.userName === userName);
+    }
+  };
 }
