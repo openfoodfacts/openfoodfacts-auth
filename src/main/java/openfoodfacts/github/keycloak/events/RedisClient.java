@@ -29,9 +29,14 @@ public class RedisClient implements AutoCloseable {
             throw new IllegalArgumentException("realm");
         }
 
-        final String newsletter = user.getFirstAttribute(UserAttributes.NEWSLETTER);
         final HashMap<String, String> additionalData = new HashMap<>();
+
+        final String newsletter = user.getFirstAttribute(UserAttributes.NEWSLETTER);
         putIfNotNull(additionalData, "newsletter", newsletter);
+
+        final String requestedOrg = user.getFirstAttribute(UserAttributes.REQUESTED_ORG);
+        putIfNotNull(additionalData, "requestedOrg", requestedOrg);
+
         postUserEvent("user-registered", user, realm, additionalData);
     }
 

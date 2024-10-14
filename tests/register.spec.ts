@@ -65,7 +65,7 @@ test("newsletter and producer fields", async ({ page }) => {
   const myMessage = await redisClient.getMessageForUser(userName);
   expect(myMessage).toBeTruthy();
   expect(myMessage?.message.newsletter).toBe('subscribe');
-  expect(myMessage?.message.requested_org).toBe('carrefour');
+  expect(myMessage?.message.requestedOrg).toBe('carrefour');
 
   // Newsletter field should be hidden on edit
   await expect(page.getByLabel('^newsletter_description^')).not.toBeVisible();
