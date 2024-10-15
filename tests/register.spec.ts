@@ -18,7 +18,7 @@ test("general layout", async ({ page }) => {
 
   // Check each field
   await page.getByLabel('Subscribe to the newsletter (2 emails per month maximum)').click();
-  await page.getByLabel('If this is a producer or brand account then please enter the name of the producer or brand').fill('carrefour');
+  await page.getByLabel('Producer or Brand Name (if applicable)').fill('carrefour');
 });
 
 test("localization", async ({ page }) => {
