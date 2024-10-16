@@ -13,3 +13,11 @@ services:
   keycloak_postgres:
     ports:
       - 5601:5432
+
+  # Static web server to host dummy application
+  test_client:
+    image: nginx
+    ports:
+      - 5604:80
+    volumes:
+      - ./tests/client:/usr/share/nginx/html
