@@ -55,6 +55,9 @@ refresh_themes:
 refresh_messages:
 	node build-scripts/refresh_messages.mjs
 
+test_setup:
+	node build-scripts/test_setup.mjs
+
 # Called by other projects to start this project as a dependency
 run: run_deps
 	COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose up -d

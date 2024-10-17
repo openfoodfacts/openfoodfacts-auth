@@ -2,13 +2,16 @@
     (async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
+        const clientId = urlParams.get('clientId');
+        const clientSecret = urlParams.get('clientSecret');
+        const lang = urlParams.get('lang');
         const formData = new FormData();
         formData.append('code', code);
         formData.append('grant_type', 'authorization_code');
-        formData.append('redirect_uri', 'http://localhost:5604/code.html');
+        formData.append('redirect_uri', `http://localhost:5604/code.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}`);
 
         const headers = new Headers();
-        headers.set('Authorization', 'Basic ' + btoa('test-id:8GI9u7uny3oqnqaWITbii5kky6vnqLXn'));
+        headers.set('Authorization', 'Basic ' + btoa(`${clientId}:${clientSecret}`));
 
         const response = await fetch('http://auth.openfoodfacts.localhost:5600/realms/open-products-facts/protocol/openid-connect/token', 
             {   
@@ -21,7 +24,9 @@
         const accessToken = JSON.parse(atob(jwt.access_token.split('.')[1]));
         const logout = Object.assign(document.createElement('button'), {innerText: 'Logout'});
         logout.addEventListener('click', () => { 
-            window.location = `http://auth.openfoodfacts.localhost:5600/realms/open-products-facts/protocol/openid-connect/logout?client_id=${accessToken.azp}&post_logout_redirect_uri=${encodeURIComponent('http://localhost:5604/index.html')}&id_token_hint=${jwt.id_token}`;
+            window.location = `http://auth.openfoodfacts.localhost:5600/realms/open-products-facts/protocol/openid-connect/logout?client_id=${accessToken.azp}&post_logout_redirect_uri=${
+                encodeURIComponent(`http://localhost:5604/index.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}`)
+            }&id_token_hint=${jwt.id_token}`;
         });
         document.body.appendChild(logout);
         const form = document.body.appendChild(document.createElement('form'));
