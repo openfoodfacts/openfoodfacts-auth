@@ -7,7 +7,7 @@ export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name:
 export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?clientId=${
   process.env.TEST_CLIENT_ID
 }&clientSecret=${
-  process.env.TEST_CLIENT_ID
+  process.env.TEST_CLIENT_SECRET
 }&lang=${
   lang
 }`);
@@ -59,22 +59,7 @@ export const createUser = async (page: Page, allFields = false) => {
   // Use dummy locale so we can test general localization
   await selectDummyLocale(page);
 
-  const randomUser = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
-  const randomPassword = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
-  await page.getByLabel('^username^').fill(randomUser);
-  await page.getByRole('textbox', {name:'^password^', exact: true}).fill(randomPassword);
-  await page.getByLabel('^passwordConfirm^').fill(randomPassword);
-  await page.getByLabel('^email^').fill(`${randomUser}@openfoodfacts.org`);
-
-  if (allFields) {
-    await page.getByLabel('^newsletter_description^').click();
-    await page.getByLabel('^this_is_a_pro_account^').fill('carrefour');
-  }
-
-  await page.getByRole("button", { name: "^doRegister^" }).click();
-
-  // Verify email page will now load
-  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
+  const randomUser = await populateRegistrationForm(page, allFields);
 
   return randomUser;
 }
@@ -82,8 +67,7 @@ export const createUser = async (page: Page, allFields = false) => {
 export const createAndVerifyUser = async(page: Page, allFields = false) => {
   const userName = await createUser(page, allFields);
   const message = await getLastEmail(userName);
-  const verifyUrl = message.plaintext.split('0=')[1].split(', 2=')[0];
-  await page.goto(verifyUrl);
+  await clickEmailVerifyLink(page, message);
   await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
   return userName;
 }
@@ -125,4 +109,29 @@ export const createRedisClient = async(stream: string) => {
       return newMessages?.[0].messages.find((m) => m.message.userName === userName);
     }
   };
+}
+
+export async function clickEmailVerifyLink(page: Page, message: any) {
+  const verifyUrl = message.plaintext.split('0=')[1].split(', 2=')[0];
+  await page.goto(verifyUrl);
+}
+
+export async function populateRegistrationForm(page: Page, allFields = false) {
+  const randomUser = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+  const randomPassword = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+  await page.getByLabel('^username^').fill(randomUser);
+  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(randomPassword);
+  await page.getByLabel('^passwordConfirm^').fill(randomPassword);
+  await page.getByLabel('^email^').fill(`${randomUser}@openfoodfacts.org`);
+
+  if (allFields) {
+    await page.getByLabel('^newsletter_description^').click();
+    await page.getByLabel('^this_is_a_pro_account^').fill('carrefour');
+  }
+
+  await page.getByRole("button", { name: "^doRegister^" }).click();
+
+  // Verify email page will now load
+  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
+  return randomUser;
 }

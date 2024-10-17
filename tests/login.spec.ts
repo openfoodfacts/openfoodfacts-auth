@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
 import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { gotoHome, gotoTestPage, matchStyles } from "./test-helper";
+import { clickEmailVerifyLink, createRedisClient, getLastEmail, gotoHome, gotoTestPage, matchStyles, populateRegistrationForm } from "./test-helper";
 
 test("login page", async ({ page }) => {
   await gotoHome(page);
@@ -58,11 +58,33 @@ test("create account link", async ({ page }) => {
 });
 
 test("locale from app is respected", async ({ page }) => {
-  await gotoTestPage(page, 'xx');
+  const redisClient = await createRedisClient('user-registered');
 
+  await gotoTestPage(page, 'xx');
   await page.getByRole("button", { name: "Login" }).click();
 
+  // Login page
   await expect(page).toHaveTitle("^loginTitle 0=Open Products Facts^");
-});
+  await page.getByRole("link", { name: "^doRegister^" }).click();
 
-// TODO: Test that locale passed in URL is respected
+  // Registration page
+  expect(page.getByText('^registerTitle^')).toBeVisible();
+  const userName = await populateRegistrationForm(page);
+
+  // Redis event should not be created before the email has been verified
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeFalsy();
+  
+  const message = await getLastEmail(userName);
+  expect(message.plaintext).toContain('^emailVerificationBody 0=');
+  await clickEmailVerifyLink(page, message);
+
+  await expect(page.getByLabel('preferred_username')).toHaveValue(userName);
+  expect(page.url()).toContain('lang=xx');
+
+  const myMessage2 = await redisClient.getMessageForUser(userName);
+  expect(myMessage2).toBeTruthy();
+
+  await page.getByRole("button", { name: "Account" }).click();
+  await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
+});
