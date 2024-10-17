@@ -75,7 +75,7 @@ module.exports = defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'make up',
+    command: 'make test_server',
     url: process.env.KEYCLOAK_BASE_URL,
     reuseExistingServer: !process.env.CI,
   },

@@ -58,6 +58,8 @@ refresh_messages:
 test_setup:
 	node build-scripts/test_setup.mjs
 
+test_server: test_setup up
+
 # Called by other projects to start this project as a dependency
 run: run_deps
 	COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose up -d

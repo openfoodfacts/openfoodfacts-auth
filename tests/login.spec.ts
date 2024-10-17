@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
 import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { gotoHome, matchStyles } from "./test-helper";
+import { gotoHome, gotoTestPage, matchStyles } from "./test-helper";
 
 test("login page", async ({ page }) => {
   await gotoHome(page);
@@ -55,6 +55,14 @@ test("create account link", async ({ page }) => {
 
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole("heading", { name: "Register" })).toBeVisible();
+});
+
+test("locale from app is respected", async ({ page }) => {
+  await gotoTestPage(page, 'xx');
+
+  await page.getByRole("button", { name: "Login" }).click();
+
+  await expect(page).toHaveTitle("^loginTitle 0=Open Products Facts^");
 });
 
 // TODO: Test that locale passed in URL is respected
