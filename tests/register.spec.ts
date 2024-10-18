@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createAndVerifyUser, createRedisClient, createUser, getLastEmail, gotoHome, matchStyles, registerLink } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getLastEmail, gotoHome, matchStyles, registerLink } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -72,4 +72,54 @@ test("newsletter and producer fields", async ({ page }) => {
   await expect(page.getByLabel('^this_is_a_pro_account^')).not.toBeVisible();
 });
 
-// TODO: Seem to be some scenarios where the language is not set against the user if they don't set it explicitly
+test("user created by API doesn't need email verification", async ({page}) => {
+  const redisClient = await createRedisClient('user-registered');
+
+  // Create a user with email verified
+  const formData = new URLSearchParams();
+  formData.append('grant_type', 'client_credentials');
+  formData.append('client_id', process.env.TEST_CLIENT_ID ?? '');
+  formData.append('client_secret', process.env.TEST_CLIENT_SECRET ?? '');
+
+  const baseUrl = process.env.KEYCLOAK_BASE_URL;
+  const realmName = process.env.KEYCLOAK_REALM_NAME;
+  const tokenUrl = `${baseUrl}/realms/${realmName}/protocol/openid-connect/token`;
+  const userUrl = `${baseUrl}/admin/realms/${realmName}/users`;
+
+  const response = await fetch(tokenUrl, 
+      {   
+          method: 'POST',
+          body: formData,
+      }
+  );
+  const jwt = await response.json();
+  const accessToken = jwt.access_token;
+
+  const {userName, password, email} = generateRandomUser();
+  const user = JSON.stringify({
+    email: email,
+    emailVerified: true,
+    enabled: true,
+    username: userName,
+    credentials: [{
+      type: 'password',
+      temporary: false,
+      value: password,
+    }],
+    attributes: {
+      name: userName,
+      locale: 'xx',
+      country: 'world'
+    }
+  });
+
+  const headers = new Headers();
+  headers.set('Authorization', 'Bearer ' + accessToken);
+  headers.set('Content-Type', 'application/json');
+
+  const createResponse = await fetch(userUrl, {method: 'POST', body: user, headers});
+
+  // Should send registration message immediately
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeTruthy();
+});
