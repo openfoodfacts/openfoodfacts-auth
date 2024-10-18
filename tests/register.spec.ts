@@ -109,7 +109,9 @@ test("user created by API doesn't need email verification", async ({page}) => {
     attributes: {
       name: userName,
       locale: 'xx',
-      country: 'world'
+      country: 'world',
+      newsletter: 'subscribe',
+      requested_org: 'carrefour',
     }
   });
 
@@ -122,4 +124,6 @@ test("user created by API doesn't need email verification", async ({page}) => {
   // Should send registration message immediately
   const myMessage = await redisClient.getMessageForUser(userName);
   expect(myMessage).toBeTruthy();
+  expect(myMessage?.message.newsletter).toBe('subscribe');
+  expect(myMessage?.message.requestedOrg).toBe('carrefour');
 });
