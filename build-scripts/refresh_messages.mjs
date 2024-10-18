@@ -38,6 +38,11 @@ for (const [code, keycloakMessages] of Object.entries(allKeycloakMessages)) {
     if (code === 'en') continue;
     const existingMessageFile = `${offMessagesDir}/messages_${code}.properties`;
     const existingMessages = existsSync(existingMessageFile) ? readFileSync(existingMessageFile, 'utf-8').split('\n') : [];
+
+    // Get rid of any blank line at the end (avoids unnecessary Crowdin diffs)
+    const lastMessage = existingMessages.pop();
+    if (lastMessage) existingMessages.push(lastMessage);
+
     for (const enMessage of enMessages) {
         const messageKey = enMessage.split('=')[0];
         if (!messageKey.length) continue;
@@ -48,6 +53,9 @@ for (const [code, keycloakMessages] of Object.entries(allKeycloakMessages)) {
         // TODO replace ([^'])'([^']) with $1''$2
         if (keycloakTranslation) existingMessages.push(keycloakTranslation);
     }
+    // Add blank line back on end to make Crowdin happy
+    existingMessages.push('');
+
     writeFileSync(existingMessageFile, existingMessages.join('\n'));
 }
 
