@@ -10,6 +10,9 @@ init:
 	npm ci
 	npx playwright install --with-deps
 
+install:
+	mvn install
+	
 build_languages:
 	node build-scripts/build_languages.mjs
 

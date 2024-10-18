@@ -9,6 +9,8 @@ import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
+import org.keycloak.events.admin.OperationType;
+import org.keycloak.events.admin.ResourceType;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.RealmModel;
@@ -57,7 +59,22 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
 
             @Override
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
-                // No-op. All processing is done in the postInit method.
+                if (ResourceType.USER.equals(event.getResourceType()) && OperationType.CREATE.equals(event.getOperationType())) {
+                    final RealmModel realm = keycloakSession.realms().getRealm(event.getRealmId());
+                    if (realm == null) {
+                        log.errorf("Failed to find realm: %s", event.getRealmId());
+                        return;
+                    }
+                    final String userId = event.getResourcePath().split("/")[1];
+                    final UserModel user = keycloakSession.users().getUserById(realm, userId);
+                    if (user == null) {
+                        log.errorf("Failed to find user: %s", userId);
+                        return;
+                    }
+                    if (!realm.isVerifyEmail() || user.isEmailVerified()) {
+                        RedisEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                    }
+                }
             }
 
             private boolean isUserRegistrationEvent(final Event event, final RealmModel realm) {

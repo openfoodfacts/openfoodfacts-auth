@@ -19,9 +19,10 @@ const access_token = (await (await fetch(`${keycloakUrl}/realms/master/protocol/
 
 const headers = new Headers();
 headers.set('Authorization', `Bearer ${access_token}`);
+const adminUrl = `${keycloakUrl}/admin/realms/${realmName}`; 
 
 // See if client exists
-const existingClient = (await (await fetch(`${keycloakUrl}/admin/realms/${realmName}/clients?clientId=${testClientId}`, {headers})).json())[0];
+const existingClient = (await (await fetch(`${adminUrl}/clients?clientId=${testClientId}`, {headers})).json())[0];
 
 const clientRepresentation = JSON.stringify({
   clientId: testClientId,
@@ -32,13 +33,13 @@ const clientRepresentation = JSON.stringify({
   secret: testClientSecret,
   redirectUris: ["http://localhost:5604/*"],
   webOrigins: ["+"],
-//   notBefore: 0,
+  serviceAccountsEnabled: true,
+  //   notBefore: 0,
 //   bearerOnly: false,
 //   consentRequired: false,
 // standardFlowEnabled: true,
 //   implicitFlowEnabled: false,
 //   directAccessGrantsEnabled: true,
-//   serviceAccountsEnabled: false,
 //   publicClient: false,
 //   frontchannelLogout: true,
 //   protocol: "openid-connect",
@@ -87,7 +88,35 @@ const clientRepresentation = JSON.stringify({
 
 headers.set('Content-Type', 'application/json');
 if (existingClient) {
-    await fetch(`${keycloakUrl}/admin/realms/${realmName}/clients/${existingClient.id}`, {method: 'PUT', body: clientRepresentation, headers});
+    await fetch(`${adminUrl}/clients/${existingClient.id}`, {method: 'PUT', body: clientRepresentation, headers});
 } else {
-    await fetch(`${keycloakUrl}/admin/realms/${realmName}/clients`, {method: 'POST', body: clientRepresentation, headers});
+    await fetch(`${adminUrl}/clients`, {method: 'POST', body: clientRepresentation, headers});
 }
+
+// Get the user
+const userUrl = `${adminUrl}/users`;
+const user = (await (await fetch(`${userUrl}?username=service-account-${testClientId}`, {headers})).json())[0];
+console.log(user);
+
+// Get the id of the ream-management client
+const realmManagementClient = (await (await fetch(`${adminUrl}/clients?clientId=realm-management`, {headers})).json())[0];
+console.log(realmManagementClient);
+
+// Get the id of the manage-users role
+const manageUsersRole = (await (await fetch(`${adminUrl}/clients/${realmManagementClient.id}/roles/manage-users`, {headers})).json());
+console.log(manageUsersRole);
+
+// Add the role to the user
+const roleMapping = [manageUsersRole];
+console.log(await fetch(`${adminUrl}/users/${user.id}/role-mappings/clients/${realmManagementClient.id}`, {method: 'POST', body: JSON.stringify(roleMapping), headers}));
+
+
+// user.clientRoles = {
+//     "realm-management": [
+//       "manage-users",
+//       "query-users"
+//     ]
+//   };
+
+// console.log(await (await fetch(`${userUrl}/${user.id}`, {method: 'PUT', body: JSON.stringify(user), headers})).text());
+

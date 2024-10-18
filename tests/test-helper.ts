@@ -117,12 +117,11 @@ export async function clickEmailVerifyLink(page: Page, message: any) {
 }
 
 export async function populateRegistrationForm(page: Page, allFields = false) {
-  const randomUser = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
-  const randomPassword = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
-  await page.getByLabel('^username^').fill(randomUser);
-  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(randomPassword);
-  await page.getByLabel('^passwordConfirm^').fill(randomPassword);
-  await page.getByLabel('^email^').fill(`${randomUser}@openfoodfacts.org`);
+  const {userName, password, email} = generateRandomUser();
+  await page.getByLabel('^username^').fill(userName);
+  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
+  await page.getByLabel('^passwordConfirm^').fill(password);
+  await page.getByLabel('^email^').fill(email);
 
   if (allFields) {
     await page.getByLabel('^newsletter_description^').click();
@@ -133,5 +132,13 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 
   // Verify email page will now load
   await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
-  return randomUser;
+  return userName;
+}
+
+export function generateRandomUser() {
+  const userName = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+  const password = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+  const email = `${userName}@openfoodfacts.org`;
+
+  return {userName, password, email};
 }
