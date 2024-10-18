@@ -12,7 +12,7 @@ init:
 
 install:
 	mvn install
-	
+
 build_languages:
 	node build-scripts/build_languages.mjs
 
@@ -61,7 +61,7 @@ refresh_messages:
 test_setup:
 	node build-scripts/test_setup.mjs
 
-test_server: test_setup up
+test_server: up test_setup
 
 # Called by other projects to start this project as a dependency
 run: run_deps
