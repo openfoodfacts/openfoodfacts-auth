@@ -126,4 +126,6 @@ test("user created by API doesn't need email verification", async ({page}) => {
   expect(myMessage).toBeTruthy();
   expect(myMessage?.message.newsletter).toBe('subscribe');
   expect(myMessage?.message.requestedOrg).toBe('carrefour');
+  expect(myMessage?.message.email).toBe(email);
+  expect(myMessage?.message.userName).toBe(userName);
 });
