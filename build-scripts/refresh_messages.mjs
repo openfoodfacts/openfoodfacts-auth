@@ -129,9 +129,9 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     // Add dummy language to show property names
     sortedLanguageCodes.push('xx');
 
-    const realmSettings = JSON.parse(readFileSync(`${runtimeDir}/realm_settings.json`));
+    const realmSettings = JSON.parse(readFileSync(`${runtimeDir}/realm_settings_template.json`));
     realmSettings.supportedLocales = sortedLanguageCodes;
-    writeFileSync(`${runtimeDir}/realm_settings.json`,stringify(realmSettings, {space: 2}));
+    writeFileSync(`${runtimeDir}/realm_settings_template.json`,stringify(realmSettings, {space: 2}));
 
     writeFileSync(`${themeDir}/theme.properties`,`locales=${sortedLanguageCodes.join(',')}\n`);
     

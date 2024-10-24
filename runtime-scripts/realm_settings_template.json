@@ -1,4 +1,15 @@
 {
+  "smtpServer": {
+    "auth": "",
+    "envelopeFrom": "",
+    "from": "noreply@openfoodfacts.org",
+    "fromDisplayName": "Open Food Facts",
+    "host": "%s",
+    "replyTo": "",
+    "replyToDisplayName": "",
+    "ssl": "false",
+    "starttls": "false"
+  },
   "supportedLocales": [
     "so",
     "om",

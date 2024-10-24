@@ -24,6 +24,9 @@ function wait_for_keycloak() {
 # Docker healthcheck waits for this file to appear and for port to be open
 rm -f /tmp/health
 
+REALM_SETTINGS=$(cat /etc/off/realm_settings_template.json)
+printf "$REALM_SETTINGS" "$SMTP_SERVER" > /etc/off/realm_settings.json
+
 # Waiting for Keycloak to start before proceeding with the configurations.
 wait_for_keycloak
 
@@ -32,8 +35,8 @@ wait_for_keycloak
 echo "Calling configure_keycloak"
 # shellcheck disable=SC2154 # CUSTOM_SCRIPTS_DIR is defined in Dockerfile.
 # Run migrations and things here
-/opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /opt/keycloak/realm_settings.json
-/opt/keycloak/bin/kcadm.sh update users/profile -f /opt/keycloak/users_profile.json -r open-products-facts
+/opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /etc/off/realm_settings.json
+/opt/keycloak/bin/kcadm.sh update users/profile -f /etc/off/users_profile.json -r open-products-facts
 echo "End of configure_keycloak"
 
 echo Healthy > /tmp/health

@@ -28,7 +28,7 @@ COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-
 # Ideally ProductOwner would register itself as a client on first startup and store the secret in some kind of vault
 # The import itself is run during the startup script
 COPY --chown=keycloak:keycloak target/open-products-facts-realm.json /opt/keycloak/data/import/open-products-facts-realm.json
-COPY --chown=keycloak:keycloak runtime-scripts/* /opt/keycloak
+COPY --chown=keycloak:keycloak runtime-scripts/* /etc/off
 
 #RUN chown -R keycloak:root /opt/keycloak
 
@@ -44,5 +44,5 @@ COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 
 HEALTHCHECK --start-period=60s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
 
-ENTRYPOINT [ "sh", "/opt/keycloak/startup.sh" ]
+ENTRYPOINT [ "sh", "/etc/off/startup.sh" ]
 

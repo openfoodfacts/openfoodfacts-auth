@@ -7,8 +7,9 @@ services:
       args:
         - KEYCLOAK_VERSION
     volumes:
-      # Bind mount to theme folder so theme can be edited without rebuilding
+      # Bind mount to themes and runtime-scripts folders so they can be edited without rebuilding
       - ./theme/off:/opt/keycloak/themes/off
+      - ./runtime-scripts:/etc/off
 
   keycloak_postgres:
     ports:
