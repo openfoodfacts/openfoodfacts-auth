@@ -78,7 +78,7 @@ module.exports = defineConfig({
     /* Note we don't use a command here as playwright won't wait for the initialisation scripts to run 
        Need to run make test to ensure everything is up and running */
     url: process.env.KEYCLOAK_BASE_URL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
   },
 });
 
