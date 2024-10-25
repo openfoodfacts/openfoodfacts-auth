@@ -23,14 +23,18 @@ build: build_languages
 
 dev: init run_deps build
 
+# Need a long wait timeout in case full migrations are running
 up: run_deps
-	docker compose up --wait
+	docker compose up --wait --wait-timeout 120
 
 down:
 	docker compose down --remove-orphans
 
-test:
+test: up test_setup
 	npx playwright test
+
+test_setup:
+	node build-scripts/test_setup.mjs
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
@@ -57,11 +61,6 @@ refresh_themes:
 # adds any new languages or countries to the keycloak configuration.
 refresh_messages:
 	node build-scripts/refresh_messages.mjs
-
-test_setup:
-	node build-scripts/test_setup.mjs
-
-test_server: up test_setup
 
 # Called by other projects to start this project as a dependency
 run: run_deps
