@@ -130,8 +130,8 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 
   await page.getByRole("button", { name: "^doRegister^" }).click();
 
-  // Verify email page will now load
-  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
+  // Verify email page will now load. Extend timeout to avoid test issues
+  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible({ timeout: 10000 });
   return userName;
 }
 

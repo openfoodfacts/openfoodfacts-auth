@@ -17,8 +17,6 @@ build_languages:
 	node build-scripts/build_languages.mjs
 
 build: build_languages
-	mkdir -p target
-	set -o allexport; source .env; set +o allexport; envsubst \$$PRODUCT_OPENER_OIDC_CLIENT_ID,\$$PRODUCT_OPENER_DOMAIN,\$$PRODUCT_OPENER_OIDC_CLIENT_SECRET,\$$REDIS_URL < conf/open-products-facts-realm.json > target/open-products-facts-realm.json
 	docker compose build
 
 dev: init run_deps build
@@ -30,10 +28,12 @@ up: run_deps
 down:
 	docker compose down --remove-orphans
 
-test: up test_setup
+test: test_setup
 	npx playwright test
 
-test_setup:
+# Use production mode for tests for faster startup and to test the optimized build
+test_setup: run_deps
+	KEYCLOAK_STARTUP=prod docker compose up --wait --wait-timeout 120
 	node build-scripts/test_setup.mjs
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.

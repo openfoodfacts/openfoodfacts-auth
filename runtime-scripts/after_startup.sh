@@ -57,12 +57,20 @@ wait_for_keycloak
 # Keycloak is running.
 
 echo "Configuring Keycloak"
-# shellcheck disable=SC2154 # CUSTOM_SCRIPTS_DIR is defined in Dockerfile.
-# Run migrations and things here
+
+# Import the realm
+/opt/keycloak/bin/kcadm.sh get realms/open-products-facts &> /dev/null
+if [[ $? != 0 ]]; then
+  /opt/keycloak/bin/kcadm.sh create realms -f /etc/off/open-products-facts-realm.json
+fi
+# Note the realm import won't update an existing realm so the following are done explicitly as they
+# are more likely to change between releases
+
+# Apply latest settings, e.g. SMTP server
 /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /etc/off/interpolated_realm_settings.json
+# Set up user attributes
 /opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /etc/off/users_profile.json
-# Update realm won't update an existing client so create and then update the client explicitly here.
-# Create the client if it doesn't exist
+# Create the ProductOpener client if it doesn't exist
 /opt/keycloak/bin/kcadm.sh get clients/c865387e-1275-47f7-948a-fd1b4b166385 -r open-products-facts &> /dev/null
 if [[ $? != 0 ]]; then
   /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /etc/off/interpolated_productopener_client.json
@@ -71,6 +79,6 @@ fi
 /opt/keycloak/bin/kcadm.sh update clients/c865387e-1275-47f7-948a-fd1b4b166385 -r open-products-facts -f /etc/off/interpolated_productopener_client.json
 # Can't import client role mappings with the user
 /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-productopener --cclientid realm-management --rolename manage-users --rolename query-users
-echo "Keycloak configuration completed"
 
+echo "Keycloak configuration completed"
 echo Healthy > /tmp/health
