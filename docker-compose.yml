@@ -3,13 +3,15 @@ services:
     image: ghcr.io/openfoodfacts/openfoodfacts-auth:${KEYCLOAK_TAG}
 
     environment:
-      - KEYCLOAK_ADMIN
-      - KEYCLOAK_ADMIN_PASSWORD
-      - KEYCLOAK_BASE_URL
-      - KEYCLOAK_REALM_NAME
+      - KC_BOOTSTRAP_ADMIN_USERNAME
+      - KC_BOOTSTRAP_ADMIN_PASSWORD
       - KC_SPI_EVENTS_LISTENER_REDIS_EVENT_LISTENER_REDIS_URL=redis://${REDIS_URL}/0
       - KC_HOSTNAME=${KEYCLOAK_BASE_URL}
       - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
       - SMTP_SERVER=smtp
+      - KC_DB=postgres
+      - KC_DB_URL_HOST
+      - KC_DB_USERNAME
+      - KC_DB_PASSWORD
       - PRODUCT_OPENER_URL
       - PRODUCT_OPENER_OIDC_CLIENT_SECRET

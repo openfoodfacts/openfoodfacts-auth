@@ -1,10 +1,6 @@
 services:
   keycloak:
     environment:
-      - KC_DB=postgres
-      - KC_DB_URL_HOST=keycloak_postgres
-      - KC_DB_USERNAME
-      - KC_DB_PASSWORD
       - KEYCLOAK_STARTUP
     ports:
       - "0.0.0.0:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"

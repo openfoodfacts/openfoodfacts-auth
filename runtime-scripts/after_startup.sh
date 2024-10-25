@@ -3,7 +3,7 @@ function wait_for_keycloak() {
   local config_command
   local wait_time
 
-  config_command="/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD --realm master"
+  config_command="/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --user $KC_BOOTSTRAP_ADMIN_USERNAME --password $KC_BOOTSTRAP_ADMIN_PASSWORD --realm master"
   wait_time=0
 
   # Waiting for the application to return a 200 status code.

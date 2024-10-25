@@ -1,5 +1,5 @@
-const keycloakId = process.env.KEYCLOAK_ADMIN;
-const keycloakPassword = process.env.KEYCLOAK_ADMIN_PASSWORD;
+const keycloakId = process.env.KC_BOOTSTRAP_ADMIN_USERNAME;
+const keycloakPassword = process.env.KC_BOOTSTRAP_ADMIN_PASSWORD;
 const keycloakUrl = process.env.KEYCLOAK_BASE_URL;
 const realmName = process.env.KEYCLOAK_REALM_NAME;
 
