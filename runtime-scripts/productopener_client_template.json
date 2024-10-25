@@ -1,0 +1,99 @@
+{
+  "adminUrl": "%s/",
+  "alwaysDisplayInConsole": true,
+  "attributes": {
+    "backchannel.logout.revoke.offline.tokens": "false",
+    "backchannel.logout.session.required": "true",
+    "client.secret.creation.time": "1698609487",
+    "display.on.consent.screen": "false",
+    "oauth2.device.authorization.grant.enabled": "false",
+    "oidc.ciba.grant.enabled": "false",
+    "post.logout.redirect.uris": "%s/cgi/oidc_signout_callback.pl"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "baseUrl": "%s/",
+  "bearerOnly": false,
+  "clientAuthenticatorType": "client-secret",
+  "clientId": "ProductOpener",
+  "consentRequired": false,
+  "defaultClientScopes": [
+    "web-origins",
+    "acr",
+    "openid",
+    "profile",
+    "roles",
+    "email"
+  ],
+  "description": "Client used by ProductOpener",
+  "directAccessGrantsEnabled": true,
+  "enabled": true,
+  "frontchannelLogout": true,
+  "fullScopeAllowed": true,
+  "id": "c865387e-1275-47f7-948a-fd1b4b166385",
+  "implicitFlowEnabled": false,
+  "name": "ProductOpener",
+  "nodeReRegistrationTimeout": -1,
+  "notBefore": 0,
+  "optionalClientScopes": [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt"
+  ],
+  "protocol": "openid-connect",
+  "protocolMappers": [
+    {
+      "config": {
+        "access.token.claim": "true",
+        "claim.name": "client_id",
+        "id.token.claim": "true",
+        "jsonType.label": "String",
+        "user.session.note": "client_id",
+        "userinfo.token.claim": "true"
+      },
+      "consentRequired": false,
+      "id": "706932c1-de97-4528-abb0-386632953e06",
+      "name": "Client ID",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usersessionmodel-note-mapper"
+    },
+    {
+      "config": {
+        "access.token.claim": "true",
+        "claim.name": "clientAddress",
+        "id.token.claim": "true",
+        "jsonType.label": "String",
+        "user.session.note": "clientAddress",
+        "userinfo.token.claim": "true"
+      },
+      "consentRequired": false,
+      "id": "a762ff13-6c41-4bb9-9314-a918a815815d",
+      "name": "Client IP Address",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usersessionmodel-note-mapper"
+    },
+    {
+      "config": {
+        "access.token.claim": "true",
+        "claim.name": "clientHost",
+        "id.token.claim": "true",
+        "jsonType.label": "String",
+        "user.session.note": "clientHost",
+        "userinfo.token.claim": "true"
+      },
+      "consentRequired": false,
+      "id": "658cf99e-9f09-4294-80f2-6fc2656c2674",
+      "name": "Client Host",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usersessionmodel-note-mapper"
+    }
+  ],
+  "publicClient": false,
+  "redirectUris": ["%s/cgi/oidc_signin_callback.pl"],
+  "rootUrl": "%s/",
+  "secret": "%s",
+  "serviceAccountsEnabled": true,
+  "standardFlowEnabled": true,
+  "surrogateAuthRequired": false,
+  "webOrigins": ["*"]
+}

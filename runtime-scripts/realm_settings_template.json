@@ -1,4 +1,19 @@
 {
+  "roles": {
+    "client": {
+      "ProductOpener": [
+        {
+          "attributes": {
+          },
+          "clientRole": true,
+          "composite": false,
+          "containerId": "c865387e-1275-47f7-948a-fd1b4b166385",
+          "id": "beda95d0-edcf-4387-a431-a642df8b62b8",
+          "name": "uma_protection"
+        }
+      ]
+    }
+  },
   "smtpServer": {
     "auth": "",
     "envelopeFrom": "",
@@ -200,6 +215,27 @@
     "ja",
     "zh",
     "xx"
+  ],
+  "users": [
+    {
+      "createdTimestamp": 1700482310356,
+      "disableableCredentialTypes": [
+      ],
+      "emailVerified": false,
+      "enabled": true,
+      "groups": [
+      ],
+      "id": "c3940479-7649-4562-9890-860d04d1d06e",
+      "notBefore": 0,
+      "realmRoles": [
+        "default-roles-open-products-facts"
+      ],
+      "requiredActions": [
+      ],
+      "serviceAccountClientId": "ProductOpener",
+      "totp": false,
+      "username": "service-account-productopener"
+    }
   ],
   "verifyEmail": true
 }

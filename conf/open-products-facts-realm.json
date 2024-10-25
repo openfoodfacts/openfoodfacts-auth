@@ -312,16 +312,6 @@
         }
       ],
       "security-admin-console": [],
-      "${PRODUCT_OPENER_OIDC_CLIENT_ID}": [
-        {
-          "id": "beda95d0-edcf-4387-a431-a642df8b62b8",
-          "name": "uma_protection",
-          "composite": false,
-          "clientRole": true,
-          "containerId": "c865387e-1275-47f7-948a-fd1b4b166385",
-          "attributes": {}
-        }
-      ],
       "admin-cli": [],
       "account-console": [],
       "broker": [
@@ -475,30 +465,6 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "webAuthnPolicyPasswordlessExtraOrigins": [],
-  "users": [
-    {
-      "id": "c3940479-7649-4562-9890-860d04d1d06e",
-      "createdTimestamp": 1700482310356,
-      "username": "service-account-productopener",
-      "enabled": true,
-      "totp": false,
-      "emailVerified": false,
-      "serviceAccountClientId": "${PRODUCT_OPENER_OIDC_CLIENT_ID}",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": [
-        "default-roles-open-products-facts"
-      ],
-      "clientRoles": {
-        "realm-management": [
-          "manage-users",
-          "query-users"
-        ]
-      },
-      "notBefore": 0,
-      "groups": []
-    }
-  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -519,109 +485,6 @@
     ]
   },
   "clients": [
-    {
-      "id": "c865387e-1275-47f7-948a-fd1b4b166385",
-      "clientId": "${PRODUCT_OPENER_OIDC_CLIENT_ID}",
-      "name": "${PRODUCT_OPENER_OIDC_CLIENT_ID}",
-      "description": "Dummy client for local development",
-      "rootUrl": "http://world.${PRODUCT_OPENER_DOMAIN}/",
-      "adminUrl": "http://world.${PRODUCT_OPENER_DOMAIN}/",
-      "baseUrl": "http://world.${PRODUCT_OPENER_DOMAIN}/",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "alwaysDisplayInConsole": true,
-      "clientAuthenticatorType": "client-secret",
-      "secret": "${PRODUCT_OPENER_OIDC_CLIENT_SECRET}",
-      "redirectUris": [
-        "http://world.${PRODUCT_OPENER_DOMAIN}/cgi/oidc_signin_callback.pl"
-      ],
-      "webOrigins": [
-        "*"
-      ],
-      "notBefore": 0,
-      "bearerOnly": false,
-      "consentRequired": false,
-      "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": true,
-      "serviceAccountsEnabled": true,
-      "publicClient": false,
-      "frontchannelLogout": true,
-      "protocol": "openid-connect",
-      "attributes": {
-        "oidc.ciba.grant.enabled": "false",
-        "client.secret.creation.time": "1698609487",
-        "backchannel.logout.session.required": "true",
-        "post.logout.redirect.uris": "http://world.${PRODUCT_OPENER_DOMAIN}/cgi/oidc_signout_callback.pl",
-        "oauth2.device.authorization.grant.enabled": "false",
-        "display.on.consent.screen": "false",
-        "backchannel.logout.revoke.offline.tokens": "false"
-      },
-      "authenticationFlowBindingOverrides": {},
-      "fullScopeAllowed": true,
-      "nodeReRegistrationTimeout": -1,
-      "protocolMappers": [
-        {
-          "id": "706932c1-de97-4528-abb0-386632953e06",
-          "name": "Client ID",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usersessionmodel-note-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.session.note": "client_id",
-            "userinfo.token.claim": "true",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "client_id",
-            "jsonType.label": "String"
-          }
-        },
-        {
-          "id": "a762ff13-6c41-4bb9-9314-a918a815815d",
-          "name": "Client IP Address",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usersessionmodel-note-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.session.note": "clientAddress",
-            "userinfo.token.claim": "true",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "clientAddress",
-            "jsonType.label": "String"
-          }
-        },
-        {
-          "id": "658cf99e-9f09-4294-80f2-6fc2656c2674",
-          "name": "Client Host",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usersessionmodel-note-mapper",
-          "consentRequired": false,
-          "config": {
-            "user.session.note": "clientHost",
-            "userinfo.token.claim": "true",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "clientHost",
-            "jsonType.label": "String"
-          }
-        }
-      ],
-      "defaultClientScopes": [
-        "web-origins",
-        "acr",
-        "openid",
-        "profile",
-        "roles",
-        "email"
-      ],
-      "optionalClientScopes": [
-        "address",
-        "phone",
-        "offline_access",
-        "microprofile-jwt"
-      ]
-    },
     {
       "id": "5ca80ba2-8030-4f5f-909c-dab3221dc652",
       "clientId": "account",
@@ -1549,17 +1412,6 @@
     "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
-  },
-  "smtpServer": {
-    "replyToDisplayName": "",
-    "starttls": "false",
-    "auth": "",
-    "replyTo": "",
-    "host": "smtp",
-    "from": "open-products-facts@example.org",
-    "fromDisplayName": "Open Products Facts",
-    "envelopeFrom": "",
-    "ssl": "false"
   },
   "loginTheme": "off",
   "accountTheme": "off",
