@@ -8,7 +8,7 @@ First, run `make build` to create the realm.json file with variables substituted
 
 Then use `docker compose up -d --build` to build and run the container.
 
-To see how a user logs in you can navigate to: http://localhost:5600/realms/open-products-facts/account/#/
+To see how a user logs in you can navigate to: http://auth.openfoodfacts.localhost:5600/realms/open-products-facts/account/#/
 
 # Tests
 

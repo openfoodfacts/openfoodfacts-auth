@@ -1,7 +1,8 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { createClient } from "redis";
 
-export const gotoHome = async (page: Page) => await page.goto("/realms/open-products-facts/account/#/");
+const keycloak = `${process.env.KEYCLOAK_BASE_URL}/realms/${process.env.KEYCLOAK_REALM_NAME}`;
+export const gotoHome = async (page: Page) => await page.goto(`${keycloak}/account/#/`);
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
 export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "^doForgotPassword^" });
 export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?clientId=${
@@ -10,7 +11,8 @@ export const gotoTestPage = async (page: Page, lang?: string) => await page.goto
   process.env.TEST_CLIENT_SECRET
 }&lang=${
   lang
-}`);
+}&keycloak=${encodeURIComponent(keycloak)}`);
+const smtp4devApi = `http://localhost:${process.env.SMTP4DEV_PORT}/api/Messages`;
 
 export const matchStyles = async (
     locator: Locator,
@@ -82,18 +84,18 @@ export const selectDummyLocale = async(page: Page) => {
 
 export const deleteEmails = async() => {
   // Delete messages from smtp4dev
-  await fetch('http://localhost:2580/api/Messages/*', {method: 'DELETE'});
+  await fetch(`${smtp4devApi}/*`, {method: 'DELETE'});
 }
 
 export const getLastEmail = async(userName: string) => {
   // Get most recent message
-  const messages = await (await fetch('http://localhost:2580/api/Messages/new')).json();
+  const messages = await (await fetch(`${smtp4devApi}/new`)).json();
   const lastMessage = messages.filter((m) => m.to[0] === `${userName}@openfoodfacts.org`).sort((a, b) => a.receivedDate.localeCompare(b.receivedDate)).pop();
   expect(lastMessage).toBeTruthy();
   const messageId = lastMessage.id;
-  const message = await (await fetch(`http://localhost:2580/api/Messages/${messageId}`)).json();
-  message.plaintext = await (await fetch(`http://localhost:2580/api/Messages/${messageId}/plaintext`)).text();
-  message.html = await (await fetch(`http://localhost:2580/api/Messages/${messageId}/html`)).text();
+  const message = await (await fetch(`${smtp4devApi}/${messageId}`)).json();
+  message.plaintext = await (await fetch(`${smtp4devApi}/${messageId}/plaintext`)).text();
+  message.html = await (await fetch(`${smtp4devApi}/${messageId}/html`)).text();
   return message;
 }
 

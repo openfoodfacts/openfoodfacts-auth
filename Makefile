@@ -28,6 +28,12 @@ up: run_deps
 down:
 	docker compose down --remove-orphans
 
+hdown:
+	docker compose down -v --remove-orphans
+
+create_externals:
+	docker volume create ${COMPOSE_PROJECT_NAME}_pgdata
+
 test: test_setup
 	npx playwright test
 
@@ -74,7 +80,7 @@ ifeq (${DEPS_DIR},)
 endif
 
 # Run dependent projects
-run_deps: clone_deps
+run_deps: create_externals clone_deps
 	@for dep in ${DEPS} ; do \
 		cd ${DEPS_DIR}/$$dep && $(MAKE) run; \
 	done

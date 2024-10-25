@@ -15,3 +15,32 @@ services:
       - KC_DB_PASSWORD
       - PRODUCT_OPENER_URL
       - PRODUCT_OPENER_OIDC_CLIENT_SECRET
+    depends_on:
+      keycloak_postgres:
+        condition: service_started
+    ports:
+      - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
+      - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
+    networks:
+      default:
+      # Needed to access and Redis
+      shared_network:
+
+  keycloak_postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${KC_DB_USERNAME}
+      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_pgdata
+
+networks:
+  # This network allows access to shared services like MongoDB and Redis
+  shared_network:
+    name: ${COMMON_NET_NAME}
+    external: true

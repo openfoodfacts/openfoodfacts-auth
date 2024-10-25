@@ -2,40 +2,16 @@ services:
   keycloak:
     environment:
       - KEYCLOAK_STARTUP
-    ports:
-      - "0.0.0.0:${KEYCLOAK_EXPOSE_PORT:-5600}:8080"
-      - "0.0.0.0:${KEYCLOAK_MANAGEMENT_PORT:-5602}:9000"
     depends_on:
-      keycloak_postgres:
-        condition: service_started
       smtp:
         condition: service_started
-    networks:
-      default:
-      # Needed to access and Redis
-      shared_network:
-
-  keycloak_postgres:
-    image: postgres:16-alpine
-    environment:
-      - POSTGRES_USER=${KC_DB_USERNAME}
-      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
-    volumes:
-      - dbdata:/var/lib/postgresql/data
 
   smtp:
     image: rnwood/smtp4dev:latest
     volumes:
       - smtpdata:/smtp4dev
     ports:
-      - 2580:80
+      - ${KEYCLOAK_EXPOSE}${SMTP4DEV_PORT}:80
 
 volumes:
-  dbdata:
   smtpdata:
-
-networks:
-  # This network allows access to shared services like MongoDB and Redis
-  shared_network:
-    name: ${COMMON_NET_NAME}
-    external: true
