@@ -74,8 +74,11 @@ export const createAndVerifyUser = async(page: Page, allFields = false) => {
   return userName;
 }
 
+// Selecting by label doesn't seem to work in the Github Workflow
+export const getLocaleSelector = (page: Page) => page.locator("#login-select-toggle");
+
 export const selectDummyLocale = async(page: Page) => {
-  const localeSelector = page.getByLabel("languages");
+  const localeSelector = getLocaleSelector(page);
   await localeSelector.click();
   await localeSelector.pressSequentially("xx");
   await localeSelector.press("Tab");

@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
 import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { clickEmailVerifyLink, createRedisClient, getLastEmail, gotoHome, gotoTestPage, matchStyles, populateRegistrationForm } from "./test-helper";
+import { clickEmailVerifyLink, createRedisClient, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, matchStyles, populateRegistrationForm } from "./test-helper";
 
 test("login page", async ({ page }) => {
   await gotoHome(page);
@@ -19,7 +19,7 @@ test("login page", async ({ page }) => {
 test("locale selector supports incremental search", async ({ page }) => {
   await gotoHome(page);
 
-  const localeSelector = page.getByLabel("languages");
+  const localeSelector = page.locator("#login-select-toggle");
   await localeSelector.click();
   await localeSelector.pressSequentially("fr");
   await localeSelector.press("Tab");
@@ -30,7 +30,7 @@ test("locale selector supports incremental search", async ({ page }) => {
 test("locale selector always shows in same language", async ({ page }) => {
   await gotoHome(page);
 
-  const localeSelector = page.getByLabel("languages");
+  const localeSelector = getLocaleSelector(page);
   await localeSelector.click();
   await localeSelector.pressSequentially("fr");
   await localeSelector.press("Tab");

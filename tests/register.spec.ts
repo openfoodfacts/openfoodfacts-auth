@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getLastEmail, gotoHome, matchStyles, registerLink } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getLastEmail, getLocaleSelector, gotoHome, matchStyles, registerLink } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -25,7 +25,7 @@ test("localization", async ({ page }) => {
   await gotoHome(page);
   await registerLink(page).click();
 
-  const localeSelector = page.getByLabel("languages");
+  const localeSelector = getLocaleSelector(page);
   await localeSelector.click();
   await localeSelector.pressSequentially("fr");
   await localeSelector.press("Tab");
