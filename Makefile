@@ -34,6 +34,9 @@ hdown:
 create_externals:
 	docker volume create ${COMPOSE_PROJECT_NAME}_pgdata
 
+remove_externals:
+	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
+
 test: test_setup
 	npx playwright test
 
