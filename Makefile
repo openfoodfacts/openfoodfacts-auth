@@ -40,9 +40,8 @@ remove_externals:
 test: test_setup
 	npx playwright test
 
-# Use production mode for tests for faster startup and to test the optimized build
-test_setup: run_deps
-	KEYCLOAK_STARTUP=prod docker compose up --wait --wait-timeout 120
+# Currently using dev mode for tests as had issues using production mode in Github workflows
+test_setup: up
 	node build-scripts/test_setup.mjs
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
