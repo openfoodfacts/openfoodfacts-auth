@@ -13,3 +13,4 @@ node_modules
 # These are generated at build time by the build_languages script
 /theme/off/common/messages/
 /runtime-scripts/interpolated_*
+/deps/
