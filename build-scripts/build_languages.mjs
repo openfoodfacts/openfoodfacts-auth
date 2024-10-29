@@ -6,6 +6,9 @@ const themeDir = 'theme/off/common';
 const countries = JSON.parse(readFileSync('build-scripts/countries.json'));
 
 const {languages, languageList} = getLanguages();
+// Add dummy language for testing
+languageList.xx = 'xx';
+
 const languageMessages =  '\n# The following are obtained from the OFF languages taxonomy\n' + 
     Object.entries(languageList).map(([key,value]) => `locale_${key}=${value}`).sort().join('\n');
 
