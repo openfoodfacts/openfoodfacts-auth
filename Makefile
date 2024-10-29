@@ -6,9 +6,10 @@ export
 SHELL := /bin/bash
 
 # Initialises Playwright for tests. Note this requires sudo access
+# Not currently using webkit as it fails intermittently
 init:
 	npm ci
-	npx playwright install --with-deps
+	npx playwright install --with-deps chromium firefox
 
 install:
 	mvn install
