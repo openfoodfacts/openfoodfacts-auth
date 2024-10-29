@@ -31,8 +31,6 @@ COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 
 # OFF specific configurations
 COPY --chown=keycloak:keycloak runtime-scripts /etc/off
-# Need to import the realm at startup as otherwise Github workflow tests fail
-COPY --chown=keycloak:keycloak runtime-scripts/open-products-facts-realm.json /opt/keycloak/data/import/open-products-facts-realm.json
 
 # Need quite a long grace period for startup because of running migrations
 HEALTHCHECK --start-period=120s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
