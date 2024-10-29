@@ -142,7 +142,7 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 
 export function generateRandomUser() {
   const userName = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
-  const password = crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+  const password = crypto.getRandomValues(new BigUint64Array(1))[0].toString(16); // Use base 16 to ensure password is long enough
   const email = `${userName}@openfoodfacts.org`;
 
   return {userName, password, email};
