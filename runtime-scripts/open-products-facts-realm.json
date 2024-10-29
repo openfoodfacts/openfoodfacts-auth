@@ -2358,5 +2358,16 @@
   },
   "clientPolicies": {
     "policies": []
+  },
+  "smtpServer": {
+    "auth": "",
+    "envelopeFrom": "",
+    "from": "noreply@openfoodfacts.org",
+    "fromDisplayName": "Open Food Facts",
+    "host": "smtp",
+    "replyTo": "",
+    "replyToDisplayName": "",
+    "ssl": "false",
+    "starttls": "false"
   }
 }
