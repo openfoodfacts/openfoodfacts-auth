@@ -58,13 +58,8 @@ wait_for_keycloak
 
 echo "Configuring Keycloak"
 
-# Import the realm
-/opt/keycloak/bin/kcadm.sh get realms/open-products-facts &> /dev/null
-if [[ $? != 0 ]]; then
-  /opt/keycloak/bin/kcadm.sh create realms -f /etc/off/open-products-facts-realm.json
-fi
-# Note the realm import won't update an existing realm so the following are done explicitly as they
-# are more likely to change between releases
+# Note the realm import done at startup won't update an existing realm so the following 
+# are done explicitly as they are more likely to change between releases
 
 # Apply latest settings, e.g. SMTP server
 /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /etc/off/interpolated_realm_settings.json

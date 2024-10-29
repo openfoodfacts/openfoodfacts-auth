@@ -5,11 +5,11 @@ echo "*** Starting keycloak ***"
 
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     echo "Starting in dev mode"
-    /opt/keycloak/bin/kc.sh start-dev --http-enabled=true --health-enabled=true --metrics-enabled=true
+    /opt/keycloak/bin/kc.sh start-dev --import-realm --http-enabled=true --health-enabled=true --metrics-enabled=true
 else
     echo "Starting in production mode"
     # Note the following options are set in the build in the Dockerfile:
     # --health-enabled=true --metrics-enabled=true
-    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true
+    /opt/keycloak/bin/kc.sh start --optimized --import-realm --http-enabled=true
 fi
 
