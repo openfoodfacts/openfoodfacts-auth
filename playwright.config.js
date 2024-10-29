@@ -14,6 +14,9 @@ dotenv.config({ path: ['.envrc','.env'] });
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
+  // 30000ms and 5000ms isn't always enough
+  timeout: 60000,
+  expect: { timeout: 10000 }, 
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,

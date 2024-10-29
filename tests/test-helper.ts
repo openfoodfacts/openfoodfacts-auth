@@ -49,8 +49,7 @@ export const matchStyles = async (
         document.body.removeChild(testElement);
         return errors.length ? errors.join('; ') : null;
       },
-      properties,
-      {timeout: 5000}
+      properties
     );
   };
  
@@ -136,7 +135,7 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
   await page.getByRole("button", { name: "^doRegister^" }).click();
 
   // Verify email page will now load. Extend timeout to avoid test issues
-  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible({ timeout: 10000 });
+  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
   return userName;
 }
 
