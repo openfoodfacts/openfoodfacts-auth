@@ -3,7 +3,7 @@ include .env
 
 export
 
-SHELL := /bin/bash
+SHELL := $(shell which bash)
 
 # Initialises Playwright for tests. Note this requires sudo access
 # Not currently using webkit as it fails intermittently
