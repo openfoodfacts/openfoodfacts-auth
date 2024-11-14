@@ -48,9 +48,7 @@ test_setup: up
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
 refresh_themes:
-	rm -rf theme/base
-	rm -rf theme/keycloak
-	rm -rf theme/keycloak.v2
+	rm -rf theme/base theme/keycloak theme/keycloak.v2 theme/keycloak.v3
 	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4

@@ -22,11 +22,13 @@ The Keycloak version to be used is specified in the .env file. However, in addit
 
 We keep a copy of the Keycloak themes in Git so that we can see what has changed between versions. Run `make refresh_themes` to refresh this copy (stored in the `theme` folder).
 
+Note: This requires a JRE in `$PATH`.
+
 ## Refresh Overridden Templates
 
 We have overridden a small number of standard Keycloak templates where needed. Make sure you refresh these templates from the original Keycloak ones if they have changed and re-apply our overrides if they are still needed. All templates containing overrides will contain a comment like:
 
-```
+```html
 <!-- OFF specific changes: ...
 ```
 
@@ -56,7 +58,7 @@ Steps to creating a client:
 
 POST /admin/realms/open-products-facts/clients
 
-```
+```json
 {
     "clientId": "{new client}",
     "secret": "{new secret}",
@@ -87,7 +89,7 @@ Assign the role
 
 POST /admin/realms/{realm}/users/{service-account-user-id}/role-mappings/clients/{realm-management-id}
 
-```
+```json
 [{
     "id": "{Id from previous get}",
     "name": "manage-users"
@@ -116,7 +118,7 @@ It looks like the CSS classes are very specific and so I suspect these could cha
 
 Currently the common.css file has to be copied between theme pages (account, login, etc.). Tried using a symlink but this didn't work.
 
-### Localizaiton
+### Localization
 
 We will need to ensure that all of the current OFF locales are covered with suitable translations.
 
@@ -129,7 +131,7 @@ All of the user editable fields need to be available on the account UI with any 
 
 Pick lists can be localized using this kind of structure:
 
-```
+```json
     {
       "name": "country",
       "displayName": "${country}",
