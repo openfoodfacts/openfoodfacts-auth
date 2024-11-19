@@ -1,10 +1,26 @@
 services:
   keycloak:
     environment:
-      - KEYCLOAK_STARTUP
+      - KC_DB=postgres
+      - KC_DB_URL_HOST
+      - KC_DB_USERNAME
+      - KC_DB_PASSWORD
     depends_on:
       smtp:
         condition: service_started
+      keycloak_postgres:
+        condition: service_started
+    networks:
+      # Needed to access Redis
+      shared_network:
+
+  keycloak_postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${KC_DB_USERNAME}
+      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   smtp:
     image: rnwood/smtp4dev:latest
@@ -15,3 +31,12 @@ services:
 
 volumes:
   smtpdata:
+  pgdata:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_pgdata
+
+networks:
+  # This network allows access to shared services like MongoDB and Redis
+  shared_network:
+    name: ${COMMON_NET_NAME}
+    external: true

@@ -3,44 +3,18 @@ services:
     image: ghcr.io/openfoodfacts/openfoodfacts-auth:${KEYCLOAK_TAG}
 
     environment:
+      - KEYCLOAK_STARTUP
       - KC_BOOTSTRAP_ADMIN_USERNAME
       - KC_BOOTSTRAP_ADMIN_PASSWORD
       - KC_SPI_EVENTS_LISTENER_REDIS_EVENT_LISTENER_REDIS_URL=redis://${REDIS_URL}/0
       - KC_HOSTNAME=${KEYCLOAK_BASE_URL}
       - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
-      - SMTP_SERVER=smtp
-      - KC_DB=postgres
-      - KC_DB_URL_HOST
-      - KC_DB_USERNAME
-      - KC_DB_PASSWORD
+      - SMTP_SERVER
       - PRODUCT_OPENER_URL
       - PRODUCT_OPENER_OIDC_CLIENT_SECRET
-    depends_on:
-      keycloak_postgres:
-        condition: service_started
     ports:
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
     networks:
       default:
-      # Needed to access and Redis
-      shared_network:
 
-  keycloak_postgres:
-    image: postgres:16-alpine
-    environment:
-      - POSTGRES_USER=${KC_DB_USERNAME}
-      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:
-    external: true
-    name: ${COMPOSE_PROJECT_NAME}_pgdata
-
-networks:
-  # This network allows access to shared services like MongoDB and Redis
-  shared_network:
-    name: ${COMMON_NET_NAME}
-    external: true

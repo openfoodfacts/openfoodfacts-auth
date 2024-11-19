@@ -26,6 +26,10 @@ dev: init run_deps build
 up: run_deps
 	docker compose up --wait --wait-timeout 120
 
+# Minimal container used by other projects for integration tests. Make target here is just to test it can start
+integration_test_target:
+	COMPOSE_FILE=docker-compose.yml KEYCLOAK_STARTUP=test KEYCLOAK_TAG=dev docker compose up --wait --wait-timeout 120
+
 down:
 	docker compose down --remove-orphans
 
