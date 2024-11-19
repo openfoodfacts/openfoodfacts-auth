@@ -12,9 +12,6 @@ services:
       - SMTP_SERVER
       - PRODUCT_OPENER_URL
       - PRODUCT_OPENER_OIDC_CLIENT_SECRET
-    ports:
-      - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
-      - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
     networks:
       default:
 
