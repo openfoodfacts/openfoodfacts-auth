@@ -20,10 +20,19 @@ services:
   keycloak_postgres:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_USER=${KC_DB_USERNAME}
-      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
+      # PostgreSQL will also create a database with this name
+      - POSTGRES_USER=${PG_ADMIN_USERNAME}
+      - POSTGRES_PASSWORD=${PG_ADMIN_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_ADMIN_USERNAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      # Needed so create_user script can connect
+      shared_network:
 
   smtp:
     image: rnwood/smtp4dev:latest

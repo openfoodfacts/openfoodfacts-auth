@@ -23,7 +23,7 @@ build: build_languages
 dev: init run_deps build
 
 # Need a long wait timeout in case full migrations are running
-up: run_deps
+up: run_deps create_user
 	docker compose up --wait --wait-timeout 120
 
 # Minimal container used by other projects for integration tests. Make target here is just to test it can start
@@ -72,6 +72,17 @@ refresh_themes:
 # adds any new languages or countries to the keycloak configuration.
 refresh_messages:
 	node build-scripts/refresh_messages.mjs
+
+# Creates the bootstrap user in PostgreSQL, which is then used to create other users
+create_bootstrap: run_deps
+	docker compose up keycloak_postgres --wait
+	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
+	  -c "PGPASSWORD=${PG_ADMIN_PASSWORD} psql -h ${KC_DB_URL_HOST} -U ${PG_ADMIN_USERNAME} -c \"create role ${PG_BOOTSTRAP_USERNAME} with password '${PG_BOOTSTRAP_PASSWORD}' login createdb createrole\" || true "
+
+create_user: create_bootstrap
+	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
+	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
+	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
 
 # Called by other projects to start this project as a dependency
 run: run_deps
