@@ -12,7 +12,7 @@ elif [[ "$KEYCLOAK_STARTUP" == "prod" ]]; then
     /opt/keycloak/bin/kc.sh start --http-enabled=true --health-enabled=true --metrics-enabled=true
 else
     echo "*** Starting keycloak in test mode ***"
-    # Use pre-optimiszd image with dev-file database for integration tests from other projects (like Product Opener)
+    # Use pre-optimized image with dev-mem database for integration tests from other projects (like Product Opener)
     # for faster startup and minimal dependencies.
     /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true
 fi
