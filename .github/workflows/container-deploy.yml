@@ -54,6 +54,7 @@ jobs:
     - name: Checkout git repository
       uses: appleboy/ssh-action@master
       with:
+        debug: true
         host: ${{ env.SSH_HOST }}
         username: ${{ env.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
