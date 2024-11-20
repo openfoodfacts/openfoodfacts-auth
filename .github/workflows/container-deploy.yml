@@ -25,13 +25,13 @@ jobs:
         echo "SSH_PROXY_HOST=off1.openfoodfacts.org" >> $GITHUB_ENV
         echo "SSH_USERNAME=off" >> $GITHUB_ENV
         echo "SSH_PROXY_USERNAME=off" >> $GITHUB_ENV
-        echo "SSH_HOST=pmg.openfoodfacts.org" >> $GITHUB_ENV
+        echo "SSH_HOST=10.1.0.104" >> $GITHUB_ENV
 
         echo "KEYCLOAK_BASE_URL=https://auth.openfoodfacts.org" >> $GITHUB_ENV
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
         echo "PRODUCT_OPENER_URL=https://world.openfoodfacts.org" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
-        echo "SMTP_SERVER=10.1.0.102" >> $GITHUB_ENV
+        echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
 
     - name: Wait for container build workflow
       uses: tomchv/wait-my-workflow@v1.1.0
