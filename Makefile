@@ -36,6 +36,9 @@ down:
 hdown:
 	docker compose down -v --remove-orphans
 
+prune:
+	docker system prune -af
+
 create_externals:
 	docker volume create ${COMPOSE_PROJECT_NAME}_pgdata
 
@@ -83,6 +86,13 @@ create_user: create_bootstrap
 	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
 	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
 	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
+
+# Create user / database in production PostgreSQL instance
+create_user_prod:
+	@docker run --rm --entrypoint bin/bash postgres:16-alpine \
+	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
+	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
+
 
 # Called by other projects to start this project as a dependency
 run: run_deps
