@@ -139,7 +139,7 @@ jobs:
         script_stop: false
         script: |
             cd ${{ matrix.env }}
-            docker compose up --wait --wait-timeout 120
+            docker compose up --wait --wait-timeout 300
 
     - name: Cleanup obsolete Docker objects
       uses: appleboy/ssh-action@master
