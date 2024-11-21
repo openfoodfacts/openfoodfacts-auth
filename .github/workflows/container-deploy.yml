@@ -54,7 +54,6 @@ jobs:
     - name: Checkout git repository
       uses: appleboy/ssh-action@master
       with:
-        debug: true
         host: ${{ env.SSH_HOST }}
         username: ${{ env.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -97,7 +96,7 @@ jobs:
           echo "COMPOSE_PROJECT_NAME=openfoodfacts-auth" >> .env
           echo "COMPOSE_PATH_SEPARATOR=," >> .env
           echo "COMPOSE_FILE=docker-compose.yml,docker/prod.yml" >> .env
-          echo "COMPOSE_FILE=PG_BOOTSTRAP_USERNAME=bootstrap" >> .env
+          echo "PG_BOOTSTRAP_USERNAME=bootstrap" >> .env
           echo "PG_BOOTSTRAP_PASSWORD=${{ secrets.PG_BOOTSTRAP_PASSWORD }}" >> .env
           echo "KC_DB_URL_HOST=${{ env.KC_DB_URL_HOST }}" >> .env
           echo "KC_DB_USERNAME=keycloak" >> .env
