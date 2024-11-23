@@ -57,6 +57,7 @@ import org.keycloak.provider.ProviderEvent;
 import org.keycloak.provider.ProviderEventListener;
 import org.keycloak.provider.ProviderFactory;
 import org.keycloak.provider.Spi;
+import org.keycloak.representations.idm.RealmRepresentation.BruteForceStrategy;
 import org.keycloak.services.clientpolicy.ClientPolicyManager;
 import org.keycloak.sessions.AuthenticationSessionProvider;
 import org.keycloak.vault.VaultTranscriber;
@@ -1607,6 +1608,16 @@ class Utils {
                     public Stream<RequiredActionConfigModel> getRequiredActionConfigsStream() {
                         throw new UnsupportedOperationException(
                                 "Unimplemented method 'getRequiredActionConfigsStream'");
+                    }
+
+                    @Override
+                    public BruteForceStrategy getBruteForceStrategy() {
+                        throw new UnsupportedOperationException("Unimplemented method 'getBruteForceStrategy'");
+                    }
+
+                    @Override
+                    public void setBruteForceStrategy(BruteForceStrategy arg0) {
+                        throw new UnsupportedOperationException("Unimplemented method 'setBruteForceStrategy'");
                     }
 
                 };

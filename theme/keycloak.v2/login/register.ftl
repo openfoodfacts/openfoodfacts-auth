@@ -17,8 +17,8 @@
                 <#if callback = "afterField">
                 <#-- render password fields just under the username or email (if used as username) -->
                     <#if passwordRequired?? && (attribute.name == 'username' || (attribute.name == 'email' && realm.registrationEmailAsUsername))>
-                        <@field.password name="password" label=msg("password") autocomplete="new-password" />
-                        <@field.password name="password-confirm" label=msg("passwordConfirm") autocomplete="new-password" />
+                        <@field.password name="password" required=true label=msg("password") autocomplete="new-password" />
+                        <@field.password name="password-confirm" required=true label=msg("passwordConfirm") autocomplete="new-password" />
                     </#if>
                 </#if>
             </@userProfileCommons.userProfileFormFields>
@@ -63,8 +63,6 @@
         <script type="module">
             import { validatePassword } from "${url.resourcesPath}/js/password-policy.js";
 
-            const template = document.querySelector("#errorTemplate").content.cloneNode(true);
-
             const activePolicies = [
                 { name: "length", policy: { value: ${passwordPolicies.length!-1}, error: "${msg('invalidPasswordMinLengthMessage')}"} },
                 { name: "maxLength", policy: { value: ${passwordPolicies.maxLength!-1}, error: "${msg('invalidPasswordMaxLengthMessage')}"} },
@@ -79,6 +77,9 @@
                 if (serverErrors) {
                     serverErrors.remove();
                 }
+
+                const template = document.querySelector("#errorTemplate").content.cloneNode(true);
+
                 const errors = validatePassword(event.target.value, activePolicies);
                 const errorList = template.querySelector("ul");
                 const htmlErrors = errors.forEach((e) => {
@@ -87,7 +88,7 @@
                     li.textContent = e;
                     errorList.appendChild(li);
                 });
-                document.getElementById("input-error-client-password").appendChild(template);
+                document.getElementById("input-error-client-password").replaceChildren(template);
             });
         </script>
     </#if>

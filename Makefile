@@ -3,7 +3,7 @@ include .env
 
 export
 
-SHELL := /bin/bash
+SHELL := $(shell which bash)
 
 # Initialises Playwright for tests. Note this requires sudo access
 # Not currently using webkit as it fails intermittently
@@ -23,14 +23,21 @@ build: build_languages
 dev: init run_deps build
 
 # Need a long wait timeout in case full migrations are running
-up: run_deps
+up: run_deps create_user
 	docker compose up --wait --wait-timeout 120
+
+# Minimal container used by other projects for integration tests. Make target here is just to test it can start
+integration_test_target:
+	COMPOSE_FILE=docker-compose.yml KEYCLOAK_STARTUP=test KEYCLOAK_TAG=dev docker compose up --wait --wait-timeout 120
 
 down:
 	docker compose down --remove-orphans
 
 hdown:
 	docker compose down -v --remove-orphans
+
+prune:
+	docker system prune -af
 
 create_externals:
 	docker volume create ${COMPOSE_PROJECT_NAME}_pgdata
@@ -48,9 +55,7 @@ test_setup: up
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
 refresh_themes:
-	rm -rf theme/base
-	rm -rf theme/keycloak
-	rm -rf theme/keycloak.v2
+	rm -rf theme/base theme/keycloak theme/keycloak.v2 theme/keycloak.v3
 	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4
@@ -70,6 +75,24 @@ refresh_themes:
 # adds any new languages or countries to the keycloak configuration.
 refresh_messages:
 	node build-scripts/refresh_messages.mjs
+
+# Creates the bootstrap user in PostgreSQL, which is then used to create other users
+create_bootstrap: run_deps
+	docker compose up keycloak_postgres --wait
+	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
+	  -c "PGPASSWORD=${PG_ADMIN_PASSWORD} psql -h ${KC_DB_URL_HOST} -U ${PG_ADMIN_USERNAME} -c \"create role ${PG_BOOTSTRAP_USERNAME} with password '${PG_BOOTSTRAP_PASSWORD}' login createdb createrole\" || true "
+
+create_user: create_bootstrap
+	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
+	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
+	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
+
+# Create user / database in production PostgreSQL instance
+create_user_prod:
+	@docker run --rm --entrypoint bin/bash postgres:16-alpine \
+	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
+	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
+
 
 # Called by other projects to start this project as a dependency
 run: run_deps
