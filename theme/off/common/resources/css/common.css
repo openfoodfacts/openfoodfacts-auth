@@ -44,22 +44,24 @@
 }
 
 /* Dark mode */
-:root .dark {
-    --off-background: var(--black);
-    --off-text: var(--white);
-    --off-other-background: var(--cortado);
+@media (prefers-color-scheme: dark) {
+    :root {
+        --off-background: var(--black);
+        --off-text: var(--white);
+        --off-other-background: var(--cortado);
 
-    --off-primary-action: var(--white);
-    /* --off-primary-action-hover: #622000; /* TBA */
-    --off-primary-button-text: var(--black);
+        --off-primary-action: var(--white);
+        /* --off-primary-action-hover: #622000; /* TBA */
+        --off-primary-button-text: var(--black);
 
-    --off-secondary-action: var(--macchiato);
-    /* --off-secondary-action-hover :#cfac9e; /* TBA */
-    --off-secondary-button-text: var(--white);
+        --off-secondary-action: var(--macchiato);
+        /* --off-secondary-action-hover :#cfac9e; /* TBA */
+        --off-secondary-button-text: var(--white);
 
-    --off-input-background: var(--macchiato);
+        --off-input-background: var(--macchiato);
 
-    --off-notification-background: var(--cappuccino);
+        --off-notification-background: var(--cappuccino);
+    }
 }
 
 /* Tried overriding the Patternfly variables but it gets too confusing */
