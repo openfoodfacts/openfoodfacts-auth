@@ -5,6 +5,7 @@ services:
       - KC_DB_URL_HOST
       - KC_DB_USERNAME
       - KC_DB_PASSWORD
+      - KC_PROXY_HEADERS=xforwarded
     ports:
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
