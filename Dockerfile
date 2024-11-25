@@ -33,6 +33,6 @@ COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 COPY --chown=keycloak:keycloak runtime-scripts /etc/off
 
 # Need quite a long grace period for startup because of running migrations
-HEALTHCHECK --start-period=120s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
+HEALTHCHECK --start-period=300s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
 
 ENTRYPOINT [ "sh", "/etc/off/startup.sh" ]
