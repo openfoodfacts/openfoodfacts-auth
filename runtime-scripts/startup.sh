@@ -9,7 +9,7 @@ if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
 elif [[ "$KEYCLOAK_STARTUP" == "prod" ]]; then
     echo "*** Starting keycloak in production mode ***"
     # Note can't use optimized as we use that for test containers and it doesn't include postgres
-    /opt/keycloak/bin/kc.sh start --http-enabled=true --health-enabled=true --metrics-enabled=true
+    /opt/keycloak/bin/kc.sh start --http-enabled=true --health-enabled=true --metrics-enabled=true --proxy-headers xforwarded
 else
     echo "*** Starting keycloak in test mode ***"
     # Use pre-optimized image with dev-mem database for integration tests from other projects (like Product Opener)
