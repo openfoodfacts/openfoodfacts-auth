@@ -1,11 +1,14 @@
 package openfoodfacts.github.keycloak.events;
 
+import java.nio.ByteBuffer;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
+import org.keycloak.models.utils.Base32;
 
 import openfoodfacts.github.keycloak.utils.UserAttributes;
 import redis.clients.jedis.JedisPooled;
@@ -71,6 +74,7 @@ public class RedisClient implements AutoCloseable {
         putIfNotNull(data, "email", user.getEmail());
         putIfNotNull(data, "userName", user.getUsername());
         putIfNotNull(data, "realm", realm.getName());
+        putIfNotNull(data, "newUserName", generateRandomAnonymousUserName());
 
         if (additionalData != null) {
             data.putAll(additionalData);
@@ -105,6 +109,21 @@ public class RedisClient implements AutoCloseable {
         if (value != null) {
             data.put(key, value);
         }
+    }
+
+    private static String generateRandomAnonymousUserName() {
+        long currentTimeMillis = System.currentTimeMillis() / 1000; // time in seconds
+        int randomNum = new SecureRandom().nextInt(65536); // random number
+
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES + Integer.BYTES);
+        buffer.putLong(currentTimeMillis);
+        buffer.putInt(randomNum);
+        byte[] packedData = buffer.array();
+
+        String encodedString = Base32.encode(packedData).toLowerCase();
+        String newUserId = "anonymous-" + encodedString;
+
+        return newUserId;
     }
 
 }
