@@ -22,6 +22,7 @@ public class DeletedUserEntityTest {
         entity.setEmail(email);
         entity.setCreatedTimestamp(createdTimestamp);
         entity.setDeletedTimestamp(deletedTimestamp);
+        entity.generateAnonymousUsername();
 
         // Assert
         Assertions.assertEquals(id, entity.getId());
@@ -30,6 +31,8 @@ public class DeletedUserEntityTest {
         Assertions.assertEquals(email, entity.getEmail());
         Assertions.assertEquals(createdTimestamp, entity.getCreatedTimestamp());
         Assertions.assertEquals(deletedTimestamp, entity.getDeletedTimestamp());
+        Assertions.assertEquals(entity.getAnonymousUsername().toLowerCase(), entity.getAnonymousUsername());
+        Assertions.assertTrue(entity.getAnonymousUsername().startsWith("anonymous-"));
     }
 
     @Test

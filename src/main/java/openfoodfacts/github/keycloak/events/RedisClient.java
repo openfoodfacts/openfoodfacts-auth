@@ -1,15 +1,17 @@
 package openfoodfacts.github.keycloak.events;
 
-import java.nio.ByteBuffer;
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.jboss.logging.Logger;
+import org.keycloak.common.util.Time;
+import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
-import org.keycloak.models.utils.Base32;
+import org.keycloak.models.UserModel.UserRemovedEvent;
 
+import openfoodfacts.github.keycloak.jpa.DeletedUserEntity;
 import openfoodfacts.github.keycloak.utils.UserAttributes;
 import redis.clients.jedis.JedisPooled;
 import redis.clients.jedis.StreamEntryID;
@@ -43,20 +45,28 @@ public class RedisClient implements AutoCloseable {
         postUserEvent("user-registered", user, realm, additionalData);
     }
 
-    public void postUserDeleted(final UserModel user, final RealmModel realm) {
-        if (user == null) {
-            throw new IllegalArgumentException("user");
-        }
+    public void postUserDeleted(final UserRemovedEvent userRemovedEvent) {
+        final DeletedUserEntity entity = new DeletedUserEntity();
+        final UserModel user = userRemovedEvent.getUser();
+        final RealmModel realm = userRemovedEvent.getRealm();
 
-        if (realm == null) {
-            throw new IllegalArgumentException("realm");
-        }
+        entity.setId(UUID.randomUUID().toString());
+        entity.setUserId(user.getId());
+        entity.setUsername(user.getUsername());
+        entity.setEmail(user.getEmail());
+        entity.setCreatedTimestamp(user.getCreatedTimestamp());
+        entity.setDeletedTimestamp(Time.currentTimeMillis());
+        entity.generateAnonymousUsername();
+        userRemovedEvent.getKeycloakSession()
+                .getProvider(JpaConnectionProvider.class)
+                .getEntityManager()
+                .persist(entity);
 
-        postUserEvent("user-deleted", user, realm, null);
+        postUserEvent("user-deleted", user, realm, Map.of("newUserName", entity.getAnonymousUsername()));
     }
 
     private void postUserEvent(final String key, final UserModel user, final RealmModel realm,
-            final HashMap<String, String> additionalData) {
+            final Map<String, String> additionalData) {
         if (key == null) {
             throw new IllegalArgumentException("key");
         }
@@ -74,7 +84,6 @@ public class RedisClient implements AutoCloseable {
         putIfNotNull(data, "email", user.getEmail());
         putIfNotNull(data, "userName", user.getUsername());
         putIfNotNull(data, "realm", realm.getName());
-        putIfNotNull(data, "newUserName", generateRandomAnonymousUserName());
 
         if (additionalData != null) {
             data.putAll(additionalData);
@@ -110,20 +119,4 @@ public class RedisClient implements AutoCloseable {
             data.put(key, value);
         }
     }
-
-    private static String generateRandomAnonymousUserName() {
-        long currentTimeMillis = System.currentTimeMillis() / 1000; // time in seconds
-        int randomNum = new SecureRandom().nextInt(65536); // random number
-
-        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES + Integer.BYTES);
-        buffer.putLong(currentTimeMillis);
-        buffer.putInt(randomNum);
-        byte[] packedData = buffer.array();
-
-        String encodedString = Base32.encode(packedData).toLowerCase();
-        String newUserId = "anonymous-" + encodedString;
-
-        return newUserId;
-    }
-
 }

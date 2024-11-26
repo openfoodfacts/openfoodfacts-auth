@@ -74,6 +74,8 @@ public class CorrectProviderEventIsForwardedToRedisTest {
             Assertions.assertEquals("someUser@example.org", fields.get("email"));
             Assertions.assertEquals("theUserName", fields.get("userName"));
             Assertions.assertEquals("open-products-facts", fields.get("realm"));
+            var newUserName = fields.get("newUserName");
+            Assertions.assertTrue(newUserName.startsWith("anonymous-"));
         }
     }
 }

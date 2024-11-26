@@ -21,4 +21,9 @@
     </createTable>
     <addPrimaryKey columnNames="ID" constraintName="PK_DELETED_USER_ID" tableName="DELETED_USER"/>
   </changeSet>
+  <changeSet "Open Food Facts" id="openfoodfacts-auth-0.2-a">>
+    <addColumn tableName="DELETED_USER">
+      <column name="ANONYMOUS_USERNAME" type="NVARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -8,7 +8,9 @@ import java.util.stream.Stream;
 
 import org.keycloak.Config.Scope;
 import org.keycloak.common.enums.SslRequired;
+import org.keycloak.common.util.Time;
 import org.keycloak.component.ComponentModel;
+import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.models.AuthenticationExecutionModel;
 import org.keycloak.models.AuthenticationFlowModel;
 import org.keycloak.models.AuthenticatorConfigModel;
@@ -61,6 +63,21 @@ import org.keycloak.representations.idm.RealmRepresentation.BruteForceStrategy;
 import org.keycloak.services.clientpolicy.ClientPolicyManager;
 import org.keycloak.sessions.AuthenticationSessionProvider;
 import org.keycloak.vault.VaultTranscriber;
+
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.FlushModeType;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.Query;
+import jakarta.persistence.StoredProcedureQuery;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaUpdate;
+import jakarta.persistence.metamodel.Metamodel;
 
 class Utils {
     public static Scope createScope(final String redisURI) {
@@ -140,9 +157,278 @@ class Utils {
                 throw new UnsupportedOperationException("Unimplemented method 'getTransactionManager'");
             }
 
+            @SuppressWarnings("unchecked")
             @Override
-            public <T extends Provider> T getProvider(Class<T> clazz) {
-                throw new UnsupportedOperationException("Unimplemented method 'getProvider'");
+            public <PT extends Provider> PT getProvider(Class<PT> clazz) {
+                return (PT) new JpaConnectionProvider() {
+                    @Override
+                    public void close() {
+                        throw new UnsupportedOperationException("Unimplemented method 'close'");
+                    }
+
+                    @Override
+                    public EntityManager getEntityManager() {
+                        return new EntityManager() {
+
+                            @Override
+                            public void persist(Object entity) {
+                            }
+
+                            @Override
+                            public <T> T merge(T entity) {
+                                throw new UnsupportedOperationException("Unimplemented method 'merge'");
+                            }
+
+                            @Override
+                            public void remove(Object entity) {
+                                throw new UnsupportedOperationException("Unimplemented method 'remove'");
+                            }
+
+                            @Override
+                            public <T> T find(Class<T> entityClass, Object primaryKey) {
+                                throw new UnsupportedOperationException("Unimplemented method 'find'");
+                            }
+
+                            @Override
+                            public <T> T find(Class<T> entityClass, Object primaryKey, Map<String, Object> properties) {
+                                throw new UnsupportedOperationException("Unimplemented method 'find'");
+                            }
+
+                            @Override
+                            public <T> T find(Class<T> entityClass, Object primaryKey, LockModeType lockMode) {
+                                throw new UnsupportedOperationException("Unimplemented method 'find'");
+                            }
+
+                            @Override
+                            public <T> T find(Class<T> entityClass, Object primaryKey, LockModeType lockMode,
+                                    Map<String, Object> properties) {
+                                throw new UnsupportedOperationException("Unimplemented method 'find'");
+                            }
+
+                            @Override
+                            public <T> T getReference(Class<T> entityClass, Object primaryKey) {
+                                throw new UnsupportedOperationException("Unimplemented method 'getReference'");
+                            }
+
+                            @Override
+                            public void flush() {
+                                throw new UnsupportedOperationException("Unimplemented method 'flush'");
+                            }
+
+                            @Override
+                            public void setFlushMode(FlushModeType flushMode) {
+                                throw new UnsupportedOperationException("Unimplemented method 'setFlushMode'");
+                            }
+
+                            @Override
+                            public FlushModeType getFlushMode() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getFlushMode'");
+                            }
+
+                            @Override
+                            public void lock(Object entity, LockModeType lockMode) {
+                                throw new UnsupportedOperationException("Unimplemented method 'lock'");
+                            }
+
+                            @Override
+                            public void lock(Object entity, LockModeType lockMode, Map<String, Object> properties) {
+                                throw new UnsupportedOperationException("Unimplemented method 'lock'");
+                            }
+
+                            @Override
+                            public void refresh(Object entity) {
+                                throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+                            }
+
+                            @Override
+                            public void refresh(Object entity, Map<String, Object> properties) {
+                                throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+                            }
+
+                            @Override
+                            public void refresh(Object entity, LockModeType lockMode) {
+                                throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+                            }
+
+                            @Override
+                            public void refresh(Object entity, LockModeType lockMode, Map<String, Object> properties) {
+                                throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+                            }
+
+                            @Override
+                            public void clear() {
+                                throw new UnsupportedOperationException("Unimplemented method 'clear'");
+                            }
+
+                            @Override
+                            public void detach(Object entity) {
+                                throw new UnsupportedOperationException("Unimplemented method 'detach'");
+                            }
+
+                            @Override
+                            public boolean contains(Object entity) {
+                                throw new UnsupportedOperationException("Unimplemented method 'contains'");
+                            }
+
+                            @Override
+                            public LockModeType getLockMode(Object entity) {
+                                throw new UnsupportedOperationException("Unimplemented method 'getLockMode'");
+                            }
+
+                            @Override
+                            public void setProperty(String propertyName, Object value) {
+                                throw new UnsupportedOperationException("Unimplemented method 'setProperty'");
+                            }
+
+                            @Override
+                            public Map<String, Object> getProperties() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getProperties'");
+                            }
+
+                            @Override
+                            public Query createQuery(String qlString) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public <T> TypedQuery<T> createQuery(CriteriaQuery<T> criteriaQuery) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public Query createQuery(CriteriaUpdate updateQuery) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public Query createQuery(CriteriaDelete deleteQuery) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public <T> TypedQuery<T> createQuery(String qlString, Class<T> resultClass) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public Query createNamedQuery(String name) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createNamedQuery'");
+                            }
+
+                            @Override
+                            public <T> TypedQuery<T> createNamedQuery(String name, Class<T> resultClass) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createNamedQuery'");
+                            }
+
+                            @Override
+                            public Query createNativeQuery(String sqlString) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createNativeQuery'");
+                            }
+
+                            @Override
+                            public Query createNativeQuery(String sqlString, Class resultClass) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createNativeQuery'");
+                            }
+
+                            @Override
+                            public Query createNativeQuery(String sqlString, String resultSetMapping) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createNativeQuery'");
+                            }
+
+                            @Override
+                            public StoredProcedureQuery createNamedStoredProcedureQuery(String name) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createNamedStoredProcedureQuery'");
+                            }
+
+                            @Override
+                            public StoredProcedureQuery createStoredProcedureQuery(String procedureName) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createStoredProcedureQuery'");
+                            }
+
+                            @Override
+                            public StoredProcedureQuery createStoredProcedureQuery(String procedureName,
+                                    Class... resultClasses) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createStoredProcedureQuery'");
+                            }
+
+                            @Override
+                            public StoredProcedureQuery createStoredProcedureQuery(String procedureName,
+                                    String... resultSetMappings) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createStoredProcedureQuery'");
+                            }
+
+                            @Override
+                            public void joinTransaction() {
+                                throw new UnsupportedOperationException("Unimplemented method 'joinTransaction'");
+                            }
+
+                            @Override
+                            public boolean isJoinedToTransaction() {
+                                throw new UnsupportedOperationException("Unimplemented method 'isJoinedToTransaction'");
+                            }
+
+                            @Override
+                            public <T> T unwrap(Class<T> cls) {
+                                throw new UnsupportedOperationException("Unimplemented method 'unwrap'");
+                            }
+
+                            @Override
+                            public Object getDelegate() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getDelegate'");
+                            }
+
+                            @Override
+                            public void close() {
+                                throw new UnsupportedOperationException("Unimplemented method 'close'");
+                            }
+
+                            @Override
+                            public boolean isOpen() {
+                                throw new UnsupportedOperationException("Unimplemented method 'isOpen'");
+                            }
+
+                            @Override
+                            public EntityTransaction getTransaction() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getTransaction'");
+                            }
+
+                            @Override
+                            public EntityManagerFactory getEntityManagerFactory() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getEntityManagerFactory'");
+                            }
+
+                            @Override
+                            public CriteriaBuilder getCriteriaBuilder() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getCriteriaBuilder'");
+                            }
+
+                            @Override
+                            public Metamodel getMetamodel() {
+                                throw new UnsupportedOperationException("Unimplemented method 'getMetamodel'");
+                            }
+
+                            @Override
+                            public <T> EntityGraph<T> createEntityGraph(Class<T> rootType) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createEntityGraph'");
+                            }
+
+                            @Override
+                            public EntityGraph<?> createEntityGraph(String graphName) {
+                                throw new UnsupportedOperationException("Unimplemented method 'createEntityGraph'");
+                            }
+
+                            @Override
+                            public EntityGraph<?> getEntityGraph(String graphName) {
+                                throw new UnsupportedOperationException("Unimplemented method 'getEntityGraph'");
+                            }
+
+                            @Override
+                            public <T> List<EntityGraph<? super T>> getEntityGraphs(Class<T> entityClass) {
+                                throw new UnsupportedOperationException("Unimplemented method 'getEntityGraphs'");
+                            }
+                        };
+                    }
+                };
             }
 
             @Override
@@ -1824,8 +2110,7 @@ class Utils {
 
                                 @Override
                                 public Long getCreatedTimestamp() {
-                                    throw new UnsupportedOperationException(
-                                            "Unimplemented method 'getCreatedTimestamp'");
+                                    return Time.currentTimeMillis();
                                 }
 
                                 @Override

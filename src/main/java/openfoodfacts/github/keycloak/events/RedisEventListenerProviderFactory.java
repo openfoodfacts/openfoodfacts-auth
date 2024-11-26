@@ -119,7 +119,7 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
                     log.debugf("New %s Event", event.getClass().getName());
 
                     if (event instanceof UserModel.UserRemovedEvent userRemovedEvent) {
-                        this.client.postUserDeleted(userRemovedEvent.getUser(), userRemovedEvent.getRealm());
+                        this.client.postUserDeleted(userRemovedEvent);
                     }
                 });
     }

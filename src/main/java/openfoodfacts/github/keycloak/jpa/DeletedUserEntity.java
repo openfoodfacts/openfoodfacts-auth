@@ -2,6 +2,11 @@ package openfoodfacts.github.keycloak.jpa;
 
 import jakarta.persistence.*;
 
+import java.nio.ByteBuffer;
+import java.security.SecureRandom;
+
+import org.keycloak.models.utils.Base32;
+
 @Entity
 @Table(name = "DELETED_USER")
 public class DeletedUserEntity {
@@ -24,6 +29,9 @@ public class DeletedUserEntity {
 
     @Column(name = "DELETED_TIMESTAMP")
     private Long deletedTimestamp;
+
+    @Column(name = "ANONYMOUS_USERNAME")
+    private String anonymousUsername;
 
     public String getId() {
         return id;
@@ -73,6 +81,27 @@ public class DeletedUserEntity {
         this.deletedTimestamp = deletedTimestamp;
     }
 
+    public String getAnonymousUsername() {
+        return anonymousUsername;
+    }
+
+    public void setAnonymousUsername(String anonymousUsername) {
+        this.anonymousUsername = anonymousUsername;
+    }
+
+    public void generateAnonymousUsername() {
+        long currentTimeMillis = System.currentTimeMillis() / 1000; // time in seconds
+        int randomNum = new SecureRandom().nextInt(65536); // random number
+
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+        buffer.putLong(currentTimeMillis * 65536 + randomNum);
+        byte[] packedData = buffer.array();
+
+        String encodedString = Base32.encode(packedData).toLowerCase();
+
+        this.anonymousUsername = "anonymous-" + encodedString;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -92,5 +121,4 @@ public class DeletedUserEntity {
     public int hashCode() {
         return id.hashCode();
     }
-
 }
