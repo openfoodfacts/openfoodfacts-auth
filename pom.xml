@@ -5,7 +5,7 @@
 
   <groupId>openfoodfacts.github.keycloak</groupId>
   <artifactId>keycloak-extensions</artifactId>
-  <version>${revision}${sha1}${changelist}</version>
+  <version>${env.KEYCLOAK_VERSION}${sha1}${changelist}</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -23,7 +23,7 @@
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
 
-    <keycloak.version>${revision}</keycloak.version>
+    <keycloak.version>${env.KEYCLOAK_VERSION}</keycloak.version>
     <junit.version>5.11.3</junit.version>
   </properties>
 
