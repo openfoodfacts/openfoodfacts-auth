@@ -427,7 +427,7 @@
   "requiredCredentials": [
     "password"
   ],
-  "passwordPolicy": "passwordHistory(2) and notUsername(undefined) and notEmail(undefined) and length(12)",
+  "passwordPolicy": "length(6)",
   "otpPolicyType": "totp",
   "otpPolicyAlgorithm": "HmacSHA512",
   "otpPolicyInitialCounter": 0,

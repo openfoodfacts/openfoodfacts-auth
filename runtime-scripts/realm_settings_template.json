@@ -3,6 +3,7 @@
     "jboss-logging",
     "redis-event-listener"
   ],
+  "passwordPolicy": "length(6)",
   "roles": {
     "client": {
       "ProductOpener": [
