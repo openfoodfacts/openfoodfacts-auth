@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getLastEmail, getLocaleSelector, gotoHome, matchStyles, registerLink } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getLastEmail, getLocaleSelector, gotoHome, matchStyles, registerLink, selectDummyLocale } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -128,4 +128,24 @@ test("user created by API doesn't need email verification", async ({page}) => {
   expect(myMessage?.message.requestedOrg).toBe('carrefour');
   expect(myMessage?.message.email).toBe(email);
   expect(myMessage?.message.userName).toBe(userName);
+});
+
+test("six character password accepted", async ({ page }) => {
+  await gotoHome(page);
+  await registerLink(page).click();
+
+  // Use dummy locale so we can test general localization
+  await selectDummyLocale(page);
+
+  const {userName, email} = generateRandomUser();
+  const password = 'aaaaaa';
+  await page.getByLabel('^username^').fill(userName);
+  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
+  await page.getByLabel('^passwordConfirm^').fill(password);
+  await page.getByLabel('^email^').fill(email);
+
+  await page.getByRole("button", { name: "^doRegister^" }).click();
+
+  // Verify email page will now load. Extend timeout to avoid test issues
+  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
 });
