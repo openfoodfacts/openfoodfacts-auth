@@ -29,7 +29,7 @@ public class IncorrectProviderEventIsNotForwardedToRedisTest {
     void testIncorrectProviderEventEventIsNotForwarded() {
         // Arrange
         String redisURI = container.getRedisURI();
-        openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory factory = new openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory();
+        openfoodfacts.github.keycloak.events.OpenFoodFactsEventListenerProviderFactory factory = new openfoodfacts.github.keycloak.events.OpenFoodFactsEventListenerProviderFactory();
         factory.init(Utils.createScope(redisURI));
 
         KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory();

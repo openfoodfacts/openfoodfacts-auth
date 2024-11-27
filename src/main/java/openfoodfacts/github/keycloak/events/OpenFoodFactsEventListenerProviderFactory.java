@@ -18,8 +18,10 @@ import org.keycloak.models.UserModel;
 import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderConfigurationBuilder;
 
-public class RedisEventListenerProviderFactory implements EventListenerProviderFactory {
-    private static final Logger log = Logger.getLogger(RedisEventListenerProviderFactory.class);
+import openfoodfacts.github.keycloak.jpa.DeletedUserEntity;
+
+public class OpenFoodFactsEventListenerProviderFactory implements EventListenerProviderFactory {
+    private static final Logger log = Logger.getLogger(OpenFoodFactsEventListenerProviderFactory.class);
 
     private RedisClient client;
 
@@ -53,7 +55,7 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
                 boolean isUserRegistrationEvent = isUserRegistrationEvent(event, realm);
                 if (isUserRegistrationEvent) {
                     final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
-                    RedisEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                    OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
                 }
             }
 
@@ -72,7 +74,7 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
                         return;
                     }
                     if (!realm.isVerifyEmail() || user.isEmailVerified()) {
-                        RedisEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
                     }
                 }
             }
@@ -119,7 +121,9 @@ public class RedisEventListenerProviderFactory implements EventListenerProviderF
                     log.debugf("New %s Event", event.getClass().getName());
 
                     if (event instanceof UserModel.UserRemovedEvent userRemovedEvent) {
-                        this.client.postUserDeleted(userRemovedEvent);
+                        final UserModel user = userRemovedEvent.getUser();
+                        String anonymousUsername = DeletedUserEntity.logDeletedUser(userRemovedEvent.getKeycloakSession(), user);
+                        this.client.postUserDeleted(user, userRemovedEvent.getRealm(), anonymousUsername);
                     }
                 });
     }

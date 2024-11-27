@@ -2,16 +2,11 @@ package openfoodfacts.github.keycloak.events;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.jboss.logging.Logger;
-import org.keycloak.common.util.Time;
-import org.keycloak.connections.jpa.JpaConnectionProvider;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
-import org.keycloak.models.UserModel.UserRemovedEvent;
 
-import openfoodfacts.github.keycloak.jpa.DeletedUserEntity;
 import openfoodfacts.github.keycloak.utils.UserAttributes;
 import redis.clients.jedis.JedisPooled;
 import redis.clients.jedis.StreamEntryID;
@@ -45,24 +40,16 @@ public class RedisClient implements AutoCloseable {
         postUserEvent("user-registered", user, realm, additionalData);
     }
 
-    public void postUserDeleted(final UserRemovedEvent userRemovedEvent) {
-        final DeletedUserEntity entity = new DeletedUserEntity();
-        final UserModel user = userRemovedEvent.getUser();
-        final RealmModel realm = userRemovedEvent.getRealm();
+    public void postUserDeleted(final UserModel user, final RealmModel realm, final String anonymousUsername) {
+        if (user == null) {
+            throw new IllegalArgumentException("user");
+        }
 
-        entity.setId(UUID.randomUUID().toString());
-        entity.setUserId(user.getId());
-        entity.setUsername(user.getUsername());
-        entity.setEmail(user.getEmail());
-        entity.setCreatedTimestamp(user.getCreatedTimestamp());
-        entity.setDeletedTimestamp(Time.currentTimeMillis());
-        entity.generateAnonymousUsername();
-        userRemovedEvent.getKeycloakSession()
-                .getProvider(JpaConnectionProvider.class)
-                .getEntityManager()
-                .persist(entity);
+        if (realm == null) {
+            throw new IllegalArgumentException("realm");
+        }
 
-        postUserEvent("user-deleted", user, realm, Map.of("newUserName", entity.getAnonymousUsername()));
+        postUserEvent("user-deleted", user, realm, Map.of("newUserName", anonymousUsername));
     }
 
     private void postUserEvent(final String key, final UserModel user, final RealmModel realm,
