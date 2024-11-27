@@ -1,4 +1,8 @@
 {
+  "eventsListeners": [
+    "jboss-logging",
+    "redis-event-listener"
+  ],
   "roles": {
     "client": {
       "ProductOpener": [

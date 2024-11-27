@@ -5,7 +5,7 @@ sh /etc/off/after_startup.sh &
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     echo "*** Starting keycloak in development mode ***"
     # In dev mode we still use the PostgreSQL database but use start-dev so that themes are dynamically reloaded
-    /opt/keycloak/bin/kc.sh start-dev --http-enabled=true --health-enabled=true --metrics-enabled=true
+    /opt/keycloak/bin/kc.sh start-dev --http-enabled=true --health-enabled=true --metrics-enabled=true --verbose
 elif [[ "$KEYCLOAK_STARTUP" == "prod" ]]; then
     echo "*** Starting keycloak in production mode ***"
     # Note can't use optimized as we use that for test containers and it doesn't include postgres
