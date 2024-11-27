@@ -149,3 +149,23 @@ test("six character password accepted", async ({ page }) => {
   // Verify email page will now load. Extend timeout to avoid test issues
   await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
 });
+
+test("five character password not accepted", async ({ page }) => {
+  await gotoHome(page);
+  await registerLink(page).click();
+
+  // Use dummy locale so we can test general localization
+  await selectDummyLocale(page);
+
+  const {userName, email} = generateRandomUser();
+  const password = '12345';
+  await page.getByLabel('^username^').fill(userName);
+  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
+  await page.getByLabel('^passwordConfirm^').fill(password);
+  await page.getByLabel('^email^').fill(email);
+
+  await page.getByRole("button", { name: "^doRegister^" }).click();
+
+  // Verify email page will now load. Extend timeout to avoid test issues
+  await expect(page.getByText('^invalidPasswordMinLengthMessage 0=6^')).toBeVisible();
+});
