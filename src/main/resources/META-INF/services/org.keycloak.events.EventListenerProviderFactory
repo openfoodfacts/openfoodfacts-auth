@@ -1,1 +1,1 @@
-openfoodfacts.github.keycloak.events.RedisEventListenerProviderFactory
+openfoodfacts.github.keycloak.events.OpenFoodFactsEventListenerProviderFactory
