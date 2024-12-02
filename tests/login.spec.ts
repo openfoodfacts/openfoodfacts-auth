@@ -69,7 +69,7 @@ test("locale from app is respected", async ({ page }) => {
 
   // Registration page
   expect(page.getByText('^registerTitle^')).toBeVisible();
-  const userName = await populateRegistrationForm(page);
+  const {userName} = await populateRegistrationForm(page);
 
   // Redis event should not be created before the email has been verified
   const myMessage = await redisClient.getMessageForUser(userName);

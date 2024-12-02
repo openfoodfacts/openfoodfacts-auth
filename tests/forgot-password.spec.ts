@@ -11,7 +11,7 @@ test("general layout", async ({ page }) => {
 });
 
 test("email", async ({ page }) => {
-  const userName = await createAndVerifyUser(page);
+  const {userName} = await createAndVerifyUser(page);
 
   // Log out
   await page.getByTestId('options-toggle').click();

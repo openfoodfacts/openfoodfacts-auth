@@ -60,17 +60,17 @@ export const createUser = async (page: Page, allFields = false) => {
   // Use dummy locale so we can test general localization
   await selectDummyLocale(page);
 
-  const randomUser = await populateRegistrationForm(page, allFields);
+  const {userName, password, email} = await populateRegistrationForm(page, allFields);
 
-  return randomUser;
+  return {userName, password, email};
 }
 
 export const createAndVerifyUser = async(page: Page, allFields = false) => {
-  const userName = await createUser(page, allFields);
+  const {userName, password, email} = await createUser(page, allFields);
   const message = await getLastEmail(userName);
   await clickEmailVerifyLink(page, message);
   await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
-  return userName;
+  return {userName, password, email};
 }
 
 // Selecting by label doesn't seem to work in the Github Workflow
@@ -136,7 +136,7 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 
   // Verify email page will now load. Extend timeout to avoid test issues
   await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
-  return userName;
+  return {userName, password, email};
 }
 
 export function generateRandomUser() {

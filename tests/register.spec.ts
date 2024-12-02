@@ -45,7 +45,7 @@ test("localization", async ({ page }) => {
 test("verification email", async ({ page }) => {
   const redisClient = await createRedisClient('user-registered');
 
-  const userName = await createUser(page);
+  const {userName} = await createUser(page);
 
   // Redis event should not be created before the email has been verified
   const myMessage = await redisClient.getMessageForUser(userName);
@@ -60,7 +60,7 @@ test("newsletter and producer fields", async ({ page }) => {
   // Get the redis client before test so we have the current stream id
   const redisClient = await createRedisClient('user-registered');
 
-  const userName = await createAndVerifyUser(page, true);
+  const {userName} = await createAndVerifyUser(page, true);
 
   const myMessage = await redisClient.getMessageForUser(userName);
   expect(myMessage).toBeTruthy();
