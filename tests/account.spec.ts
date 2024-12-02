@@ -32,12 +32,15 @@ test("delete account", async ({ page }) => {
   await page.getByRole('button', {name: '^delete^'}).click();
 
   // Not sure when the reauthenticate window appears
-  if (await page.getByText('^reauthenticate^').isVisible()) {
+  const reauthenticate = page.getByText('^reauthenticate^');
+  const confirm = page.getByText('^deleteAccountConfirm^');
+  await expect(reauthenticate.or(confirm)).toBeVisible();
+  if (await reauthenticate.isVisible()) {
     await page.getByLabel('^password^').fill(password);
     await page.getByRole('button', {name: '^doLogin^'}).click();
   }
 
-  await expect(page.getByText('^deleteAccountConfirm^')).toBeVisible();
+  await expect(confirm).toBeVisible();
   await expect(page.getByText('^irreversibleAction^')).toBeVisible();
 
   await expect(page.getByText('^deletingImplies^')).toBeVisible();
