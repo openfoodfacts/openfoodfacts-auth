@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
 import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { clickEmailVerifyLink, createRedisClient, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, matchStyles, populateRegistrationForm } from "./test-helper";
+import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, keycloakUserUrl, matchStyles, populateRegistrationForm } from "./test-helper";
 
 test("login page", async ({ page }) => {
   await gotoHome(page);
@@ -87,4 +87,9 @@ test("locale from app is respected", async ({ page }) => {
 
   await page.getByRole("button", { name: "Account" }).click();
   await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
+
+  // Fetch the user via API and make sure locale is set correctly
+  const headers = await getKeycloakHeaders();
+  const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}`, {headers})).json();
+  expect(users[0].attributes.locale[0]).toBe('xx');
 });

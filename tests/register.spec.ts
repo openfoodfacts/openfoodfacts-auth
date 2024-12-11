@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getLastEmail, getLocaleSelector, gotoHome, matchStyles, registerLink, selectDummyLocale } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, keycloakUserUrl, matchStyles, registerLink, selectDummyLocale } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -75,26 +75,6 @@ test("newsletter and producer fields", async ({ page }) => {
 test("user created by API doesn't need email verification", async ({page}) => {
   const redisClient = await createRedisClient('user-registered');
 
-  // Create a user with email verified
-  const formData = new URLSearchParams();
-  formData.append('grant_type', 'client_credentials');
-  formData.append('client_id', process.env.TEST_CLIENT_ID ?? '');
-  formData.append('client_secret', process.env.TEST_CLIENT_SECRET ?? '');
-
-  const baseUrl = process.env.KEYCLOAK_BASE_URL;
-  const realmName = process.env.KEYCLOAK_REALM_NAME;
-  const tokenUrl = `${baseUrl}/realms/${realmName}/protocol/openid-connect/token`;
-  const userUrl = `${baseUrl}/admin/realms/${realmName}/users`;
-
-  const response = await fetch(tokenUrl, 
-      {   
-          method: 'POST',
-          body: formData,
-      }
-  );
-  const jwt = await response.json();
-  const accessToken = jwt.access_token;
-
   const {userName, password, email} = generateRandomUser();
   const user = JSON.stringify({
     email: email,
@@ -115,11 +95,9 @@ test("user created by API doesn't need email verification", async ({page}) => {
     }
   });
 
-  const headers = new Headers();
-  headers.set('Authorization', 'Bearer ' + accessToken);
-  headers.set('Content-Type', 'application/json');
+  const headers = await getKeycloakHeaders();
 
-  const createResponse = await fetch(userUrl, {method: 'POST', body: user, headers});
+  const createResponse = await fetch(keycloakUserUrl, {method: 'POST', body: user, headers});
 
   // Should send registration message immediately
   const myMessage = await redisClient.getMessageForUser(userName);
@@ -169,3 +147,4 @@ test("five character password not accepted", async ({ page }) => {
   // Verify email page will now load. Extend timeout to avoid test issues
   await expect(page.getByText('^invalidPasswordMinLengthMessage 0=6^')).toBeVisible();
 });
+

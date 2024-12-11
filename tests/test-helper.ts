@@ -1,8 +1,10 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { createClient } from "redis";
 
-const keycloak = `${process.env.KEYCLOAK_BASE_URL}/realms/${process.env.KEYCLOAK_REALM_NAME}`;
-export const gotoHome = async (page: Page) => await page.goto(`${keycloak}/account/#/`);
+const keycloakBaseUrl = process.env.KEYCLOAK_BASE_URL;
+const keycloakRealm = process.env.KEYCLOAK_REALM_NAME;
+const keycloakRealmUrl = `${keycloakBaseUrl}/realms/${keycloakRealm}`;
+export const gotoHome = async (page: Page) => await page.goto(`${keycloakRealmUrl}/account/#/`);
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
 export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "^doForgotPassword^" });
 export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?clientId=${
@@ -11,9 +13,9 @@ export const gotoTestPage = async (page: Page, lang?: string) => await page.goto
   process.env.TEST_CLIENT_SECRET
 }&lang=${
   lang
-}&keycloak=${encodeURIComponent(keycloak)}`);
+}&keycloak=${encodeURIComponent(keycloakRealmUrl)}`);
 const smtp4devApi = `http://localhost:${process.env.SMTP4DEV_PORT}/api/Messages`;
-
+export const keycloakUserUrl = `${keycloakBaseUrl}/admin/realms/${keycloakRealm}/users`;
 export const matchStyles = async (
     locator: Locator,
     properties: any
@@ -145,4 +147,27 @@ export function generateRandomUser() {
   const email = `${userName}@openfoodfacts.org`;
 
   return {userName, password, email};
+}
+
+export async function getKeycloakHeaders() {
+  const formData = new URLSearchParams();
+  formData.append('grant_type', 'client_credentials');
+  formData.append('client_id', process.env.TEST_CLIENT_ID ?? '');
+  formData.append('client_secret', process.env.TEST_CLIENT_SECRET ?? '');
+
+  const tokenUrl = `${keycloakRealmUrl}/protocol/openid-connect/token`;
+
+  const response = await fetch(tokenUrl,
+    {
+      method: 'POST',
+      body: formData,
+    }
+  );
+  const jwt = await response.json();
+  const accessToken = jwt.access_token;
+
+  const headers = new Headers();
+  headers.set('Authorization', 'Bearer ' + accessToken);
+  headers.set('Content-Type', 'application/json');
+  return headers;
 }
