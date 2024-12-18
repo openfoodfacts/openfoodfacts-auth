@@ -144,7 +144,7 @@ class Utils {
     }
 
     public static KeycloakSession createKeycloakSession(final boolean isVerifyEmail, final boolean isEmailVerified,
-            final String userNewsletterAttribute) {
+            final String userNewsletterAttribute, final String initialRegisteredAttribute) {
         return new KeycloakSession() {
 
             @Override
@@ -337,24 +337,28 @@ class Utils {
 
                             @Override
                             public StoredProcedureQuery createNamedStoredProcedureQuery(String name) {
-                                throw new UnsupportedOperationException("Unimplemented method 'createNamedStoredProcedureQuery'");
+                                throw new UnsupportedOperationException(
+                                        "Unimplemented method 'createNamedStoredProcedureQuery'");
                             }
 
                             @Override
                             public StoredProcedureQuery createStoredProcedureQuery(String procedureName) {
-                                throw new UnsupportedOperationException("Unimplemented method 'createStoredProcedureQuery'");
+                                throw new UnsupportedOperationException(
+                                        "Unimplemented method 'createStoredProcedureQuery'");
                             }
 
                             @Override
                             public StoredProcedureQuery createStoredProcedureQuery(String procedureName,
                                     Class... resultClasses) {
-                                throw new UnsupportedOperationException("Unimplemented method 'createStoredProcedureQuery'");
+                                throw new UnsupportedOperationException(
+                                        "Unimplemented method 'createStoredProcedureQuery'");
                             }
 
                             @Override
                             public StoredProcedureQuery createStoredProcedureQuery(String procedureName,
                                     String... resultSetMappings) {
-                                throw new UnsupportedOperationException("Unimplemented method 'createStoredProcedureQuery'");
+                                throw new UnsupportedOperationException(
+                                        "Unimplemented method 'createStoredProcedureQuery'");
                             }
 
                             @Override
@@ -394,7 +398,8 @@ class Utils {
 
                             @Override
                             public EntityManagerFactory getEntityManagerFactory() {
-                                throw new UnsupportedOperationException("Unimplemented method 'getEntityManagerFactory'");
+                                throw new UnsupportedOperationException(
+                                        "Unimplemented method 'getEntityManagerFactory'");
                             }
 
                             @Override
@@ -2049,6 +2054,8 @@ class Utils {
             public UserProvider users() {
                 return new UserProvider() {
 
+                    private String registeredAttribute = initialRegisteredAttribute;
+
                     @Override
                     public void close() {
                         throw new UnsupportedOperationException("Unimplemented method 'close'");
@@ -2131,6 +2138,11 @@ class Utils {
 
                                 @Override
                                 public void setSingleAttribute(String name, String value) {
+                                    if ("registered".equals(name)) {
+                                        registeredAttribute = value;
+                                        return;
+                                    }
+
                                     throw new UnsupportedOperationException(
                                             "Unimplemented method 'setSingleAttribute'");
                                 }
@@ -2149,6 +2161,8 @@ class Utils {
                                 public String getFirstAttribute(String name) {
                                     if ("newsletter".equals(name)) {
                                         return userNewsletterAttribute;
+                                    } else if ("registered".equals(name)) {
+                                        return registeredAttribute;
                                     }
 
                                     return null;
@@ -2502,6 +2516,11 @@ class Utils {
 
     public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail,
             final boolean isEmailVerified, final String userNewsletterAttribute) {
+        return createKeycloakSessionFactory(isVerifyEmail, isEmailVerified, userNewsletterAttribute, null);
+    }
+
+    public static KeycloakSessionFactory createKeycloakSessionFactory(final boolean isVerifyEmail,
+            final boolean isEmailVerified, final String userNewsletterAttribute, final String registeredAttribute) {
         return new KeycloakSessionFactory() {
             private ProviderEventListener listener;
 
@@ -2531,7 +2550,8 @@ class Utils {
 
             @Override
             public KeycloakSession create() {
-                return createKeycloakSession(isVerifyEmail, isEmailVerified, userNewsletterAttribute);
+                return createKeycloakSession(isVerifyEmail, isEmailVerified, userNewsletterAttribute,
+                        registeredAttribute);
             }
 
             @Override

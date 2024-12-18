@@ -19,6 +19,7 @@ import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderConfigurationBuilder;
 
 import openfoodfacts.github.keycloak.jpa.DeletedUserEntity;
+import openfoodfacts.github.keycloak.utils.UserAttributes;
 
 public class OpenFoodFactsEventListenerProviderFactory implements EventListenerProviderFactory {
     private static final Logger log = Logger.getLogger(OpenFoodFactsEventListenerProviderFactory.class);
@@ -55,13 +56,17 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                 boolean isUserRegistrationEvent = isUserRegistrationEvent(event, realm);
                 if (isUserRegistrationEvent) {
                     final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
-                    OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                    if (user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
+                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                        user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
+                    }
                 }
             }
 
             @Override
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
-                if (ResourceType.USER.equals(event.getResourceType()) && OperationType.CREATE.equals(event.getOperationType())) {
+                if (ResourceType.USER.equals(event.getResourceType())
+                        && OperationType.CREATE.equals(event.getOperationType())) {
                     final RealmModel realm = keycloakSession.realms().getRealm(event.getRealmId());
                     if (realm == null) {
                         log.errorf("Failed to find realm: %s", event.getRealmId());
@@ -73,8 +78,11 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                         log.errorf("Failed to find user: %s", userId);
                         return;
                     }
-                    if (!realm.isVerifyEmail() || user.isEmailVerified()) {
+
+                    if ((!realm.isVerifyEmail() || user.isEmailVerified())
+                            && user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
                         OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                        user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
                     }
                 }
             }
@@ -90,7 +98,8 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                         }
 
                         if (user.isEmailVerified()) {
-                            // Mail address validation is enabled, but user has already validated it according to API
+                            // Mail address validation is enabled, but user has already validated it
+                            // according to API
                             return true;
                         }
                     } else {
@@ -122,7 +131,8 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
 
                     if (event instanceof UserModel.UserRemovedEvent userRemovedEvent) {
                         final UserModel user = userRemovedEvent.getUser();
-                        String anonymousUsername = DeletedUserEntity.logDeletedUser(userRemovedEvent.getKeycloakSession(), user);
+                        String anonymousUsername = DeletedUserEntity
+                                .logDeletedUser(userRemovedEvent.getKeycloakSession(), user);
                         this.client.postUserDeleted(user, userRemovedEvent.getRealm(), anonymousUsername);
                     }
                 });
