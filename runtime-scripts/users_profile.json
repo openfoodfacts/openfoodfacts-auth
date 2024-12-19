@@ -656,6 +656,32 @@
           ]
         }
       }
+    },
+    {
+      "name": "old_email",
+      "displayName": "Old email address (was duplicate or invalid)",
+      "permissions": {
+        "view": [
+          "admin"
+        ],
+        "edit": [
+          "admin"
+        ]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "registered",
+      "displayName": "Prevents re-sending welcome email on change of email address",
+      "permissions": {
+        "view": [
+          "admin"
+        ],
+        "edit": [
+          "admin"
+        ]
+      },
+      "multivalued": false
     }
   ],
   "groups": [

@@ -108,6 +108,37 @@ test("user created by API doesn't need email verification", async ({page}) => {
   expect(myMessage?.message.userName).toBe(userName);
 });
 
+test("migrated user with invlaid email loaded with no messages", async ({page}) => {
+  const redisClient = await createRedisClient('user-registered');
+
+  const {userName, password, email} = generateRandomUser();
+  const user = JSON.stringify({
+    enabled: true,
+    username: userName,
+    credentials: [{
+      type: 'password',
+      temporary: false,
+      value: password,
+    }],
+    attributes: {
+      name: userName,
+      locale: 'xx',
+      country: 'world',
+      newsletter: 'subscribe',
+      registered: 'registered',
+      old_email: 'invalid@madeupname',
+    }
+  });
+
+  const headers = await getKeycloakHeaders();
+
+  const createResponse = await fetch(keycloakUserUrl, {method: 'POST', body: user, headers});
+
+  // Should send registration message immediately
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeFalsy();
+});
+
 test("six character password accepted", async ({ page }) => {
   await gotoHome(page);
   await registerLink(page).click();
