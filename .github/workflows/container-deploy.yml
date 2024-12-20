@@ -31,7 +31,7 @@ jobs:
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
         echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
-        echo "CLIENTS=OFF,https://world.openfoodfacts.org NEW_OPFF,https://world.new.openpetfoordfacts.org" >> $GITHUB_ENV
+        echo "CLIENTS=OFF,https://world.openfoodfacts.org NEW_OPFF,https://world.new.openpetfoodfacts.org" >> $GITHUB_ENV
 
     - name: Wait for container build workflow
       uses: tomchv/wait-my-workflow@v1.1.0
