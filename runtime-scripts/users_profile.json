@@ -72,11 +72,6 @@
           "admin",
           "user"
         ]
-      },
-      "validations": {
-        "person-name-prohibited-characters": {
-          "error-message": ""
-        }
       }
     },
     {
