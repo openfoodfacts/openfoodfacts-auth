@@ -1,5 +1,5 @@
 function wait_for_keycloak() {
-  local -r MAX_WAIT=60
+  local -r MAX_WAIT=120
   local config_command
   local wait_time
 
@@ -91,8 +91,8 @@ do
       "$CLIENT_SECRET" \
       > /etc/off/interpolated_client_$CLIENT_ID.json
     /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /etc/off/interpolated_client_$CLIENT_ID.json
-    # Can't import client role mappings with the user
-    /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-$CLIENT_ID --cclientid realm-management --rolename manage-users --rolename query-users
+    # Can't import client role mappings with the user. Note generated user name is always in lower case
+    /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-${CLIENT_ID,,} --cclientid realm-management --rolename manage-users --rolename query-users
   fi
 done
 
