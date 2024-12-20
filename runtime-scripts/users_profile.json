@@ -19,7 +19,7 @@
       },
       "validations": {
         "length": {
-          "max": "20",
+          "max": "200",
           "min": "2"
         },
         "pattern": {
