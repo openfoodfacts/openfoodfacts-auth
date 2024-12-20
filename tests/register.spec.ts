@@ -39,7 +39,7 @@ test("localization", async ({ page }) => {
   await countryInput.press("ArrowDown"); // If the options are sorted correctly the next option should be Allemagne
   await countryInput.press("Tab");
 
-  await expect(countryInput).toHaveValue('DE');
+  await expect(countryInput).toHaveValue('de');
 });
 
 test("verification email", async ({ page }) => {
