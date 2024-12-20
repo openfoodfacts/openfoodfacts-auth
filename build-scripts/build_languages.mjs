@@ -22,7 +22,7 @@ for (const [ key, language ] of Object.entries(languages)) {
         if (!country.country_code_2?.en) {
             continue;
         }
-        const countryCode = country.country_code_2.en;
+        const countryCode = country.country_code_2.en.toLowerCase();
         const countryName = (country.name[code] ?? country.name.en).replaceAll("'","''");
         countryMessages.push(`country_${countryCode}=${countryName}`);
     }

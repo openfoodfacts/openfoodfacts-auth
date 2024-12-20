@@ -115,7 +115,7 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
             console.warn(`No 2 letter code for: ${countryId}`);
             continue;
         }
-        const countryCode = country.country_code_2.en;
+        const countryCode = country.country_code_2.en.toLowerCase();
         // Currently get english name for sorting until Keycloak fixes sorting by localized name
         const countryName = country.name.en;
         countryOptions[countryCode] = '${country_' + countryCode + '}';
