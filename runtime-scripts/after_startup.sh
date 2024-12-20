@@ -25,26 +25,7 @@ function wait_for_keycloak() {
 rm -f /tmp/health
 
 REALM_SETTINGS=$(cat /etc/off/realm_settings_template.json)
-PRODUCT_OPENER_CLIENT=$(cat /etc/off/productopener_client_template.json)
-
-# Use printf here as envsubst isn't available in the standard Keycloak image
-# Need to make sure arguments are added in the right order. 
-# Note refresh_messages will sort JSON alphabetically. 
-# These are the current parameters in order:
-# clients[0].adminUrl: $PRODUCT_OPENER_URL
-# clients[0].attributes.post.logout.redirect.uris: $PRODUCT_OPENER_URL
-# clients[0].baseUrl: $PRODUCT_OPENER_URL
-# clients[0].redirectUris: $PRODUCT_OPENER_URL
-# clients[0].rootUrl: $PRODUCT_OPENER_URL
-# clients[0].secret: $PRODUCT_OPENER_OIDC_CLIENT_SECRET
-printf "$PRODUCT_OPENER_CLIENT" \
-  "$PRODUCT_OPENER_URL" \
-  "$PRODUCT_OPENER_URL" \
-  "$PRODUCT_OPENER_URL" \
-  "$PRODUCT_OPENER_URL" \
-  "$PRODUCT_OPENER_URL" \
-  "$PRODUCT_OPENER_OIDC_CLIENT_SECRET" \
-  > /etc/off/interpolated_productopener_client.json
+CLIENT_TEMPLATE=$(cat /etc/off/productopener_client_template.json)
 
 # smtpServer.host: $SMTP_SERVER
 printf "$REALM_SETTINGS" \
@@ -70,15 +51,50 @@ fi
 /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /etc/off/interpolated_realm_settings.json
 # Set up user attributes
 /opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /etc/off/users_profile.json
-# Create the ProductOpener client if it doesn't exist
-/opt/keycloak/bin/kcadm.sh get clients/c865387e-1275-47f7-948a-fd1b4b166385 -r open-products-facts &> /dev/null
-if [[ $? != 0 ]]; then
-  /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /etc/off/interpolated_productopener_client.json
-fi
-# Always update the client with the latest settings
-/opt/keycloak/bin/kcadm.sh update clients/c865387e-1275-47f7-948a-fd1b4b166385 -r open-products-facts -f /etc/off/interpolated_productopener_client.json
-# Can't import client role mappings with the user
-/opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-productopener --cclientid realm-management --rolename manage-users --rolename query-users
+
+# Create clients
+for CLIENT in $CLIENTS
+do
+  IFS=","
+  CLIENT_PARTS=($CLIENT)
+  unset IFS
+  CLIENT_ID=${CLIENT_PARTS[0]}
+  CLIENT_URL=${CLIENT_PARTS[1]}
+  EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r open-products-facts)
+  if [[ "$EXISTING_CLIENT" == "[ ]" ]];then
+    SECRET_KEY=${CLIENT_ID}_CLIENT_SECRET
+    CLIENT_SECRET=\"${!SECRET_KEY}\"
+    # If no secret variable is provided then null will generate a new secret
+    if [[ "$CLIENT_SECRET" == "\"\"" ]]; then 
+      CLIENT_SECRET=null
+    fi
+    # Use printf here as envsubst isn't available in the standard Keycloak image
+    # Need to make sure arguments are added in the right order. 
+    # Note refresh_messages will sort JSON alphabetically. 
+    # These are the current parameters in order:
+    # clients[0].adminUrl: $CLIENT_URL
+    # clients[0].attributes.post.logout.redirect.uris: $CLIENT_URL
+    # clients[0].baseUrl: $CLIENT_URL
+    # clients[0].clientId: $CLIENT_ID
+    # clients[0].name: $CLIENT_ID
+    # clients[0].redirectUris: $CLIENT_URL
+    # clients[0].rootUrl: $CLIENT_URL
+    # clients[0].secret: $CLIENT_SECRET
+    printf "$CLIENT_TEMPLATE" \
+      "$CLIENT_URL" \
+      "$CLIENT_URL" \
+      "$CLIENT_URL" \
+      "$CLIENT_ID" \
+      "$CLIENT_ID" \
+      "$CLIENT_URL" \
+      "$CLIENT_URL" \
+      "$CLIENT_SECRET" \
+      > /etc/off/interpolated_client_$CLIENT_ID.json
+    /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /etc/off/interpolated_client_$CLIENT_ID.json
+    # Can't import client role mappings with the user
+    /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-$CLIENT_ID --cclientid realm-management --rolename manage-users --rolename query-users
+  fi
+done
 
 echo "Keycloak configuration completed"
 echo Healthy > /tmp/health

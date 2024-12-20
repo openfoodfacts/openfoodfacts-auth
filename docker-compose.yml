@@ -10,8 +10,7 @@ services:
       - KC_HOSTNAME=${KEYCLOAK_BASE_URL}
       - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
       - SMTP_SERVER
-      - PRODUCT_OPENER_URL
-      - PRODUCT_OPENER_OIDC_CLIENT_SECRET
+      - CLIENTS
     networks:
       default:
 

@@ -29,9 +29,9 @@ jobs:
 
         echo "KEYCLOAK_BASE_URL=https://auth.openfoodfacts.org" >> $GITHUB_ENV
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
-        echo "PRODUCT_OPENER_URL=https://world.openfoodfacts.org" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
         echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
+        echo "CLIENTS=OFF,https://world.openfoodfacts.org NEW_OPFF,https://world.new.openpetfoordfacts.org" >> $GITHUB_ENV
 
     - name: Wait for container build workflow
       uses: tomchv/wait-my-workflow@v1.1.0
@@ -101,9 +101,7 @@ jobs:
           echo "KC_DB_URL_HOST=${{ env.KC_DB_URL_HOST }}" >> .env
           echo "KC_DB_USERNAME=keycloak" >> .env
           echo "KC_DB_PASSWORD=${{ secrets.KC_DB_PASSWORD }}" >> .env
-          echo "PRODUCT_OPENER_OIDC_CLIENT_ID=ProductOpener" >> .env
-          echo "PRODUCT_OPENER_URL=${{ env.PRODUCT_OPENER_URL }}" >> .env
-          echo "PRODUCT_OPENER_OIDC_CLIENT_SECRET=${{ secrets.PRODUCT_OPENER_OIDC_CLIENT_SECRET }}" >> .env
+          echo "CLIENTS=${{ env.CLIENTS }}" >> .env
           echo "REDIS_URL=${{ env.REDIS_URL }}" >> .env
           echo "SMTP_SERVER=${{ env.SMTP_SERVER }}" >> .env
           echo "KEYCLOAK_HTTP_PORT=5600" >> .env

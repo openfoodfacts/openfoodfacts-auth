@@ -14,7 +14,7 @@
   "baseUrl": "%s/",
   "bearerOnly": false,
   "clientAuthenticatorType": "client-secret",
-  "clientId": "ProductOpener",
+  "clientId": "%s",
   "consentRequired": false,
   "defaultClientScopes": [
     "web-origins",
@@ -29,9 +29,8 @@
   "enabled": true,
   "frontchannelLogout": true,
   "fullScopeAllowed": true,
-  "id": "c865387e-1275-47f7-948a-fd1b4b166385",
   "implicitFlowEnabled": false,
-  "name": "ProductOpener",
+  "name": "%s",
   "nodeReRegistrationTimeout": -1,
   "notBefore": 0,
   "optionalClientScopes": [
@@ -52,7 +51,6 @@
         "userinfo.token.claim": "true"
       },
       "consentRequired": false,
-      "id": "706932c1-de97-4528-abb0-386632953e06",
       "name": "Client ID",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usersessionmodel-note-mapper"
@@ -67,7 +65,6 @@
         "userinfo.token.claim": "true"
       },
       "consentRequired": false,
-      "id": "a762ff13-6c41-4bb9-9314-a918a815815d",
       "name": "Client IP Address",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usersessionmodel-note-mapper"
@@ -82,7 +79,6 @@
         "userinfo.token.claim": "true"
       },
       "consentRequired": false,
-      "id": "658cf99e-9f09-4294-80f2-6fc2656c2674",
       "name": "Client Host",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usersessionmodel-note-mapper"
@@ -91,7 +87,7 @@
   "publicClient": false,
   "redirectUris": ["%s/cgi/oidc_signin_callback.pl"],
   "rootUrl": "%s/",
-  "secret": "%s",
+  "secret": %s,
   "serviceAccountsEnabled": true,
   "standardFlowEnabled": true,
   "surrogateAuthRequired": false,
