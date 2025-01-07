@@ -24,6 +24,12 @@ function wait_for_keycloak() {
 # Docker healthcheck waits for this file to appear and for port to be open
 rm -f /tmp/health
 
+
+# Import (not performed at startup) does not interpolate variables https://github.com/keycloak/keycloak/issues/12069
+# So we need to do the substitution ourselves.
+# We use printf to do this as envsubst isn't available in the standard Keycloak image
+# Need to make sure arguments are added in the right order. 
+# Note refresh_messages will sort JSON templates alphabetically by key. 
 REALM_SETTINGS=$(cat /etc/off/realm_settings_template.json)
 CLIENT_TEMPLATE=$(cat /etc/off/productopener_client_template.json)
 
@@ -68,9 +74,6 @@ do
     if [[ "$CLIENT_SECRET" == "\"\"" ]]; then 
       CLIENT_SECRET=null
     fi
-    # Use printf here as envsubst isn't available in the standard Keycloak image
-    # Need to make sure arguments are added in the right order. 
-    # Note refresh_messages will sort JSON alphabetically. 
     # These are the current parameters in order:
     # clients[0].adminUrl: $CLIENT_URL
     # clients[0].attributes.post.logout.redirect.uris: $CLIENT_URL
