@@ -59,7 +59,7 @@ public class UserRegisteredEventIsForwardedToRedisIfValidationIsEnabledButValida
 
                 @Override
                 public String getClientId() {
-                    return "test-client-id";
+                    return "test-client-client-id";
                 }
             });
 
@@ -78,7 +78,7 @@ public class UserRegisteredEventIsForwardedToRedisIfValidationIsEnabledButValida
             Assertions.assertEquals("someUser@example.org", fields.get("email"));
             Assertions.assertEquals("theUserName", fields.get("userName"));
             Assertions.assertEquals("open-products-facts", fields.get("realm"));
-            Assertions.assertEquals("test-client-id", fields.get("clientId"));
+            Assertions.assertEquals("test-client-client-id", fields.get("clientId"));
         }
     }
 

@@ -11,6 +11,7 @@ import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.events.admin.OperationType;
 import org.keycloak.events.admin.ResourceType;
+import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.RealmModel;
@@ -56,8 +57,10 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                 boolean isUserRegistrationEvent = isUserRegistrationEvent(event, realm);
                 if (isUserRegistrationEvent) {
                     final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
+
                     if (user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
-                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                        // Note that for normal events the clientId is the normal clientId, not the internal GUID
+                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm, event.getClientId());
                         user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
                     }
                 }
@@ -79,9 +82,16 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                         return;
                     }
 
+                    // Note for admin events the clientId in the AuthDetails is the internal GUID
+                    final ClientModel client = keycloakSession.clients().getClientById(realm, event.getAuthDetails().getClientId());
+                    if (client == null) {
+                        log.errorf("Failed to find client: %s", event.getAuthDetails().getClientId());
+                        return;
+                    }
+
                     if ((!realm.isVerifyEmail() || user.isEmailVerified())
                             && user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
-                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm);
+                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm, client.getClientId());
                         user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
                     }
                 }

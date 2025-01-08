@@ -66,6 +66,7 @@ test("newsletter and producer fields", async ({ page }) => {
   expect(myMessage).toBeTruthy();
   expect(myMessage?.message.newsletter).toBe('subscribe');
   expect(myMessage?.message.requestedOrg).toBe('carrefour');
+  expect(myMessage?.message.clientId).toBe('account-console');
 
   // Newsletter field should be hidden on edit
   await expect(page.getByLabel('^newsletter_description^')).not.toBeVisible();
@@ -109,7 +110,7 @@ test("user created by API doesn't need email verification", async ({page}) => {
   expect(myMessage?.message.clientId).toBe(process.env.TEST_CLIENT_ID);
 });
 
-test("migrated user with invlaid email loaded with no messages", async ({page}) => {
+test("migrated user with invalid email loaded with no messages", async ({page}) => {
   const redisClient = await createRedisClient('user-registered');
 
   const {userName, password, email} = generateRandomUser();
