@@ -94,7 +94,7 @@ test("locale from app is respected", async ({ page }) => {
   const myMessage2 = await redisClient.getMessageForUser(userName);
   expect(myMessage2).toBeTruthy();
   
-    // Fetch the user via API and make sure locale is set correctly
+  // Fetch the user via API and make sure locale is set correctly
   const headers = await getKeycloakHeaders();
   const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}`, {headers})).json();
   expect(users[0].attributes.locale[0]).toBe('xx');

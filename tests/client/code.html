@@ -1,54 +1,94 @@
 <script>
-    (async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const clientId = urlParams.get('clientId');
-        const clientSecret = urlParams.get('clientSecret');
-        const keycloak = decodeURIComponent(urlParams.get('keycloak'));
-        const lang = urlParams.get('lang');
-        const formData = new FormData();
-        formData.append('code', code);
-        formData.append('grant_type', 'authorization_code');
-        formData.append('redirect_uri', `http://localhost:5604/code.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(keycloak)}`);
+  (async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    const clientId = urlParams.get("clientId");
+    const clientSecret = urlParams.get("clientSecret");
+    const keycloak = decodeURIComponent(urlParams.get("keycloak"));
+    const lang = urlParams.get("lang");
 
-        const headers = new Headers();
-        headers.set('Authorization', 'Basic ' + btoa(`${clientId}:${clientSecret}`));
+    if (!code) {
+      const error = urlParams.get("error");
+      // Try again if we get a temporarily unavailable error
+      if (error === "temporarily_unavailable") {
+        const nonce = crypto.getRandomValues(new BigUint64Array(1))[0];
+        const url = `${keycloak}/protocol/openid-connect/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+          `http://localhost:5604/code.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(
+            keycloak
+          )}`
+        )}&scope=openid+profile+offline_access&state=${nonce}&ui_locales=${lang}`;
+        window.location = url;
+      }
+    }
 
-        const response = await fetch(`${keycloak}/protocol/openid-connect/token`, 
-            {   
-                method: 'POST',
-                body: formData,
-                headers: headers,
-            }
-        );
-        const jwt = await response.json();
-        const accessToken = JSON.parse(atob(jwt.access_token.split('.')[1]));
+    const formData = new FormData();
+    formData.append("code", code);
+    formData.append("grant_type", "authorization_code");
+    formData.append(
+      "redirect_uri",
+      `http://localhost:5604/code.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(
+        keycloak
+      )}`
+    );
 
-        const logout = Object.assign(document.createElement('button'), {innerText: 'Logout'});
-        logout.addEventListener('click', () => { 
-            window.location = `${keycloak}/protocol/openid-connect/logout?client_id=${accessToken.azp}&post_logout_redirect_uri=${
-                encodeURIComponent(`http://localhost:5604/index.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(keycloak)}`)
-            }&id_token_hint=${jwt.id_token}`;
-        });
-        document.body.appendChild(logout);
+    const headers = new Headers();
+    headers.set(
+      "Authorization",
+      "Basic " + btoa(`${clientId}:${clientSecret}`)
+    );
 
-        const account = Object.assign(document.createElement('button'), {innerText: 'Account'});
-        account.addEventListener('click', () => { 
-            window.location = `${keycloak}/account/#/`;
-        });
-        document.body.appendChild(account);
+    const response = await fetch(`${keycloak}/protocol/openid-connect/token`, {
+      method: "POST",
+      body: formData,
+      headers: headers,
+    });
+    const jwt = await response.json();
+    const accessToken = JSON.parse(atob(jwt.access_token.split(".")[1]));
 
-        const form = document.body.appendChild(document.createElement('form'));
-        for (const [key, value] of Object.entries(accessToken)) {
-            form.appendChild(Object.assign(document.createElement('label'), {innerText: key, htmlFor: key}));
-            form.appendChild(Object.assign(document.createElement('input'), {id: key, type: 'text', value: typeof value === 'object' ? JSON.stringify(value) : value}));
-        }
-    })();
+    const logout = Object.assign(document.createElement("button"), {
+      innerText: "Logout",
+    });
+    logout.addEventListener("click", () => {
+      window.location = `${keycloak}/protocol/openid-connect/logout?client_id=${
+        accessToken.azp
+      }&post_logout_redirect_uri=${encodeURIComponent(
+        `http://localhost:5604/index.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(
+          keycloak
+        )}`
+      )}&id_token_hint=${jwt.id_token}`;
+    });
+    document.body.appendChild(logout);
+
+    const account = Object.assign(document.createElement("button"), {
+      innerText: "Account",
+    });
+    account.addEventListener("click", () => {
+      window.location = `${keycloak}/account/#/`;
+    });
+    document.body.appendChild(account);
+
+    const form = document.body.appendChild(document.createElement("form"));
+    for (const [key, value] of Object.entries(accessToken)) {
+      form.appendChild(
+        Object.assign(document.createElement("label"), {
+          innerText: key,
+          htmlFor: key,
+        })
+      );
+      form.appendChild(
+        Object.assign(document.createElement("input"), {
+          id: key,
+          type: "text",
+          value: typeof value === "object" ? JSON.stringify(value) : value,
+        })
+      );
+    }
+  })();
 </script>
 <style>
-    form {
-        display: grid;
-        grid-template-columns: auto auto;
-    }
+  form {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
 </style>
 <body></body>
