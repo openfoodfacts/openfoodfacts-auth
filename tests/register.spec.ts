@@ -106,6 +106,7 @@ test("user created by API doesn't need email verification", async ({page}) => {
   expect(myMessage?.message.requestedOrg).toBe('carrefour');
   expect(myMessage?.message.email).toBe(email);
   expect(myMessage?.message.userName).toBe(userName);
+  expect(myMessage?.message.clientId).toBe(process.env.TEST_CLIENT_ID);
 });
 
 test("migrated user with invlaid email loaded with no messages", async ({page}) => {
