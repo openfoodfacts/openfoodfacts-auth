@@ -78,12 +78,12 @@ refresh_messages:
 
 # Creates the bootstrap user in PostgreSQL, which is then used to create other users
 create_bootstrap: run_deps
-	docker compose up keycloak_postgres --wait
-	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
+	COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose up keycloak_postgres --wait
+	@COMPOSE_FILE=${COMPOSE_FILE_RUN} docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
 	  -c "PGPASSWORD=${PG_ADMIN_PASSWORD} psql -h ${KC_DB_URL_HOST} -U ${PG_ADMIN_USERNAME} -c \"create role ${PG_BOOTSTRAP_USERNAME} with password '${PG_BOOTSTRAP_PASSWORD}' login createdb createrole\" || true "
 
 create_user: create_bootstrap
-	@docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
+	@COMPOSE_FILE=${COMPOSE_FILE_RUN} docker run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
 	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
 	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
 
@@ -96,7 +96,7 @@ create_user_prod:
 
 # Called by other projects to start this project as a dependency
 # Use docker compose pull to ensure we get the latest keycloak image
-run: run_deps create_user
+run: create_user
 	COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose pull keycloak && \
 		if ! COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose up --wait --wait-timeout 120; then \
 		COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose logs && exit 1; fi
