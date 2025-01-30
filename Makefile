@@ -96,7 +96,7 @@ create_user_prod:
 
 # Called by other projects to start this project as a dependency
 # Use docker compose pull to ensure we get the latest keycloak image
-run: run_deps
+run: run_deps create_user
 	COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose pull keycloak && \
 		if ! COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose up --wait --wait-timeout 120; then \
 		COMPOSE_FILE=${COMPOSE_FILE_RUN} docker compose logs && exit 1; fi
