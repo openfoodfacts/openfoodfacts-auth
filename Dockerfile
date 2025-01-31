@@ -23,7 +23,8 @@ COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-
 COPY --chown=keycloak:keycloak theme/off /opt/keycloak/themes/off
 
 # Pre-optimize the build for test-container rather than production as tests are deployed more often
-RUN /opt/keycloak/bin/kc.sh build --db=dev-mem
+# Note tried using dev-mem but is unpredictable when used in PO integration tests
+RUN /opt/keycloak/bin/kc.sh build --db=dev-file
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 
