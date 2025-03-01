@@ -24,7 +24,7 @@
     <sha1/>
 
     <keycloak.version>${env.KEYCLOAK_VERSION}</keycloak.version>
-    <junit.version>5.11.4</junit.version>
+    <junit.version>5.12.0</junit.version>
   </properties>
 
   <build>
