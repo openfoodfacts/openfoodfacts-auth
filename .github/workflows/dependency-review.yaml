@@ -14,4 +14,4 @@ jobs:
         with:
           envFile: '.env'
       - name: "Dependency Review"
-        uses: actions/dependency-review-action@v4.5.0
+        uses: actions/dependency-review-action@v4.6.0
