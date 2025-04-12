@@ -101,4 +101,5 @@ done
 
 echo "$(date -u) Keycloak configuration completed"
 echo Healthy > /tmp/health
-cp /etc/off/image_id /etc/off/config_id
+# Hash the current configuration
+echo "$(printenv | grep -v '^HOSTNAME' ; cat /etc/off/image_id)" | md5sum > /etc/off/deployed_config_id

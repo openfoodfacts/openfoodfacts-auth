@@ -1,5 +1,8 @@
 # Running configuration after startup inspired by: https://keycloak.discourse.group/t/keycloak-x-docker-startup-scripts-not-being-executed/8208/6?u=famod
-if [[ `cat /etc/off/image_id` == `cat /etc/off/config_id` ]]; then
+
+# Generate a unique config id from the image and environment. Don't include hostname as that is the container id
+echo "$(printenv | grep -v '^HOSTNAME' ; cat /etc/off/image_id)" | md5sum > /etc/off/config_id
+if [[ `cat /etc/off/config_id` == `cat /etc/off/deployed_config_id` ]]; then
     echo "*** Config is unchanged ***"
     echo Healthy > /tmp/health
 else

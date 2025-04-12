@@ -33,11 +33,6 @@ COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 # OFF specific configurations
 COPY --chown=keycloak:keycloak runtime-scripts /etc/off
 
-# Create a unique id for this image
-USER root
-RUN cp /proc/sys/kernel/random/uuid /etc/off/image_id && chown keycloak:keycloak /etc/off/image_id
-USER keycloak:keycloak
-
 # Need quite a long grace period for startup because of running migrations
 HEALTHCHECK --start-period=300s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
 
