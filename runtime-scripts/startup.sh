@@ -1,6 +1,11 @@
 # Running configuration after startup inspired by: https://keycloak.discourse.group/t/keycloak-x-docker-startup-scripts-not-being-executed/8208/6?u=famod
-echo "*** Starting background process ***"
-sh /etc/off/after_startup.sh &
+if [[ `cat /etc/off/image_id` == `cat /etc/off/config_id` ]]; then
+    echo "*** Config is unchanged ***"
+    echo Healthy > /tmp/health
+else
+    echo "*** Starting background process ***"
+    sh /etc/off/after_startup.sh &
+fi
 
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     echo "*** Starting keycloak in development mode ***"
@@ -14,5 +19,5 @@ else
     echo "*** Starting keycloak in test mode ***"
     # Use pre-optimized image with dev-file database for integration tests from other projects (like Product Opener)
     # for faster startup and minimal dependencies.
-    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true
+    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --cache=local
 fi

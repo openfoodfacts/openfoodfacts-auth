@@ -9,16 +9,16 @@ function wait_for_keycloak() {
   # Waiting for the application to return a 200 status code.
   until ${config_command}; do
     if [[ ${wait_time} -ge ${MAX_WAIT} ]]; then
-      echo "The application service did not start within ${MAX_WAIT} seconds. Aborting."
+      echo "$(date -u) The application service did not start within ${MAX_WAIT} seconds. Aborting."
       exit 1
     else
-      echo "Waiting (${wait_time}/${MAX_WAIT}) ..."
+      echo "$(date -u) Waiting (${wait_time}/${MAX_WAIT}) ..."
       sleep 1
       ((++wait_time))
     fi
   done
 
-  echo "Keycloak is now up and running."
+  echo "$(date -u) Keycloak is now up and running."
 }
 
 # Docker healthcheck waits for this file to appear and for port to be open
@@ -43,7 +43,7 @@ wait_for_keycloak
 
 # Keycloak is running.
 
-echo "Configuring Keycloak"
+echo "$(date -u) Configuring Keycloak"
 
 # Import the realm
 /opt/keycloak/bin/kcadm.sh get realms/open-products-facts &> /dev/null
@@ -99,5 +99,6 @@ do
   fi
 done
 
-echo "Keycloak configuration completed"
+echo "$(date -u) Keycloak configuration completed"
 echo Healthy > /tmp/health
+cp /etc/off/image_id /etc/off/config_id
