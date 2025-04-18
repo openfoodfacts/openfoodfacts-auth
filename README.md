@@ -72,22 +72,6 @@ Run `make build` to finally update the container images.
 
 # Roadmap
 
-## First Objective
-
-The current keycloak branch in the openfoodfcts-server repo has become unmanageable so the suggested plan is to move to an incremental, feature-flag based approach.
-
-The items below list the suggested incremental releasable items in order to achieve the first objective of moving all user authentication into Keycloak:
-
-- Sync users with Keycloak: Keep the existing authentication process the same but ensure that all new users and updates to existing users are replicated in Keycloak. This would include an initial migration. The main difference from the existing migration code is we need to cope with updates as well as creating new users. This would be flagged based on the presence of a `KEYCLOAK_BACKCHANNEL_BASE_URL`
-- Switch all backend code that receives a user id and password to authenticate via Keycloak. Note still keep the existing session management code once the user is authenticated
-- Give the option to sign-in via the Keycloak login form by adding a `keycloak=1` query parameter
-- Move all users to automatically log-in via Keycloak
-- Switch user registration to Keycloak, so PO will no longer be creating users or updating user profile information. Before we can do this we need to have completed the following:
-    - Change the Pro user sign-up flow. Rather than putting the requested organization on the main user form the user would sign up normally and then request to join an organization once signed in. A regular welcome email would not be sent if the user signed up via the Pro platform. This can be started before any of the other Keycloak work
-    - Trigger registration emails and user deletion through Redis events coming from Keycloak. This should only affect new users so probably don't need a feature flag. Will require implementing the Redis listener and Minion in all flavours
-
-Note the existing branch includes support for API authentication using a Keycloak access token. Suggest this is pushed beyond the first release.
-
 ## Mobile
 
 We will need to update the mobile application to launch the keycloak login and account pages before we can deprecate the password grant type option.
