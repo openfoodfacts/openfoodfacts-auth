@@ -83,13 +83,14 @@ refresh_messages:
 # Creates the bootstrap user in PostgreSQL, which is then used to create other users
 create_bootstrap: run_deps
 	${DOCKER_RUN} compose up keycloak_postgres --wait
-	@${DOCKER_RUN} run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
-	  -c "PGPASSWORD=${PG_ADMIN_PASSWORD} psql -h ${KC_DB_URL_HOST} -U ${PG_ADMIN_USERNAME} -c \"create role ${PG_BOOTSTRAP_USERNAME} with password '${PG_BOOTSTRAP_PASSWORD}' login createdb createrole\" || true "
+	@${DOCKER_RUN} compose exec -e PGUSER=${PG_ADMIN_USERNAME} -e PGPASSWORD=${PG_ADMIN_PASSWORD} keycloak_postgres \
+	  psql -c "create role ${PG_BOOTSTRAP_USERNAME} with password '${PG_BOOTSTRAP_PASSWORD}' login createdb createrole" || true
 
 create_user: create_bootstrap
-	@${DOCKER_RUN} run --rm --network ${COMMON_NET_NAME} --entrypoint bin/bash postgres:16-alpine \
-	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
-	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
+	@${DOCKER_RUN} compose exec -e PGUSER=${PG_BOOTSTRAP_USERNAME} -e PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} keycloak_postgres \
+	  psql -d postgres -c "create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb" || true
+	@${DOCKER_RUN} compose exec -e PGUSER=${KC_DB_USERNAME} -e PGPASSWORD=${KC_DB_PASSWORD} keycloak_postgres \
+	  psql -d postgres -c "create database ${KC_DB_USERNAME}" || true
 
 # Create user / database in production PostgreSQL instance
 create_user_prod:
