@@ -81,5 +81,10 @@ module.exports = defineConfig({
     url: process.env.KEYCLOAK_BASE_URL,
     reuseExistingServer: true,
   },
-});
 
+  /* This figure is by trial and error to minimize false positives when running tests locally
+     Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */
+  expect: {
+    toHaveScreenshot: { maxDiffPixels: process.env.CI ? 0 : 700 },
+  },
+});
