@@ -34,6 +34,9 @@ up: run_deps create_user
 integration_test_target:
 	COMPOSE_FILE=docker-compose.yml KEYCLOAK_STARTUP=test KEYCLOAK_TAG=dev docker compose up --wait --wait-timeout 120
 
+show_keycloak_logs:
+	docker compose logs keycloak
+
 down:
 	docker compose down --remove-orphans
 
@@ -53,7 +56,7 @@ test: test_setup
 	npx playwright test
 
 # Currently using dev mode for tests as had issues using production mode in Github workflows
-test_setup: up
+test_setup: up show_keycloak_logs
 	node build-scripts/test_setup.mjs
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
