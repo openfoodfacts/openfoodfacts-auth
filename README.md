@@ -54,6 +54,8 @@ The Keycloak version to be used is specified in the `.env` file. However, in add
 
 We keep a copy of the Keycloak themes in Git so that we can see what has changed between versions. Run `make refresh_themes` to refresh this copy (stored in the `theme` folder).
 
+`make refresh_themes` also calls `make update-keycloak_version` which refreshes the version numbers in the `pom.xml` file.
+
 Note: This requires a JRE in `$PATH`.
 
 ## Refresh Overridden Templates

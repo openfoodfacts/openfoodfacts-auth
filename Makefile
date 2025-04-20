@@ -14,14 +14,14 @@ init:
 	npx playwright install --with-deps chromium firefox
 
 install:
-	mvn install
+	mvn clean install
 
 build_languages:
 	node build-scripts/build_languages.mjs
 
 build: build_languages
 # Generate a unique id for the build
-	cp /proc/sys/kernel/random/uuid runtime-scripts/image_id
+	cp -rf /proc/sys/kernel/random/uuid runtime-scripts/image_id
 	docker compose build
 
 dev: init run_deps build
@@ -73,6 +73,12 @@ refresh_themes:
 	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	$(MAKE) refresh_messages
+	$(MAKE) update_keycloak_version
+
+# Updates the Keycloak version in the pom.xml file as using ${env.KEYCLOAK_VERSION} can be tricky
+# with IDE's like VSCode that load Maven before the .env file has been evaluated
+update_keycloak_version:
+	node build-scripts/update_keycloak_version.mjs
 
 # This will find any existing Keycloak translations for messages defined in the messages_en file
 # It also downloads the current languages and countries taxonomies from openfoodfacts-server and

@@ -30,8 +30,6 @@ FROM maven:3-eclipse-temurin-21 AS builder
 
 Uses Maven version 3 with version 21 of the JDK.
 
-Note that the `KEYCLOAK_VERSION` environment variable needs to be set before any tools read the `pom.xml` file.
+Note that if the `KEYCLOAK_VERSION` is changed you will need to run `make update_keycloak_version` to update the `pom.xml` file.
 
 `make install` will download any other dependencies and run the unit tests.
-
-
