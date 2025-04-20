@@ -70,7 +70,11 @@ Please try and write a Playwright test to cover any specific overrides, so we kn
 
 ## Build
 
-Run `make build` to finally update the container images.
+Run `make build` to update the container images.
+
+## Test
+
+Make sure you re-run the end to end tests with `make test` after a Keycloak upgrade. Pay particular attention to the screen snapshots is it is often necessary to update the custom CSS for the OFF theme after a Keycloak upgrade.
 
 # Roadmap
 

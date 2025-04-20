@@ -124,6 +124,11 @@ export async function clickEmailVerifyLink(page: Page, message: any) {
 
 export async function populateRegistrationForm(page: Page, allFields = false) {
   const {userName, password, email} = generateRandomUser();
+  await fillRegistrationForm(page, userName, password, email, allFields);
+  return {userName, password, email};
+}
+
+async function fillRegistrationForm(page, userName, password, email, allFields) {
   await page.getByLabel('^username^').fill(userName);
   await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
   await page.getByLabel('^passwordConfirm^').fill(password);
@@ -138,7 +143,6 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 
   // Verify email page will now load. Extend timeout to avoid test issues
   await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
-  return {userName, password, email};
 }
 
 export function generateRandomUser() {
@@ -170,4 +174,20 @@ export async function getKeycloakHeaders() {
   headers.set('Authorization', 'Bearer ' + accessToken);
   headers.set('Content-Type', 'application/json');
   return headers;
+}
+
+export async function registerSnapshotUser(page: Page, testName) {
+  // Uniquely name snapshot users by test and browser so they don't clash during parallel runs
+  const snapshotUsername = `${testName}-${page.context().browser()?.browserType().name()}`;
+
+  // Delete user if already exists
+  const headers = await getKeycloakHeaders();
+  const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${snapshotUsername}`, {headers})).json();
+  if (users.length == 1) {
+    await fetch(`${keycloakUserUrl}/${users[0].id}`, {headers, method: 'DELETE'});
+  }
+
+  await fillRegistrationForm(page, snapshotUsername, 'test123', `${snapshotUsername}@openfoodfacts.org`, true);
+
+  return snapshotUsername;
 }
