@@ -17,3 +17,4 @@ A very simple test client application is hosted in the `tests/client` folder and
 The `screenshots.spec.ts` module captures full screen shots to check for UI changes between builds, e.g. after Keycloak upgrades.
 
 Screen shots are very sensitive to the environment, and so the master copies are generated from the GitHub Actions. This can be done by logging an `/update-screenshots` comment on your PR.  You may see some differences from these when you run tests locally, depending on your environment.
+
