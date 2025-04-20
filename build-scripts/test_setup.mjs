@@ -97,7 +97,9 @@ const userUrl = `${adminUrl}/users`;
 const user = (await (await fetch(`${userUrl}?username=service-account-${testClientId}`, {headers})).json())[0];
 
 // Get the id of the ream-management client
-const realmManagementClient = (await (await fetch(`${adminUrl}/clients?clientId=realm-management`, {headers})).json())[0];
+const realmManagementClientResponse = await (await fetch(`${adminUrl}/clients?clientId=realm-management`, {headers})).json();
+console.log(JSON.stringify(realmManagementClientResponse));
+const realmManagementClient = realmManagementClientResponse[0];
 
 // Get the id of the manage-users role
 const manageUsersRole = (await (await fetch(`${adminUrl}/clients/${realmManagementClient.id}/roles/manage-users`, {headers})).json());
