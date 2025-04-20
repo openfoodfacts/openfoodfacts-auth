@@ -2,7 +2,7 @@
 
 # Generate a unique config id from the image and environment. Don't include hostname as that is the container id
 echo "$(printenv | grep -v '^HOSTNAME' ; cat /etc/off/image_id)" | md5sum > /etc/off/config_id
-if [[ `cat /etc/off/config_id` == `cat /etc/off/deployed_config_id` ]]; then
+if [ -f /etc/off/deployed_config_id ] && [[ `cat /etc/off/config_id` == `cat /etc/off/deployed_config_id` ]]; then
     echo "*** Config is unchanged ***"
     echo Healthy > /tmp/health
 else
