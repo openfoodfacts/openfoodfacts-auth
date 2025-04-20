@@ -9,7 +9,7 @@ services:
     volumes:
       # Bind mount to themes and runtime-scripts folders so they can be edited without rebuilding
       - ./theme/off:/opt/keycloak/themes/off
-      - ./runtime-scripts:/etc/off
+      - ./runtime-scripts:/opt/off
 
   keycloak_postgres:
     ports:
