@@ -82,11 +82,12 @@ module.exports = defineConfig({
     reuseExistingServer: true,
   },
 
-  /* This figure is by trial and error to minimize false positives when running tests locally
-     Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */
   expect: {
     toHaveScreenshot: { 
-      maxDiffPixels: process.env.CI ? 0 : 700,
+      /* This figure is by trial and error to minimize false positives when running tests locally
+        Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */
+      maxDiffPixels: process.env.CI ? 0 : 3000,
+
       /* The following ensures we pick up background color block changes 
       without being so fussy as to detect subtle shadow changes */
       threshold: 0.1,
