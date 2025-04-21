@@ -6,7 +6,8 @@ services:
       - KC_DB_USERNAME
       - KC_DB_PASSWORD
       # Explicitly set the client secret for testing
-      - OFF_CLIENT_SECRET=Cf4NdSAjZsNO9HLcuXeuvukzFu00roQa
+      - OFF_CLIENT_SECRET
+      - OFF_PRO_CLIENT_SECRET
     ports:
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"

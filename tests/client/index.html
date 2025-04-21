@@ -1,16 +1,7 @@
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const clientId = urlParams.get('clientId');
-    const clientSecret = urlParams.get('clientSecret');
-    const lang = urlParams.get('lang');
-    const keycloak = decodeURIComponent(urlParams.get('keycloak'));
-    const nonce = crypto.getRandomValues(new BigUint64Array(1))[0];
-    function login() {
-        const url = `${keycloak}/protocol/openid-connect/auth?response_type=code&client_id=${clientId}&redirect_uri=${
-            encodeURIComponent(`http://localhost:5604/code.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(keycloak)}`)
-        }&scope=openid+profile+offline_access&state=${nonce}&ui_locales=${lang}`;
-        window.location = url;
+    async function login() {
+        const common = await import("./common.js");
+        common.login();
     }
 </script>
 <body>

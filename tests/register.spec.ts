@@ -6,10 +6,10 @@ test("general layout", async ({ page }) => {
   await gotoHome(page);
   await registerLink(page).click();
 
-  const beforeHelper = page.locator('.pf-c-form__helper-text-before:has-text("public user id"):above(#username)');
+  const beforeHelper = page.locator('#form-help-text-before-username:has-text("public user id"):above(#username)');
   expect(await matchStyles(beforeHelper, HELPER_TEXT)).toBeNull();
 
-  const afterHelper = page.locator('.pf-c-form__helper-text-after:has-text("public user id"):below(#username)');
+  const afterHelper = page.locator('#form-help-text-after-username:has-text("public user id"):below(#username)');
   expect(await matchStyles(afterHelper, HELPER_TEXT)).toBeNull();
 
   // Check dropdown icons are being displayed
@@ -66,6 +66,7 @@ test("newsletter and producer fields", async ({ page }) => {
   expect(myMessage).toBeTruthy();
   expect(myMessage?.message.newsletter).toBe('subscribe');
   expect(myMessage?.message.requestedOrg).toBe('carrefour');
+  expect(myMessage?.message.clientId).toBe('account-console');
 
   // Newsletter field should be hidden on edit
   await expect(page.getByLabel('^newsletter_description^')).not.toBeVisible();
@@ -106,9 +107,10 @@ test("user created by API doesn't need email verification", async ({page}) => {
   expect(myMessage?.message.requestedOrg).toBe('carrefour');
   expect(myMessage?.message.email).toBe(email);
   expect(myMessage?.message.userName).toBe(userName);
+  expect(myMessage?.message.clientId).toBe(process.env.TEST_CLIENT_ID);
 });
 
-test("migrated user with invlaid email loaded with no messages", async ({page}) => {
+test("migrated user with invalid email loaded with no messages", async ({page}) => {
   const redisClient = await createRedisClient('user-registered');
 
   const {userName, password, email} = generateRandomUser();

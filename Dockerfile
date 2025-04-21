@@ -23,16 +23,17 @@ COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-
 COPY --chown=keycloak:keycloak theme/off /opt/keycloak/themes/off
 
 # Pre-optimize the build for test-container rather than production as tests are deployed more often
-RUN /opt/keycloak/bin/kc.sh build --db=dev-mem
+# Note tried using dev-mem but is unpredictable when used in PO integration tests
+RUN /opt/keycloak/bin/kc.sh build --db=dev-file
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 
 COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 
 # OFF specific configurations
-COPY --chown=keycloak:keycloak runtime-scripts /etc/off
+COPY --chown=keycloak:keycloak runtime-scripts /opt/off
 
 # Need quite a long grace period for startup because of running migrations
 HEALTHCHECK --start-period=300s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
 
-ENTRYPOINT [ "sh", "/etc/off/startup.sh" ]
+ENTRYPOINT [ "sh", "/opt/off/startup.sh" ]

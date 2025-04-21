@@ -20,7 +20,7 @@ public class RedisClient implements AutoCloseable {
         this.jedis = new JedisPooled(url);
     }
 
-    public void postUserRegistered(final UserModel user, final RealmModel realm) {
+    public void postUserRegistered(final UserModel user, final RealmModel realm, final String clientId) {
         if (user == null) {
             throw new IllegalArgumentException("user");
         }
@@ -36,6 +36,8 @@ public class RedisClient implements AutoCloseable {
 
         final String requestedOrg = user.getFirstAttribute(UserAttributes.REQUESTED_ORG);
         putIfNotNull(additionalData, "requestedOrg", requestedOrg);
+
+        additionalData.put("clientId", clientId);
 
         postUserEvent("user-registered", user, realm, additionalData);
     }

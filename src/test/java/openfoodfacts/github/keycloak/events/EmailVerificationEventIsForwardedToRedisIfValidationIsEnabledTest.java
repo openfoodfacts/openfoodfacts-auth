@@ -57,6 +57,10 @@ public class EmailVerificationEventIsForwardedToRedisIfValidationIsEnabledTest {
                     return EventType.VERIFY_EMAIL;
                 }
 
+                @Override
+                public String getClientId() {
+                    return "test-client-client-id";
+                }
             });
 
             // Assert
@@ -75,6 +79,7 @@ public class EmailVerificationEventIsForwardedToRedisIfValidationIsEnabledTest {
             Assertions.assertEquals("theUserName", fields.get("userName"));
             Assertions.assertEquals("open-products-facts", fields.get("realm"));
             Assertions.assertEquals("subscribe", fields.get("newsletter"));
+            Assertions.assertEquals("test-client-client-id", fields.get("clientId"));
         }
     }
 

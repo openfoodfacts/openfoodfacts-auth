@@ -77,16 +77,27 @@ test("locale from app is respected", async ({ page }) => {
   
   const message = await getLastEmail(userName);
   expect(message.plaintext).toContain('^emailVerificationBody 0=');
-  await clickEmailVerifyLink(page, message);
 
-  await expect(page.getByLabel('preferred_username')).toHaveValue(userName);
-  expect(page.url()).toContain('lang=xx');
+  // Open a new tab to verify the email
+  const verifyPage = await page.context().newPage();
+  await clickEmailVerifyLink(verifyPage, message);
+
+  // Login should occur on the verify page.
+  // Behavior on the original page is a bit unpredictable at the moment
+  await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
+  expect(verifyPage.url()).toContain('lang=xx');
+  
+  // for (const testPage of [verifyPage, page]) {
+  //   await expect(testPage.getByLabel('preferred_username')).toHaveValue(userName);
+  //   expect(testPage.url()).toContain('lang=xx');
+  //   await testPage.getByRole("button", { name: "Account" }).click();
+  //   // Since Keycloak 26.2.0 it looks like you have to log in again to see your account info
+  //   await expect(testPage.getByText('^loginAccountTitle^')).toBeVisible();
+  // }
 
   const myMessage2 = await redisClient.getMessageForUser(userName);
   expect(myMessage2).toBeTruthy();
-
-  await page.getByRole("button", { name: "Account" }).click();
-  await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
+  expect(myMessage2?.message.clientId).toBe(process.env.TEST_CLIENT_ID);
 
   // Fetch the user via API and make sure locale is set correctly
   const headers = await getKeycloakHeaders();

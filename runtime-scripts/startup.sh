@@ -1,6 +1,18 @@
 # Running configuration after startup inspired by: https://keycloak.discourse.group/t/keycloak-x-docker-startup-scripts-not-being-executed/8208/6?u=famod
-echo "*** Starting background process ***"
-sh /etc/off/after_startup.sh &
+
+# Generate a unique config id from the image and environment. Don't include hostname as that is the container id
+# Note the /opt/off folder holds read-only data and ~/off holds data that is generated during script runs
+# They are kept separate as we mount /opt/off to a local folder during development to avoid rebuilds but that
+# creates permission issues in GitHub actions if we attempt to write back to the folder from the container
+mkdir -p ~/off
+echo "$(printenv | grep -v '^HOSTNAME' ; cat /opt/off/image_id)" | md5sum > ~/off/config_id
+if [ -f ~/off/deployed_config_id ] && [[ `cat ~/off/config_id` == `cat ~/off/deployed_config_id` ]]; then
+    echo "*** Config is unchanged ***"
+    echo Healthy > /tmp/health
+else
+    echo "*** Starting background process ***"
+    sh /opt/off/after_startup.sh &
+fi
 
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     echo "*** Starting keycloak in development mode ***"
@@ -12,7 +24,7 @@ elif [[ "$KEYCLOAK_STARTUP" == "prod" ]]; then
     /opt/keycloak/bin/kc.sh start --http-enabled=true --health-enabled=true --metrics-enabled=true --proxy-headers xforwarded
 else
     echo "*** Starting keycloak in test mode ***"
-    # Use pre-optimized image with dev-mem database for integration tests from other projects (like Product Opener)
+    # Use pre-optimized image with dev-file database for integration tests from other projects (like Product Opener)
     # for faster startup and minimal dependencies.
-    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true
+    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --cache=local
 fi

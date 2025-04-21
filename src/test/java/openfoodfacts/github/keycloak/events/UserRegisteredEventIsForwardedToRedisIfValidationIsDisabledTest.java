@@ -57,6 +57,10 @@ public class UserRegisteredEventIsForwardedToRedisIfValidationIsDisabledTest {
                     return EventType.REGISTER;
                 }
 
+                @Override
+                public String getClientId() {
+                    return "test-client-client-id";
+                }
             });
 
             // Assert
@@ -74,6 +78,7 @@ public class UserRegisteredEventIsForwardedToRedisIfValidationIsDisabledTest {
             Assertions.assertEquals("someUser@example.org", fields.get("email"));
             Assertions.assertEquals("theUserName", fields.get("userName"));
             Assertions.assertEquals("open-products-facts", fields.get("realm"));
+            Assertions.assertEquals("test-client-client-id", fields.get("clientId"));
         }
     }
 
