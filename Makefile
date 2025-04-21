@@ -53,7 +53,7 @@ remove_externals:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
 
 test: test_setup
-	npx playwright test
+	npx playwright test ${args}
 
 # Update expected screen shots. Need to be able to run this from CI in order to get a consistent environment
 update_screenshots: test_setup
@@ -113,10 +113,11 @@ create_user_prod:
 
 
 # Called by other projects to start this project as a dependency
-# Use docker compose pull to ensure we get the latest keycloak image
+# Use docker compose pull to ensure we get the latest keycloak image (unless we are using the dev image)
 run: create_user
-	${DOCKER_RUN} compose pull keycloak && \
-		if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
+	if [ "${KEYCLOAK_TAG}" != "dev" ]; then \
+	    ${DOCKER_RUN} compose pull keycloak; fi && \
+	if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
 		${DOCKER_RUN} compose logs && exit 1; fi
 
 # Space delimited list of dependant projects

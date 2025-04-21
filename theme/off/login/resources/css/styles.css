@@ -57,24 +57,30 @@
 }
 
 /* Info positioning an colour. Note this is effectively hidden at the moment on the main login screen */
+.pf-v5-c-login__main-footer {
+    margin: 0 -2rem;
+    display: block;
+}
 #kc-info {
-    margin: 20px -2rem -2rem;
-    background-color: var(--off-other-background);
+    margin: 0;
 }
 #kc-info-wrapper {
-    font-size: inherit;
     padding: 1rem 2rem;
-    background-color: transparent;
+    margin: 2rem 0 -2rem 0;
+    font-size: inherit;
+    background-color: var(--off-other-background);
+    text-align: left;
 }
 
 /* Move the new user actions above the login button */
 #kc-registration-container {
     position: absolute;
-    bottom: 5.5rem;
+    bottom: 5rem;
+    left: 2rem;
     border: none;
 }
 #kc-info-wrapper:has(#kc-registration-container:only-child) {
-    padding: 0 2rem;
+    padding: 0;
 }
 
 /* Social login section */
@@ -86,6 +92,8 @@
 .subtitle {
     margin-bottom: -1rem;
     margin-top: 0;
+    text-align: right;
+    color: var(--off-notification-background);
 }
 
 /* Helper text font size */
@@ -124,136 +132,3 @@
 h1#kc-page-title {
     margin-top: 0;
 }
-
-
-/* Fix input height on forgot password *-
-#kc-reset-password-form .pf-v5-c-form-control {
-    line-height: 2rem;
-}
-
-/* Re-authenticate message position*-
-.pf-v5-c-alert.pf-m-inline {
-    margin-top: 1rem;
-}
-
-/* Fix cancel button positoin on delete confirmation *-
-button[name=cancel-aia] {
-    margin-left: 2rem !important;
-}
-
-/* Remove excess spacing *-
-#kc-form-buttons {
-    margin-top: 0;
-}
-
-/* Move reset password instructions to top of form *-
-.pf-v5-c-login__main-body {
-    display: grid;
-}
-#kc-reset-password-form {
-    order: 2;
-}
-#kc-reset-password-form + #kc-info {
-    margin-top: 1rem;
-    margin-bottom: -1rem;
-    background-color: transparent;
-}
-
-/* Ensure red border covers whole of password fields 
-
-.pf-c-input-group > .pf-c-form-control[aria-invalid=true] {
-    border-bottom-width: 0;
-}
-.pf-c-input-group:has(> .pf-c-form-control[aria-invalid=true]) {
-    border-bottom: var(--pf-global--BorderWidth--md) solid var(--pf-global--danger-color--100)
-}
-/*
-.card-pf {
-    background-color: var(--off-background);
-}
-
-:root {
-    --pf-global--primary-color--100: var(--off-primary-action);
-    --pf-global--primary-color--200: var(--off-primary-action-hover);
-
-    --pf-global--BackgroundColor--light-100: var(--off-input-background);
-
-    --pf-global--BorderWidth--sm: var(--off-input-border-width);
-}
-
-a {
-    color: var(--off-primary-action);
-}
-
-.login-pf a:hover {
-    color: var(--off-primary-action-hover);
-}
-
-
-
-.pf-c-button.pf-m-block {
-    border-radius: var(--off-button-radius);
-    line-height: 2;
-}
-
-.login-pf-page .card-pf {
-    margin-top: 64px;
-}
-
-/* Prevent the locale selector from jumping into the title logo on small screens 
-#kc-locale {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: auto;
-    text-align: right;
-    z-index: 9999;
-}
-
-/* Move the "back to login" link to the top of the form 
-#kc-content {
-    position: relative;
-    padding-top: 1em;
-}
-#kc-form-options {
-    position: absolute;
-    top: 0;
-}
-
-/* Prevent Register from getting misaligned 
-.col-md-10 {
-    width: 100%;
-}
-
-/* Display password reset info at the top of the form 
-#kc-content-wrapper {
-    display:flex;
-    flex-flow: column;
-}
-#kc-info {
-    order: 1;
-    margin: 0
-}
-#kc-reset-password-form {
-    order: 2;
-}
-#kc-info-wrapper {
-    padding: 15px 0;
-    background-color: transparent;
-    text-align: initial;
-}
-
-/* Preserve title font size 
-.login-pf-page .login-pf-header h1 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-/* Ensure red border covers whole of password fields 
-.pf-c-input-group > .pf-c-form-control[aria-invalid=true] {
-    border-bottom-width: 0;
-}
-.pf-c-input-group:has(> .pf-c-form-control[aria-invalid=true]) {
-    border-bottom: var(--pf-global--BorderWidth--md) solid var(--pf-global--danger-color--100)
-}
-*/
