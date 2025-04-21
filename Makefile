@@ -34,6 +34,9 @@ up: run_deps create_user
 integration_test_target:
 	COMPOSE_FILE=docker-compose.yml KEYCLOAK_STARTUP=test KEYCLOAK_TAG=dev docker compose up --wait --wait-timeout 120
 
+show_keycloak_logs:
+	docker compose logs keycloak
+
 down:
 	docker compose down --remove-orphans
 
@@ -50,10 +53,14 @@ remove_externals:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
 
 test: test_setup
-	npx playwright test
+	npx playwright test ${args}
+
+# Update expected screen shots. Need to be able to run this from CI in order to get a consistent environment
+update_screenshots: test_setup
+	npx playwright test --update-snapshots screenshots.spec.ts
 
 # Currently using dev mode for tests as had issues using production mode in Github workflows
-test_setup: up
+test_setup: up show_keycloak_logs
 	node build-scripts/test_setup.mjs
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
@@ -106,10 +113,11 @@ create_user_prod:
 
 
 # Called by other projects to start this project as a dependency
-# Use docker compose pull to ensure we get the latest keycloak image
+# Use docker compose pull to ensure we get the latest keycloak image (unless we are using the dev image)
 run: create_user
-	${DOCKER_RUN} compose pull keycloak && \
-		if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
+	if [ "${KEYCLOAK_TAG}" != "dev" ]; then \
+	    ${DOCKER_RUN} compose pull keycloak; fi && \
+	if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
 		${DOCKER_RUN} compose logs && exit 1; fi
 
 # Space delimited list of dependant projects

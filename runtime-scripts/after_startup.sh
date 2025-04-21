@@ -30,13 +30,13 @@ rm -f /tmp/health
 # We use printf to do this as envsubst isn't available in the standard Keycloak image
 # Need to make sure arguments are added in the right order. 
 # Note refresh_messages will sort JSON templates alphabetically by key. 
-REALM_SETTINGS=$(cat /etc/off/realm_settings_template.json)
-CLIENT_TEMPLATE=$(cat /etc/off/productopener_client_template.json)
+REALM_SETTINGS=$(cat /opt/off/realm_settings_template.json)
+CLIENT_TEMPLATE=$(cat /opt/off/productopener_client_template.json)
 
 # smtpServer.host: $SMTP_SERVER
 printf "$REALM_SETTINGS" \
   "$SMTP_SERVER" \
-  > /etc/off/interpolated_realm_settings.json
+  > ~/off/interpolated_realm_settings.json
 
 # Waiting for Keycloak to start before proceeding with the configurations.
 wait_for_keycloak
@@ -48,15 +48,15 @@ echo "$(date -u) Configuring Keycloak"
 # Import the realm
 /opt/keycloak/bin/kcadm.sh get realms/open-products-facts &> /dev/null
 if [[ $? != 0 ]]; then
-  /opt/keycloak/bin/kcadm.sh create realms -f /etc/off/open-products-facts-realm.json
+  /opt/keycloak/bin/kcadm.sh create realms -f /opt/off/open-products-facts-realm.json
 fi
 # Note the realm import won't update an existing realm so the following are done explicitly as they
 # are more likely to change between releases
 
 # Apply latest settings, e.g. SMTP server
-/opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f /etc/off/interpolated_realm_settings.json
+/opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f ~/off/interpolated_realm_settings.json
 # Set up user attributes
-/opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /etc/off/users_profile.json
+/opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /opt/off/users_profile.json
 
 # Create clients
 for CLIENT in $CLIENTS
@@ -92,8 +92,8 @@ do
       "$CLIENT_URL" \
       "$CLIENT_URL" \
       "$CLIENT_SECRET" \
-      > /etc/off/interpolated_client_$CLIENT_ID.json
-    /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /etc/off/interpolated_client_$CLIENT_ID.json
+      > ~/off/interpolated_client_$CLIENT_ID.json
+    /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f ~/off/interpolated_client_$CLIENT_ID.json
     # Can't import client role mappings with the user. Note generated user name is always in lower case
     /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-${CLIENT_ID,,} --cclientid realm-management --rolename manage-users --rolename query-users
   fi
@@ -102,4 +102,4 @@ done
 echo "$(date -u) Keycloak configuration completed"
 echo Healthy > /tmp/health
 # Hash the current configuration
-echo "$(printenv | grep -v '^HOSTNAME' ; cat /etc/off/image_id)" | md5sum > /etc/off/deployed_config_id
+echo "$(printenv | grep -v '^HOSTNAME' ; cat /opt/off/image_id)" | md5sum > ~/off/deployed_config_id

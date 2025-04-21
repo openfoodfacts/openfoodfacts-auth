@@ -1911,6 +1911,42 @@ class Utils {
                         throw new UnsupportedOperationException("Unimplemented method 'setBruteForceStrategy'");
                     }
 
+                    @Override
+                    public boolean isAdminPermissionsEnabled() {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'isAdminPermissionsEnabled'");
+                    }
+
+                    @Override
+                    public void setAdminPermissionsEnabled(boolean adminPermissionsEnabled) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'setAdminPermissionsEnabled'");
+                    }
+
+                    @Override
+                    public boolean isVerifiableCredentialsEnabled() {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'isVerifiableCredentialsEnabled'");
+                    }
+
+                    @Override
+                    public void setVerifiableCredentialsEnabled(boolean verifiableCredentialsEnabled) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'setVerifiableCredentialsEnabled'");
+                    }
+
+                    @Override
+                    public ClientModel getAdminPermissionsClient() {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'getAdminPermissionsClient'");
+                    }
+
+                    @Override
+                    public void setAdminPermissionsClient(ClientModel client) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'setAdminPermissionsClient'");
+                    }
+
                 };
 
                 return new RealmProvider() {

@@ -6,10 +6,10 @@ test("general layout", async ({ page }) => {
   await gotoHome(page);
   await registerLink(page).click();
 
-  const beforeHelper = page.locator('.pf-c-form__helper-text-before:has-text("public user id"):above(#username)');
+  const beforeHelper = page.locator('#form-help-text-before-username:has-text("public user id"):above(#username)');
   expect(await matchStyles(beforeHelper, HELPER_TEXT)).toBeNull();
 
-  const afterHelper = page.locator('.pf-c-form__helper-text-after:has-text("public user id"):below(#username)');
+  const afterHelper = page.locator('#form-help-text-after-username:has-text("public user id"):below(#username)');
   expect(await matchStyles(afterHelper, HELPER_TEXT)).toBeNull();
 
   // Check dropdown icons are being displayed
