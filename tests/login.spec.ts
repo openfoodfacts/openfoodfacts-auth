@@ -88,7 +88,9 @@ test("locale from app is respected", async ({ page }) => {
     expect(testPage.url()).toContain('lang=xx');
   
     await testPage.getByRole("button", { name: "Account" }).click();
-    await expect(testPage.getByText('^personalInfoDescription^')).toBeVisible();
+
+    // Since Keycloak 26.2.0 it looks like you have to log in again to see your account info
+    await expect(testPage.getByText('^loginAccountTitle^')).toBeVisible();
   }
 
   const myMessage2 = await redisClient.getMessageForUser(userName);

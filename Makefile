@@ -53,7 +53,7 @@ remove_externals:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
 
 test: test_setup
-	npx playwright test
+	npx playwright test ${args}
 
 # Update expected screen shots. Need to be able to run this from CI in order to get a consistent environment
 update_screenshots: test_setup

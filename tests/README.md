@@ -12,6 +12,8 @@ We recommend using the "Playwright Test for VSCode" plugin.
 
 A very simple test client application is hosted in the `tests/client` folder and hosted in a test_client container as part of the development docker setup.
 
+With the current configuration this can be accessed with the following link: http://localhost:5604/index.html?clientId=test-client&clientSecret=test-secret123&lang=xx&keycloak=http%3A%2F%2Fauth.openfoodfacts.localhost%3A5600%2Frealms%2Fopen-products-facts
+
 # Screenshot Tests
 
 The `screenshots.spec.ts` module captures full screen shots to check for UI changes between builds, e.g. after Keycloak upgrades.
