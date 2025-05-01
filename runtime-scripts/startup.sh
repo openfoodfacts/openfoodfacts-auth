@@ -17,11 +17,11 @@ fi
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     echo "*** Starting keycloak in development mode ***"
     # In dev mode we still use the PostgreSQL database but use start-dev so that themes are dynamically reloaded
-    /opt/keycloak/bin/kc.sh start-dev --http-enabled=true --health-enabled=true --metrics-enabled=true --verbose
+    /opt/keycloak/bin/kc.sh start-dev --db=postgres --http-enabled=true --health-enabled=true --metrics-enabled=true --verbose
 elif [[ "$KEYCLOAK_STARTUP" == "prod" ]]; then
     echo "*** Starting keycloak in production mode ***"
     # Note can't use optimized as we use that for test containers and it doesn't include postgres
-    /opt/keycloak/bin/kc.sh start --http-enabled=true --health-enabled=true --metrics-enabled=true --proxy-headers xforwarded
+    /opt/keycloak/bin/kc.sh start --db=postgres --http-enabled=true --health-enabled=true --metrics-enabled=true --proxy-headers xforwarded
 else
     echo "*** Starting keycloak in test mode ***"
     # Use pre-optimized image with dev-file database for integration tests from other projects (like Product Opener)
