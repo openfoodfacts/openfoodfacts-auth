@@ -9,7 +9,7 @@
   "devDependencies": {
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.14.1",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.5.0",
     "json-stable-stringify": "^1.2.1",
     "redis": "^4.7.0",
     "xml2js": "^0.6.2"
