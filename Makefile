@@ -66,18 +66,30 @@ test_setup: up show_keycloak_logs
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
 refresh_themes:
-	rm -rf theme/base theme/keycloak theme/keycloak.v2 theme/keycloak.v3
+	rm -rf theme/theme
+	mkdir theme/theme
 	wget https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar --strip-components=4
-	jar xf org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar theme
+	unzip org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar \
+		theme/base/account/messages/* \
+		theme/base/admin/messages/* \
+		theme/base/email/messages/* \
+		theme/base/login/messages/* \
+		theme/base/email/html/template.ftl \
+		theme/keycloak.v2/login/user-profile-commons.ftl \
+		-d theme
 	rm org.keycloak.keycloak-themes-${KEYCLOAK_VERSION}.jar
 
 	tar -xzvf keycloak-${KEYCLOAK_VERSION}.tar.gz keycloak-${KEYCLOAK_VERSION}/lib/lib/main/org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar --strip-components=4
-	jar xf org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar theme
+	unzip org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar \
+		theme/keycloak.v3/account/index.ftl \
+		theme/keycloak.v3/account/messages/* \
+		theme/keycloak.v3/account/resources/content.json \
+		-d theme
 	rm org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar
 
-	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
+ 	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	$(MAKE) refresh_messages
 	$(MAKE) update_keycloak_version
