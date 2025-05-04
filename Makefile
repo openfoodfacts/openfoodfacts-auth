@@ -89,7 +89,7 @@ refresh_themes:
 		-d theme
 	rm org.keycloak.keycloak-account-ui-${KEYCLOAK_VERSION}.jar
 
- 	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
+	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	$(MAKE) refresh_messages
 	$(MAKE) update_keycloak_version
