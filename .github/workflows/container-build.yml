@@ -63,6 +63,5 @@ jobs:
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
           build-args:
             KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
