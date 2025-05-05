@@ -1,5 +1,5 @@
 <#macro emailLayout>
-<html lang="${locale.language}" dir="${(ltr)?then('ltr','rtl')}">
+<html>
 <body>
     <#nested>
 </body>
