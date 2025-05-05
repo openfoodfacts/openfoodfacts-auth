@@ -8,7 +8,7 @@ import { writeFileSync, readFileSync, existsSync, readdirSync, copyFileSync, rmS
 import { getLanguages } from './utils.mjs';
 import stringify from 'json-stable-stringify';
 
-const baseThemeDir = 'theme';
+const baseThemeDir = 'theme/theme';
 const offMessagesDir = `src/messages`;
 
 const enMessages = [];
