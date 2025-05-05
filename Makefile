@@ -19,9 +19,11 @@ install:
 build_languages:
 	node build-scripts/build_languages.mjs
 
-build: build_languages
+pre_build: build_languages
 # Generate a unique id for the build
 	cp -rf /proc/sys/kernel/random/uuid runtime-scripts/image_id
+
+build: pre_build
 	docker compose build
 
 dev: init run_deps build

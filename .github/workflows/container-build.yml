@@ -52,7 +52,7 @@ jobs:
             type=sha,format=long
 
       - name: Prepare Docker build
-        run: mkdir target && make build
+        run: make pre_build
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
