@@ -1911,6 +1911,7 @@ class Utils {
                         throw new UnsupportedOperationException("Unimplemented method 'setBruteForceStrategy'");
                     }
 
+                    /* Added in Keycloak 26.2.0
                     @Override
                     public boolean isAdminPermissionsEnabled() {
                         // TODO Auto-generated method stub
@@ -1946,7 +1947,7 @@ class Utils {
                         // TODO Auto-generated method stub
                         throw new UnsupportedOperationException("Unimplemented method 'setAdminPermissionsClient'");
                     }
-
+*/
                 };
 
                 return new RealmProvider() {
