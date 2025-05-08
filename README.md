@@ -66,7 +66,7 @@ We have overridden a small number of standard Keycloak templates where needed. M
 <!-- OFF specific changes: ...
 ```
 
-Please try and write a Playwright test to cover any specific overrides, so we know when it is safe to remove them.
+If you need to override a new template make sure it is listed in the `refresh_themes` target of the `Makefile` so that we can track further changes made by Keycloak to that template. Please try and write a Playwright test to cover any specific overrides, so we know when it is safe to remove them.
 
 ## Build
 

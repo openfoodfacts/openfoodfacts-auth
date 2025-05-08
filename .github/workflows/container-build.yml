@@ -52,7 +52,7 @@ jobs:
             type=sha,format=long
 
       - name: Prepare Docker build
-        run: mkdir target && make build
+        run: make pre_build
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -63,6 +63,5 @@ jobs:
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
           build-args:
             KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}

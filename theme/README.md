@@ -1,6 +1,8 @@
 # Themes
 
-The OpenFoodFacts theme is in the off directory. The other directories are a copy of the default themes that come with Keycloak and are extracted here purely for reference.
+The OpenFoodFacts theme is in the off directory. The `theme`sub-directory contains copies files from the the default themes that come with Keycloak that we override and are extracted here purely for reference.
+
+You will need to update the `refresh_themes` target of the `Makefile` if you need to override any new templates.
 
 To refresh the default Keycloak themes run `make refresh_themes`
 
