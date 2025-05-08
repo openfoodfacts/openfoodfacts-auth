@@ -31,9 +31,9 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 
 # OFF specific configurations
-COPY --chown=keycloak:keycloak runtime-scripts /etc/off
+COPY --chown=keycloak:keycloak runtime-scripts /opt/off
 
 # Need quite a long grace period for startup because of running migrations
 HEALTHCHECK --start-period=300s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'
 
-ENTRYPOINT [ "sh", "/etc/off/startup.sh" ]
+ENTRYPOINT [ "sh", "/opt/off/startup.sh" ]

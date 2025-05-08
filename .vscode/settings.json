@@ -2,5 +2,7 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
         "keycloak"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "maven.pomfile.autoUpdateEffectivePOM": true
 }
