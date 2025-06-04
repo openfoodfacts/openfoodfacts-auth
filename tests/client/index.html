@@ -3,7 +3,12 @@
         const common = await import("./common.js");
         common.login();
     }
+    async function pkceLogin() {
+        const common = await import("./common.js");
+        common.pkceLogin();
+    }
 </script>
 <body>
     <button onclick="login()">Login</button>
+    <button onclick="pkceLogin()">PKCE Login</button>
 </body>

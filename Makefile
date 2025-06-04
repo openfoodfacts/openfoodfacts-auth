@@ -61,9 +61,11 @@ test: test_setup
 update_screenshots: test_setup
 	npx playwright test --update-snapshots screenshots.spec.ts
 
-# Currently using dev mode for tests as had issues using production mode in Github workflows
-test_setup: up show_keycloak_logs
+create_test_clients:
 	node build-scripts/test_setup.mjs
+
+# Currently using dev mode for tests as had issues using production mode in Github workflows
+test_setup: up show_keycloak_logs create_test_clients
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
