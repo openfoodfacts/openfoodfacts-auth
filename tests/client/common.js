@@ -30,7 +30,9 @@ function base64URLEncode(bytes) {
 
 export async function pkceLogin() {
   const verifier = base64URLEncode(crypto.getRandomValues(new Uint8Array(32)));
-  sessionStorage.setItem("verifier", verifier);
+  // Save the verifier so that the code page can access it
+  // Should really use sessionStorage but for tests when we click a verification email that starts a separate session
+  localStorage.setItem("verifier", verifier);
   const codeChallenge = base64URLEncode(
     new Uint8Array(
       await crypto.subtle.digest(

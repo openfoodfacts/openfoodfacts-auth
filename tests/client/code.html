@@ -22,7 +22,7 @@
         "Basic " + btoa(`${clientId}:${clientSecret}`)
       );
     } else {
-      const verifier = sessionStorage.getItem("verifier");
+      const verifier = localStorage.getItem("verifier");
       body = new URLSearchParams({
         code: code,
         grant_type: "authorization_code",
