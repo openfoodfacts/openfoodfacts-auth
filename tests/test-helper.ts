@@ -9,6 +9,8 @@ export const registerLink = (page: Page) => page.getByRole("link", { name: "Crea
 export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "^doForgotPassword^" });
 export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?clientId=${
   process.env.TEST_CLIENT_ID
+}&pkceClientId=${
+  process.env.TEST_PKCE_CLIENT_ID
 }&clientSecret=${
   process.env.TEST_CLIENT_SECRET
 }&lang=${
