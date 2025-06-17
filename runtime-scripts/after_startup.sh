@@ -59,13 +59,12 @@ fi
 /opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /opt/off/users_profile.json
 
 # Create clients
-for CLIENT in $CLIENTS
+for CLIENT_ID in $(echo $CLIENTS | tr ',' ' ')
 do
-  IFS=","
-  CLIENT_PARTS=($CLIENT)
-  unset IFS
-  CLIENT_ID=${CLIENT_PARTS[0]}
-  CLIENT_URL=${CLIENT_PARTS[1]}
+  # Get BASE_URL and CLIENT_SECRET from environment variables
+  BASE_URL_VAR="${CLIENT_ID}_BASE_URL"
+  CLIENT_URL="${!BASE_URL_VAR}"
+
   EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r open-products-facts)
   if [[ "$EXISTING_CLIENT" == "[ ]" ]];then
     SECRET_KEY=${CLIENT_ID}_CLIENT_SECRET
@@ -74,25 +73,53 @@ do
     if [[ "$CLIENT_SECRET" == "\"\"" ]]; then 
       CLIENT_SECRET=null
     fi
+
+    # override the default value of POST_LOGOUT_REDIRECT_URIS if it is set in the environment for a particular client. Environment variable will be in this format: <CLIENT_ID>_POST_LOGOUT_REDIRECT_URIS
+    POST_LOGOUT_REDIRECT_URIS="${CLIENT_URL}/cgi/oidc_signout_callback.pl"  # default value
+    POST_LOGOUT_REDIRECT_URIS_VAR="${CLIENT_ID}_POST_LOGOUT_REDIRECT_URIS"  # env variable name
+    # Check if the environment variable is set and use its value if it is
+    if [[ -n "${!POST_LOGOUT_REDIRECT_URIS_VAR}" ]]; then
+      POST_LOGOUT_REDIRECT_URIS="${!POST_LOGOUT_REDIRECT_URIS_VAR}"
+    fi
+
+    # override the default value of PUBLIC_CLIENT if it is set in the environment for a particular client. Environment variable will be in this format: <CLIENT_ID>_PUBLIC_CLIENT
+    PUBLIC_CLIENT="false"  # default value
+    PUBLIC_CLIENT_VAR="${CLIENT_ID}_PUBLIC_CLIENT"  # env variable name
+    # Check if the environment variable is set and use its value if it is
+    if [[ -n "${!PUBLIC_CLIENT_VAR}" ]]; then
+      PUBLIC_CLIENT="${!PUBLIC_CLIENT_VAR}"
+    fi
+
+    # override the default value of REDIRECT_URIS if it is set in the environment for a particular client. Environment variable will be in this format: <CLIENT_ID>_REDIRECT_URIS
+    REDIRECT_URIS="${CLIENT_URL}/cgi/oidc_signin_callback.pl"  # default value
+    REDIRECT_URIS_VAR="${CLIENT_ID}_REDIRECT_URIS"  # env variable name
+    # Check if the environment variable is set and use its value if it is
+    if [[ -n "${!REDIRECT_URIS_VAR}" ]]; then
+      REDIRECT_URIS="${!REDIRECT_URIS_VAR}"
+    fi
+
     # These are the current parameters in order:
     # clients[0].adminUrl: $CLIENT_URL
-    # clients[0].attributes.post.logout.redirect.uris: $CLIENT_URL
+    # clients[0].attributes.post.logout.redirect.uris: $POST_LOGOUT_REDIRECT_URIS
     # clients[0].baseUrl: $CLIENT_URL
     # clients[0].clientId: $CLIENT_ID
     # clients[0].name: $CLIENT_ID
-    # clients[0].redirectUris: $CLIENT_URL
+    # clients[0].publicClient: $PUBLIC_CLIENT
+    # clients[0].redirectUris: $REDIRECT_URIS
     # clients[0].rootUrl: $CLIENT_URL
     # clients[0].secret: $CLIENT_SECRET
     printf "$CLIENT_TEMPLATE" \
       "$CLIENT_URL" \
-      "$CLIENT_URL" \
+      "$POST_LOGOUT_REDIRECT_URIS" \
       "$CLIENT_URL" \
       "$CLIENT_ID" \
       "$CLIENT_ID" \
-      "$CLIENT_URL" \
+      "$PUBLIC_CLIENT" \
+      "$REDIRECT_URIS" \
       "$CLIENT_URL" \
       "$CLIENT_SECRET" \
       > ~/off/interpolated_client_$CLIENT_ID.json
+      
     /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f ~/off/interpolated_client_$CLIENT_ID.json
     # Can't import client role mappings with the user. Note generated user name is always in lower case
     /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-${CLIENT_ID,,} --cclientid realm-management --rolename manage-users --rolename query-users
