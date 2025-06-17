@@ -61,6 +61,8 @@ fi
 # Create clients
 for CLIENT_ID in $(echo $CLIENTS | tr ',' ' ')
 do
+  echo "Configuring client: $CLIENT_ID"
+
   # Get BASE_URL and CLIENT_SECRET from environment variables
   BASE_URL_VAR="${CLIENT_ID}_BASE_URL"
   CLIENT_URL="${!BASE_URL_VAR}"
@@ -97,6 +99,8 @@ do
     if [[ -n "${!REDIRECT_URIS_VAR}" ]]; then
       REDIRECT_URIS="${!REDIRECT_URIS_VAR}"
     fi
+
+    echo "Creating client: $CLIENT_ID with BASE_URL: $CLIENT_URL, CLIENT_SECRET: $CLIENT_SECRET, POST_LOGOUT_REDIRECT_URIS: $POST_LOGOUT_REDIRECT_URIS, PUBLIC_CLIENT: $PUBLIC_CLIENT, REDIRECT_URIS: $REDIRECT_URIS"
 
     # These are the current parameters in order:
     # clients[0].adminUrl: $CLIENT_URL
