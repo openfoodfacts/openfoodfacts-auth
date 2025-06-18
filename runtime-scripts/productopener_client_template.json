@@ -8,7 +8,7 @@
     "display.on.consent.screen": "false",
     "oauth2.device.authorization.grant.enabled": "false",
     "oidc.ciba.grant.enabled": "false",
-    "post.logout.redirect.uris": "%s/cgi/oidc_signout_callback.pl"
+    "post.logout.redirect.uris": "%s"
   },
   "authenticationFlowBindingOverrides": {},
   "baseUrl": "%s/",
@@ -84,8 +84,8 @@
       "protocolMapper": "oidc-usersessionmodel-note-mapper"
     }
   ],
-  "publicClient": false,
-  "redirectUris": ["%s/cgi/oidc_signin_callback.pl"],
+  "publicClient": %s,
+  "redirectUris": ["%s"],
   "rootUrl": "%s/",
   "secret": %s,
   "serviceAccountsEnabled": true,
