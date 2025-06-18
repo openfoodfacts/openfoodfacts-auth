@@ -59,7 +59,7 @@ fi
 /opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /opt/off/users_profile.json
 
 # Create clients
-for CLIENT_ID in $(echo $CLIENTS | tr ',' ' ')
+for CLIENT_ID in $CLIENTS
 do
   echo "Configuring client: $CLIENT_ID"
 
