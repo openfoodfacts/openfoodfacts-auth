@@ -97,7 +97,7 @@ test("locale from app is respected", async ({ page }) => {
 
   const myMessage2 = await redisClient.getMessageForUser(userName);
   expect(myMessage2).toBeTruthy();
-  expect(myMessage2?.message.clientId).toBe(process.env.TEST_CLIENT_ID);
+  expect(myMessage2?.message.clientId).toBe('test_client');
 
   // Fetch the user via API and make sure locale is set correctly
   const headers = await getKeycloakHeaders();
@@ -133,10 +133,10 @@ test("pkce login works", async ({ page }) => {
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
   await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
-  await expect(verifyPage.getByLabel('azp')).toHaveValue(process.env.TEST_PKCE_CLIENT_ID || '');
+  await expect(verifyPage.getByLabel('azp')).toHaveValue('test_public_client');
   expect(verifyPage.url()).toContain('lang=xx');
   
   const myMessage2 = await redisClient.getMessageForUser(userName);
   expect(myMessage2).toBeTruthy();
-  expect(myMessage2?.message.clientId).toBe(process.env.TEST_PKCE_CLIENT_ID);
+  expect(myMessage2?.message.clientId).toBe('test_public_client');
 });

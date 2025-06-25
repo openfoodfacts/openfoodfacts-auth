@@ -7,15 +7,7 @@ const keycloakRealmUrl = `${keycloakBaseUrl}/realms/${keycloakRealm}`;
 export const gotoHome = async (page: Page) => await page.goto(`${keycloakRealmUrl}/account/#/`);
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
 export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "^doForgotPassword^" });
-export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?clientId=${
-  process.env.TEST_CLIENT_ID
-}&pkceClientId=${
-  process.env.TEST_PKCE_CLIENT_ID
-}&clientSecret=${
-  process.env.TEST_CLIENT_SECRET
-}&lang=${
-  lang
-}&keycloak=${encodeURIComponent(keycloakRealmUrl)}`);
+export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?lang=${lang}`);
 const smtp4devApi = `http://localhost:${process.env.SMTP4DEV_PORT}/api/Messages`;
 export const keycloakUserUrl = `${keycloakBaseUrl}/admin/realms/${keycloakRealm}/users`;
 export const matchStyles = async (
@@ -158,8 +150,8 @@ export function generateRandomUser() {
 export async function getKeycloakHeaders() {
   const formData = new URLSearchParams();
   formData.append('grant_type', 'client_credentials');
-  formData.append('client_id', process.env.TEST_CLIENT_ID ?? '');
-  formData.append('client_secret', process.env.TEST_CLIENT_SECRET ?? '');
+  formData.append('client_id', 'test_client');
+  formData.append('client_secret', 'test-client-secret');
 
   const tokenUrl = `${keycloakRealmUrl}/protocol/openid-connect/token`;
 

@@ -1,5 +1,4 @@
 {
-  "adminUrl": "%s/",
   "alwaysDisplayInConsole": true,
   "attributes": {
     "backchannel.logout.revoke.offline.tokens": "false",
@@ -8,13 +7,12 @@
     "display.on.consent.screen": "false",
     "oauth2.device.authorization.grant.enabled": "false",
     "oidc.ciba.grant.enabled": "false",
-    "post.logout.redirect.uris": "%s/cgi/oidc_signout_callback.pl"
+    "post.logout.redirect.uris": "http://*"
   },
   "authenticationFlowBindingOverrides": {},
-  "baseUrl": "%s/",
   "bearerOnly": false,
   "clientAuthenticatorType": "client-secret",
-  "clientId": "%s",
+  "clientId": "test_client",
   "consentRequired": false,
   "defaultClientScopes": [
     "web-origins",
@@ -24,13 +22,13 @@
     "roles",
     "email"
   ],
-  "description": "Client used by ProductOpener",
+  "description": "Confidential client used for testing",
   "directAccessGrantsEnabled": true,
   "enabled": true,
   "frontchannelLogout": true,
   "fullScopeAllowed": true,
   "implicitFlowEnabled": false,
-  "name": "%s",
+  "name": "Confidential client used for testing",
   "nodeReRegistrationTimeout": -1,
   "notBefore": 0,
   "optionalClientScopes": [
@@ -85,9 +83,8 @@
     }
   ],
   "publicClient": false,
-  "redirectUris": ["%s/cgi/oidc_signin_callback.pl"],
-  "rootUrl": "%s/",
-  "secret": %s,
+  "redirectUris": ["http://*"],
+  "secret": "test-client-secret",
   "serviceAccountsEnabled": true,
   "standardFlowEnabled": true,
   "surrogateAuthRequired": false,
