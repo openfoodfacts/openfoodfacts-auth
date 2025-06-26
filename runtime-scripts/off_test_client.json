@@ -12,7 +12,7 @@
   "authenticationFlowBindingOverrides": {},
   "bearerOnly": false,
   "clientAuthenticatorType": "client-secret",
-  "clientId": "test_client",
+  "clientId": "OFF",
   "consentRequired": false,
   "defaultClientScopes": [
     "web-origins",
@@ -22,13 +22,13 @@
     "roles",
     "email"
   ],
-  "description": "Confidential client used for testing",
-  "directAccessGrantsEnabled": false,
+  "description": "High privilege client used for testing",
+  "directAccessGrantsEnabled": true,
   "enabled": true,
   "frontchannelLogout": true,
   "fullScopeAllowed": true,
   "implicitFlowEnabled": false,
-  "name": "Confidential client used for testing",
+  "name": "High privilege client used for testing",
   "nodeReRegistrationTimeout": -1,
   "notBefore": 0,
   "optionalClientScopes": [
@@ -84,8 +84,8 @@
   ],
   "publicClient": false,
   "redirectUris": ["http://*"],
-  "secret": "test-client-secret",
-  "serviceAccountsEnabled": false,
+  "secret": "Cf4NdSAjZsNO9HLcuXeuvukzFu00roQa",
+  "serviceAccountsEnabled": true,
   "standardFlowEnabled": true,
   "surrogateAuthRequired": false,
   "webOrigins": ["*"]

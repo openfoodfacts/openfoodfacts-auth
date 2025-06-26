@@ -74,18 +74,18 @@ fi
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
   echo "$(date -u) *** Creating test clients ***"
   # Create clients
-  for CLIENT_ID in test_client test_public_client
+  for CLIENT_ID in off_test_client test_client test_public_client
   do
     echo "$(date -u) *** Checking if client $CLIENT_ID exists ***"
     EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r open-products-facts  --fields clientId)
     if [[ "$EXISTING_CLIENT" == "[ ]" ]];then
       echo "$(date -u) *** Creating client $CLIENT_ID ***"
       /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /opt/off/$CLIENT_ID.json
-      # Can't import client role mappings with the user. Note generated user name is always in lower case
-      echo "$(date -u) *** Assigning role mappings for client $CLIENT_ID ***"
-      /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-${CLIENT_ID,,} --cclientid realm-management --rolename manage-users --rolename query-users
     fi
   done
+  # The off client has additional permissions but can't import client role mappings with the user. Note generated user name is always in lower case
+  echo "$(date -u) *** Assigning role mappings for client OFF ***"
+  /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-off --cclientid realm-management --rolename manage-users --rolename query-users
   echo "$(date -u) *** Test clients created ***"
 fi
 

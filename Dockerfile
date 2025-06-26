@@ -32,8 +32,8 @@ FROM base AS testcontainer
 
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=root
 ENV KC_BOOTSTRAP_ADMIN_PASSWORD=root-test-password
-ENV KC_HOSTNAME=http://keycloak:8080
-ENV KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
+ENV KC_HOSTNAME_STRICT=false
+ENV KC_HOSTNAME_BACKCHANNEL_DYNAMIC=false
 ENV SMTP_SERVER=smtp
 
 # Note have to put the following in a separate script as RUN doesn't seem to cope with starting a background process (& suffix)
@@ -42,7 +42,7 @@ RUN sh /opt/off/configure_testcontainer.sh
 # Need quite a long grace period for startup because of running migrations
 HEALTHCHECK --start-period=300s --interval=1s CMD timeout 1s bash -c 'echo > /dev/tcp/localhost/8080'
 
-ENTRYPOINT [ "/opt/keycloak/bin/kc.sh", "start", "--optimized", "--http-enabled=true", "--cache=local" ]
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh", "start", "--optimized", "--http-enabled=true", "--cache=local", "--verbose" ]
 
 FROM base
 # Production image. This is also used for dev. Health and metrics don't seem to add too much to the startup time

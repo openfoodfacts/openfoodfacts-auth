@@ -35,7 +35,7 @@ _up:
 up: run_deps create_user _up
 
 build_test: pre_build
-	BUILD_TARGET=testcontainer docker compose build
+	BUILD_TARGET=testcontainer docker compose --progress=plain build
 
 # Minimal container used by other projects for integration tests. Make target here is just to test it can start
 integration_test_target:
