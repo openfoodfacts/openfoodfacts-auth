@@ -54,22 +54,6 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and push Docker test image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: ${{ github.event_name == 'pull_request' }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
-          platforms: linux/amd64,linux/arm64
-          target: test
-          build-args:
-            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
-          tags: |
-            ghcr.io/openfoodfacts/openfoodfacts-auth:test
-          labels: |
-            org.opencontainers.image.version=test
-      
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -82,3 +66,22 @@ jobs:
             KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Docker testcontainer image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          # TODO: Change this to !=
+          push: ${{ github.event_name == 'pull_request' }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
+          platforms: linux/amd64,linux/arm64
+          target: testcontainer
+          build-args:
+            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
+          tags: |
+            ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
+          labels: |
+            org.opencontainers.image.version=testcontainer
+            org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
+      

@@ -28,6 +28,9 @@ rm -f /tmp/health
 wait_for_keycloak
 
 # Keycloak is running. Check to see if if this is a new build, in which case apply realm settings
+# Note the /opt/off folder holds read-only data and ~/off holds data that is generated during script runs
+# They are kept separate as we mount /opt/off to a local folder during development to avoid rebuilds but that
+# creates permission issues in GitHub actions if we attempt to write back to the folder from the container
 if [ -f ~/off/deployed_image_id ] && [[ `cat /opt/off/image_id` == `cat ~/off/deployed_image_id` ]]; then
     echo "$(date -u) *** Build is unchanged ***"
 else
@@ -50,7 +53,7 @@ else
   /opt/keycloak/bin/kcadm.sh get realms/open-products-facts --fields realm &> /dev/null
   if [[ $? != 0 ]]; then
     echo "$(date -u) *** Importing realm ***"
-    /opt/keycloak/bin/kcadm.sh create realms -f /opt/off/open-products-facts-realm.json
+    /opt/keycloak/bin/kcadm.sh create realms -f /opt/off/open-products-facts_realm.json
   fi
 
   # Note the realm import won't update an existing realm so the following are done explicitly as they

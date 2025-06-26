@@ -56,6 +56,4 @@ Note that these template files contain '%' placeholders which are used in the `a
 
 ### Backward compatibility
 
-Username password authentication is still needed for now, which will use the password grant type (deprecated in OAuth 2.1). This is enabled using the `directAccessGrantsEnabled` key in the `productopener_client_template.json`
-
-Note that the existing `after_startup.sh` script does not update settings for existing clients, so these will need to be changed manually (on the Client > Settings page) when Direct access grants are revoked in the future.
+Username password authentication is still needed for now, which will use the password grant type (deprecated in OAuth 2.1). This is enabled using the `directAccessGrantsEnabled` key in the `test_client.json` file.
