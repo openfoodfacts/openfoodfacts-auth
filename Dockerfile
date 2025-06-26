@@ -32,7 +32,7 @@ FROM base AS testcontainer
 
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=root
 ENV KC_BOOTSTRAP_ADMIN_PASSWORD=root-test-password
-ENV KC_HOSTNAME=http://auth.openfoodfacts.localhost:5600
+ENV KC_HOSTNAME=http://keycloak:8080
 ENV KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
 ENV SMTP_SERVER=smtp
 

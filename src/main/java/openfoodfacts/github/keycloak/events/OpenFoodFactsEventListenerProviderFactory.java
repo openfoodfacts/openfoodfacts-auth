@@ -131,7 +131,7 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
     public void init(Config.Scope scope) {
         final String redisUrl = scope.get("redisUrl");
         if(redisUrl != null && !redisUrl.trim().isEmpty()) {
-            this.client = new RedisClient(redisUrl);
+            this.client = new RedisClient("redis://" + redisUrl + "/0");
         } else {
             log.warn("REDIS_URL not specified");
         }
