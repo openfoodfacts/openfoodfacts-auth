@@ -71,8 +71,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          # TODO: Change this to !=
-          push: ${{ github.event_name == 'pull_request' }}
+          push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
           platforms: linux/amd64,linux/arm64
