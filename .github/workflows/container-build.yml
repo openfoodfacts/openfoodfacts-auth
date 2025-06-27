@@ -53,7 +53,7 @@ jobs:
 
       - name: Prepare Docker build
         run: make pre_build
-      
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -61,7 +61,27 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
           build-args:
             KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Docker testcontainer image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
+          platforms: linux/amd64,linux/arm64
+          target: testcontainer
+          build-args:
+            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
+          tags: |
+            ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
+          labels: |
+            org.opencontainers.image.version=testcontainer
+          # Need to set the description via an annotation as this is a multi-arch image (https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images)
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
+      

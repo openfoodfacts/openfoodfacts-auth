@@ -29,12 +29,20 @@ build: pre_build
 dev: init run_deps build
 
 # Need a long wait timeout in case full migrations are running
-up: run_deps create_user
+_up:
 	docker compose up --wait --wait-timeout 120
+
+# Make sure the dev default COMPOSE_FILE is used so that the postgres container is not re-created by the create_user task
+up: DOCKER_RUN=docker
+up: run_deps create_user _up
+
+build_test: pre_build
+	BUILD_TARGET=testcontainer docker compose --progress=plain build
 
 # Minimal container used by other projects for integration tests. Make target here is just to test it can start
 integration_test_target:
-	COMPOSE_FILE=docker-compose.yml KEYCLOAK_STARTUP=test KEYCLOAK_TAG=dev docker compose up --wait --wait-timeout 120
+	COMPOSE_FILE=docker-compose.yml KEYCLOAK_TAG=testcontainer docker compose up --wait --wait-timeout 120
+	$(MAKE) show_keycloak_logs
 
 show_keycloak_logs:
 	docker compose logs keycloak
@@ -61,9 +69,7 @@ test: test_setup
 update_screenshots: test_setup
 	npx playwright test --update-snapshots screenshots.spec.ts
 
-# Currently using dev mode for tests as had issues using production mode in Github workflows
 test_setup: up show_keycloak_logs
-	node build-scripts/test_setup.mjs
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference

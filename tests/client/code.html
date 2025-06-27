@@ -1,33 +1,39 @@
 <script>
   (async () => {
-    const {code, clientId, clientSecret, keycloak, lang, error, login} = await import("./common.js");
+    const {code, clientId, pkceClientId, clientSecret, keycloak, lang, error, login, pkceLogin, redirectUri, mode} = await import("./common.js");
 
     if (!code) {
       // Try again if we get a temporarily unavailable error
       if (error === "temporarily_unavailable") {
-        login();
+        mode == "pkce" ? pkceLogin() : login();
       }
     }
 
-    const formData = new FormData();
-    formData.append("code", code);
-    formData.append("grant_type", "authorization_code");
-    formData.append(
-      "redirect_uri",
-      `http://localhost:5604/code.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(
-        keycloak
-      )}`
-    );
-
+    let body;
     const headers = new Headers();
-    headers.set(
-      "Authorization",
-      "Basic " + btoa(`${clientId}:${clientSecret}`)
-    );
+    if (mode != "pkce") {
+      body = new FormData();
+      body.append("code", code);
+      body.append("grant_type", "authorization_code");
+      body.append("redirect_uri", redirectUri());
 
+      headers.set(
+        "Authorization",
+        "Basic " + btoa(`${clientId}:${clientSecret}`)
+      );
+    } else {
+      const verifier = localStorage.getItem("verifier");
+      body = new URLSearchParams({
+        code: code,
+        grant_type: "authorization_code",
+        redirect_uri: redirectUri(true),
+        client_id: pkceClientId,
+        code_verifier: verifier
+      });
+    }
     const response = await fetch(`${keycloak}/protocol/openid-connect/token`, {
       method: "POST",
-      body: formData,
+      body: body,
       headers: headers,
     });
     const jwt = await response.json();
@@ -40,9 +46,7 @@
       window.location = `${keycloak}/protocol/openid-connect/logout?client_id=${
         accessToken.azp
       }&post_logout_redirect_uri=${encodeURIComponent(
-        `http://localhost:5604/index.html?clientId=${clientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(
-          keycloak
-        )}`
+        redirectUri(false, "index")
       )}&id_token_hint=${jwt.id_token}`;
     });
     document.body.appendChild(logout);

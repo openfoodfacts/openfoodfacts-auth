@@ -61,7 +61,7 @@ test("locale from app is respected", async ({ page }) => {
   const redisClient = await createRedisClient('user-registered');
 
   await gotoTestPage(page, 'xx');
-  await page.getByRole("button", { name: "Login" }).click();
+  await page.getByRole("button", { name: "Login", exact: true }).click();
 
   // Login page
   await expect(page).toHaveTitle("^loginTitle 0=Open Products Facts^");
@@ -97,10 +97,46 @@ test("locale from app is respected", async ({ page }) => {
 
   const myMessage2 = await redisClient.getMessageForUser(userName);
   expect(myMessage2).toBeTruthy();
-  expect(myMessage2?.message.clientId).toBe(process.env.TEST_CLIENT_ID);
+  expect(myMessage2?.message.clientId).toBe('test_client');
 
   // Fetch the user via API and make sure locale is set correctly
   const headers = await getKeycloakHeaders();
   const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}`, {headers})).json();
   expect(users[0].attributes.locale[0]).toBe('xx');
+});
+
+test("pkce login works", async ({ page }) => {
+  const redisClient = await createRedisClient('user-registered');
+
+  await gotoTestPage(page, 'xx');
+  await page.getByRole("button", { name: "PKCE Login", exact: true }).click();
+
+  // Login page
+  await expect(page).toHaveTitle("^loginTitle 0=Open Products Facts^");
+  await page.getByRole("link", { name: "^doRegister^" }).click();
+
+  // Registration page
+  expect(page.getByText('^registerTitle^')).toBeVisible();
+  const {userName} = await populateRegistrationForm(page);
+
+  // Redis event should not be created before the email has been verified
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeFalsy();
+  
+  const message = await getLastEmail(userName);
+  expect(message.plaintext).toContain('^emailVerificationBody 0=');
+
+  // Open a new tab to verify the email
+  const verifyPage = await page.context().newPage();
+  await clickEmailVerifyLink(verifyPage, message);
+
+  // Login should occur on the verify page.
+  // Behavior on the original page is a bit unpredictable at the moment
+  await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
+  await expect(verifyPage.getByLabel('azp')).toHaveValue('test_public_client');
+  expect(verifyPage.url()).toContain('lang=xx');
+  
+  const myMessage2 = await redisClient.getMessageForUser(userName);
+  expect(myMessage2).toBeTruthy();
+  expect(myMessage2?.message.clientId).toBe('test_public_client');
 });

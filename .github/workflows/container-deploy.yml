@@ -27,7 +27,7 @@ jobs:
         echo "SSH_PROXY_USERNAME=off" >> $GITHUB_ENV
         echo "SSH_HOST=10.1.0.104" >> $GITHUB_ENV
 
-        echo "KEYCLOAK_BASE_URL=https://auth.openfoodfacts.org" >> $GITHUB_ENV
+        echo "KC_HOSTNAME=https://auth.openfoodfacts.org" >> $GITHUB_ENV
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
         echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
@@ -91,7 +91,7 @@ jobs:
           # Set environment variables
           echo "KC_BOOTSTRAP_ADMIN_USERNAME=root" > .env
           echo "KC_BOOTSTRAP_ADMIN_PASSWORD=${{ secrets.KC_BOOTSTRAP_ADMIN_PASSWORD }}" >> .env
-          echo "KEYCLOAK_BASE_URL=${{ env.KEYCLOAK_BASE_URL }}" >> .env
+          echo "KC_HOSTNAME=${{ env.KC_HOSTNAME }}" >> .env
           echo "KEYCLOAK_REALM_NAME=open-products-facts" >> .env
           echo "COMPOSE_PROJECT_NAME=openfoodfacts-auth" >> .env
           echo "COMPOSE_PATH_SEPARATOR=," >> .env
