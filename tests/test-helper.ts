@@ -150,8 +150,9 @@ export function generateRandomUser() {
 export async function getKeycloakHeaders() {
   const formData = new URLSearchParams();
   formData.append('grant_type', 'client_credentials');
-  formData.append('client_id', 'test_client');
-  formData.append('client_secret', 'test-client-secret');
+  // Note we need to use the OFF client here as the test_client doesn't have permission to read users
+  formData.append('client_id', 'OFF');
+  formData.append('client_secret', process.env.OFF_CLIENT_SECRET || '');
 
   const tokenUrl = `${keycloakRealmUrl}/protocol/openid-connect/token`;
 
