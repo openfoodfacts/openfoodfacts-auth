@@ -83,5 +83,6 @@ jobs:
             ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
           labels: |
             org.opencontainers.image.version=testcontainer
-            org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
+          # Need to set the description via an annotation as this is a multi-arch image (https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images)
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
       
