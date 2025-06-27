@@ -1,18 +1,16 @@
 const urlParams = new URLSearchParams(window.location.search);
 
-export const clientId = urlParams.get("clientId");
-export const pkceClientId = urlParams.get("pkceClientId");
-export const clientSecret = urlParams.get("clientSecret");
+export const clientId = 'test_client';
+export const pkceClientId = 'test_public_client';
+export const clientSecret = 'test-client-secret';
 export const lang = urlParams.get("lang");
-export const keycloak = decodeURIComponent(urlParams.get("keycloak"));
+export const keycloak = 'http://auth.openfoodfacts.localhost:5600/realms/open-products-facts';
 export const code = urlParams.get("code");
 export const error = urlParams.get("error");
 export const mode = urlParams.get("mode");
 
 export function redirectUri(pkce = false, page = "code") {
-  return `http://localhost:5604/${page}.html?clientId=${clientId}&pkceClientId=${pkceClientId}&clientSecret=${clientSecret}&lang=${lang}&keycloak=${encodeURIComponent(
-    keycloak
-  )}&mode=${pkce ? "pkce" : "auth"}`;
+  return `http://localhost:5604/${page}.html?lang=${lang}&mode=${pkce ? "pkce" : "auth"}`;
 }
 export function login() {
   const nonce = crypto.getRandomValues(new BigUint64Array(1))[0];

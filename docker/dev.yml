@@ -1,9 +1,10 @@
 services:
   keycloak:
-    image: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
+    image: ghcr.io/openfoodfacts/openfoodfacts-auth:${BUILD_TARGET:-dev}
     build:
       context: .
       dockerfile: Dockerfile
+      target: ${BUILD_TARGET:-}
       args:
         - KEYCLOAK_VERSION
     volumes:

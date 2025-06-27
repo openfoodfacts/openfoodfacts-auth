@@ -1,0 +1,89 @@
+{
+  "alwaysDisplayInConsole": true,
+  "attributes": {
+    "backchannel.logout.revoke.offline.tokens": "false",
+    "backchannel.logout.session.required": "true",
+    "display.on.consent.screen": "false",
+    "oauth2.device.authorization.grant.enabled": "false",
+    "oidc.ciba.grant.enabled": "false",
+    "post.logout.redirect.uris": "http://*"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "bearerOnly": false,
+  "clientId": "test_public_client",
+  "consentRequired": false,
+  "defaultClientScopes": [
+    "web-origins",
+    "acr",
+    "openid",
+    "profile",
+    "roles",
+    "email"
+  ],
+  "description": "Public client used for testing",
+  "directAccessGrantsEnabled": false,
+  "enabled": true,
+  "frontchannelLogout": true,
+  "fullScopeAllowed": true,
+  "implicitFlowEnabled": false,
+  "name": "Public client used for testing",
+  "nodeReRegistrationTimeout": -1,
+  "notBefore": 0,
+  "optionalClientScopes": [
+    "address",
+    "phone",
+    "offline_access",
+    "microprofile-jwt"
+  ],
+  "protocol": "openid-connect",
+  "protocolMappers": [
+    {
+      "config": {
+        "access.token.claim": "true",
+        "claim.name": "client_id",
+        "id.token.claim": "true",
+        "jsonType.label": "String",
+        "user.session.note": "client_id",
+        "userinfo.token.claim": "true"
+      },
+      "consentRequired": false,
+      "name": "Client ID",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usersessionmodel-note-mapper"
+    },
+    {
+      "config": {
+        "access.token.claim": "true",
+        "claim.name": "clientAddress",
+        "id.token.claim": "true",
+        "jsonType.label": "String",
+        "user.session.note": "clientAddress",
+        "userinfo.token.claim": "true"
+      },
+      "consentRequired": false,
+      "name": "Client IP Address",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usersessionmodel-note-mapper"
+    },
+    {
+      "config": {
+        "access.token.claim": "true",
+        "claim.name": "clientHost",
+        "id.token.claim": "true",
+        "jsonType.label": "String",
+        "user.session.note": "clientHost",
+        "userinfo.token.claim": "true"
+      },
+      "consentRequired": false,
+      "name": "Client Host",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usersessionmodel-note-mapper"
+    }
+  ],
+  "publicClient": true,
+  "redirectUris": ["http://*"],
+  "serviceAccountsEnabled": false,
+  "standardFlowEnabled": true,
+  "surrogateAuthRequired": false,
+  "webOrigins": ["*"]
+}

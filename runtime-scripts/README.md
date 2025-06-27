@@ -4,6 +4,14 @@ This folder contains scripts that are executed as part of the Keycloak startup p
 
 The startup.sh script runs an after_startup.sh script in the background which waits for keycloak to start and then can run arbitrary updates to realm configuration.
 
+## Test Clients
+
+For the dev and testcontainer images three test clients are created, as follows:
+
+ - test_client: A confidential client with limited permissions
+ - test_public_client: A public client (suitable for use in the PKCE login flow)
+ - OFF: A client with permission to manage users, as would be used by Product Opener
+
 ## Custom Fields
 
 Custom fields are defined in the `runtime-scripts/user_profiles.json` file.
@@ -56,6 +64,4 @@ Note that these template files contain '%' placeholders which are used in the `a
 
 ### Backward compatibility
 
-Username password authentication is still needed for now, which will use the password grant type (deprecated in OAuth 2.1). This is enabled using the `directAccessGrantsEnabled` key in the `productopener_client_template.json`
-
-Note that the existing `after_startup.sh` script does not update settings for existing clients, so these will need to be changed manually (on the Client > Settings page) when Direct access grants are revoked in the future.
+Username password authentication is still needed for now, which will use the password grant type (deprecated in OAuth 2.1). This is enabled using the `directAccessGrantsEnabled` key in the `test_client.json` file.
