@@ -74,7 +74,7 @@ fi
 if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
   echo "$(date -u) *** Creating test clients ***"
   # Create clients
-  for CLIENT_ID in off_test_client test_client test_public_client
+  for CLIENT_ID in OFF test_client test_public_client
   do
     echo "$(date -u) *** Checking if client $CLIENT_ID exists ***"
     EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r open-products-facts  --fields clientId)

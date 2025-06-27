@@ -32,6 +32,8 @@ dev: init run_deps build
 _up:
 	docker compose up --wait --wait-timeout 120
 
+# Make sure the dev default COMPOSE_FILE is used so that the postgres container is not re-created by the create_user task
+up: DOCKER_RUN=docker
 up: run_deps create_user _up
 
 build_test: pre_build
