@@ -556,12 +556,12 @@ class Utils {
 
                     @Override
                     public String getId() {
-                        return "open-products-facts";
+                        return "openfoodfacts";
                     }
 
                     @Override
                     public String getName() {
-                        return "open-products-facts";
+                        return "openfoodfacts";
                     }
 
                     @Override
@@ -2100,7 +2100,7 @@ class Utils {
 
                     @Override
                     public UserModel getUserById(RealmModel realm, String id) {
-                        if (realm != null && realm.getId().equals("open-products-facts") && id != null
+                        if (realm != null && realm.getId().equals("openfoodfacts") && id != null
                                 && "theUserId".equals(id)) {
                             return new UserModel() {
 

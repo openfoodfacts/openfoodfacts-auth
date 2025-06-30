@@ -58,7 +58,7 @@ Note that only attributes relevant to all Open Food Facts services should be sto
 
 ## Making future realm changes
 
-The import realm facility on startup loads the configuration from `open-products-facts-realm.json` but this will not update an existing realm with any configuration changes. Changes that need to be applied to existing realms need to be added to the `realm_settings_template.json` file.
+The import realm facility on startup loads the configuration from `openfoodfacts-realm.json` but this will not update an existing realm with any configuration changes. Changes that need to be applied to existing realms need to be added to the `realm_settings_template.json` file.
 
 Note that these template files contain '%' placeholders which are used in the `after_startup.sh` script, so make sure that the order of these is not changed. Also note that the `refresh_messages` script updates these templates and will sort all object keys alphabetically for clearer diffs.
 

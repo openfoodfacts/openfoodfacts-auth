@@ -36,8 +36,24 @@ if [ -f ~/off/deployed_image_id ] && [[ `cat /opt/off/image_id` == `cat ~/off/de
 else
   echo "$(date -u) *** Configuring Keycloak ***"
 
-  # Import (not performed at startup) does not interpolate variables https://github.com/keycloak/keycloak/issues/12069
-  # So we need to do the substitution ourselves.
+  # Migrate old realm name
+  echo "$(date -u) *** Checking if open-products-facts realm exists ***"
+  /opt/keycloak/bin/kcadm.sh get realms/open-products-facts --fields realm &> /dev/null
+  if [[ $? == 0 ]]; then
+    echo "$(date -u) *** Renaming realm ***"
+    /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -s realm=openfoodfacts -s displayName="Open Food Facts"
+  else
+    # Import (not performed at startup) does not interpolate variables https://github.com/keycloak/keycloak/issues/12069
+    echo "$(date -u) *** Checking if realm exists ***"
+    /opt/keycloak/bin/kcadm.sh get realms/openfoodfacts --fields realm &> /dev/null
+    if [[ $? != 0 ]]; then
+      echo "$(date -u) *** Importing realm ***"
+      /opt/keycloak/bin/kcadm.sh create realms -f /opt/off/openfoodfacts_realm.json
+    fi
+  fi
+
+  # Note the realm import won't update an existing realm so the following are done explicitly as they
+  # are more likely to change between releases
   # We use printf to do this as envsubst isn't available in the standard Keycloak image
   # Need to make sure arguments are added in the right order. 
   # Note refresh_messages will sort JSON templates alphabetically by key. 
@@ -48,23 +64,12 @@ else
     "$SMTP_SERVER" \
     > ~/off/interpolated_realm_settings.json
 
-  # Import the realm
-  echo "$(date -u) *** Checking if realm exists ***"
-  /opt/keycloak/bin/kcadm.sh get realms/open-products-facts --fields realm &> /dev/null
-  if [[ $? != 0 ]]; then
-    echo "$(date -u) *** Importing realm ***"
-    /opt/keycloak/bin/kcadm.sh create realms -f /opt/off/open-products-facts_realm.json
-  fi
-
-  # Note the realm import won't update an existing realm so the following are done explicitly as they
-  # are more likely to change between releases
-
   # Apply latest settings, e.g. SMTP server
   echo "$(date -u) *** Applying realm settings ***"
-  /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -f ~/off/interpolated_realm_settings.json
+  /opt/keycloak/bin/kcadm.sh update realms/openfoodfacts -f ~/off/interpolated_realm_settings.json
   # Set up user attributes
   echo "$(date -u) *** Configuring user profiles ***"
-  /opt/keycloak/bin/kcadm.sh update users/profile -r open-products-facts -f /opt/off/users_profile.json
+  /opt/keycloak/bin/kcadm.sh update users/profile -r openfoodfacts -f /opt/off/users_profile.json
 
   cp /opt/off/image_id ~/off/deployed_image_id
 fi
@@ -77,15 +82,15 @@ if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
   for CLIENT_ID in OFF test_client test_public_client
   do
     echo "$(date -u) *** Checking if client $CLIENT_ID exists ***"
-    EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r open-products-facts  --fields clientId)
+    EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r openfoodfacts  --fields clientId)
     if [[ "$EXISTING_CLIENT" == "[ ]" ]];then
       echo "$(date -u) *** Creating client $CLIENT_ID ***"
-      /opt/keycloak/bin/kcadm.sh create clients -r open-products-facts -f /opt/off/$CLIENT_ID.json
+      /opt/keycloak/bin/kcadm.sh create clients -r openfoodfacts -f /opt/off/$CLIENT_ID.json
     fi
   done
   # The off client has additional permissions but can't import client role mappings with the user. Note generated user name is always in lower case
   echo "$(date -u) *** Assigning role mappings for client OFF ***"
-  /opt/keycloak/bin/kcadm.sh add-roles -r open-products-facts --uusername service-account-off --cclientid realm-management --rolename manage-users --rolename query-users
+  /opt/keycloak/bin/kcadm.sh add-roles -r openfoodfacts --uusername service-account-off --cclientid realm-management --rolename manage-users --rolename query-users
   echo "$(date -u) *** Test clients created ***"
 fi
 

@@ -44,7 +44,7 @@ public class UserRegisteredEventIsNotForwardedToRedisRepeatedly {
 
                 @Override
                 public String getRealmId() {
-                    return "open-products-facts";
+                    return "openfoodfacts";
                 }
 
                 @Override

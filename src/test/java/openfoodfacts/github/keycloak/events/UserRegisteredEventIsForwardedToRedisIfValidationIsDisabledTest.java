@@ -44,7 +44,7 @@ public class UserRegisteredEventIsForwardedToRedisIfValidationIsDisabledTest {
 
                 @Override
                 public String getRealmId() {
-                    return "open-products-facts";
+                    return "openfoodfacts";
                 }
 
                 @Override
@@ -77,7 +77,7 @@ public class UserRegisteredEventIsForwardedToRedisIfValidationIsDisabledTest {
             Assertions.assertEquals("theUserId", fields.get("id"));
             Assertions.assertEquals("someUser@example.org", fields.get("email"));
             Assertions.assertEquals("theUserName", fields.get("userName"));
-            Assertions.assertEquals("open-products-facts", fields.get("realm"));
+            Assertions.assertEquals("openfoodfacts", fields.get("realm"));
             Assertions.assertEquals("test-client-client-id", fields.get("clientId"));
         }
     }

@@ -1,7 +1,7 @@
 {
   "id": "793a2761-1af2-44e1-a0b8-cc37a030a2af",
-  "realm": "open-products-facts",
-  "displayName": "Open Products Facts",
+  "realm": "openfoodfacts",
+  "displayName": "Open Food Facts",
   "displayNameHtml": "",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
@@ -58,7 +58,7 @@
       },
       {
         "id": "6254728b-ae51-4873-bcb3-3d9854845b00",
-        "name": "default-roles-open-products-facts",
+        "name": "default-roles-openfoodfacts",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -418,7 +418,7 @@
   "groups": [],
   "defaultRole": {
     "id": "6254728b-ae51-4873-bcb3-3d9854845b00",
-    "name": "default-roles-open-products-facts",
+    "name": "default-roles-openfoodfacts",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -439,7 +439,7 @@
     "totpAppFreeOTPName"
   ],
   "localizationTexts": {},
-  "webAuthnPolicyRpEntityName": "Open Products Facts",
+  "webAuthnPolicyRpEntityName": "Open Food Facts",
   "webAuthnPolicySignatureAlgorithms": [
     "ES256"
   ],
@@ -452,7 +452,7 @@
   "webAuthnPolicyAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyAcceptableAaguids": [],
   "webAuthnPolicyExtraOrigins": [],
-  "webAuthnPolicyPasswordlessRpEntityName": "Open Products Facts",
+  "webAuthnPolicyPasswordlessRpEntityName": "Open Food Facts",
   "webAuthnPolicyPasswordlessSignatureAlgorithms": [
     "ES256"
   ],
@@ -490,13 +490,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/open-products-facts/account/",
+      "baseUrl": "/realms/openfoodfacts/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/open-products-facts/account/*"
+        "/realms/openfoodfacts/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -534,13 +534,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/open-products-facts/account/",
+      "baseUrl": "/realms/openfoodfacts/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/open-products-facts/account/*"
+        "/realms/openfoodfacts/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -807,13 +807,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/open-products-facts/console/",
+      "baseUrl": "/admin/openfoodfacts/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/open-products-facts/console/*"
+        "/admin/openfoodfacts/console/*"
       ],
       "webOrigins": [
         "+"

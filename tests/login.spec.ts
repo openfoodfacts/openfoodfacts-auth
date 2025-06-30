@@ -6,7 +6,7 @@ import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEma
 test("login page", async ({ page }) => {
   await gotoHome(page);
 
-  await expect(page).toHaveTitle("Sign in to Open Products Facts");
+  await expect(page).toHaveTitle("Sign in to Open Food Facts");
 
   const signInButton = page.getByRole("button", { name: "Sign In" });
   expect(await matchStyles(signInButton, PRIMARY_BUTTON)).toBeNull();
@@ -64,7 +64,7 @@ test("locale from app is respected", async ({ page }) => {
   await page.getByRole("button", { name: "Login", exact: true }).click();
 
   // Login page
-  await expect(page).toHaveTitle("^loginTitle 0=Open Products Facts^");
+  await expect(page).toHaveTitle("^loginTitle 0=Open Food Facts^");
   await page.getByRole("link", { name: "^doRegister^" }).click();
 
   // Registration page
@@ -112,7 +112,7 @@ test("pkce login works", async ({ page }) => {
   await page.getByRole("button", { name: "PKCE Login", exact: true }).click();
 
   // Login page
-  await expect(page).toHaveTitle("^loginTitle 0=Open Products Facts^");
+  await expect(page).toHaveTitle("^loginTitle 0=Open Food Facts^");
   await page.getByRole("link", { name: "^doRegister^" }).click();
 
   // Registration page
