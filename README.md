@@ -34,11 +34,11 @@ We use Playwright to drive the Keycloak user interface and perform end to end te
 
 First, run `make dev` to load dependencies and build the container image. Them use `make up` to start the services.
 
-To see how a user logs in you can navigate to: http://auth.openfoodfacts.localhost:5600/realms/open-products-facts/account/#/
+To see how a user logs in you can navigate to: http://auth.openfoodfacts.localhost:5600/realms/openfoodfacts/account/#/
 
 For more detailed debug information you can also use the test client with the following URL:
 
-http://auth.openfoodfacts.localhost:5604/?clientId=test-client&clientSecret=test-secret123&lang=en&keycloak=http%3A%2F%2Fauth.openfoodfacts.localhost%3A5600%2Frealms%2Fopen-products-facts
+http://auth.openfoodfacts.localhost:5604/?clientId=test-client&clientSecret=test-secret123&lang=en&keycloak=http%3A%2F%2Fauth.openfoodfacts.localhost%3A5600%2Frealms%2Fopenfoodfacts
 
 If you create a new user account you will need to validate the email address used. The validation email can be found in SMTP4Dev here: http://localhost:5605/
 

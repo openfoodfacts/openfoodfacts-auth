@@ -45,7 +45,7 @@ public class EmailVerificationEventIsNotForwardedToRedisRepeatedly {
 
                 @Override
                 public String getRealmId() {
-                    return "open-products-facts";
+                    return "openfoodfacts";
                 }
 
                 @Override

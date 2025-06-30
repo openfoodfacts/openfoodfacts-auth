@@ -43,12 +43,12 @@ public class CorrectProviderEventIsForwardedToRedisTest {
 
                 @Override
                 public RealmModel getRealm() {
-                    return session.realms().getRealmByName("open-products-facts");
+                    return session.realms().getRealmByName("openfoodfacts");
                 }
 
                 @Override
                 public UserModel getUser() {
-                    return session.users().getUserById(session.realms().getRealmByName("open-products-facts"),
+                    return session.users().getUserById(session.realms().getRealmByName("openfoodfacts"),
                             "theUserId");
                 }
 
@@ -73,7 +73,7 @@ public class CorrectProviderEventIsForwardedToRedisTest {
             Assertions.assertEquals("theUserId", fields.get("id"));
             Assertions.assertEquals("someUser@example.org", fields.get("email"));
             Assertions.assertEquals("theUserName", fields.get("userName"));
-            Assertions.assertEquals("open-products-facts", fields.get("realm"));
+            Assertions.assertEquals("openfoodfacts", fields.get("realm"));
             var newUserName = fields.get("newUserName");
             Assertions.assertTrue(newUserName.startsWith("anonymous-"));
         }

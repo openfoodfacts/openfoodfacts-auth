@@ -233,7 +233,7 @@
       "id": "c3940479-7649-4562-9890-860d04d1d06e",
       "notBefore": 0,
       "realmRoles": [
-        "default-roles-open-products-facts"
+        "default-roles-openfoodfacts"
       ],
       "requiredActions": [
       ],

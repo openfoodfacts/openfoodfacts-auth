@@ -92,7 +92,7 @@ jobs:
           echo "KC_BOOTSTRAP_ADMIN_USERNAME=root" > .env
           echo "KC_BOOTSTRAP_ADMIN_PASSWORD=${{ secrets.KC_BOOTSTRAP_ADMIN_PASSWORD }}" >> .env
           echo "KC_HOSTNAME=${{ env.KC_HOSTNAME }}" >> .env
-          echo "KEYCLOAK_REALM_NAME=open-products-facts" >> .env
+          echo "KEYCLOAK_REALM_NAME=openfoodfacts" >> .env
           echo "COMPOSE_PROJECT_NAME=openfoodfacts-auth" >> .env
           echo "COMPOSE_PATH_SEPARATOR=," >> .env
           echo "COMPOSE_FILE=docker-compose.yml,docker/prod.yml" >> .env
