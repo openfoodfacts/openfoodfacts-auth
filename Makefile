@@ -32,9 +32,7 @@ dev: init run_deps build
 _up:
 	docker compose up --wait --wait-timeout 120
 
-# Make sure the dev default COMPOSE_FILE is used so that the postgres container is not re-created by the create_user task
-up: DOCKER_RUN=docker
-up: run_deps create_user _up
+up: create_user _up
 
 build_test: pre_build
 	BUILD_TARGET=testcontainer docker compose --progress=plain build
@@ -113,17 +111,9 @@ update_keycloak_version:
 refresh_messages:
 	node build-scripts/refresh_messages.mjs
 
-# Creates the bootstrap user in PostgreSQL, which is then used to create other users
-create_bootstrap: run_deps
-	${DOCKER_RUN} compose up keycloak_postgres --wait
-	@${DOCKER_RUN} compose exec -e PGUSER=${PG_ADMIN_USERNAME} -e PGPASSWORD=${PG_ADMIN_PASSWORD} keycloak_postgres \
-	  psql -c "create role ${PG_BOOTSTRAP_USERNAME} with password '${PG_BOOTSTRAP_PASSWORD}' login createdb createrole" || true
-
-create_user: create_bootstrap
-	@${DOCKER_RUN} compose exec -e PGUSER=${PG_BOOTSTRAP_USERNAME} -e PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} keycloak_postgres \
-	  psql -d postgres -c "create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb" || true
-	@${DOCKER_RUN} compose exec -e PGUSER=${KC_DB_USERNAME} -e PGPASSWORD=${KC_DB_PASSWORD} keycloak_postgres \
-	  psql -d postgres -c "create database ${KC_DB_USERNAME}" || true
+# Creates the keycloak user in the shared-services postgresql database
+create_user: run_deps
+	cd ${DEPS_DIR}/openfoodfacts-shared-services && $(MAKE) create_user username=${KC_DB_USERNAME} password=${KC_DB_PASSWORD}
 
 # Create user / database in production PostgreSQL instance
 create_user_prod:

@@ -12,10 +12,6 @@ services:
       - ./theme/off:/opt/keycloak/themes/off
       - ./runtime-scripts:/opt/off
 
-  keycloak_postgres:
-    ports:
-      - 5601:5432
-
   # Static web server to host dummy application
   test_client:
     image: nginx
