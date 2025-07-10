@@ -21,6 +21,10 @@
     display: block;
 }
 
+.pf-v5-c-login__main {
+    background-color: var(--off-background);
+}
+
 /* Position language selector at top of form */
 .pf-v5-c-login__main-header {
     position: relative;
