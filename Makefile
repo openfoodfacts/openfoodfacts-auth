@@ -35,7 +35,7 @@ _up:
 up: create_user _up
 
 build_test: pre_build
-	BUILD_TARGET=testcontainer docker compose --progress=plain build
+	COMPOSE_FILE=docker/test.yml docker compose --progress=plain build
 
 # Minimal container used by other projects for integration tests. Make target here is just to test it can start
 integration_test_target:
@@ -67,7 +67,8 @@ test: test_setup
 update_screenshots: test_setup
 	npx playwright test --update-snapshots screenshots.spec.ts
 
-test_setup: up show_keycloak_logs
+test_setup: run_deps
+	COMPOSE_FILE=docker/test.yml docker compose up --wait --wait-timeout 120
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference

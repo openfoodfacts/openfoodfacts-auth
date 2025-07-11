@@ -27,6 +27,8 @@ services:
       - smtpdata:/smtp4dev
     ports:
       - ${KEYCLOAK_EXPOSE}${SMTP4DEV_PORT}:80
+    networks:
+      shared_network:
 
 volumes:
   smtpdata:

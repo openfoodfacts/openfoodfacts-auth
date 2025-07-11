@@ -35,6 +35,7 @@ ENV KC_BOOTSTRAP_ADMIN_PASSWORD=root-test-password
 ENV KC_HOSTNAME_STRICT=false
 ENV KC_HOSTNAME_BACKCHANNEL_DYNAMIC=false
 ENV SMTP_SERVER=smtp
+ENV KEYCLOAK_STARTUP=test
 
 # Note have to put the following in a separate script as RUN doesn't seem to cope with starting a background process (& suffix)
 RUN sh /opt/off/configure_testcontainer.sh
