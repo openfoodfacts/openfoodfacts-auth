@@ -56,7 +56,7 @@ jobs:
         checkName: build
         ref: ${{ github.event.pull_request.head.sha || github.sha }}
         intervalSeconds: 10
-        timeoutSeconds: 600 # 10m
+        timeoutSeconds: 1800 # 30m
 
     - name: Do something if build fail
       if: steps.wait-build.outputs.conclusion == 'failure'
