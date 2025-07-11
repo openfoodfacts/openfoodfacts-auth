@@ -29,6 +29,7 @@ jobs:
         echo "KC_DB_URL_HOST=postgresql" >> $GITHUB_ENV
         echo "REDIS_URL=redis://redis:6379" >> $GITHUB_ENV
         echo "SMTP_SERVER=10:1.0.102" >> $GITHUB_ENV
+        echo "COMMON_NET_NAME=po_webnet" >> $GITHUB_ENV
 
         echo "KEYCLOAK_STARTUP=staging" >> $GITHUB_ENV
     - name: Set various variable for production deployment
@@ -43,6 +44,7 @@ jobs:
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
         echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
+        echo "COMMON_NET_NAME=common_net" >> $GITHUB_ENV
 
         echo "KEYCLOAK_STARTUP=prod" >> $GITHUB_ENV
 
@@ -120,6 +122,7 @@ jobs:
   
           echo "KEYCLOAK_TAG=sha-${{ github.sha }}" >> .env
           echo "RESTART_POLICY=always" >> .env
+          echo "COMMON_NET_NAME=${{ env.COMMON_NET_NAME }}" >> .env
 
     - name: Create staging database and user
       if: matrix.env == 'off-auth-net'

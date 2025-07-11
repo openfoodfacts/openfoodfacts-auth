@@ -15,3 +15,12 @@ services:
     ports:
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
+    networks:
+      # Needed to access Redis and PostgreSQL
+      shared_network:
+
+networks:
+  # This network allows access to shared services like MongoDB and Redis
+  shared_network:
+    name: ${COMMON_NET_NAME}
+    external: true
