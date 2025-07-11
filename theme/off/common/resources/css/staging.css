@@ -1,0 +1,11 @@
+:root {
+    --off-background: #b883e4;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --off-background:#59089b;
+    }
+}
+#kc-header {
+    display: block;
+}

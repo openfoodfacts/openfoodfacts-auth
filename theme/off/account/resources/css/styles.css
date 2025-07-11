@@ -1,5 +1,9 @@
 @import url('common.css');
 
+.pf-v5-c-page__main-section {
+    background-color: var(--off-background);
+}
+
 .pf-v5-c-masthead, .pf-v5-c-toolbar {
     background-color: var(--off-other-background);
 }

@@ -17,27 +17,8 @@ services:
     depends_on:
       smtp:
         condition: service_started
-      keycloak_postgres:
-        condition: service_started
     networks:
-      # Needed to access Redis
-      shared_network:
-
-  keycloak_postgres:
-    image: postgres:16-alpine
-    environment:
-      # PostgreSQL will also create a database with this name
-      - POSTGRES_USER=${PG_ADMIN_USERNAME}
-      - POSTGRES_PASSWORD=${PG_ADMIN_PASSWORD}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${PG_ADMIN_USERNAME}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    networks:
-      # Needed so create_user script can connect
+      # Needed to access Redis and PostgreSQL
       shared_network:
 
   smtp:
@@ -46,12 +27,11 @@ services:
       - smtpdata:/smtp4dev
     ports:
       - ${KEYCLOAK_EXPOSE}${SMTP4DEV_PORT}:80
+    networks:
+      shared_network:
 
 volumes:
   smtpdata:
-  pgdata:
-    external: true
-    name: ${COMPOSE_PROJECT_NAME}_pgdata
 
 networks:
   # This network allows access to shared services like MongoDB and Redis

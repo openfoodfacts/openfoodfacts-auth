@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { createClient } from "redis";
 
-const keycloakBaseUrl = process.env.KC_HOSTNAME;
+const keycloakBaseUrl = "http://auth.openfoodfacts.localhost:5606";
 const keycloakRealm = process.env.KEYCLOAK_REALM_NAME;
 const keycloakRealmUrl = `${keycloakBaseUrl}/realms/${keycloakRealm}`;
 export const gotoHome = async (page: Page) => await page.goto(`${keycloakRealmUrl}/account/#/`);

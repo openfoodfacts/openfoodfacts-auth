@@ -8,8 +8,8 @@ echo "$(date -u) *** Starting keycloak in configure testcontainer mode ***"
 /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --cache=local --verbose &
 KEYCLOAK_PID=$!
 
-# Run the after_setup script in dev mode so that test clients are created and persisted in the test image's dev-file database
-KEYCLOAK_STARTUP=dev sh /opt/off/after_startup.sh
+# Run the after_setup script so that test clients are created and persisted in the test image's dev-file database
+sh /opt/off/after_startup.sh
 
 # Need to kill the process gracefully so that all data is written back to the dev-file database
 echo "$(date -u) *** Sending kill to keycloak PID $KEYCLOAK_PID ***"

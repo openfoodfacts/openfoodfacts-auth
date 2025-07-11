@@ -1,4 +1,5 @@
 {
+  "displayName": "%s",
   "eventsListeners": [
     "jboss-logging",
     "redis-event-listener"
@@ -23,7 +24,7 @@
     "auth": "",
     "envelopeFrom": "",
     "from": "noreply@openfoodfacts.org",
-    "fromDisplayName": "Open Food Facts",
+    "fromDisplayName": "%s",
     "host": "%s",
     "replyTo": "",
     "replyToDisplayName": "",

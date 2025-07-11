@@ -36,12 +36,19 @@ if [ -f ~/off/deployed_image_id ] && [[ `cat /opt/off/image_id` == `cat ~/off/de
 else
   echo "$(date -u) *** Configuring Keycloak ***"
 
+  REALM_DISPLAY_NAME="Open Food Facts"
+  if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
+    REALM_DISPLAY_NAME="Open Food Facts [DEV]"
+  elif [[ "$KEYCLOAK_STARTUP" == "staging" ]]; then
+    REALM_DISPLAY_NAME="Open Food Facts [STAGING]"
+  fi
+
   # Migrate old realm name
   echo "$(date -u) *** Checking if open-products-facts realm exists ***"
   /opt/keycloak/bin/kcadm.sh get realms/open-products-facts --fields realm &> /dev/null
   if [[ $? == 0 ]]; then
     echo "$(date -u) *** Renaming realm ***"
-    /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -s realm=openfoodfacts -s displayName="Open Food Facts"
+    /opt/keycloak/bin/kcadm.sh update realms/open-products-facts -s realm=openfoodfacts -s displayName="$REALM_DISPLAY_NAME"
   else
     # Import (not performed at startup) does not interpolate variables https://github.com/keycloak/keycloak/issues/12069
     echo "$(date -u) *** Checking if realm exists ***"
@@ -59,8 +66,13 @@ else
   # Note refresh_messages will sort JSON templates alphabetically by key. 
   REALM_SETTINGS=$(cat /opt/off/realm_settings_template.json)
 
-  # smtpServer.host: $SMTP_SERVER
+  # These are the current placeholders, in order. Note these are sorted
+  # name
+  # smtpServer.fromDisplayName
+  # smtpServer.host
   printf "$REALM_SETTINGS" \
+    "$REALM_DISPLAY_NAME" \
+    "$REALM_DISPLAY_NAME" \
     "$SMTP_SERVER" \
     > ~/off/interpolated_realm_settings.json
 
@@ -74,9 +86,8 @@ else
   cp /opt/off/image_id ~/off/deployed_image_id
 fi
 
-# Only create test clients in dev mode. When we build the test image we call this script in dev mode
-# so that the clients are created and then persisted in the dev-file database.
-if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
+# Only create test clients in dev or test mode.
+if [[ "$KEYCLOAK_STARTUP" == "dev" ]] || [[ "$KEYCLOAK_STARTUP" == "test" ]]; then
   echo "$(date -u) *** Creating test clients ***"
   # Create clients
   for CLIENT_ID in OFF test_client test_public_client

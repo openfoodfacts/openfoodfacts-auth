@@ -1,20 +1,15 @@
 services:
   keycloak:
-    image: ghcr.io/openfoodfacts/openfoodfacts-auth:${BUILD_TARGET:-dev}
+    image: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
     build:
       context: .
       dockerfile: Dockerfile
-      target: ${BUILD_TARGET:-}
       args:
         - KEYCLOAK_VERSION
     volumes:
       # Bind mount to themes and runtime-scripts folders so they can be edited without rebuilding
       - ./theme/off:/opt/keycloak/themes/off
       - ./runtime-scripts:/opt/off
-
-  keycloak_postgres:
-    ports:
-      - 5601:5432
 
   # Static web server to host dummy application
   test_client:

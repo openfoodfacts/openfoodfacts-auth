@@ -14,9 +14,8 @@ dotenv.config({ path: ['.envrc','.env'] });
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  // 30000ms and 5000ms isn't always enough
+  // 30000ms and 5000ms isn't always enough. Note expect timeout is set later on
   timeout: 60000,
-  expect: { timeout: 10000 }, 
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -78,11 +77,12 @@ module.exports = defineConfig({
   webServer: {
     /* Note we don't use a command here as playwright won't wait for the initialisation scripts to run 
        Need to run make test to ensure everything is up and running */
-    url: process.env.KC_HOSTNAME,
+    url: "http://auth.openfoodfacts.localhost:5606",
     reuseExistingServer: true,
   },
 
   expect: {
+    timeout: 10000, 
     toHaveScreenshot: { 
       /* This figure is by trial and error to minimize false positives when running tests locally
         Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */
