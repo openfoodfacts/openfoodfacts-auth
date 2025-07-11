@@ -161,7 +161,7 @@ jobs:
         proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
             cd ${{ matrix.env }}
-            docker compose up --wait --wait-timeout 300
+            make _up
 
     - name: Cleanup obsolete Docker objects
       uses: appleboy/ssh-action@master
