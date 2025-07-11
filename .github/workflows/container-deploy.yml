@@ -2,10 +2,8 @@ name: Container Image Deployment CI
 
 on:
   push:
-    # Initially only doing production deploy
-    # branches:
-    #   - main
-    #   - deploy-*
+    branches:
+      - main
     tags:
       - v*.*.*
 
