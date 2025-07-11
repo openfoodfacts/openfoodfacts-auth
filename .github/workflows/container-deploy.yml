@@ -19,6 +19,20 @@ jobs:
     environment: ${{ matrix.env }}
     concurrency: ${{ matrix.env }}
     steps:
+    - name: Set various variable for staging deployment
+      if: matrix.env == 'off-auth-net'
+      run: |
+        echo "SSH_PROXY_HOST=ovh1.openfoodfacts.org" >> $GITHUB_ENV
+        echo "SSH_USERNAME=off" >> $GITHUB_ENV
+        echo "SSH_PROXY_USERNAME=off" >> $GITHUB_ENV
+        echo "SSH_HOST=10.1.0.200" >> $GITHUB_ENV
+
+        echo "KC_HOSTNAME=https://auth.openfoodfacts.net" >> $GITHUB_ENV
+        echo "KC_DB_URL_HOST=postgresql" >> $GITHUB_ENV
+        echo "REDIS_URL=redis://redis:6379" >> $GITHUB_ENV
+        echo "SMTP_SERVER=10:1.0.102" >> $GITHUB_ENV
+
+        echo "KEYCLOAK_STARTUP=staging" >> $GITHUB_ENV
     - name: Set various variable for production deployment
       if: matrix.env == 'off-auth-org'
       run: |
@@ -31,7 +45,8 @@ jobs:
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
         echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
-        echo "CLIENTS=OFF,https://world.openfoodfacts.org NEW_OPFF,https://world.new.openpetfoodfacts.org" >> $GITHUB_ENV
+
+        echo "KEYCLOAK_STARTUP=prod" >> $GITHUB_ENV
 
     - name: Wait for container build workflow
       uses: tomchv/wait-my-workflow@v1.1.0
@@ -60,7 +75,6 @@ jobs:
         proxy_host: ${{ env.SSH_PROXY_HOST }}
         proxy_username: ${{ env.SSH_PROXY_USERNAME }}
         proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script_stop: false
         script: |
           # Clone Git repository if not already there
           [ ! -d '${{ matrix.env}}' ] && git clone --depth 1 https://github.com/${{ github.repository }} ${{ matrix.env }} --no-single-branch 2>&1
@@ -83,7 +97,6 @@ jobs:
         proxy_host: ${{ env.SSH_PROXY_HOST }}
         proxy_username: ${{ env.SSH_PROXY_USERNAME }}
         proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script_stop: false
         script: |
           # Go to repository directory
           cd ${{ matrix.env}}
@@ -101,17 +114,17 @@ jobs:
           echo "KC_DB_URL_HOST=${{ env.KC_DB_URL_HOST }}" >> .env
           echo "KC_DB_USERNAME=keycloak" >> .env
           echo "KC_DB_PASSWORD=${{ secrets.KC_DB_PASSWORD }}" >> .env
-          echo "CLIENTS=${{ env.CLIENTS }}" >> .env
           echo "REDIS_URL=${{ env.REDIS_URL }}" >> .env
           echo "SMTP_SERVER=${{ env.SMTP_SERVER }}" >> .env
           echo "KEYCLOAK_HTTP_PORT=5600" >> .env
           echo "KEYCLOAK_MANAGEMENT_PORT=5602" >> .env
-          echo "KEYCLOAK_STARTUP=prod" >> .env
+          echo "KEYCLOAK_STARTUP=${{env.KEYCLOAK_STARTUP}}" >> .env
   
           echo "KEYCLOAK_TAG=sha-${{ github.sha }}" >> .env
           echo "RESTART_POLICY=always" >> .env
 
-    - name: Create database and user
+    - name: Create staging database and user
+      if: matrix.env == 'off-auth-net'
       uses: appleboy/ssh-action@master
       with:
         host: ${{ env.SSH_HOST }}
@@ -120,7 +133,21 @@ jobs:
         proxy_host: ${{ env.SSH_PROXY_HOST }}
         proxy_username: ${{ env.SSH_PROXY_USERNAME }}
         proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script_stop: false
+        script: |
+          # Need to run this from shared-net so that script can access the bootstrap password
+          cd shared-net
+          make create_user username=keycloak password=${{ secrets.KC_DB_PASSWORD }}
+
+    - name: Create production database and user
+      if: matrix.env == 'off-auth-org'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.SSH_HOST }}
+        username: ${{ env.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        proxy_host: ${{ env.SSH_PROXY_HOST }}
+        proxy_username: ${{ env.SSH_PROXY_USERNAME }}
+        proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd ${{ matrix.env }}
           make create_user_prod
@@ -134,7 +161,6 @@ jobs:
         proxy_host: ${{ env.SSH_PROXY_HOST }}
         proxy_username: ${{ env.SSH_PROXY_USERNAME }}
         proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script_stop: false
         script: |
             cd ${{ matrix.env }}
             docker compose up --wait --wait-timeout 300
@@ -149,7 +175,6 @@ jobs:
         proxy_host: ${{ env.SSH_PROXY_HOST }}
         proxy_username: ${{ env.SSH_PROXY_USERNAME }}
         proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script_stop: false
         script: |
           cd ${{ matrix.env }}
           make prune
