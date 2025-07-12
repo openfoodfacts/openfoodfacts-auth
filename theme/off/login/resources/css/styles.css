@@ -7,9 +7,10 @@
     font-size: 1.5em;
     right: 1em;
     position: absolute;
-    top: 1em;
+    top: 57px;
     color: var(--off-text);
     display: none;
+    margin-block-start: 0;
 }
 
 .pf-v5-c-login {

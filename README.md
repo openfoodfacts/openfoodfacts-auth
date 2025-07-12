@@ -6,6 +6,55 @@ The primary responsibility of this service is to support user authentication and
 
 Ultimately all user and re-user authentication should take place via Keycloak. Other Open Food Facts projects should not be prompting users for their username and password, but instead redirecting to Keycloak. This will allow us to support other authentication methods like Passkeys and social login in the future. However, username and password authentication APIs are currently still provided while all services transition.
 
+# Configuring Clients
+
+No clients are pre-configured in the production and staging instances. We only use OIDC clients (not SAML). Clients are configured on the Open Food Facts realm (not master).
+
+## Internal Backend Client
+
+This configuration would only be used for our internal clients that needs to be able query / update, like Product Opener:
+
+* Client authentication: enabled
+* Authentication flows: Standard flow, Direct access grants, Service account roles
+* Root URL: https://world.openfoodfacts.org/ (or as appropriate)
+* Home URL: (blank)
+* Valid redirect URLs: cgi/oidc_signin_callback.pl
+* Valid post logout redirect URIs: cgi/oidc_signout_callback.pl
+* Web origins: +
+
+Go to the service account user for the client (e.g. service-account-off) and join the "User management" group which will assign the realm-management:manage-users and realm-management:query-users roles.
+
+Securely share the randomly generated Client Secret with the client.
+
+## Public External Clients
+
+This applies to clients that just need to be able to initiate a PKCE login flow for a user, such as off-explorer:
+
+* Client authentication: disabled (this makes it a public client)
+* Authentication flows: Standard flow (do not enable any other flows)
+* Root URL, Home URL, Valid redirect URLs, Valid post logout redirect URIs: As specified by the client
+* Web origins: +
+
+There is no service account for these types of client and no secret, so only the Client ID needs to be shared with the client.
+
+## Private External Clients
+
+These would be used if the client has a backend that is able to perform the code for token exchange.
+
+The configuration is the same as for a Public client except that Client authentication is enabled so there will be a secret to share with the client.
+
+# Configuring Users
+
+The default root user should not be used and every administrator should be a specific named individual. Keycloak administrators are added to the master realm.
+
+## Full Administrators
+
+These will have access to all roles and be able to create additional users.
+
+## Open Food Facts administrators
+
+These will have full access to the Open Food Facts realm so can add new clients, reset user passwords, etc.
+
 # Components of the Project
 
 Different aspects of the Keycloak deployment are managed by the following components of this project:

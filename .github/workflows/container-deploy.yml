@@ -28,7 +28,6 @@ jobs:
         echo "KC_HOSTNAME=https://auth.openfoodfacts.net" >> $GITHUB_ENV
         echo "KC_DB_URL_HOST=postgresql" >> $GITHUB_ENV
         echo "REDIS_URL=redis://redis:6379" >> $GITHUB_ENV
-        echo "SMTP_SERVER=10:1.0.102" >> $GITHUB_ENV
         echo "COMMON_NET_NAME=po_webnet" >> $GITHUB_ENV
 
         echo "KEYCLOAK_STARTUP=staging" >> $GITHUB_ENV
@@ -43,7 +42,6 @@ jobs:
         echo "KC_HOSTNAME=https://auth.openfoodfacts.org" >> $GITHUB_ENV
         echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
         echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
-        echo "SMTP_SERVER=pmg.openfoodfacts.org" >> $GITHUB_ENV
         echo "COMMON_NET_NAME=common_net" >> $GITHUB_ENV
 
         echo "KEYCLOAK_STARTUP=prod" >> $GITHUB_ENV
@@ -56,7 +54,7 @@ jobs:
         checkName: build
         ref: ${{ github.event.pull_request.head.sha || github.sha }}
         intervalSeconds: 10
-        timeoutSeconds: 600 # 10m
+        timeoutSeconds: 1800 # 30m
 
     - name: Do something if build fail
       if: steps.wait-build.outputs.conclusion == 'failure'
@@ -115,7 +113,7 @@ jobs:
           echo "KC_DB_USERNAME=keycloak" >> .env
           echo "KC_DB_PASSWORD=${{ secrets.KC_DB_PASSWORD }}" >> .env
           echo "REDIS_URL=${{ env.REDIS_URL }}" >> .env
-          echo "SMTP_SERVER=${{ env.SMTP_SERVER }}" >> .env
+          echo "SMTP_SERVER=pmg.openfoodfacts.org" >> .env
           echo "KEYCLOAK_HTTP_PORT=5600" >> .env
           echo "KEYCLOAK_MANAGEMENT_PORT=5602" >> .env
           echo "KEYCLOAK_STARTUP=${{env.KEYCLOAK_STARTUP}}" >> .env
