@@ -8,7 +8,7 @@ Ultimately all user and re-user authentication should take place via Keycloak. O
 
 # Configuring Clients
 
-No clients are pre-configured in the production and staging instances. We only use OIDC clients (not SAML).
+No clients are pre-configured in the production and staging instances. We only use OIDC clients (not SAML). Clients are configured on the Open Food Facts realm (not master).
 
 ## Internal Backend Client
 
@@ -42,6 +42,18 @@ There is no service account for these types of client and no secret, so only the
 These would be used if the client has a backend that is able to perform the code for token exchange.
 
 The configuration is the same as for a Public client except that Client authentication is enabled so there will be a secret to share with the client.
+
+# Configuring Users
+
+The default root user should not be used and every administrator should be a specific named individual. Keycloak administrators are added to the master realm.
+
+## Full Administrators
+
+These will have access to all roles and be able to create additional users.
+
+## Open Food Facts administrators
+
+These will have full access to the Open Food Facts realm so can add new clients, reset user passwords, etc.
 
 # Components of the Project
 
