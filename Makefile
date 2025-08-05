@@ -132,7 +132,7 @@ run: create_user
 		${DOCKER_RUN} compose logs && exit 1; fi
 
 stop:
-	docker compose stop
+	${DOCKER_RUN} compose stop
 
 # Space delimited list of dependant projects
 DEPS=openfoodfacts-shared-services
