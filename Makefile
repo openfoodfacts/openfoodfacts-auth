@@ -131,6 +131,9 @@ run: create_user
 	if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
 		${DOCKER_RUN} compose logs && exit 1; fi
 
+stop:
+	docker compose stop
+
 # Space delimited list of dependant projects
 DEPS=openfoodfacts-shared-services
 # Set the DEPS_DIR if it hasn't been set already
