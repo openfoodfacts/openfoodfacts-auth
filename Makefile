@@ -131,8 +131,9 @@ run: create_user
 	if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
 		${DOCKER_RUN} compose logs && exit 1; fi
 
-stop: stop_deps
+stop:
 	${DOCKER_RUN} compose stop
+	$(MAKE) stop_deps
 
 # Space delimited list of dependant projects
 DEPS=openfoodfacts-shared-services
