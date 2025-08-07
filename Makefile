@@ -151,7 +151,7 @@ run_deps: create_externals clone_deps
 # Stop dependent projects
 stop_deps:
 	@for dep in ${DEPS} ; do \
-		cd ${DEPS_DIR}/$$dep && ( $(MAKE) stop || env -i docker compose stop ) ; \
+		cd ${DEPS_DIR}/$$dep && ( make stop || env -i docker compose stop ) ; \
 	done
 
 # Clone dependent projects without running them (used to pull in yml for tests)
