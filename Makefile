@@ -131,7 +131,7 @@ run: create_user
 	if ! ${DOCKER_RUN} compose up --wait --wait-timeout 120; then \
 		${DOCKER_RUN} compose logs && exit 1; fi
 
-stop:
+stop: stop_deps
 	${DOCKER_RUN} compose stop
 
 # Space delimited list of dependant projects
@@ -145,6 +145,12 @@ endif
 run_deps: create_externals clone_deps
 	@for dep in ${DEPS} ; do \
 		cd ${DEPS_DIR}/$$dep && $(MAKE) run; \
+	done
+
+# Stop dependent projects
+stop_deps:
+	@for dep in ${DEPS} ; do \
+		cd ${DEPS_DIR}/$$dep && ( $(MAKE) stop || env -i docker compose stop ) ; \
 	done
 
 # Clone dependent projects without running them (used to pull in yml for tests)
