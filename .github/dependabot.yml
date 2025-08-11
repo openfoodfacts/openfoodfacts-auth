@@ -23,8 +23,12 @@ updates:
     groups:
       deps-maven-production:
         dependency-type: production
+        patterns:
+          - "*"
       deps-maven-dev:
         dependency-type: development
+        patterns:
+          - "*"
     ignore:
       - dependency-name: "org.keycloak:*"
   - package-ecosystem: "npm"
@@ -34,3 +38,5 @@ updates:
     groups:
       deps-npm-dev:
         dependency-type: development
+        patterns:
+          - "*"
