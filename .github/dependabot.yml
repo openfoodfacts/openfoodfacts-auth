@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      - dependency-type: "all"
     groups:
       deps-github-actions:
         patterns:
@@ -12,6 +14,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      - dependency-type: "all"
     groups:
       deps-devcontainers:
         patterns:
@@ -20,23 +24,27 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      - dependency-type: "all"
     groups:
       deps-maven-production:
-        dependency-type: production
+        dependency-type: "production"
         patterns:
           - "*"
       deps-maven-dev:
-        dependency-type: development
+        dependency-type: "development"
         patterns:
           - "*"
     ignore:
       - dependency-name: "org.keycloak:*"
   - package-ecosystem: "npm"
     directory: "/"
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "monthly"
     groups:
       deps-npm-dev:
-        dependency-type: development
+        dependency-type: "development"
         patterns:
           - "*"
