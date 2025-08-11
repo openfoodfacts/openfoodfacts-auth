@@ -5,33 +5,32 @@ updates:
     schedule:
       interval: "monthly"
     groups:
-      actions:
+      deps-github-actions:
         patterns:
-          - "actions/*"
-      docker:
-        patterns:
-          - "docker/*"
-      github:
-        patterns:
-          - "github/*"
+          - "*"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      deps-devcontainers:
+        patterns:
+          - "*"
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
       interval: "monthly"
     groups:
-      apache-maven-plugins:
-        patterns:
-          - "org.apache.maven.plugins:*"
-      testcontainers:
-        patterns:
-          - "org.testcontainers:*"
+      deps-maven-production:
+        dependency-type: production
+      deps-maven-dev:
+        dependency-type: development
     ignore:
       - dependency-name: "org.keycloak:*"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      deps-npm-dev:
+        dependency-type: development
