@@ -7,7 +7,7 @@ updates:
     allow:
       - dependency-type: "all"
     groups:
-      deps-github-actions:
+      github-actions:
         patterns:
           - "*"
   - package-ecosystem: "devcontainers"
@@ -17,7 +17,7 @@ updates:
     allow:
       - dependency-type: "all"
     groups:
-      deps-devcontainers:
+      devcontainers:
         patterns:
           - "*"
   - package-ecosystem: "maven"
@@ -27,11 +27,11 @@ updates:
     allow:
       - dependency-type: "all"
     groups:
-      deps-maven-production:
+      maven-production:
         dependency-type: "production"
         patterns:
           - "*"
-      deps-maven-dev:
+      maven-dev:
         dependency-type: "development"
         patterns:
           - "*"
@@ -44,7 +44,7 @@ updates:
     schedule:
       interval: "monthly"
     groups:
-      deps-npm-dev:
+      npm-dev:
         dependency-type: "development"
         patterns:
           - "*"
