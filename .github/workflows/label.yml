@@ -9,10 +9,6 @@ name: 🏷️ Pull Request Labeler
 on:
 - pull_request_target
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   label:
     name: Auto-Labelling Pull Request
