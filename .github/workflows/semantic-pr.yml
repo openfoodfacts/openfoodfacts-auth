@@ -7,10 +7,6 @@ on:
       - edited
       - synchronize
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   main:
     name: Validate Pull Request title
