@@ -146,4 +146,4 @@ Once all apps are going through Keycloak for authentication we can start to supp
 ## 🎨 Design & User interface
 - We strive to thoughfully design every feature before we move on to implementation, so that we respect Open Food Facts' graphic charter and nascent design system, while having efficient user flows.
 - [![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?logo=figma&logoColor=white) Keycloak user flows](https://www.figma.com/design/lQSExloZB3G2cn9acIGy6m/User-flows---Keycloak?m=auto&t=wRSYmglFiDZ8CauF-6)
-<br><br>
+
