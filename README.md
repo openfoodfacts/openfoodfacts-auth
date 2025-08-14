@@ -103,7 +103,7 @@ The Keycloak version to be used is specified in the `.env` file. However, in add
 
 We keep a copy of the Keycloak themes in Git so that we can see what has changed between versions. Run `make refresh_themes` to refresh this copy (stored in the `theme` folder).
 
-`make refresh_themes` also calls `make update-keycloak_version` which refreshes the version numbers in the `pom.xml` file.
+`make refresh_themes` also calls `make update_keycloak_version` which refreshes the version numbers in the `pom.xml` file.
 
 Note: This requires a JRE in `$PATH`.
 
@@ -121,9 +121,13 @@ If you need to override a new template make sure it is listed in the `refresh_th
 
 Run `make build` to update the container images.
 
+Run `make build_test` to build the pre-configured testcontainer image used by other projects and the end to end tests.
+
 ## Test
 
 Make sure you re-run the end to end tests with `make test` after a Keycloak upgrade. Pay particular attention to the screen snapshots is it is often necessary to update the custom CSS for the OFF theme after a Keycloak upgrade.
+
+There may be some acceptable variation in screen sots, in which case you can run `make update_screenshots` to refresh these. Note that you may need to refresh these using the GitHub action on the PR by commenting with `/update-screenshots` to get exact pixel matches when running tests in GitHub.
 
 # Roadmap
 
@@ -142,4 +146,4 @@ Once all apps are going through Keycloak for authentication we can start to supp
 ## 🎨 Design & User interface
 - We strive to thoughfully design every feature before we move on to implementation, so that we respect Open Food Facts' graphic charter and nascent design system, while having efficient user flows.
 - [![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?logo=figma&logoColor=white) Keycloak user flows](https://www.figma.com/design/lQSExloZB3G2cn9acIGy6m/User-flows---Keycloak?m=auto&t=wRSYmglFiDZ8CauF-6)
-<br><br>
+

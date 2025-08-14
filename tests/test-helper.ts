@@ -75,8 +75,9 @@ export const getLocaleSelector = (page: Page) => page.getByLabel("languages");
 export const selectDummyLocale = async(page: Page) => {
   const localeSelector = getLocaleSelector(page);
   await localeSelector.click();
-  await localeSelector.pressSequentially("xx");
-  await localeSelector.press("Tab");
+  await localeSelector.press("x", {delay:100});
+  await localeSelector.press("x", {delay:100});
+  await localeSelector.press("Tab", {delay:100});
   return localeSelector;
 }
 

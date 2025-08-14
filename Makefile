@@ -65,7 +65,7 @@ test: test_setup
 
 # Update expected screen shots. Need to be able to run this from CI in order to get a consistent environment
 update_screenshots: test_setup
-	npx playwright test --update-snapshots screenshots.spec.ts
+	npx playwright test --update-snapshots changed screenshots.spec.ts
 
 test_setup: run_deps
 	COMPOSE_FILE=docker/test.yml docker compose up --wait --wait-timeout 120
