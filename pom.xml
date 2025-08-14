@@ -19,7 +19,7 @@
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
     <keycloak.version>26.0.5</keycloak.version>
-    <junit.version>5.13.0</junit.version>
+    <junit.version>5.13.4</junit.version>
   </properties>
   <build>
     <finalName>keycloak-extensions-${project.version}</finalName>
@@ -141,18 +141,18 @@
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
-      <version>6.0.0</version>
+      <version>6.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
-      <version>1.21.1</version>
+      <version>1.21.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>1.21.1</version>
+      <version>1.21.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
