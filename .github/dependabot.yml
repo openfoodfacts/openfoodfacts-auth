@@ -35,8 +35,9 @@ updates:
         dependency-type: "development"
         patterns:
           - "*"
-    ignore:
-      - dependency-name: "org.keycloak:*"
+    # Experimental: Allow dependabot to update Keycloak to see if we can semi-automate updates
+    # ignore:
+    #   - dependency-name: "org.keycloak:*"
   - package-ecosystem: "npm"
     directory: "/"
     allow:

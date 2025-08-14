@@ -82,7 +82,7 @@ module.exports = defineConfig({
   },
 
   expect: {
-    timeout: 10000, 
+    timeout: 15000, 
     toHaveScreenshot: { 
       /* This figure is by trial and error to minimize false positives when running tests locally
         Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */

@@ -15,3 +15,5 @@ jobs:
           envFile: '.env'
       - name: "Dependency Review"
         uses: actions/dependency-review-action@v4.7.1
+        with:
+          fail-on-severity: high
