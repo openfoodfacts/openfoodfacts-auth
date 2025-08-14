@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: make init
       - name: Build
-        run: make build
+        run: make build_test
       - name: Update Playwright test results
         run: make update_screenshots
       - uses: actions/upload-artifact@v4
