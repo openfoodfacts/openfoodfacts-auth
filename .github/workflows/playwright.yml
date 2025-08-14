@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_run:
-    workflows: [ update-screenshots ]
+    workflows: [ "Update Screenshots" ]
     types:
       - completed
 jobs:
