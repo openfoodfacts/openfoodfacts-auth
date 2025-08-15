@@ -207,14 +207,12 @@ jobs:
           docker load --input ${{ runner.temp }}/testcontainer.tar
           docker image ls -a
       - name: Run Playwright tests
-        run: |
-          make test
-          pwd
-          ls
-          echo ${{ github.workspace }}
-          
+        run: make test
+
       - uses: actions/upload-artifact@v4
         with:
           name: test-results
+          # Playwright .last-run.json file won't be uploaded without this
+          include-hidden-files: true
           path: ${{ github.workspace }}/test-results/
           retention-days: 30
