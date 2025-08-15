@@ -91,13 +91,46 @@ jobs:
           name: testcontainer
           path: ${{ runner.temp }}/testcontainer.tar
 
+  # Run the playwright tests. Uses the image artifacts created in the build job
+  test:
+    needs: build
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: make init
+      - name: Download previously built testcontainer image
+        uses: actions/download-artifact@v4
+        with:
+          name: testcontainer
+          path: ${{ runner.temp }}
+      - name: Load testcontainer image
+        run: |
+          docker load --input ${{ runner.temp }}/testcontainer.tar
+          docker image ls -a
+      - name: Run Playwright tests
+        run: make test
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          # Playwright .last-run.json file won't be uploaded without this
+          include-hidden-files: true
+          path: ${{ github.workspace }}/test-results/
+          retention-days: 30
+
   # Only runs on push to main. Does the full multi-platform build (using above images to cache the linux one)
   # and pushes the images to the registry
   push-images:
     name: Push Images to Registry
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    needs: build
+    # Only push images if tests have passed
+    needs: test
     permissions:
       contents: read
       packages: write
@@ -185,34 +218,3 @@ jobs:
           # Need to set the description via an annotation as this is a multi-arch image (https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images)
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
       
-  # Run the playwright tests. Uses the image artifacts created in the build job
-  test:
-    needs: build
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Install dependencies
-        run: make init
-      - name: Download previously built testcontainer image
-        uses: actions/download-artifact@v4
-        with:
-          name: testcontainer
-          path: ${{ runner.temp }}
-      - name: Load testcontainer image
-        run: |
-          docker load --input ${{ runner.temp }}/testcontainer.tar
-          docker image ls -a
-      - name: Run Playwright tests
-        run: make test
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          # Playwright .last-run.json file won't be uploaded without this
-          include-hidden-files: true
-          path: ${{ github.workspace }}/test-results/
-          retention-days: 30
