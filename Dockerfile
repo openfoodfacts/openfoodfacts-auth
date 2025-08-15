@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/root/.m2 set -x && \
     export SKIP_INTEGRATION_TESTS=true && \
     mvn -B package
 
-FROM quay.io/keycloak/keycloak:26.3.0 AS base
+FROM quay.io/keycloak/keycloak:26.3.2 AS base
 # Base image that the test and production images derive from.
 # Note the version number above is set by the update_keycloak_version.mjs script, so no need to edit manually
 
