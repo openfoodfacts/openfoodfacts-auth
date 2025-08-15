@@ -22,28 +22,10 @@ jobs:
       packages: write
 
     steps:
-      - name: Get repository, owner and branch name
-        # see https://github.com/actions/checkout/issues/331
-        id: get-branch
-        run: |
-            echo branch=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName') >> $GITHUB_OUTPUT
-            echo owner=$(gh pr view $PR_NO --repo $REPO --json headRepositoryOwner --jq '.headRepositoryOwner.login')  >> $GITHUB_OUTPUT
-            echo repository=$(gh pr view $PR_NO --repo $REPO --json headRepositoryOwner,headRepository --jq '.headRepositoryOwner.login + "/" + .headRepository.name')  >> $GITHUB_OUTPUT
-        env:
-            REPO: ${{ github.repository }}
-            PR_NO: ${{ github.event.issue.number }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          # we need to checkout the fork repository
-          # see https://github.com/stefanzweifel/git-auto-commit-action?tab=readme-ov-file#workflow-should-run-in-base-repository
-          fetch-depth: 1
-          repository: "${{ steps.get-branch.outputs.repository }}"
-          ref: "${{ steps.get-branch.outputs.branch }}"
-          # We can use GITHUB_TOKEN here because we don't want to trigger another action if we commit
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: cardinalby/export-env-action@v2
+
+        - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'
 
@@ -65,7 +47,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: 'Additional changes for Keycloak update'
-          branch: "${{ steps.get-branch.outputs.branch }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
