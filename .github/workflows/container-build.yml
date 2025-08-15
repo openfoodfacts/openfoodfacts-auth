@@ -13,6 +13,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  # This builds the images and uploads them as artifacts
   build:
     runs-on: ubuntu-latest
 
@@ -55,7 +56,7 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and upload Docker image
+      - name: Build and export Docker image to tar
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -71,7 +72,7 @@ jobs:
           name: image
           path: ${{ runner.temp }}/image.tar
 
-      - name: Build and upload Docker testcontainer image
+      - name: Build and export Docker testcontainer image to tar
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -90,6 +91,8 @@ jobs:
           name: testcontainer
           path: ${{ runner.temp }}/testcontainer.tar
 
+  # Only runs on push to main. Does the full multi-platform build (using above images to cache the linux one)
+  # and pushes the images to the registry
   push-images:
     name: Push Images to Registry
     if: github.event_name != 'pull_request'
@@ -182,6 +185,7 @@ jobs:
           # Need to set the description via an annotation as this is a multi-arch image (https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images)
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
       
+  # Run the playwright tests. Uses the image artifacts created in the build job
   test:
     needs: build
     timeout-minutes: 60
@@ -207,5 +211,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: ./test-results/
+          path: ${{ github.workspace }}/test-results/
           retention-days: 30
