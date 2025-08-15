@@ -24,7 +24,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-
+        with:
+          # Need this to ensure we don't get a detached head
+          ref: ${{ github.head_ref }}
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'
