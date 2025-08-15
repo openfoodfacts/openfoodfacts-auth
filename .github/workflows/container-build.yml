@@ -33,8 +33,16 @@ jobs:
             REPO: ${{ github.repository }}
             PR_NO: ${{ github.event.issue.number }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v5
-
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # we need to checkout the fork repository
+          # see https://github.com/stefanzweifel/git-auto-commit-action?tab=readme-ov-file#workflow-should-run-in-base-repository
+          fetch-depth: 1
+          repository: "${{ steps.get-branch.outputs.repository }}"
+          ref: "${{ steps.get-branch.outputs.branch }}"
+          # We can use GITHUB_TOKEN here because we don't want to trigger another action if we commit
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'
