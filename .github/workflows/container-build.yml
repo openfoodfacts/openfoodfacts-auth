@@ -207,5 +207,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: ${{ runner.temp }}/test-results/
+          path: ./test-results/
           retention-days: 30
