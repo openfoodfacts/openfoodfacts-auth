@@ -17,38 +17,18 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      # update_keycloak_version may make additional changes, which will need to be pushed
-      contents: write
+      contents: read
       packages: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          # Need this to ensure we don't get a detached head
-          ref: ${{ github.head_ref }}
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-
-      # NodeJS is used to update the keycloak version
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-
-      - name: Check Keycloak Version for changes
-        run: |
-          # Don't run make init as we don't need Playwright
-          npm ci
-          make update_keycloak_version
-
-      - name: Commit and push chnages from Keycloak upgrade
-        uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          commit_message: 'Additional changes for Keycloak update'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
