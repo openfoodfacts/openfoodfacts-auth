@@ -183,7 +183,6 @@ jobs:
           outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
       
   test:
-    name: Run Playwright Tests
     needs: build
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -208,5 +207,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: test-results/
+          path: ${{ runner.temp }}/test-results/
           retention-days: 30
