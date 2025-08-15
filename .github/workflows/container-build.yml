@@ -18,6 +18,8 @@ jobs:
 
     permissions:
       contents: read
+      # Package write permission is needed to update the cache
+      packages: write
 
     steps:
       - name: Checkout

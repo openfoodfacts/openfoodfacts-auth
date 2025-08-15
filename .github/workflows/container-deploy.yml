@@ -51,7 +51,7 @@ jobs:
       id: wait-build
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        checkName: build
+        checkName: push-images
         ref: ${{ github.event.pull_request.head.sha || github.sha }}
         intervalSeconds: 10
         timeoutSeconds: 1800 # 30m
