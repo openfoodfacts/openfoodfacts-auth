@@ -48,7 +48,10 @@ jobs:
           node-version: lts/*
 
       - name: Check Keycloak Version for changes
-        run: make update_keycloak_version
+        run: |
+          # Don't run make init as we don't need Playwright
+          npm ci
+          make update_keycloak_version
 
       - name: Commit and push chnages from Keycloak upgrade
         uses: stefanzweifel/git-auto-commit-action@v6
