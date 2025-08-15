@@ -17,10 +17,22 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      # update_keycloak_version may make additional changes, which will need to be pushed
+      contents: write
       packages: write
 
     steps:
+      - name: Get repository, owner and branch name
+        # see https://github.com/actions/checkout/issues/331
+        id: get-branch
+        run: |
+            echo branch=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName') >> $GITHUB_OUTPUT
+            echo owner=$(gh pr view $PR_NO --repo $REPO --json headRepositoryOwner --jq '.headRepositoryOwner.login')  >> $GITHUB_OUTPUT
+            echo repository=$(gh pr view $PR_NO --repo $REPO --json headRepositoryOwner,headRepository --jq '.headRepositoryOwner.login + "/" + .headRepository.name')  >> $GITHUB_OUTPUT
+        env:
+            REPO: ${{ github.repository }}
+            PR_NO: ${{ github.event.issue.number }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v5
 
       - uses: cardinalby/export-env-action@v2
@@ -29,6 +41,20 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
+      # NodeJS is used to update the keycloak version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Check Keycloak Version for changes
+        run: make update_keycloak_version
+
+      - name: Commit and push chnages from Keycloak upgrade
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: 'Additional changes for Keycloak update'
+          branch: "${{ steps.get-branch.outputs.branch }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -62,8 +88,6 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
           platforms: linux/amd64,linux/arm64
-          build-args:
-            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -76,8 +100,6 @@ jobs:
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
           platforms: linux/amd64,linux/arm64
           target: testcontainer
-          build-args:
-            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
           tags: |
             ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
           labels: |

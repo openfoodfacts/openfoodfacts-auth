@@ -72,6 +72,7 @@ test_setup: run_deps
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
+# Usage: make refresh_themes KEYCLOAK_VERSION=...
 refresh_themes:
 	rm -rf theme/theme
 	mkdir theme/theme
@@ -99,12 +100,11 @@ refresh_themes:
 	rm keycloak-${KEYCLOAK_VERSION}.tar.gz
 
 	$(MAKE) refresh_messages
-	$(MAKE) update_keycloak_version
 
 # Updates the Keycloak version in the pom.xml file as using ${env.KEYCLOAK_VERSION} can be tricky
 # with IDE's like VSCode that load Maven before the .env file has been evaluated
 update_keycloak_version:
-	node build-scripts/update_keycloak_version.mjs
+	@node build-scripts/update_keycloak_version.mjs
 
 # This will find any existing Keycloak translations for messages defined in the messages_en file
 # It also downloads the current languages and countries taxonomies from openfoodfacts-server and
