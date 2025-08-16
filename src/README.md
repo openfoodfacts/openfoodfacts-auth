@@ -30,6 +30,6 @@ FROM maven:3-eclipse-temurin-21 AS builder
 
 Uses Maven version 3 with version 21 of the JDK.
 
-Note that if the `KEYCLOAK_VERSION` is changed you will need to run `make update_keycloak_version` to update the `pom.xml` file.
+Note that if the `keycloak.version` property is changed you will need to run `make update_keycloak_version` to update the other version numbers in the `pom.xml` file and refresh themes and messages.
 
 `make install` will download any other dependencies and run the unit tests.

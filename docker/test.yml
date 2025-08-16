@@ -5,8 +5,6 @@ services:
       context: ..
       dockerfile: Dockerfile
       target: testcontainer
-      args:
-        - KEYCLOAK_VERSION
     environment:
       - KC_SPI_EVENTS_LISTENER_REDIS_EVENT_LISTENER_REDIS_URL=${REDIS_URL}
       - KC_HOSTNAME=http://auth.openfoodfacts.localhost:5606
