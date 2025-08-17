@@ -126,7 +126,6 @@ jobs:
   # Only runs on push to main. Does the full multi-platform build (using above images to cache the linux one)
   # and pushes the images to the registry
   push-images:
-    name: Push Images to Registry
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     # Only push images if tests have passed
