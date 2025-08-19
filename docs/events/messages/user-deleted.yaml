@@ -1,21 +1,22 @@
-title: Generated when a user requests to be forgotten
-payload:
-  type: object
-  properties:
-    id:
-      description: The internal Keycloak id of the user
-      type: string
-    email:
-      description: The user's email address
-      type: string
-    userName:
-      description: The user's public facing user name
-      type: string
-    realm:
-      description: The Keycloak realm
-      const: openfoodfacts
-    newUserName:
-      description: A randomly generated alias for the user that will be associated with their historic contributions
-      type: string
-      examples:
-        - anonymous-1234
+user-deleted:
+  title: Generated when a user requests to be forgotten
+  payload:
+    type: object
+    properties:
+      id:
+        description: The internal Keycloak id of the user
+        type: string
+      email:
+        description: The user's email address
+        type: string
+      userName:
+        description: The user's public facing user name
+        type: string
+      realm:
+        description: The Keycloak realm
+        const: openfoodfacts
+      newUserName:
+        description: A randomly generated alias for the user that will be associated with their historic contributions
+        type: string
+        examples:
+          - anonymous-1234

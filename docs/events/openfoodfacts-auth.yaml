@@ -14,14 +14,10 @@ operations:
   user-registered:
     action: send
     channel:
-      address: user-registered
       messages:
-        user-registered:
-          $ref: "./messages/user-registered.yaml"
+        $ref: "./messages/user-registered.yaml"
   user-deleted:
     action: send
     channel:
-      address: user-deleted
       messages:
-        user-deleted:
-          $ref: "./messages/user-deleted.yaml"
+        $ref: "./messages/user-deleted.yaml"
