@@ -21,10 +21,8 @@ user-registered:
         examples:
           - OFF
       newsletter:
-        description: Whether the user subscribed to the newsletter
-        enum: 
-          - subscribe
-          - ""
+        description: Present if the user subscribed to the newsletter
+        const: subscribe
       requestedOrg:
         description: The producer organization the user has requested to join
         type: string
