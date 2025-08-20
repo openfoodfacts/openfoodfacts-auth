@@ -1,0 +1,28 @@
+user-registered:
+  title: Details of a new user that has registered with the app
+  payload:
+    type: object
+    properties:
+      id:
+        description: The internal Keycloak id of the new user
+        type: string
+      email:
+        description: The user's email address
+        type: string
+      userName:
+        description: The user's public facing user name
+        type: string
+      realm:
+        description: The Keycloak realm in which the user was created
+        const: openfoodfacts
+      clientId:
+        description: The client_id of the application that initiated the new user registration process
+        type: string
+        examples:
+          - OFF
+      newsletter:
+        description: Present if the user subscribed to the newsletter
+        const: subscribe
+      requestedOrg:
+        description: The producer organization the user has requested to join
+        type: string
