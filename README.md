@@ -55,6 +55,10 @@ These will have access to all roles and be able to create additional users.
 
 These will have full access to the Open Food Facts realm so can add new clients, reset user passwords, etc.
 
+# Events
+
+Keycloak will emit certain user events to Redis, documented [here](docs/events/openfoodfacts-auth.html)
+
 # Components of the Project
 
 Different aspects of the Keycloak deployment are managed by the following components of this project:

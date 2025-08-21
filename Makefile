@@ -122,6 +122,9 @@ create_user_prod:
 	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
 	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
 
+build_asyncapi:
+	npm install
+	cd docs/events && npx asyncapi generate fromTemplate openfoodfacts-auth.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param singleFile=true outFilename=openfoodfacts-auth.html --force-write --output=.
 
 # Called by other projects to start this project as a dependency
 # Use docker compose pull to ensure we get the latest keycloak image (unless we are using the dev image)
