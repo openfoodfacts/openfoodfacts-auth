@@ -124,7 +124,7 @@ create_user_prod:
 
 build_asyncapi:
 	npm install
-	cd docs/events && npx asyncapi generate fromTemplate openfoodfacts-auth.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param singleFile=true --force-write --output=.
+	cd docs/events && npx asyncapi generate fromTemplate openfoodfacts-auth.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param singleFile=true outFilename=openfoodfacts-auth.html --force-write --output=.
 
 # Called by other projects to start this project as a dependency
 # Use docker compose pull to ensure we get the latest keycloak image (unless we are using the dev image)
