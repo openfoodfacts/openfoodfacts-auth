@@ -1,0 +1,19 @@
+[
+  {
+    "id": "d0d4e698-c0e3-461d-aa0d-d18e5ee78ee2",
+    "name": "name",
+    "protocol": "openid-connect",
+    "protocolMapper": "oidc-usermodel-attribute-mapper",
+    "consentRequired": false,
+    "config": {
+      "introspection.token.claim": "true",
+      "userinfo.token.claim": "true",
+      "user.attribute": "name",
+      "id.token.claim": "true",
+      "lightweight.claim": "false",
+      "access.token.claim": "true",
+      "claim.name": "name",
+      "jsonType.label": "String"
+    }
+  }
+]
