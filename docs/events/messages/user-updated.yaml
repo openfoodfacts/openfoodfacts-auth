@@ -1,4 +1,4 @@
-user-registered:
+user-updated:
   title: Details of a user that has updated their profile
   payload:
     type: object
