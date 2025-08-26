@@ -65,7 +65,7 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                                 event.getClientId());
                         user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
                     }
-                } else if (isUserUpdatedEvent(event, realm)) {
+                } else if (isUserUpdatedEvent(event)) {
                     final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
                     OpenFoodFactsEventListenerProviderFactory.this.client.postUserUpdated(user, realm,
                             event.getClientId());
@@ -132,7 +132,7 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                 return false;
             }
 
-            private boolean isUserUpdatedEvent(final Event event, final RealmModel realm) {
+            private boolean isUserUpdatedEvent(final Event event) {
                 final EventType eventType = event.getType();
                 return EventType.UPDATE_PROFILE.equals(eventType);
             }
