@@ -1,0 +1,22 @@
+user-registered:
+  title: Details of a user that has updated their profile
+  payload:
+    type: object
+    properties:
+      id:
+        description: The internal Keycloak id of the user
+        type: string
+      email:
+        description: The user's email address
+        type: string
+      userName:
+        description: The user's public facing user name
+        type: string
+      realm:
+        description: The Keycloak realm in which the user was created
+        const: openfoodfacts
+      clientId:
+        description: The client_id of the application that initiated the user profile update process
+        type: string
+        examples:
+          - OFF
