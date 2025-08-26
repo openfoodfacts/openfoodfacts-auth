@@ -42,6 +42,21 @@ public class RedisClient implements AutoCloseable {
         postUserEvent("user-registered", user, realm, additionalData);
     }
 
+    public void postUserUpdated(final UserModel user, final RealmModel realm, final String clientId) {
+        if (user == null) {
+            throw new IllegalArgumentException("user");
+        }
+
+        if (realm == null) {
+            throw new IllegalArgumentException("realm");
+        }
+
+        final HashMap<String, String> additionalData = new HashMap<>();        
+        additionalData.put("clientId", clientId);
+
+        postUserEvent("user-updated", user, realm, additionalData);
+    }
+
     public void postUserDeleted(final UserModel user, final RealmModel realm, final String anonymousUsername) {
         if (user == null) {
             throw new IllegalArgumentException("user");
