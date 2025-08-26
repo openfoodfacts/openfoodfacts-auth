@@ -22,6 +22,23 @@ test("account personal info", async ({ page }) => {
   await expect(page.getByLabel('^this_is_a_pro_account^')).not.toBeVisible();
 });
 
+test("update display name", async ({ page }) => {
+  // Get the redis client before test so we have the current stream id
+  const redisClient = await createRedisClient('user-updated');
+
+  await createAndVerifyUser(page);
+
+  const newUserName = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+
+  await page.getByLabel('^name^').fill(newUserName);
+
+  await page.getByRole('button', {name: '^save^'}).click();
+
+  const myMessage = await redisClient.getMessageForUser(newUserName);
+  expect(myMessage).toBeTruthy();
+  expect(myMessage?.message.userName).toBe(newUserName);
+});
+
 test("delete account", async ({ page }) => {
   // Get the redis client before test so we have the current stream id
   const redisClient = await createRedisClient('user-deleted');
