@@ -70,14 +70,6 @@ public class RedisClient implements AutoCloseable {
         postUserEvent("user-deleted", user, realm, Map.of("newUserName", anonymousUsername));
     }
 
-    private String getAttribute(final Map<String, List<String>> attributes, final String key) {
-        final var values = attributes.get(key);
-        if (values != null) {
-            return values.getFirst();
-        }
-        return null;
-    }
-
     private void postUserEvent(final String key, final UserModel user, final RealmModel realm,
             final Map<String, String> additionalData) {
         if (key == null) {
@@ -97,10 +89,9 @@ public class RedisClient implements AutoCloseable {
         putIfNotNull(data, "email", user.getEmail());
         putIfNotNull(data, "userName", user.getUsername());
 
-        final var userAttributes = user.getAttributes();
-        putIfNotNull(data, "name", getAttribute(userAttributes, "name"));
-        putIfNotNull(data, "locale", getAttribute(userAttributes, "locale"));
-        putIfNotNull(data, "country", getAttribute(userAttributes, "country"));
+        putIfNotNull(data, "name", user.getFirstAttribute("name"));
+        putIfNotNull(data, "locale", user.getFirstAttribute("locale"));
+        putIfNotNull(data, "country", user.getFirstAttribute("country"));
 
         putIfNotNull(data, "realm", realm.getName());
 
