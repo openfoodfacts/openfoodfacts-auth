@@ -1,6 +1,7 @@
 package openfoodfacts.github.keycloak.events;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
@@ -42,6 +43,21 @@ public class RedisClient implements AutoCloseable {
         postUserEvent("user-registered", user, realm, additionalData);
     }
 
+    public void postUserUpdated(final UserModel user, final RealmModel realm, final String clientId) {
+        if (user == null) {
+            throw new IllegalArgumentException("user");
+        }
+
+        if (realm == null) {
+            throw new IllegalArgumentException("realm");
+        }
+
+        final HashMap<String, String> additionalData = new HashMap<>();
+        additionalData.put("clientId", clientId);
+
+        postUserEvent("user-updated", user, realm, additionalData);
+    }
+
     public void postUserDeleted(final UserModel user, final RealmModel realm, final String anonymousUsername) {
         if (user == null) {
             throw new IllegalArgumentException("user");
@@ -72,6 +88,11 @@ public class RedisClient implements AutoCloseable {
         putIfNotNull(data, "id", user.getId());
         putIfNotNull(data, "email", user.getEmail());
         putIfNotNull(data, "userName", user.getUsername());
+
+        putIfNotNull(data, "name", user.getFirstAttribute("name"));
+        putIfNotNull(data, "locale", user.getFirstAttribute("locale"));
+        putIfNotNull(data, "country", user.getFirstAttribute("country"));
+
         putIfNotNull(data, "realm", realm.getName());
 
         if (additionalData != null) {

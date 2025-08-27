@@ -59,10 +59,16 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                     final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
 
                     if (user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
-                        // Note that for normal events the clientId is the normal clientId, not the internal GUID
-                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm, event.getClientId());
+                        // Note that for normal events the clientId is the normal clientId, not the
+                        // internal GUID
+                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm,
+                                event.getClientId());
                         user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
                     }
+                } else if (isUserUpdatedEvent(event)) {
+                    final UserModel user = keycloakSession.users().getUserById(realm, event.getUserId());
+                    OpenFoodFactsEventListenerProviderFactory.this.client.postUserUpdated(user, realm,
+                            event.getClientId());
                 }
             }
 
@@ -83,7 +89,8 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                     }
 
                     // Note for admin events the clientId in the AuthDetails is the internal GUID
-                    final ClientModel client = keycloakSession.clients().getClientById(realm, event.getAuthDetails().getClientId());
+                    final ClientModel client = keycloakSession.clients().getClientById(realm,
+                            event.getAuthDetails().getClientId());
                     if (client == null) {
                         log.errorf("Failed to find client: %s", event.getAuthDetails().getClientId());
                         return;
@@ -91,7 +98,8 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
 
                     if ((!realm.isVerifyEmail() || user.isEmailVerified())
                             && user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
-                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm, client.getClientId());
+                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm,
+                                client.getClientId());
                         user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
                     }
                 }
@@ -124,14 +132,20 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
                 return false;
             }
 
+            private boolean isUserUpdatedEvent(final Event event) {
+                final EventType eventType = event.getType();
+                return EventType.UPDATE_PROFILE.equals(eventType);
+            }
+
         };
     }
 
     @Override
     public void init(Config.Scope scope) {
         String redisUrl = scope.get("redisUrl");
-        if(redisUrl != null && !redisUrl.trim().isEmpty()) {
-            if (!redisUrl.startsWith("redis://")) redisUrl = "redis://" + redisUrl;
+        if (redisUrl != null && !redisUrl.trim().isEmpty()) {
+            if (!redisUrl.startsWith("redis://"))
+                redisUrl = "redis://" + redisUrl;
             this.client = new RedisClient(redisUrl);
         } else {
             log.warn("REDIS_URL not specified");

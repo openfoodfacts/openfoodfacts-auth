@@ -1,10 +1,10 @@
-user-registered:
-  title: Details of a new user that has registered with the app
+user-updated:
+  title: Details of a user that has updated their profile
   payload:
     type: object
     properties:
       id:
-        description: The internal Keycloak id of the new user
+        description: The internal Keycloak id of the user
         type: string
       email:
         description: The user's email address
@@ -30,13 +30,7 @@ user-registered:
         description: The Keycloak realm in which the user was created
         const: openfoodfacts
       clientId:
-        description: The client_id of the application that initiated the new user registration process
+        description: The client_id of the application that initiated the user profile update process
         type: string
         examples:
           - OFF
-      newsletter:
-        description: Present if the user subscribed to the newsletter
-        const: subscribe
-      requestedOrg:
-        description: The producer organization the user has requested to join
-        type: string
