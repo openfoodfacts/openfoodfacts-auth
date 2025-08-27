@@ -26,17 +26,20 @@ test("update display name", async ({ page }) => {
   // Get the redis client before test so we have the current stream id
   const redisClient = await createRedisClient('user-updated');
 
-  await createAndVerifyUser(page);
+  const {userName} = await createAndVerifyUser(page);
 
-  const newUserName = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
+  const newDisplayName = 'test-' + crypto.getRandomValues(new BigUint64Array(1))[0].toString(36);
 
-  await page.getByLabel('^name^').fill(newUserName);
+  await page.getByLabel('^name^').fill(newDisplayName);
+  await page.locator('#country input').pressSequentially('fr');
+  await page.getByText('France').click();
 
   await page.getByRole('button', {name: '^save^'}).click();
+  await expect(page.getByText('^accountUpdatedMessage^')).toBeVisible();
 
-  const myMessage = await redisClient.getMessageForUser(newUserName);
+  const myMessage = await redisClient.getMessageForUser(userName);
   expect(myMessage).toBeTruthy();
-  expect(myMessage?.message.userName).toBe(newUserName);
+  expect(myMessage?.message.name).toBe(newDisplayName);
 });
 
 test("delete account", async ({ page }) => {
