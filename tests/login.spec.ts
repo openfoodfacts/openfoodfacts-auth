@@ -133,6 +133,7 @@ test("pkce login works", async ({ page }) => {
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
   await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
+  await expect(verifyPage.getByLabel('name', {exact: true})).toHaveValue(`Test User ${userName}`);
   await expect(verifyPage.getByLabel('azp')).toHaveValue('test_public_client');
   expect(verifyPage.url()).toContain('lang=xx');
   
