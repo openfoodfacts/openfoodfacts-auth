@@ -104,7 +104,7 @@ jobs:
       - name: Install dependencies
         run: make init
       - name: Download previously built testcontainer image
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: testcontainer
           path: ${{ runner.temp }}
@@ -169,7 +169,7 @@ jobs:
         run: make pre_build
 
       - name: Download previously built image
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: image
           path: ${{ runner.temp }}
@@ -191,7 +191,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Download previously built testcontainer image
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: testcontainer
           path: ${{ runner.temp }}
