@@ -57,7 +57,7 @@ test("create account link", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Register" })).toBeVisible();
 });
 
-test("locale from app is respected", async ({ page }) => {
+test("locale and country from app is respected", async ({ page }) => {
   const redisClient = await createRedisClient('user-registered');
 
   await gotoTestPage(page, 'xx');
@@ -103,6 +103,7 @@ test("locale from app is respected", async ({ page }) => {
   const headers = await getKeycloakHeaders();
   const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}`, {headers})).json();
   expect(users[0].attributes.locale[0]).toBe('xx');
+  expect(users[0].attributes.country[0]).toBe('fr');
 });
 
 test("pkce login works", async ({ page }) => {

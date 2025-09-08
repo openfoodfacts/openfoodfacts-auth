@@ -16,7 +16,7 @@ export function login() {
   const nonce = crypto.getRandomValues(new BigUint64Array(1))[0];
   const url = `${keycloak}/protocol/openid-connect/auth?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
     redirectUri()
-  )}&scope=openid+profile+offline_access&state=${nonce}&ui_locales=${lang}`;
+  )}&scope=openid+profile+offline_access&state=${nonce}&ui_locales=${lang}&cc=fr`;
   window.location = url;
 }
 
