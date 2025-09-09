@@ -81,6 +81,11 @@ jobs:
         run: |
           docker load --input ${{ runner.temp }}/image.tar
           docker image ls -a
+
+      - name: Build languages
+        # Need to build languages as the dev image uses locally mapped volumes for the themes
+        run: make build_languages
+
       - name: Run Playwright tests
         run: make test
 
