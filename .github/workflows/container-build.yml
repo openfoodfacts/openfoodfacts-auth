@@ -42,28 +42,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=semver,pattern={{version}}
-            type=ref,event=pr
-            type=ref,event=branch
-            type=sha,format=long
-
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and export Docker image to tar
+      - name: Build and export Docker dev image to tar
         uses: docker/build-push-action@v6
         with:
           context: .
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
           outputs: type=docker,dest=${{ runner.temp }}/image.tar
 
       - name: Upload image artifact
@@ -72,7 +60,7 @@ jobs:
           name: image
           path: ${{ runner.temp }}/image.tar
 
-  # Run the playwright tests. Uses the image artifacts created in the build job
+  # Run the playwright tests. Uses the dev image artifacts created in the build job
   test:
     needs: build
     timeout-minutes: 60
@@ -148,17 +136,6 @@ jobs:
 
       - name: Prepare Docker build
         run: make pre_build
-
-      - name: Download previously built image
-        uses: actions/download-artifact@v5
-        with:
-          name: image
-          path: ${{ runner.temp }}
-
-      - name: Load image
-        run: |
-          docker load --input ${{ runner.temp }}/image.tar
-          docker image ls -a
 
       - name: Build and push Docker multi-platform image
         uses: docker/build-push-action@v6
