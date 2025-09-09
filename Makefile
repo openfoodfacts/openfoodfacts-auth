@@ -34,13 +34,16 @@ _up:
 
 up: create_user _up
 
-build_test: pre_build
-	COMPOSE_FILE=docker/test.yml docker compose --progress=plain build
+build_testcontainer: pre_build
+	docker build --progress=plain --target=testcontainer --tag=ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer .
 
 # Minimal container used by other projects for integration tests. Make target here is just to test it can start
 integration_test_target:
-	COMPOSE_FILE=docker-compose.yml KEYCLOAK_TAG=testcontainer docker compose up --wait --wait-timeout 120
-	$(MAKE) show_keycloak_logs
+	@echo ******************************************************************************************
+	@echo * Check the docker logs for any errors. You can test the client on http://localhost:5606 *
+	@echo * Use Ctrl+C to exit and delete the container                                            *
+	@echo ******************************************************************************************
+	docker run --rm -p 5606:8080 ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
 
 show_keycloak_logs:
 	docker compose logs keycloak
@@ -60,15 +63,12 @@ create_externals:
 remove_externals:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
 
-test: test_setup
+test: up
 	npx playwright test ${args}
 
 # Update expected screen shots. Need to be able to run this from CI in order to get a consistent environment
-update_screenshots: test_setup
+update_screenshots: up
 	npx playwright test --update-snapshots changed screenshots.spec.ts
-
-test_setup: run_deps
-	COMPOSE_FILE=docker/test.yml docker compose up --wait --wait-timeout 120
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference

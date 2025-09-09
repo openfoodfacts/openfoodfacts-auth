@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
     }
 
     const cc = urlParams.get('cc');
-    if (cc) {
+    if (cc && cc !== 'world') {
         sessionStorage.setItem('country', cc);
     }
     const countrySelect = document.getElementById('country');
