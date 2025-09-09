@@ -72,25 +72,6 @@ jobs:
           name: image
           path: ${{ runner.temp }}/image.tar
 
-      - name: Build and export Docker testcontainer image to tar
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
-          target: testcontainer
-          tags: |
-            ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
-          labels: |
-            org.opencontainers.image.version=testcontainer
-          outputs: type=docker,dest=${{ runner.temp }}/testcontainer.tar
-      
-      - name: Upload testcontainer artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: testcontainer
-          path: ${{ runner.temp }}/testcontainer.tar
-
   # Run the playwright tests. Uses the image artifacts created in the build job
   test:
     needs: build
@@ -103,14 +84,14 @@ jobs:
           node-version: lts/*
       - name: Install dependencies
         run: make init
-      - name: Download previously built testcontainer image
+      - name: Download previously built image
         uses: actions/download-artifact@v5
         with:
-          name: testcontainer
+          name: image
           path: ${{ runner.temp }}
-      - name: Load testcontainer image
+      - name: Load image
         run: |
-          docker load --input ${{ runner.temp }}/testcontainer.tar
+          docker load --input ${{ runner.temp }}/image.tar
           docker image ls -a
       - name: Run Playwright tests
         run: make test
@@ -123,7 +104,7 @@ jobs:
           path: ${{ github.workspace }}/test-results/
           retention-days: 30
 
-  # Only runs on push to main. Does the full multi-platform build (using above images to cache the linux one)
+  # Only runs on push to main. Does the full multi-platform build (using above image to cache the linux/amd64 one)
   # and pushes the images to the registry
   push-images:
     if: github.event_name != 'pull_request'
@@ -189,17 +170,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Download previously built testcontainer image
-        uses: actions/download-artifact@v5
-        with:
-          name: testcontainer
-          path: ${{ runner.temp }}
-
-      - name: Load testcontainer image
-        run: |
-          docker load --input ${{ runner.temp }}/testcontainer.tar
-          docker image ls -a
 
       - name: Build and push Docker testcontainer multi-platform image
         uses: docker/build-push-action@v6
