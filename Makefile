@@ -26,6 +26,8 @@ pre_build: build_languages
 build: pre_build
 	docker compose build
 
+build_test: build
+
 dev: init run_deps build
 
 # Need a long wait timeout in case full migrations are running
