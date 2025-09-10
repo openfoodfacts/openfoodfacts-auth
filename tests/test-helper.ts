@@ -1,13 +1,13 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { createClient } from "redis";
 
-const keycloakBaseUrl = "http://auth.openfoodfacts.localhost:5606";
+const keycloakBaseUrl = "http://auth.openfoodfacts.localhost:5600";
 const keycloakRealm = process.env.KEYCLOAK_REALM_NAME;
 const keycloakRealmUrl = `${keycloakBaseUrl}/realms/${keycloakRealm}`;
 export const gotoHome = async (page: Page) => await page.goto(`${keycloakRealmUrl}/account/#/`);
 export const registerLink = (page: Page) => page.getByRole("link", { name: "Create an Open Food Facts account" });
 export const forgotPasswordLink = (page: Page) => page.getByRole("link", { name: "^doForgotPassword^" });
-export const gotoTestPage = async (page: Page, lang?: string) => await page.goto(`http://localhost:5604/index.html?lang=${lang}`);
+export const gotoTestPage = async (page: Page, lang?: string, cc?: string) => await page.goto(`http://localhost:5604/index.html?lang=${lang}&cc=${cc}`);
 const smtp4devApi = `http://localhost:${process.env.SMTP4DEV_PORT}/api/Messages`;
 export const keycloakUserUrl = `${keycloakBaseUrl}/admin/realms/${keycloakRealm}/users`;
 export const matchStyles = async (
