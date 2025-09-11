@@ -7,11 +7,12 @@
   "author": "Open Food Facts contributors",
   "license": "AGPL-3.0-only",
   "devDependencies": {
+    "@asyncapi/cli": "^3.3.0",
     "@playwright/test": "^1.54.2",
     "@types/node": "^24.2.1",
     "dotenv": "^17.2.1",
     "json-stable-stringify": "^1.3.0",
-    "redis": "^5.8.0",
+    "redis": "^5.8.1",
     "xml2js": "^0.6.2"
   }
 }

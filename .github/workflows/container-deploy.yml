@@ -47,12 +47,12 @@ jobs:
         echo "KEYCLOAK_STARTUP=prod" >> $GITHUB_ENV
 
     - name: Wait for container build workflow
-      uses: tomchv/wait-my-workflow@v1.1.0
+      uses: fountainhead/action-wait-for-check@v1.2.0
       id: wait-build
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        checkName: build
-        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+        checkName: push-images
+        ref: ${{ github.sha }}
         intervalSeconds: 10
         timeoutSeconds: 1800 # 30m
 

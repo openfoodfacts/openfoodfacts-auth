@@ -1,4 +1,4 @@
-name: Create and publish a Docker image
+name: Build and test
 
 on:
   push:
@@ -12,17 +12,109 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # This builds the images and uploads them as artifacts
   build:
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
+      # Package write permission is needed to update the cache
       packages: write
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: cardinalby/export-env-action@v2
+        with:
+          envFile: '.env'
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare Docker build
+        run: make pre_build
+
+      - name: Build and export Docker dev image to tar
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
+          tags: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
+          outputs: type=docker,dest=${{ runner.temp }}/image.tar
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: image
+          path: ${{ runner.temp }}/image.tar
+
+  # Run the playwright tests. Uses the dev image artifacts created in the build job
+  test:
+    needs: build
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: make init
+      - name: Download previously built image
+        uses: actions/download-artifact@v5
+        with:
+          name: image
+          path: ${{ runner.temp }}
+      - name: Load image
+        run: |
+          docker load --input ${{ runner.temp }}/image.tar
+          docker image ls -a
+
+      - name: Build languages
+        # Need to build languages as the dev image uses locally mapped volumes for the themes
+        run: make build_languages
+
+      - name: Run Playwright tests
+        run: make test
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          # Playwright .last-run.json file won't be uploaded without this
+          include-hidden-files: true
+          path: ${{ github.workspace }}/test-results/
+          retention-days: 30
+
+  # Only runs on push to main. Does the full multi-platform build (using above image to cache the linux/amd64 one)
+  # and pushes the images to the registry
+  push-images:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    # Only push images if tests have passed
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'
@@ -54,30 +146,26 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and push Docker image
+      - name: Build and push Docker multi-platform image
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
           platforms: linux/amd64,linux/arm64
-          build-args:
-            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Build and push Docker testcontainer image
+      - name: Build and push Docker testcontainer multi-platform image
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
           platforms: linux/amd64,linux/arm64
           target: testcontainer
-          build-args:
-            KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
           tags: |
             ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
           labels: |

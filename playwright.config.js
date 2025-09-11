@@ -77,7 +77,7 @@ module.exports = defineConfig({
   webServer: {
     /* Note we don't use a command here as playwright won't wait for the initialisation scripts to run 
        Need to run make test to ensure everything is up and running */
-    url: "http://auth.openfoodfacts.localhost:5606",
+    url: "http://auth.openfoodfacts.localhost:5600",
     reuseExistingServer: true,
   },
 

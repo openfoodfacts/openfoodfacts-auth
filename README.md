@@ -55,6 +55,10 @@ These will have access to all roles and be able to create additional users.
 
 These will have full access to the Open Food Facts realm so can add new clients, reset user passwords, etc.
 
+# Events
+
+Keycloak will emit certain user events to Redis, documented [here](docs/events/openfoodfacts-auth.html)
+
 # Components of the Project
 
 Different aspects of the Keycloak deployment are managed by the following components of this project:
@@ -97,13 +101,13 @@ The settings in `.env` are designed to support the default local setup. Use `.en
 
 # Applying Keycloak Updates
 
-The Keycloak version to be used is specified in the `.env` file. However, in addition to updating this there are a number of other steps that need to be completed:
+The Keycloak version to be used is specified `keycloak.version` property in the `pom.xml` file. However, in addition to updating this there are a number of other steps that need to be completed:
 
 ## Refresh Themes
 
-We keep a copy of the Keycloak themes in Git so that we can see what has changed between versions. Run `make refresh_themes` to refresh this copy (stored in the `theme` folder).
+We keep a copy of the Keycloak themes in Git so that we can see what has changed between versions. Run `make refresh_themes KEYCLOAK_VERSION=...` to refresh this copy (stored in the `theme` folder).
 
-`make refresh_themes` also calls `make update_keycloak_version` which refreshes the version numbers in the `pom.xml` file.
+`make refresh_themes` is called from `make update_keycloak_version` if the `keycloak.version` property in the `pom.xml` has been changed.
 
 Note: This requires a JRE in `$PATH`.
 
@@ -121,13 +125,13 @@ If you need to override a new template make sure it is listed in the `refresh_th
 
 Run `make build` to update the container images.
 
-Run `make build_test` to build the pre-configured testcontainer image used by other projects and the end to end tests.
+Run `make build_testcontainer` to build the pre-configured testcontainer image used by other projects. Run `make integration_test_target` to verify that the testcontainer image deploys correctly.
 
 ## Test
 
-Make sure you re-run the end to end tests with `make test` after a Keycloak upgrade. Pay particular attention to the screen snapshots is it is often necessary to update the custom CSS for the OFF theme after a Keycloak upgrade.
+Make sure you re-run the end to end tests with `make test` after a Keycloak upgrade. Pay particular attention to the screen snapshots, it is often necessary to update the custom CSS for the OFF theme after a Keycloak upgrade.
 
-There may be some acceptable variation in screen sots, in which case you can run `make update_screenshots` to refresh these. Note that you may need to refresh these using the GitHub action on the PR by commenting with `/update-screenshots` to get exact pixel matches when running tests in GitHub.
+There may be some acceptable variation in screen shots, in which case you can run `make update_screenshots` to refresh these. Note that you may need to refresh these using the GitHub action on the PR by commenting with `/update-screenshots` to get exact pixel matches when running tests in GitHub.
 
 # Roadmap
 
