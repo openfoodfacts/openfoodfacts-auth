@@ -60,11 +60,11 @@ When the `access_token` expires the backend can request a new one using the `ref
 
 ## Public External Clients
 
-This applies to can be used by clients that do not have a backend, e.g. Single Page Applications (SPAs) with just static pages or mobile apps, where all data will be stored in the browser / mobile app. Note that great care must be taken with storing access tokens and refresh tokens in the browser, and most current advice is to use a backend for frontend model to store sensitive data, but we still support this option to keep our services as open as possible.
+This applies to clients that do not have a backend, e.g. Single Page Applications (SPAs) with just static pages or mobile apps, where all data will be stored in the browser / mobile app. Note that great care must be taken when storing access tokens and refresh tokens in the browser, and most current advice is to use a backend for frontend model to store sensitive data, but we still support this option to keep our services as open as possible.
 
 Note that mobile apps should use an In App Browser to perform the authentication flow and not a "Web View" as the former is more secure and provides Single-SIgn-On (SSO) support across all of the user's apps.
 
-The configuration is the same as for a private client, but Client authentication is disabled, so there is no client secret. In the following diagram the App actor could be the mobile app or just a web applications pages running in the browser. These types of app must use the Proof Key for Code Exchange (PKCE) login flow, which looks like this:
+The configuration in Keycloak is the same as for a private client, but Client authentication is disabled, so there is no client secret. In the following diagram the App actor could be the mobile app or just a web application's pages running in the browser. These types of app must use the Proof Key for Code Exchange (PKCE) login flow, which looks like this:
 
 ```mermaid
 sequenceDiagram
