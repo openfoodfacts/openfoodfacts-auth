@@ -62,7 +62,7 @@ When the `access_token` expires the backend can request a new one using the `ref
 
 This applies to clients that do not have a backend, e.g. Single Page Applications (SPAs) with just static pages or mobile apps, where all data will be stored in the browser / mobile app. Note that great care must be taken when storing access tokens and refresh tokens in the browser, and most current advice is to use a backend for frontend model to store sensitive data, but we still support this option to keep our services as open as possible.
 
-Note that mobile apps should use an In App Browser to perform the authentication flow and not a "Web View" as the former is more secure and provides Single-SIgn-On (SSO) support across all of the user's apps.
+Note that mobile apps should use an In App Browser to perform the authentication flow and not a "Web View" as the former is more secure and provides Single-Sign-On (SSO) support across all of the user's apps.
 
 The configuration in Keycloak is the same as for a private client, but Client authentication is disabled, so there is no client secret. In the following diagram the App actor could be the mobile app or just a web application's pages running in the browser. These types of app must use the Proof Key for Code Exchange (PKCE) login flow, which looks like this:
 
@@ -92,9 +92,9 @@ Keycloak will then present the user with a Login page where the user authenticat
 
 The browser app can then call the Keycloak token endpoint with a grant_type of `authorization_code`, supplying the `code` and a `code_verifier` which confirms that they were the ones that initiated the login flow. Keycloak will return a response which will include an `access_token` and a `refresh_token`.
 
-When the user wants to perform an action that uses an authenticated API then this must include the `access_token` in the Authorization header.
+When the App wants to perform an action that uses an authenticated API then this must include the `access_token` in the Authorization header.
 
-When the `access_token` expires the browser app can request a new one using the `refresh_token` (flow not shown) which will work unless the user has logged out of that session. Note that `refresh_tokens` are rotated so the new `refresh_token` received after refreshing the `access_token` should replace the previous `refresh_token`.
+When the `access_token` expires the App can request a new one using the `refresh_token` (flow not shown) which will work unless the user has logged out of that session. Note that `refresh_tokens` are rotated so the new `refresh_token` received after refreshing the `access_token` should replace the previous `refresh_token`.
 
 ## Internal Backend Client
 
