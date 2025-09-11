@@ -55,6 +55,10 @@ These will have access to all roles and be able to create additional users.
 
 These will have full access to the Open Food Facts realm so can add new clients, reset user passwords, etc.
 
+# Events
+
+Keycloak will emit certain user events to Redis, documented [here](docs/events/openfoodfacts-auth.html)
+
 # Components of the Project
 
 Different aspects of the Keycloak deployment are managed by the following components of this project:
@@ -121,7 +125,7 @@ If you need to override a new template make sure it is listed in the `refresh_th
 
 Run `make build` to update the container images.
 
-Run `make build_test` to build the pre-configured testcontainer image used by other projects and the end to end tests.
+Run `make build_testcontainer` to build the pre-configured testcontainer image used by other projects. Run `make integration_test_target` to verify that the testcontainer image deploys correctly.
 
 ## Test
 

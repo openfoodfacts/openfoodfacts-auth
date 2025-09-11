@@ -26,6 +26,8 @@ pre_build: build_languages
 build: pre_build
 	docker compose build
 
+build_test: build
+
 dev: init run_deps build
 
 # Need a long wait timeout in case full migrations are running
@@ -34,13 +36,16 @@ _up:
 
 up: create_user _up
 
-build_test: pre_build
-	COMPOSE_FILE=docker/test.yml docker compose --progress=plain build
+build_testcontainer: pre_build
+	docker build --progress=plain --target=testcontainer --tag=ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer .
 
 # Minimal container used by other projects for integration tests. Make target here is just to test it can start
 integration_test_target:
-	COMPOSE_FILE=docker-compose.yml KEYCLOAK_TAG=testcontainer docker compose up --wait --wait-timeout 120
-	$(MAKE) show_keycloak_logs
+	@echo ******************************************************************************************
+	@echo * Check the docker logs for any errors. You can test the client on http://localhost:5606 *
+	@echo * Use Ctrl+C to exit and delete the container                                            *
+	@echo ******************************************************************************************
+	docker run --rm -p 5606:8080 ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
 
 show_keycloak_logs:
 	docker compose logs keycloak
@@ -60,15 +65,12 @@ create_externals:
 remove_externals:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
 
-test: test_setup
+test: up
 	npx playwright test ${args}
 
 # Update expected screen shots. Need to be able to run this from CI in order to get a consistent environment
-update_screenshots: test_setup
+update_screenshots: up
 	npx playwright test --update-snapshots changed screenshots.spec.ts
-
-test_setup: run_deps
-	COMPOSE_FILE=docker/test.yml docker compose up --wait --wait-timeout 120
 
 # We keep a copy of the Keycloak themes in our own source control so that we can easily see diffs after keycloak upgrades.
 # These themese aren't actually used in the deployment, they are just for reference
@@ -122,6 +124,9 @@ create_user_prod:
 	  -c "PGPASSWORD=${PG_BOOTSTRAP_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${PG_BOOTSTRAP_USERNAME} -c \"create role ${KC_DB_USERNAME} with password '${KC_DB_PASSWORD}' login createdb\"; \
 	  PGPASSWORD=${KC_DB_PASSWORD} psql -h ${KC_DB_URL_HOST} -d postgres -U ${KC_DB_USERNAME} -c \"create database ${KC_DB_USERNAME}\" || true "
 
+build_asyncapi:
+	npm install
+	cd docs/events && npx asyncapi generate fromTemplate openfoodfacts-auth.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param singleFile=true outFilename=openfoodfacts-auth.html --force-write --output=.
 
 # Called by other projects to start this project as a dependency
 # Use docker compose pull to ensure we get the latest keycloak image (unless we are using the dev image)
