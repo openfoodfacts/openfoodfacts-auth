@@ -63,3 +63,33 @@ jobs:
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
           labeled: 🌐 Translations, translations, i18n, Translations
           label-operator: OR
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/openfoodfacts/projects/36 # Add issue to the open pet food facts project
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: 🐾 Open Pet Food Facts
+          label-operator: OR
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/openfoodfacts/projects/43 # Add issue to the open products facts project
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: 📸 Open Products Facts
+          label-operator: OR
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/openfoodfacts/projects/37 # Add issue to the open beauty facts project
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: 🧴 Open Beauty Facts
+          label-operator: OR
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/openfoodfacts/projects/5 # Add issue to the folksonomy project
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: 🏷️ Folksonomy Project
+          label-operator: OR
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/openfoodfacts/projects/41 # Add issue to the producer platform project
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: 🏭 Producers Platform
+          label-operator: OR
