@@ -6,7 +6,7 @@ We recommend using the "Playwright Test for VSCode" plugin.
 
 `make init` will install the required NPM packages and any Playwright dependencies for the current version (sudo privileges may be required).
 
-`make test_setup` needs to be run at least once on the local Keycloak realm to configure a test client.
+`make up` needs to be run at least once on the local Keycloak realm to configure a test client.
 
 # Test Client
 
