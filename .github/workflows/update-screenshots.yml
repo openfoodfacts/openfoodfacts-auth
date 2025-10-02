@@ -35,7 +35,7 @@ jobs:
           # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
           # So this is a personal access token
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: lts/*
       - name: Install dependencies
