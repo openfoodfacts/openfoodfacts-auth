@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.1.0...v0.2.0) (2025-10-18)
+
+
+### Features
+
+* Include name in standard profile ([#254](https://github.com/openfoodfacts/openfoodfacts-auth/issues/254)) ([9ba3239](https://github.com/openfoodfacts/openfoodfacts-auth/commit/9ba323957e4667a815af3a102560891ebd1c4ac6))
+
 ## [0.1.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.0.8...v0.1.0) (2025-09-12)
 
 
