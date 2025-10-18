@@ -114,7 +114,7 @@ Securely share the randomly generated Client Secret with the client.
 
 # Configuring Keycloak Users
 
-Keycloak users are used to administer the Keyclaok system and are distinct from Open Food Facts users. Keycloak administrators are added to the master realm.
+Keycloak users are used to administer the Keycloak system and are distinct from Open Food Facts users. Keycloak administrators are added to the master realm.
 
 The default root user should not be used and every administrator should be a specific named individual. 
 
