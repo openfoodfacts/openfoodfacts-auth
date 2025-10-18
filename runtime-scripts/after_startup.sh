@@ -83,6 +83,10 @@ else
   echo "$(date -u) *** Configuring user profiles ***"
   /opt/keycloak/bin/kcadm.sh update users/profile -r openfoodfacts -f /opt/off/users_profile.json
 
+  # Include name in standard access token
+  echo "$(date -u) *** Adding name to token profile [ignore duplicate errors] ***"
+  /opt/keycloak/bin/kcadm.sh create client-scopes/e100d014-3f1d-4075-9777-643deeda8811/protocol-mappers/add-models -r openfoodfacts -f /opt/off/name_profile.json
+
   cp /opt/off/image_id ~/off/deployed_image_id
 fi
 
