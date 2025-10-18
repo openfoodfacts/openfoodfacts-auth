@@ -112,11 +112,11 @@ Go to the service account user for the client (e.g. service-account-off) and joi
 
 Securely share the randomly generated Client Secret with the client.
 
-# Configuring Keycloak Users
+# Configuring Keycloak Administrators
 
-Keycloak users are used to administer the Keycloak system and are distinct from Open Food Facts users. Keycloak administrators are added to the master realm.
+Keycloak administrators are distinct from Open Food Facts users. Keycloak administrators are added to the master realm.
 
-The default root user should not be used and every administrator should be a specific named individual. 
+The default root user should not be used and every Keycloak administrator should be a specific named individual. 
 
 ## Full Administrators
 
