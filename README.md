@@ -8,11 +8,97 @@ Ultimately all user and re-user authentication should take place via Keycloak. O
 
 # Configuring Clients
 
-No clients are pre-configured in the production and staging instances. We only use OIDC clients (not SAML). Clients are configured on the Open Food Facts realm (not master).
+No clients are pre-configured in the production and staging instances. We only use OIDC clients (not SAML). Clients are configured on the `openfoodfacts` realm (not `master`).
+
+The sequence diagrams below are provided to aid initial understanding of the login process, but app developers are advised to use established Open ID Connect (OIDC) / OAuth libraries to perform authentication.
+
+## Private External Clients
+
+This is the preferred option for re-users that have their own backend where a client secret and access tokens can be securely stored. The configuration in Keycloak is as follows:
+
+* Client authentication: Enabled (this makes it a private client)
+* Authentication flows: Standard flow (do not enable any other flows)
+* Root URL, Home URL, Valid redirect URLs, Valid post logout redirect URIs: As specified by the client
+* Web origins: +
+
+The following diagram shows a basic login flow followed by access to a Service that requires authentication:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Browser->>App Backend: Login
+    App Backend-->>Browser: Redirect to Keycloak
+    Browser->>Keycloak: Authorization endpoint. Includes client_id
+    Keycloak->>Browser: Login page
+    Browser->>Keycloak: Authenticate
+    Keycloak-->>Browser: Redirect to App
+    Browser->>App Backend: Authorization code
+    App Backend->>Keycloak: Token endpoint<br/>Using Client ID and Secret
+    Keycloak->>App Backend: Access token
+    App Backend->>Browser: Protected resource <br/>(sets session cookie)
+
+    Browser->>App Backend: Update protected resource
+    note over App Backend: Validate session cookie
+    App Backend->>Service: Authenticated API (with Access token)
+    Service-->>Keycloak: Validate Access token
+    Note over Service: Process request
+    Service->>App Backend: Success response
+    App Backend->>Browser: Success response
+
+```
+After the user has requested to login the app should redirect the user to the authorization_endpoint URL. The `client_id` and `redirect_uri` are included in the query parameters (amongst others) with an response_type of `code`. The `redirect_uri` must match the Redirect URL that was specified when the client was created.
+
+Keycloak will then present the user with a Login page where they authenticate. If authentication was successful then Keycloak will redirect the browser back to the `redirect_uri` with the `code` query parameter.
+
+The app can then call the Keycloak token endpoint with a grant_type of `authorization_code`, supplying the `code` and authenticating with the `client_id` and `client_secret`. This will return a response which will include an `access_token` and a `refresh_token`.
+
+The `access_token` should not be returned to the browser as this creates an unnecessary security risk. It is preferred that the App Backend should generate a session cookie flagged as `Secure`, `HttpOnly` and with `SameSite=Strict`. This cookie could include an encrypted copy of the `access_token` or alternatively the `access_token` could be stored on the server and linked to the user's session.
+
+When the user wants to perform an action that uses an authenticated API then this is relayed via the backend which will pass on the `access_token` to the service.
+
+When the `access_token` expires the backend can request a new one using the `refresh_token` (flow not shown) which will work unless the user has logged out of that session.
+
+## Public External Clients
+
+This applies to clients that do not have a backend, e.g. Single Page Applications (SPAs) with just static pages or mobile apps, where all data will be stored in the browser / mobile app. Note that great care must be taken when storing access tokens and refresh tokens in the browser, and most current advice is to use a backend for frontend model to store sensitive data, but we still support this option to keep our services as open as possible.
+
+Note that mobile apps should use an In App Browser to perform the authentication flow and not a "Web View" as the former is more secure and provides Single-Sign-On (SSO) support across all of the user's apps.
+
+The configuration in Keycloak is the same as for a private client, but Client authentication is disabled, so there is no client secret. In the following diagram the App actor could be the mobile app or just a web application's pages running in the browser. These types of app must use the Proof Key for Code Exchange (PKCE) login flow, which looks like this:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    note over App: User clicks Login
+    App->>Browser: Set location to Authorization endpoint
+    Browser->>Keycloak: Authorization endpoint <br/>Includes client_id and a code_challenge
+    Keycloak->>Browser: Login page
+    Browser->>Keycloak: Authenticate
+    Keycloak-->>Browser: Redirect with Authorization code
+    Browser->>App: App page extracts code <br/> from the redirect query parameter
+    App->>Keycloak: Token endpoint<br/>Using code, client_id and code_verifier
+    Keycloak->>App: Access token
+
+    App->>Service: Authenticated API (with Access token)
+    Service-->>Keycloak: Validate Access token
+    Note over Service: Process request
+    Service->>App: Success response
+    App->>Browser: Show success page
+
+```
+After the user has requested to login the app should redirect the user to the authorization_endpoint URL. The `client_id` and `redirect_uri` are included in the query parameters (amongst others) along with a `code_challenge` and with an response_type of `code`.
+
+Keycloak will then present the user with a Login page where the user authenticates themselves. If authentication was successful then Keycloak will redirect the browser back to the `redirect_uri` with the `code` query parameter.
+
+The browser app can then call the Keycloak token endpoint with a grant_type of `authorization_code`, supplying the `code` and a `code_verifier` which confirms that they were the ones that initiated the login flow. Keycloak will return a response which will include an `access_token` and a `refresh_token`.
+
+When the App wants to perform an action that uses an authenticated API then this must include the `access_token` in the Authorization header.
+
+When the `access_token` expires the App can request a new one using the `refresh_token` (flow not shown) which will work unless the user has logged out of that session. Note that `refresh_tokens` are rotated so the new `refresh_token` received after refreshing the `access_token` should replace the previous `refresh_token`.
 
 ## Internal Backend Client
 
-This configuration would only be used for our internal clients that needs to be able query / update, like Product Opener:
+This configuration would only be used for our internal clients (like Product Opener) that need to be able to perform authenticated operations in their own right (not on behalf of a user):
 
 * Client authentication: enabled
 * Authentication flows: Standard flow, Direct access grants, Service account roles
@@ -26,26 +112,11 @@ Go to the service account user for the client (e.g. service-account-off) and joi
 
 Securely share the randomly generated Client Secret with the client.
 
-## Public External Clients
+# Configuring Keycloak Administrators
 
-This applies to clients that just need to be able to initiate a PKCE login flow for a user, such as off-explorer:
+Keycloak administrators are distinct from Open Food Facts users. Keycloak administrators are added to the master realm.
 
-* Client authentication: disabled (this makes it a public client)
-* Authentication flows: Standard flow (do not enable any other flows)
-* Root URL, Home URL, Valid redirect URLs, Valid post logout redirect URIs: As specified by the client
-* Web origins: +
-
-There is no service account for these types of client and no secret, so only the Client ID needs to be shared with the client.
-
-## Private External Clients
-
-These would be used if the client has a backend that is able to perform the code for token exchange.
-
-The configuration is the same as for a Public client except that Client authentication is enabled so there will be a secret to share with the client.
-
-# Configuring Users
-
-The default root user should not be used and every administrator should be a specific named individual. Keycloak administrators are added to the master realm.
+The default root user should not be used and every Keycloak administrator should be a specific named individual. 
 
 ## Full Administrators
 
@@ -125,7 +196,7 @@ If you need to override a new template make sure it is listed in the `refresh_th
 
 Run `make build` to update the container images.
 
-Run `make build_test` to build the pre-configured testcontainer image used by other projects and the end to end tests.
+Run `make build_testcontainer` to build the pre-configured testcontainer image used by other projects. Run `make integration_test_target` to verify that the testcontainer image deploys correctly.
 
 ## Test
 

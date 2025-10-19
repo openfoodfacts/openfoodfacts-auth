@@ -6,7 +6,7 @@ import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEma
 test("login page", async ({ page }) => {
   await gotoHome(page);
 
-  await expect(page).toHaveTitle("Sign in to Open Food Facts");
+  await expect(page).toHaveTitle("Sign in to Open Food Facts [DEV]");
 
   const signInButton = page.getByRole("button", { name: "Sign In" });
   expect(await matchStyles(signInButton, PRIMARY_BUTTON)).toBeNull();
@@ -57,14 +57,14 @@ test("create account link", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Register" })).toBeVisible();
 });
 
-test("locale from app is respected", async ({ page }) => {
+test("locale and country from app is respected", async ({ page }) => {
   const redisClient = await createRedisClient('user-registered');
 
-  await gotoTestPage(page, 'xx');
+  await gotoTestPage(page, 'xx', 'fr');
   await page.getByRole("button", { name: "Login", exact: true }).click();
 
   // Login page
-  await expect(page).toHaveTitle("^loginTitle 0=Open Food Facts^");
+  await expect(page).toHaveTitle("^loginTitle 0=Open Food Facts [DEV]^");
   await page.getByRole("link", { name: "^doRegister^" }).click();
 
   // Registration page
@@ -103,16 +103,17 @@ test("locale from app is respected", async ({ page }) => {
   const headers = await getKeycloakHeaders();
   const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}`, {headers})).json();
   expect(users[0].attributes.locale[0]).toBe('xx');
+  expect(users[0].attributes.country[0]).toBe('fr');
 });
 
 test("pkce login works", async ({ page }) => {
   const redisClient = await createRedisClient('user-registered');
 
-  await gotoTestPage(page, 'xx');
+  await gotoTestPage(page, 'xx', 'world');
   await page.getByRole("button", { name: "PKCE Login", exact: true }).click();
 
   // Login page
-  await expect(page).toHaveTitle("^loginTitle 0=Open Food Facts^");
+  await expect(page).toHaveTitle("^loginTitle 0=Open Food Facts [DEV]^");
   await page.getByRole("link", { name: "^doRegister^" }).click();
 
   // Registration page
@@ -133,10 +134,16 @@ test("pkce login works", async ({ page }) => {
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
   await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
+  await expect(verifyPage.getByLabel('name', {exact: true})).toHaveValue(`Test User ${userName}`);
   await expect(verifyPage.getByLabel('azp')).toHaveValue('test_public_client');
   expect(verifyPage.url()).toContain('lang=xx');
   
   const myMessage2 = await redisClient.getMessageForUser(userName);
   expect(myMessage2).toBeTruthy();
   expect(myMessage2?.message.clientId).toBe('test_public_client');
+
+  // Fetch the user via API and make sure country is not set for world domain
+  const headers = await getKeycloakHeaders();
+  const users = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}`, {headers})).json();
+  expect(users[0].attributes.country?.[0]).toBeFalsy();
 });

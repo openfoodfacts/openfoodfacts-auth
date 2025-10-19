@@ -18,7 +18,7 @@ jobs:
           envFile: '.env'
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: "21"
           distribution: "temurin"
@@ -28,7 +28,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5.4.3
+        uses: codecov/codecov-action@v5.5.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: openfoodfacts/openfoodfacts-auth
