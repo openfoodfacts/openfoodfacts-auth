@@ -15,6 +15,7 @@ services:
     ports:
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
+    restart: always
     networks:
       # Needed to access Redis and PostgreSQL
       shared_network:

@@ -125,6 +125,7 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 
 async function fillRegistrationForm(page, userName, password, email, allFields) {
   await page.getByLabel('^username^').fill(userName);
+  await page.getByLabel('^name^').fill(`Test User ${userName}`);
   await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
   await page.getByLabel('^passwordConfirm^').fill(password);
   await page.getByLabel('^email^').fill(email);
