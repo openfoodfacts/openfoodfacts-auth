@@ -49,8 +49,15 @@ updates:
         dependency-type: "development"
         patterns:
           - "*"
-  - package-ecosystem: docker
-    directory: "/"
+
+  - package-ecosystem: docker-compose
+    # Note we only do docker-compose as the Dockerfile itself is handled by the update-keycloak-version action
+    directories:
+      - "/"
+      - "docker"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 30
+    groups:
+      docker-compose:
+        patterns:
+          - "*"
