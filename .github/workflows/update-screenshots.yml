@@ -35,7 +35,7 @@ jobs:
           # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
           # So this is a personal access token
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
       - name: Install dependencies
@@ -51,7 +51,7 @@ jobs:
           path: test-results/
           retention-days: 30
       - name: Commit and push updated snapshots
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: 'Updated Playwright Screenshots'
           branch: "${{ steps.get-branch.outputs.branch }}"
