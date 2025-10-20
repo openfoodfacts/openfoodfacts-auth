@@ -49,3 +49,15 @@ updates:
         dependency-type: "development"
         patterns:
           - "*"
+
+  - package-ecosystem: docker-compose
+    # Note we only do docker-compose as the Dockerfile itself is handled by the update-keycloak-version action
+    directories:
+      - "/"
+      - "docker"
+    schedule:
+      interval: "monthly"
+    groups:
+      docker-compose:
+        patterns:
+          - "*"
