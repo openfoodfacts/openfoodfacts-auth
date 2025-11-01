@@ -10,6 +10,6 @@
       contents: write
       pull-requests: write
     steps:
-      - uses: googleapis/release-please-action@v4.3
+      - uses: googleapis/release-please-action@v4.4
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
