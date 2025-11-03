@@ -4,34 +4,60 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      - dependency-type: "all"
     groups:
-      actions:
+      github-actions:
         patterns:
-          - "actions/*"
-      docker:
-        patterns:
-          - "docker/*"
-      github:
-        patterns:
-          - "github/*"
+          - "*"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      - dependency-type: "all"
+    groups:
+      devcontainers:
+        patterns:
+          - "*"
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      - dependency-type: "all"
     groups:
-      apache-maven-plugins:
+      maven-production:
+        dependency-type: "production"
         patterns:
-          - "org.apache.maven.plugins:*"
-      testcontainers:
+          - "*"
+      maven-dev:
+        dependency-type: "development"
         patterns:
-          - "org.testcontainers:*"
-    ignore:
-      - dependency-name: "org.keycloak:*"
+          - "*"
+    # Experimental: Allow dependabot to update Keycloak to see if we can semi-automate updates
+    # ignore:
+    #   - dependency-name: "org.keycloak:*"
   - package-ecosystem: "npm"
     directory: "/"
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "monthly"
+    groups:
+      npm-dev:
+        dependency-type: "development"
+        patterns:
+          - "*"
+
+  - package-ecosystem: docker-compose
+    # Note we only do docker-compose as the Dockerfile itself is handled by the update-keycloak-version action
+    directories:
+      - "/"
+      - "docker"
+    schedule:
+      interval: "monthly"
+    groups:
+      docker-compose:
+        patterns:
+          - "*"

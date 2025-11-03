@@ -89,3 +89,8 @@ section h1 {
 .pf-v5-c-form__group:has(#requested_org) {
     display: none;
 }
+
+/* Hide the "Back to..." link */
+a[data-testid="referrer-link"] {
+    display: none !important;
+}

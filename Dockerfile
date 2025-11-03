@@ -1,20 +1,18 @@
 # syntax = docker/dockerfile:1.2
 
-ARG KEYCLOAK_VERSION
-
 FROM maven:3-eclipse-temurin-21 AS builder
 # build a custom extensions for keycloak using maven
 
-ARG KEYCLOAK_VERSION
 WORKDIR /build
 COPY ./src /build/src
 COPY ./pom.xml /build
 RUN --mount=type=cache,target=/root/.m2 set -x && \
     export SKIP_INTEGRATION_TESTS=true && \
-    mvn -B package -Drevision=${KEYCLOAK_VERSION}
+    mvn -B package
 
-FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} AS base
-# Base image that the test and production images derive from
+FROM quay.io/keycloak/keycloak:26.3.3 AS base
+# Base image that the test and production images derive from.
+# Note the version number above is set by the update_keycloak_version.mjs script, so no need to edit manually
 
 # get the compiled extensions
 COPY --from=builder --chown=keycloak:keycloak /build/target/keycloak-extensions-*-jar-with-dependencies.jar /opt/keycloak/providers/

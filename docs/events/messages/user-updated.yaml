@@ -1,0 +1,36 @@
+user-updated:
+  title: Details of a user that has updated their profile
+  payload:
+    type: object
+    properties:
+      id:
+        description: The internal Keycloak id of the user
+        type: string
+      email:
+        description: The user's email address
+        type: string
+      userName:
+        description: The user's public facing user name (user id)
+        type: string
+      name:
+        description: The user's display / full name
+        type: string
+      locale:
+        description: Preferred 2 letter language code
+        type: string
+        examples:
+          - fr
+      country:
+        description: 2 letter country code or "world"
+        type: string
+        examples:
+          - fr
+          - world
+      realm:
+        description: The Keycloak realm in which the user was created
+        const: openfoodfacts
+      clientId:
+        description: The client_id of the application that initiated the user profile update process
+        type: string
+        examples:
+          - OFF

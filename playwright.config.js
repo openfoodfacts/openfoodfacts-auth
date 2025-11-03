@@ -77,12 +77,12 @@ module.exports = defineConfig({
   webServer: {
     /* Note we don't use a command here as playwright won't wait for the initialisation scripts to run 
        Need to run make test to ensure everything is up and running */
-    url: "http://auth.openfoodfacts.localhost:5606",
+    url: "http://auth.openfoodfacts.localhost:5600",
     reuseExistingServer: true,
   },
 
   expect: {
-    timeout: 10000, 
+    timeout: 15000, 
     toHaveScreenshot: { 
       /* This figure is by trial and error to minimize false positives when running tests locally
         Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */

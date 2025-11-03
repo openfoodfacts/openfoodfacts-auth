@@ -1,0 +1,28 @@
+asyncapi: "3.0.0"
+
+info:
+  title: Events emitted by Keycloak
+  version: 0.0.2
+
+servers:
+  redis:
+    title: Redis server
+    host: redis:6379
+    protocol: redis
+
+operations:
+  user-registered:
+    action: send
+    channel:
+      messages:
+        $ref: "./messages/user-registered.yaml"
+  user-updated:
+    action: send
+    channel:
+      messages:
+        $ref: "./messages/user-updated.yaml"
+  user-deleted:
+    action: send
+    channel:
+      messages:
+        $ref: "./messages/user-deleted.yaml"

@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - KEYCLOAK_VERSION
     volumes:
       # Bind mount to themes and runtime-scripts folders so they can be edited without rebuilding
       - ./theme/off:/opt/keycloak/themes/off

@@ -1,0 +1,45 @@
+name: Check for a Keycloak version change
+
+on:
+  pull_request:
+    branches: 
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  update-keycloak-version:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # Need this to ensure we don't get a detached head
+          ref: ${{ github.head_ref }}
+          # We can't use GITHUB_TOKEN here because, github actions can't trigger actions
+          # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
+          # So this is a personal access token
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+      # NodeJS is used to update the keycloak version
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: Check Keycloak Version for changes
+        run: |
+          # Don't run make init as we don't need Playwright
+          npm ci
+          make update_keycloak_version
+
+      - name: Commit and push chnages from Keycloak upgrade
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: 'Additional changes for Keycloak update'
