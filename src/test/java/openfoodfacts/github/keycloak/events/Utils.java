@@ -64,18 +64,27 @@ import org.keycloak.services.clientpolicy.ClientPolicyManager;
 import org.keycloak.sessions.AuthenticationSessionProvider;
 import org.keycloak.vault.VaultTranscriber;
 
+import jakarta.persistence.CacheRetrieveMode;
+import jakarta.persistence.CacheStoreMode;
+import jakarta.persistence.ConnectionConsumer;
+import jakarta.persistence.ConnectionFunction;
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.FindOption;
 import jakarta.persistence.FlushModeType;
 import jakarta.persistence.LockModeType;
+import jakarta.persistence.LockOption;
 import jakarta.persistence.Query;
+import jakarta.persistence.RefreshOption;
 import jakarta.persistence.StoredProcedureQuery;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.TypedQueryReference;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaSelect;
 import jakarta.persistence.criteria.CriteriaUpdate;
 import jakarta.persistence.metamodel.Metamodel;
 
@@ -140,6 +149,12 @@ class Utils {
             @Deprecated
             public Set<String> getPropertyNames() {
                 throw new UnsupportedOperationException("Unimplemented method 'getPropertyNames'");
+            }
+
+            @Override
+            public Scope root() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'root'");
             }
         };
     }
@@ -431,6 +446,84 @@ class Utils {
                             @Override
                             public <T> List<EntityGraph<? super T>> getEntityGraphs(Class<T> entityClass) {
                                 throw new UnsupportedOperationException("Unimplemented method 'getEntityGraphs'");
+                            }
+
+                            @Override
+                            public <T> T find(Class<T> entityClass, Object primaryKey, FindOption... options) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'find'");
+                            }
+
+                            @Override
+                            public <T> T find(EntityGraph<T> entityGraph, Object primaryKey, FindOption... options) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'find'");
+                            }
+
+                            @Override
+                            public <T> T getReference(T entity) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'getReference'");
+                            }
+
+                            @Override
+                            public void lock(Object entity, LockModeType lockMode, LockOption... options) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'lock'");
+                            }
+
+                            @Override
+                            public void refresh(Object entity, RefreshOption... options) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+                            }
+
+                            @Override
+                            public void setCacheRetrieveMode(CacheRetrieveMode cacheRetrieveMode) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'setCacheRetrieveMode'");
+                            }
+
+                            @Override
+                            public void setCacheStoreMode(CacheStoreMode cacheStoreMode) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'setCacheStoreMode'");
+                            }
+
+                            @Override
+                            public CacheRetrieveMode getCacheRetrieveMode() {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'getCacheRetrieveMode'");
+                            }
+
+                            @Override
+                            public CacheStoreMode getCacheStoreMode() {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'getCacheStoreMode'");
+                            }
+
+                            @Override
+                            public <T> TypedQuery<T> createQuery(CriteriaSelect<T> selectQuery) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public <T> TypedQuery<T> createQuery(TypedQueryReference<T> reference) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'createQuery'");
+                            }
+
+                            @Override
+                            public <C> void runWithConnection(ConnectionConsumer<C> action) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'runWithConnection'");
+                            }
+
+                            @Override
+                            public <C, T> T callWithConnection(ConnectionFunction<C, T> function) {
+                                // TODO Auto-generated method stub
+                                throw new UnsupportedOperationException("Unimplemented method 'callWithConnection'");
                             }
                         };
                     }
