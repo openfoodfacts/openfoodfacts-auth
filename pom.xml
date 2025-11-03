@@ -4,7 +4,7 @@
   <name>ProductOpener Keycloak extensions</name>
   <groupId>openfoodfacts.github.keycloak</groupId>
   <artifactId>keycloak-extensions</artifactId>
-  <version>26.3.3</version>
+  <version>26.4.2</version>
   <packaging>jar</packaging>
   <properties>
     <java.version>21</java.version>
@@ -15,7 +15,7 @@
     <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
     <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
     <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
-    <revision>26.3.3</revision>
+    <revision>26.4.2</revision>
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
     <keycloak.version>26.4.2</keycloak.version>
