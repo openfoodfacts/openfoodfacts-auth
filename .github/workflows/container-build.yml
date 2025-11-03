@@ -59,7 +59,7 @@ jobs:
           outputs: type=docker,dest=${{ runner.temp }}/image.tar
 
       - name: Upload image artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: image
           path: ${{ runner.temp }}/image.tar
@@ -77,7 +77,7 @@ jobs:
       - name: Install dependencies
         run: make init
       - name: Download previously built image
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: image
           path: ${{ runner.temp }}
@@ -93,7 +93,7 @@ jobs:
       - name: Run Playwright tests
         run: make test
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: test-results
