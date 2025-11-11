@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.0...v0.2.1) (2025-11-11)
+
+
+### Technical
+
+* **deps:** bump the maven-production group with 6 updates ([#286](https://github.com/openfoodfacts/openfoodfacts-auth/issues/286)) ([85b5364](https://github.com/openfoodfacts/openfoodfacts-auth/commit/85b53648ca7a3b20742ca8fe60f330fe330adc50))
+
 ## [0.2.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.1.0...v0.2.0) (2025-11-03)
 
 
