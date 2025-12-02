@@ -2082,6 +2082,9 @@
     "country_code_3": {
       "en": "AUT"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "de"
     },
@@ -2974,6 +2977,9 @@
     },
     "country_code_3": {
       "en": "BEL"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "nl,fr,de"
@@ -4730,6 +4736,9 @@
     },
     "country_code_3": {
       "en": "BGR"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "bg"
@@ -7396,6 +7405,9 @@
     "country_code_3": {
       "en": "HRV"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "hr"
     },
@@ -7776,6 +7788,9 @@
     "country_code_3": {
       "en": "CYP"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "el,tr"
     },
@@ -7916,6 +7931,9 @@
     },
     "country_code_3": {
       "en": "CZE"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "cs"
@@ -8199,6 +8217,9 @@
     },
     "country_code_3": {
       "en": "DNK"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "da"
@@ -9508,6 +9529,9 @@
     "country_code_3": {
       "en": "EST"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "et"
     },
@@ -10397,6 +10421,9 @@
     "country_code_3": {
       "en": "FIN"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "fi,sv"
     },
@@ -10550,6 +10577,9 @@
     },
     "country_code_3": {
       "en": "FRA"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "fr"
@@ -11430,6 +11460,9 @@
     "country_code_3": {
       "en": "DEU"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "de"
     },
@@ -11853,6 +11886,9 @@
     },
     "country_code_3": {
       "en": "GRC"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "el"
@@ -13548,6 +13584,9 @@
     "country_code_3": {
       "en": "HUN"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "hu"
     },
@@ -14501,6 +14540,9 @@
     "country_code_3": {
       "en": "IRL"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "en,ga"
     },
@@ -14887,6 +14929,9 @@
     },
     "country_code_3": {
       "en": "ITA"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "it"
@@ -16461,6 +16506,9 @@
     "country_code_3": {
       "en": "LVA"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "lv"
     },
@@ -17292,6 +17340,9 @@
     "country_code_3": {
       "en": "LTU"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "lt"
     },
@@ -17451,6 +17502,9 @@
     },
     "country_code_3": {
       "en": "LUX"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "fr,de,lb,en"
@@ -18388,6 +18442,9 @@
     },
     "country_code_3": {
       "en": "MLT"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "en,mt"
@@ -20795,6 +20852,9 @@
     "country_code_3": {
       "en": "NLD"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "nl"
     },
@@ -22696,6 +22756,7 @@
     "name": {
       "af": "Palestynse Grondgebiede",
       "ar": "الأراضي الفلسطينية",
+      "be": "Дзяржава Палесціна",
       "ca": "Territoris Palestins",
       "cy": "Tiriogaethau Palesteinaidd",
       "de": "Palästinensische Autonomiegebiete",
@@ -23491,6 +23552,9 @@
     "country_code_3": {
       "en": "POL"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "pl"
     },
@@ -23649,6 +23713,9 @@
     },
     "country_code_3": {
       "en": "PRT"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "pt"
@@ -24339,6 +24406,9 @@
     },
     "country_code_3": {
       "en": "ROU"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "ro"
@@ -26844,6 +26914,9 @@
     "country_code_3": {
       "en": "SVK"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "sk"
     },
@@ -26985,6 +27058,9 @@
     },
     "country_code_3": {
       "en": "SVN"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "sl"
@@ -28019,6 +28095,9 @@
     "country_code_3": {
       "en": "ESP"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "es,ca,eu,gl"
     },
@@ -28832,6 +28911,9 @@
     },
     "country_code_3": {
       "en": "SWE"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "sv"
@@ -31605,6 +31687,9 @@
     },
     "country_code_3": {
       "en": "GBR"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "en,cy,ga,gd"
