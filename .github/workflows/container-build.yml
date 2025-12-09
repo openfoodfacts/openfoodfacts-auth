@@ -105,7 +105,7 @@ jobs:
   # Only runs on push to main. Does the full multi-platform build (using above image to cache the linux/amd64 one)
   # and pushes the images to the registry
   push-images:
-    if: (github.event_name != 'pull_request') || (github.event.pull_request.github.ref == 'refs/heads/deploy-to-scaleway')
+    if: (github.event_name != 'pull_request') || (github.ref_name == 'deploy-to-scaleway')
     runs-on: ubuntu-latest
     # Only push images if tests have passed
     needs: test
