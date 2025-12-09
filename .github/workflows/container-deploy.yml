@@ -15,11 +15,11 @@ jobs:
     strategy:
       matrix:
         env:
-          - |
+          - >-
             ${{
               (
                 startsWith(github.ref, 'refs/tags/v') ||
-                github.head_ref == 'deploy-to-scaleway'
+                (github.head_ref == 'deploy-to-scaleway')
               ) && 'off-auth-org' || 'off-auth-net'
             }}
     environment: ${{ matrix.env }}
@@ -42,7 +42,7 @@ jobs:
     - name: Set various variable for production deployment
       if: matrix.env == 'off-auth-org'
       run: |
-        echo "SSH_PROXY_HOST=scaleway-01.infra.openfoodfacts.org" >> $GITHUB_ENV
+        echo "SSH_PROXY_HOST=scaleway-02.infra.openfoodfacts.org" >> $GITHUB_ENV
         echo "SSH_USERNAME=off" >> $GITHUB_ENV
         echo "SSH_PROXY_USERNAME=off" >> $GITHUB_ENV
         echo "SSH_HOST=10.13.1.200" >> $GITHUB_ENV
