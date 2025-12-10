@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      # remove later on
       - deploy-to-scaleway
     tags:
       - v*.*.*
