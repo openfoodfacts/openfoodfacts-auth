@@ -48,8 +48,8 @@ jobs:
 
         echo "KC_HOSTNAME=https://auth.openfoodfacts.org" >> $GITHUB_ENV
         # for now this is the stunnel
-        echo "KC_DB_URL_HOST=10.1.0.101" >> $GITHUB_ENV
-        echo "REDIS_URL=10.1.0.101:6379" >> $GITHUB_ENV
+        echo "KC_DB_URL_HOST=10.13.1.101" >> $GITHUB_ENV
+        echo "REDIS_URL=10.13.1.101:6379" >> $GITHUB_ENV
         echo "COMMON_NET_NAME=common_net" >> $GITHUB_ENV
 
         echo "KEYCLOAK_STARTUP=prod" >> $GITHUB_ENV
