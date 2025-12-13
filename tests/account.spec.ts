@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from "@playwright/test";
-import { createAndVerifyUser, createRedisClient, matchStyles } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, generateRandomUser, getKeycloakHeaders, keycloakUserUrl, matchStyles } from "./test-helper";
 import { SECONDARY_BUTTON, SECONDARY_BUTTON_HOVER } from "./expected-styles";
 
 test("account personal info", async ({ page }) => {
@@ -72,6 +72,93 @@ test("delete account", async ({ page }) => {
 
   await expect(page.getByText('^userDeletedSuccessfully^')).toBeVisible();
 
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeTruthy();
+  expect(myMessage?.message.userName).toBe(userName);
+  expect(myMessage?.message.newUserName).toBeTruthy();
+});
+
+test('update account via API generates event', async() => {
+  const redisClient = await createRedisClient('user-updated');
+
+  const {userName, password, email} = generateRandomUser();
+  const userData = {
+    email: email,
+    emailVerified: true,
+    enabled: true,
+    username: userName,
+    credentials: [{
+      type: 'password',
+      temporary: false,
+      value: password,
+    }],
+    attributes: {
+      name: userName,
+      locale: 'xx',
+      country: 'world',
+      newsletter: 'subscribe',
+      requested_org: 'carrefour',
+    }
+  };
+  const newUser = JSON.stringify(userData);
+
+  const headers = await getKeycloakHeaders();
+
+  // Create the user
+  await fetch(keycloakUserUrl, {method: 'POST', body: newUser, headers});
+  const keycloakUsers = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}&briefRepresentation=true`, {headers})).json();
+
+  // Update user details
+  userData.attributes.name = `updated-${userName}`;
+  userData.attributes.locale = 'en';
+  userData.attributes.country = 'fr';
+  userData.email = `updated-${email}`;
+  const updatedUser = JSON.stringify(userData);
+  const updateResponse = await fetch(`${keycloakUserUrl}/${keycloakUsers[0].id}`, {method: 'PUT', body: updatedUser, headers});
+
+  // Should send user-updated message
+  const myMessage = await redisClient.getMessageForUser(userName);
+  expect(myMessage).toBeTruthy();
+  expect(myMessage?.message.email).toBe(`updated-${email}`);
+  expect(myMessage?.message.name).toBe(`updated-${userName}`);
+  expect(myMessage?.message.locale).toBe('en');
+  expect(myMessage?.message.country).toBe('fr');
+  expect(myMessage?.message.clientId).toBe('OFF');
+});
+
+test('delete user via API generates event', async() => {
+  const redisClient = await createRedisClient('user-deleted');
+
+  const {userName, password, email} = generateRandomUser();
+  const userData = {
+    email: email,
+    emailVerified: true,
+    enabled: true,
+    username: userName,
+    credentials: [{
+      type: 'password',
+      temporary: false,
+      value: password,
+    }],
+    attributes: {
+      name: userName,
+      locale: 'xx',
+      country: 'world',
+      newsletter: 'subscribe',
+      requested_org: 'carrefour',
+    }
+  };
+  const newUser = JSON.stringify(userData);
+  const headers = await getKeycloakHeaders();
+
+  // Create the user
+  await fetch(keycloakUserUrl, {method: 'POST', body: newUser, headers});
+  const keycloakUsers = await (await fetch(`${keycloakUserUrl}?exact=true&username=${userName}&briefRepresentation=true`, {headers})).json();
+
+  // Delete user
+  const updateResponse = await fetch(`${keycloakUserUrl}/${keycloakUsers[0].id}`, {method: 'DELETE', headers});
+
+  // Should send user-deleted message
   const myMessage = await redisClient.getMessageForUser(userName);
   expect(myMessage).toBeTruthy();
   expect(myMessage?.message.userName).toBe(userName);

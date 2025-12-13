@@ -5,7 +5,7 @@ if [[ "$KEYCLOAK_STARTUP" == "dev" ]]; then
     echo "$(date -u) *** Starting keycloak in development mode ***"
     export EMAIL_BACKGROUND_COLOR=#83e498
     # In dev mode we still use the PostgreSQL database with additional switches so that themes are dynamically reloaded
-    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --cache=local --spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false --verbose
+    /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --cache=local --spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false --verbose --log-level=info
 else
     echo "$(date -u) *** Starting keycloak in production mode ***"
     if [[ "$KEYCLOAK_STARTUP" == "staging" ]]; then
