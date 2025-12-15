@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.1](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.0...v0.2.1) (2025-12-15)
+
+
+### Bug Fixes
+
+* Ensure events are emitted when users updated by admin or API ([#296](https://github.com/openfoodfacts/openfoodfacts-auth/issues/296)) ([7a81e80](https://github.com/openfoodfacts/openfoodfacts-auth/commit/7a81e80f443ddddcc95caabb696160e7468757be))
+
+
+### Technical
+
+* **deps-dev:** bump org.testcontainers:testcontainers ([#290](https://github.com/openfoodfacts/openfoodfacts-auth/issues/290)) ([c470c78](https://github.com/openfoodfacts/openfoodfacts-auth/commit/c470c78361ed8c31874889410e2c262ce21e5472))
+* **deps-dev:** bump the npm-dev group with 51 updates ([#292](https://github.com/openfoodfacts/openfoodfacts-auth/issues/292)) ([3e444e1](https://github.com/openfoodfacts/openfoodfacts-auth/commit/3e444e1203154e20b32ee20f6be77d6782b10e1f))
+* **deps:** bump the github-actions group with 2 updates ([#291](https://github.com/openfoodfacts/openfoodfacts-auth/issues/291)) ([37eef14](https://github.com/openfoodfacts/openfoodfacts-auth/commit/37eef14bf16c22acf2a7647325cde9b8f1121d78))
+* **deps:** bump the maven-production group with 6 updates ([#286](https://github.com/openfoodfacts/openfoodfacts-auth/issues/286)) ([85b5364](https://github.com/openfoodfacts/openfoodfacts-auth/commit/85b53648ca7a3b20742ca8fe60f330fe330adc50))
+* Fix relative URIs to begin with forward slash ([#295](https://github.com/openfoodfacts/openfoodfacts-auth/issues/295)) ([541049f](https://github.com/openfoodfacts/openfoodfacts-auth/commit/541049f075c3c9b776e4f36d2daab3bd70f2149f))
+
 ## [0.2.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.1.0...v0.2.0) (2025-11-03)
 
 
