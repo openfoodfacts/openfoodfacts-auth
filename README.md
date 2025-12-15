@@ -102,10 +102,10 @@ This configuration would only be used for our internal clients (like Product Ope
 
 * Client authentication: enabled
 * Authentication flows: Standard flow, Direct access grants, Service account roles
-* Root URL: https://world.openfoodfacts.org/ (or as appropriate)
+* Root URL: `https://world.openfoodfacts.org` (or as appropriate)
 * Home URL: (blank)
-* Valid redirect URLs: cgi/oidc_signin_callback.pl
-* Valid post logout redirect URIs: cgi/oidc_signout_callback.pl
+* Valid redirect URLs: `/cgi/oidc_signin_callback.pl`
+* Valid post logout redirect URIs: `/cgi/oidc_signout_callback.pl`
 * Web origins: +
 
 Go to the service account user for the client (e.g. service-account-off) and join the "User management" group which will assign the realm-management:manage-users and realm-management:query-users roles.
