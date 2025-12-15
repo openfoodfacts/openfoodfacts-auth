@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - deploy-to-scaleway
     tags:
       - v*.*.*
 
@@ -14,13 +13,7 @@ jobs:
     strategy:
       matrix:
         env:
-          - >-
-            ${{
-              (
-                startsWith(github.ref, 'refs/tags/v') ||
-                (github.ref == 'refs/heads/deploy-to-scaleway')
-              ) && 'off-auth-org' || 'off-auth-net'
-            }}
+          - ${{ startsWith(github.ref, 'refs/tags/v') && 'off-auth-org' || 'off-auth-net' }}
     environment: ${{ matrix.env }}
     concurrency: ${{ matrix.env }}
     steps:

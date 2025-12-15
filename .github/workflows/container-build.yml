@@ -1,14 +1,9 @@
 name: Build and test
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-      - deploy-to-scaleway
-  # re-activate before merging
-  #pull_request:
-  #  branches:
-  #    - main
 
 env:
   REGISTRY: ghcr.io
