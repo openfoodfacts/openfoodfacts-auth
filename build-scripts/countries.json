@@ -2082,6 +2082,9 @@
     "country_code_3": {
       "en": "AUT"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "de"
     },
@@ -2226,6 +2229,9 @@
     },
     "osm_relation": {
       "en": "16239"
+    },
+    "regional_entity": {
+      "en": "european-union"
     },
     "wikidata": {
       "en": "Q40"
@@ -2975,6 +2981,9 @@
     "country_code_3": {
       "en": "BEL"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "nl,fr,de"
     },
@@ -3114,6 +3123,9 @@
     },
     "osm_relation": {
       "en": "52411"
+    },
+    "regional_entity": {
+      "en": "european-union"
     },
     "wikidata": {
       "en": "Q31"
@@ -4731,6 +4743,9 @@
     "country_code_3": {
       "en": "BGR"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "bg"
     },
@@ -4878,6 +4893,9 @@
     },
     "osm_relation": {
       "en": "186382"
+    },
+    "regional_entity": {
+      "en": "european-union"
     },
     "wikidata": {
       "en": "Q219"
@@ -7396,6 +7414,9 @@
     "country_code_3": {
       "en": "HRV"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "hr"
     },
@@ -7538,6 +7559,9 @@
     },
     "osm_relation": {
       "en": "214885"
+    },
+    "regional_entity": {
+      "en": "european-union"
     },
     "wikidata": {
       "en": "Q224"
@@ -7776,6 +7800,9 @@
     "country_code_3": {
       "en": "CYP"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "el,tr"
     },
@@ -7908,6 +7935,9 @@
     },
     "osm_relation": {
       "en": "307787"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:czech-republic": {
@@ -7916,6 +7946,9 @@
     },
     "country_code_3": {
       "en": "CZE"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "cs"
@@ -8059,6 +8092,9 @@
     },
     "osm_relation": {
       "en": "51684"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:democratic-republic-of-the-congo": {
@@ -8199,6 +8235,9 @@
     },
     "country_code_3": {
       "en": "DNK"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "da"
@@ -8342,6 +8381,9 @@
       "yo": "Dẹ́nmárkì",
       "zh": "丹麦",
       "zu": "IDenimaki"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:djibouti": {
@@ -9508,6 +9550,9 @@
     "country_code_3": {
       "en": "EST"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "et"
     },
@@ -9647,6 +9692,9 @@
       "yo": "Estóníà",
       "zh": "爱沙尼亚",
       "zu": "I-Estoniya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:ethiopia": {
@@ -10397,6 +10445,9 @@
     "country_code_3": {
       "en": "FIN"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "fi,sv"
     },
@@ -10542,6 +10593,9 @@
       "za": "Finlan",
       "zh": "芬兰",
       "zu": "IFinlandi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:france": {
@@ -10550,6 +10604,9 @@
     },
     "country_code_3": {
       "en": "FRA"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "fr"
@@ -10701,6 +10758,9 @@
       "za": "Fazgoz",
       "zh": "法国",
       "zu": "IFulansi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:french-guiana": {
@@ -10737,11 +10797,11 @@
       "eu": "Guyana Frantsesa",
       "fa": "گویان فرانسه",
       "fi": "Ranskan Guayana",
-      "fr": "Guyane",
+      "fr": "Guyane française",
       "fy": "Frânsk Guyana",
       "ga": "Guáin na Fraince",
       "gd": "Guiana Fhrangach",
-      "gl": "Güiana Francesa - Guyane française",
+      "gl": "Güiana Francesa",
       "gn": "Gujána Hyãsiapegua",
       "he": "גיאנה הצרפתית",
       "hi": "फ़्रान्सीसी गुयाना",
@@ -11430,6 +11490,9 @@
     "country_code_3": {
       "en": "DEU"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "de"
     },
@@ -11588,6 +11651,9 @@
       "za": "Dwzgoz",
       "zh": "德国",
       "zu": "IJalimani"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:ghana": {
@@ -11854,6 +11920,9 @@
     "country_code_3": {
       "en": "GRC"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "el"
     },
@@ -11997,6 +12066,9 @@
       "yo": "Gríìsì",
       "zh": "希腊",
       "zu": "IGreki"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:greenland": {
@@ -13548,6 +13620,9 @@
     "country_code_3": {
       "en": "HUN"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "hu"
     },
@@ -13687,6 +13762,9 @@
       "yi": "אונגארן",
       "yo": "Húngárì",
       "zh": "匈牙利"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:iceland": {
@@ -14501,6 +14579,9 @@
     "country_code_3": {
       "en": "IRL"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "en,ga"
     },
@@ -14633,6 +14714,9 @@
       "za": "Aiwjlanz Gunghozgoz",
       "zh": "爱尔兰共和国",
       "zu": "I-Ayilendi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:isle-of-man": {
@@ -14888,6 +14972,9 @@
     "country_code_3": {
       "en": "ITA"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "it"
     },
@@ -15041,6 +15128,9 @@
       "yo": "Itálíà",
       "zh": "意大利",
       "zu": "ITaliya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:jamaica": {
@@ -16461,6 +16551,9 @@
     "country_code_3": {
       "en": "LVA"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "lv"
     },
@@ -16597,6 +16690,9 @@
       "yo": "Látfíà",
       "zh": "拉脫維亞",
       "zu": "ILatviya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:lebanon": {
@@ -17292,6 +17388,9 @@
     "country_code_3": {
       "en": "LTU"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "lt"
     },
@@ -17443,6 +17542,9 @@
       "yo": "Lituéníà",
       "zh": "立陶宛",
       "zu": "ILithuwaniya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:luxembourg": {
@@ -17451,6 +17553,9 @@
     },
     "country_code_3": {
       "en": "LUX"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "fr,de,lb,en"
@@ -17584,6 +17689,9 @@
       "yi": "לוקסעמבורג",
       "yo": "Lúksẹ́mbọ̀rg",
       "zh": "卢森堡"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:macau": {
@@ -18389,6 +18497,9 @@
     "country_code_3": {
       "en": "MLT"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "en,mt"
     },
@@ -18524,6 +18635,9 @@
       "yo": "Máltà",
       "zh": "马耳他",
       "zu": "IMalta"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:marshall-islands": {
@@ -20795,6 +20909,9 @@
     "country_code_3": {
       "en": "NLD"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "nl"
     },
@@ -20938,6 +21055,9 @@
       "yo": "Nẹ́dálándì",
       "zh": "荷蘭",
       "zu": "Netherlands"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:new-caledonia": {
@@ -22696,6 +22816,7 @@
     "name": {
       "af": "Palestynse Grondgebiede",
       "ar": "الأراضي الفلسطينية",
+      "be": "Дзяржава Палесціна",
       "ca": "Territoris Palestins",
       "cy": "Tiriogaethau Palesteinaidd",
       "de": "Palästinensische Autonomiegebiete",
@@ -23491,6 +23612,9 @@
     "country_code_3": {
       "en": "POL"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "pl"
     },
@@ -23641,6 +23765,9 @@
       "yo": "Pólàndì",
       "zh": "波兰",
       "zu": "IPolandi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:portugal": {
@@ -23649,6 +23776,9 @@
     },
     "country_code_3": {
       "en": "PRT"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "pt"
@@ -23793,6 +23923,9 @@
       "yo": "Pọ́rtúgàl",
       "zh": "葡萄牙",
       "zu": "IPhothugali"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:puerto-rico": {
@@ -24340,6 +24473,9 @@
     "country_code_3": {
       "en": "ROU"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "ro"
     },
@@ -24477,6 +24613,9 @@
       "yi": "רומעניע",
       "yo": "Románíà",
       "zh": "羅馬尼亞"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:russia": {
@@ -26844,6 +26983,9 @@
     "country_code_3": {
       "en": "SVK"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "sk"
     },
@@ -26977,6 +27119,9 @@
       "yo": "Slofákíà",
       "zh": "斯洛伐克",
       "zu": "ISlovaki"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:slovenia": {
@@ -26985,6 +27130,9 @@
     },
     "country_code_3": {
       "en": "SVN"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "sl"
@@ -27121,6 +27269,9 @@
       "yi": "סלאוועניע",
       "yo": "Sloféníà",
       "zh": "斯洛文尼亚"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:solomon-islands": {
@@ -28019,6 +28170,9 @@
     "country_code_3": {
       "en": "ESP"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "es,ca,eu,gl"
     },
@@ -28168,6 +28322,9 @@
       "za": "Sihbanhyaz",
       "zh": "西班牙",
       "zu": "ISpeyini"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:sri-lanka": {
@@ -28833,6 +28990,9 @@
     "country_code_3": {
       "en": "SWE"
     },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
+    },
     "language_codes": {
       "en": "sv"
     },
@@ -28979,6 +29139,9 @@
       "yo": "Swídìn",
       "zh": "瑞典",
       "zu": "ISwidi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:switzerland": {
@@ -31605,6 +31768,9 @@
     },
     "country_code_3": {
       "en": "GBR"
+    },
+    "ecobalyse_is_part_of_eu": {
+      "en": "yes"
     },
     "language_codes": {
       "en": "en,cy,ga,gd"
