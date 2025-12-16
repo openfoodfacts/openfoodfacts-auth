@@ -34,14 +34,15 @@ jobs:
     - name: Set various variable for production deployment
       if: matrix.env == 'off-auth-org'
       run: |
-        echo "SSH_PROXY_HOST=off1.openfoodfacts.org" >> $GITHUB_ENV
+        echo "SSH_PROXY_HOST=scaleway-02.infra.openfoodfacts.org" >> $GITHUB_ENV
         echo "SSH_USERNAME=off" >> $GITHUB_ENV
         echo "SSH_PROXY_USERNAME=off" >> $GITHUB_ENV
-        echo "SSH_HOST=10.1.0.104" >> $GITHUB_ENV
+        echo "SSH_HOST=10.13.1.200" >> $GITHUB_ENV
 
         echo "KC_HOSTNAME=https://auth.openfoodfacts.org" >> $GITHUB_ENV
-        echo "KC_DB_URL_HOST=10.1.0.120" >> $GITHUB_ENV
-        echo "REDIS_URL=10.1.0.122:6379" >> $GITHUB_ENV
+        # for now this is the stunnel
+        echo "KC_DB_URL_HOST=10.13.1.101" >> $GITHUB_ENV
+        echo "REDIS_URL=10.13.1.101:6379" >> $GITHUB_ENV
         echo "COMMON_NET_NAME=common_net" >> $GITHUB_ENV
 
         echo "KEYCLOAK_STARTUP=prod" >> $GITHUB_ENV
@@ -53,8 +54,8 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         checkName: push-images
         ref: ${{ github.sha }}
-        intervalSeconds: 10
-        timeoutSeconds: 1800 # 30m
+        intervalSeconds: 30
+        timeoutSeconds: 2400 # 40m
 
     - name: Do something if build fail
       if: steps.wait-build.outputs.conclusion == 'failure'
@@ -150,6 +151,20 @@ jobs:
         script: |
           cd ${{ matrix.env }}
           make create_user_prod
+
+    - name: Create common net
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.SSH_HOST }}
+        username: ${{ env.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        proxy_host: ${{ env.SSH_PROXY_HOST }}
+        proxy_username: ${{ env.SSH_PROXY_USERNAME }}
+        proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd ${{ matrix.env }}
+          # if common net exists, it won't fail
+          make create_common_net
 
     - name: Start services
       uses: appleboy/ssh-action@master
