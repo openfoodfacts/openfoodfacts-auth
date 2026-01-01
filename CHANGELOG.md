@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.2](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.1...v0.2.2) (2026-01-01)
+
+
+### Technical
+
+* **deps-dev:** bump the maven-dev group with 2 updates ([#298](https://github.com/openfoodfacts/openfoodfacts-auth/issues/298)) ([a331ae6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/a331ae64920e77142e15450ee0c01b0ae34c41d8))
+* **deps-dev:** bump the npm-dev group with 30 updates ([#300](https://github.com/openfoodfacts/openfoodfacts-auth/issues/300)) ([584d053](https://github.com/openfoodfacts/openfoodfacts-auth/commit/584d0530331d7c4b73b821d7962ec9d2f0c55c04))
+* **deps:** bump the github-actions group with 4 updates ([#299](https://github.com/openfoodfacts/openfoodfacts-auth/issues/299)) ([5c6c56b](https://github.com/openfoodfacts/openfoodfacts-auth/commit/5c6c56b67511badae55f380e84704313647a3d02))
+
 ## [0.2.1](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.0...v0.2.1) (2025-12-15)
 
 
