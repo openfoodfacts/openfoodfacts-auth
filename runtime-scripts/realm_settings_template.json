@@ -21,15 +21,19 @@
     }
   },
   "smtpServer": {
-    "auth": "",
+    "auth": "%s",
+    "authType": "basic",
     "envelopeFrom": "",
     "from": "noreply@openfoodfacts.org",
     "fromDisplayName": "%s",
     "host": "%s",
+    "password": "%s",
+    "port": "%s",
     "replyTo": "",
     "replyToDisplayName": "",
     "ssl": "false",
-    "starttls": "false"
+    "starttls": "true",
+    "user": "%s"
   },
   "supportedLocales": [
     "so",

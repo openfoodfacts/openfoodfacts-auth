@@ -74,33 +74,38 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
 
             @Override
             public void onEvent(AdminEvent event, boolean includeRepresentation) {
-                if (ResourceType.USER.equals(event.getResourceType())
-                        && OperationType.CREATE.equals(event.getOperationType())) {
-                    final RealmModel realm = keycloakSession.realms().getRealm(event.getRealmId());
-                    if (realm == null) {
-                        log.errorf("Failed to find realm: %s", event.getRealmId());
-                        return;
-                    }
-                    final String userId = event.getResourcePath().split("/")[1];
-                    final UserModel user = keycloakSession.users().getUserById(realm, userId);
-                    if (user == null) {
-                        log.errorf("Failed to find user: %s", userId);
-                        return;
-                    }
+                if (ResourceType.USER.equals(event.getResourceType())) {
+                    final var operationType = event.getOperationType();
+                    if (OperationType.CREATE.equals(operationType) || OperationType.UPDATE.equals(operationType)) {
+                        final RealmModel realm = keycloakSession.realms().getRealm(event.getRealmId());
+                        if (realm == null) {
+                            log.errorf("Failed to find realm: %s", event.getRealmId());
+                            return;
+                        }
+                        final String userId = event.getResourcePath().split("/")[1];
+                        final UserModel user = keycloakSession.users().getUserById(realm, userId);
+                        if (user == null) {
+                            log.errorf("Failed to find user: %s", userId);
+                            return;
+                        }
 
-                    // Note for admin events the clientId in the AuthDetails is the internal GUID
-                    final ClientModel client = keycloakSession.clients().getClientById(realm,
-                            event.getAuthDetails().getClientId());
-                    if (client == null) {
-                        log.errorf("Failed to find client: %s", event.getAuthDetails().getClientId());
-                        return;
-                    }
-
-                    if ((!realm.isVerifyEmail() || user.isEmailVerified())
-                            && user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
-                        OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm,
-                                client.getClientId());
-                        user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
+                        // Note for admin events the clientId in the AuthDetails is the internal GUID
+                        final ClientModel client = keycloakSession.clients().getClientById(realm,
+                                event.getAuthDetails().getClientId());
+                        if (client == null) {
+                            log.errorf("Failed to find client: %s", event.getAuthDetails().getClientId());
+                            return;
+                        }
+                        if (OperationType.UPDATE.equals(operationType)) {
+                            OpenFoodFactsEventListenerProviderFactory.this.client.postUserUpdated(user, realm,
+                                    client.getClientId());
+                        } else if (OperationType.CREATE.equals(operationType)
+                                && ((!realm.isVerifyEmail() || user.isEmailVerified()))
+                                && user.getFirstAttribute(UserAttributes.REGISTERED) == null) {
+                            OpenFoodFactsEventListenerProviderFactory.this.client.postUserRegistered(user, realm,
+                                    client.getClientId());
+                            user.setSingleAttribute(UserAttributes.REGISTERED, UserAttributes.REGISTERED);
+                        }
                     }
                 }
             }
@@ -156,7 +161,7 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
     public void postInit(final KeycloakSessionFactory keycloakSessionFactory) {
         keycloakSessionFactory.register(
                 (event) -> {
-                    log.debugf("New %s Event", event.getClass().getName());
+                    log.infof("New %s Event", event.getClass().getName());
 
                     if (event instanceof UserModel.UserRemovedEvent userRemovedEvent) {
                         final UserModel user = userRemovedEvent.getUser();

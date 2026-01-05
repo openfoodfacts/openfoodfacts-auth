@@ -24,7 +24,7 @@ jobs:
             PR_NO: ${{ github.event.issue.number }}
             GITHUB_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           # we need to checkout the fork repository
           # see https://github.com/stefanzweifel/git-auto-commit-action?tab=readme-ov-file#workflow-should-run-in-base-repository
@@ -44,7 +44,7 @@ jobs:
         run: make build
       - name: Update Playwright test results
         run: make update_screenshots
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: test-results

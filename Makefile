@@ -62,6 +62,10 @@ prune:
 create_externals:
 	docker volume create ${COMPOSE_PROJECT_NAME}_pgdata
 
+create_common_net:
+	docker network create --driver=bridge --subnet="172.30.0.0/16" ${COMMON_NET_NAME} \
+        || echo "network already exists"
+
 remove_externals:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_pgdata
 
