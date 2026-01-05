@@ -67,13 +67,21 @@ else
   REALM_SETTINGS=$(cat /opt/off/realm_settings_template.json)
 
   # These are the current placeholders, in order. Note these are sorted
-  # name
+  # displayName
+  # smtpServer.auth
   # smtpServer.fromDisplayName
   # smtpServer.host
+  # smtpServer.password
+  # smtpServer.port
+  # smtpServer.user
   printf "$REALM_SETTINGS" \
     "$REALM_DISPLAY_NAME" \
+    "$SMTP_AUTH" \
     "$REALM_DISPLAY_NAME" \
     "$SMTP_SERVER" \
+    "$SMTP_PASSWORD" \
+    "$SMTP_PORT" \
+    "$SMTP_USER" \
     > ~/off/interpolated_realm_settings.json
 
   # Apply latest settings, e.g. SMTP server
