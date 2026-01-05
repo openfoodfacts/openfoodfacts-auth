@@ -114,7 +114,11 @@ jobs:
           echo "KC_DB_USERNAME=keycloak" >> .env
           echo "KC_DB_PASSWORD=${{ secrets.KC_DB_PASSWORD }}" >> .env
           echo "REDIS_URL=${{ env.REDIS_URL }}" >> .env
-          echo "SMTP_SERVER=pmg.openfoodfacts.org" >> .env
+          echo "SMTP_SERVER=in-v3.mailjet.com" >> .env
+          echo "SMTP_PORT=587" >> .env
+          echo "SMTP_AUTH=true" >> .env
+          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
+          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> .env
           echo "KEYCLOAK_HTTP_PORT=5600" >> .env
           echo "KEYCLOAK_MANAGEMENT_PORT=5602" >> .env
           echo "KEYCLOAK_STARTUP=${{env.KEYCLOAK_STARTUP}}" >> .env
