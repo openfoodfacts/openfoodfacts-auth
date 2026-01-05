@@ -32,7 +32,7 @@
     "replyTo": "",
     "replyToDisplayName": "",
     "ssl": "false",
-    "starttls": "false",
+    "starttls": "true",
     "user": "%s"
   },
   "supportedLocales": [
