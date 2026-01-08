@@ -2230,6 +2230,9 @@
     "osm_relation": {
       "en": "16239"
     },
+    "regional_entity": {
+      "en": "european-union"
+    },
     "wikidata": {
       "en": "Q40"
     }
@@ -3120,6 +3123,9 @@
     },
     "osm_relation": {
       "en": "52411"
+    },
+    "regional_entity": {
+      "en": "european-union"
     },
     "wikidata": {
       "en": "Q31"
@@ -4887,6 +4893,9 @@
     },
     "osm_relation": {
       "en": "186382"
+    },
+    "regional_entity": {
+      "en": "european-union"
     },
     "wikidata": {
       "en": "Q219"
@@ -7551,6 +7560,9 @@
     "osm_relation": {
       "en": "214885"
     },
+    "regional_entity": {
+      "en": "european-union"
+    },
     "wikidata": {
       "en": "Q224"
     }
@@ -7923,6 +7935,9 @@
     },
     "osm_relation": {
       "en": "307787"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:czech-republic": {
@@ -8077,6 +8092,9 @@
     },
     "osm_relation": {
       "en": "51684"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:democratic-republic-of-the-congo": {
@@ -8363,6 +8381,9 @@
       "yo": "Dẹ́nmárkì",
       "zh": "丹麦",
       "zu": "IDenimaki"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:djibouti": {
@@ -9671,6 +9692,9 @@
       "yo": "Estóníà",
       "zh": "爱沙尼亚",
       "zu": "I-Estoniya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:ethiopia": {
@@ -10569,6 +10593,9 @@
       "za": "Finlan",
       "zh": "芬兰",
       "zu": "IFinlandi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:france": {
@@ -10731,6 +10758,9 @@
       "za": "Fazgoz",
       "zh": "法国",
       "zu": "IFulansi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:french-guiana": {
@@ -10767,11 +10797,11 @@
       "eu": "Guyana Frantsesa",
       "fa": "گویان فرانسه",
       "fi": "Ranskan Guayana",
-      "fr": "Guyane",
+      "fr": "Guyane française",
       "fy": "Frânsk Guyana",
       "ga": "Guáin na Fraince",
       "gd": "Guiana Fhrangach",
-      "gl": "Güiana Francesa - Guyane française",
+      "gl": "Güiana Francesa",
       "gn": "Gujána Hyãsiapegua",
       "he": "גיאנה הצרפתית",
       "hi": "फ़्रान्सीसी गुयाना",
@@ -11621,6 +11651,9 @@
       "za": "Dwzgoz",
       "zh": "德国",
       "zu": "IJalimani"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:ghana": {
@@ -12033,6 +12066,9 @@
       "yo": "Gríìsì",
       "zh": "希腊",
       "zu": "IGreki"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:greenland": {
@@ -13726,6 +13762,9 @@
       "yi": "אונגארן",
       "yo": "Húngárì",
       "zh": "匈牙利"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:iceland": {
@@ -14675,6 +14714,9 @@
       "za": "Aiwjlanz Gunghozgoz",
       "zh": "爱尔兰共和国",
       "zu": "I-Ayilendi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:isle-of-man": {
@@ -15086,6 +15128,9 @@
       "yo": "Itálíà",
       "zh": "意大利",
       "zu": "ITaliya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:jamaica": {
@@ -16645,6 +16690,9 @@
       "yo": "Látfíà",
       "zh": "拉脫維亞",
       "zu": "ILatviya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:lebanon": {
@@ -17494,6 +17542,9 @@
       "yo": "Lituéníà",
       "zh": "立陶宛",
       "zu": "ILithuwaniya"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:luxembourg": {
@@ -17638,6 +17689,9 @@
       "yi": "לוקסעמבורג",
       "yo": "Lúksẹ́mbọ̀rg",
       "zh": "卢森堡"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:macau": {
@@ -18581,6 +18635,9 @@
       "yo": "Máltà",
       "zh": "马耳他",
       "zu": "IMalta"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:marshall-islands": {
@@ -20998,6 +21055,9 @@
       "yo": "Nẹ́dálándì",
       "zh": "荷蘭",
       "zu": "Netherlands"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:new-caledonia": {
@@ -23705,6 +23765,9 @@
       "yo": "Pólàndì",
       "zh": "波兰",
       "zu": "IPolandi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:portugal": {
@@ -23860,6 +23923,9 @@
       "yo": "Pọ́rtúgàl",
       "zh": "葡萄牙",
       "zu": "IPhothugali"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:puerto-rico": {
@@ -24547,6 +24613,9 @@
       "yi": "רומעניע",
       "yo": "Románíà",
       "zh": "羅馬尼亞"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:russia": {
@@ -27050,6 +27119,9 @@
       "yo": "Slofákíà",
       "zh": "斯洛伐克",
       "zu": "ISlovaki"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:slovenia": {
@@ -27197,6 +27269,9 @@
       "yi": "סלאוועניע",
       "yo": "Sloféníà",
       "zh": "斯洛文尼亚"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:solomon-islands": {
@@ -28247,6 +28322,9 @@
       "za": "Sihbanhyaz",
       "zh": "西班牙",
       "zu": "ISpeyini"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:sri-lanka": {
@@ -29061,6 +29139,9 @@
       "yo": "Swídìn",
       "zh": "瑞典",
       "zu": "ISwidi"
+    },
+    "regional_entity": {
+      "en": "european-union"
     }
   },
   "en:switzerland": {
