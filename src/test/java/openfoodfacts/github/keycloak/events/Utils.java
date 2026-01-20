@@ -48,6 +48,7 @@ import org.keycloak.models.SubjectCredentialManager;
 import org.keycloak.models.ThemeManager;
 import org.keycloak.models.TokenManager;
 import org.keycloak.models.UserConsentModel;
+import org.keycloak.models.UserCredentialManager;
 import org.keycloak.models.UserLoginFailureProvider;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.UserProvider;
@@ -2586,6 +2587,11 @@ class Utils {
                     @Override
                     public void preRemove(RealmModel realm, ComponentModel component) {
                         throw new UnsupportedOperationException("Unimplemented method 'preRemove'");
+                    }
+
+                    @Override
+                    public UserCredentialManager getUserCredentialManager(UserModel arg0) {
+                        throw new UnsupportedOperationException("Unimplemented method 'getUserCredentialManager'");
                     }
 
                 };
