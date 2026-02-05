@@ -32,9 +32,6 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     trace: 'retain-on-failure',
-    launchOptions: {
-      ignoreDefaultArgs: ['--hide-scrollbars'],
-    },
   },
 
   /* Configure projects for major browsers */
