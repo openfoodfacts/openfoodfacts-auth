@@ -37,7 +37,7 @@ public class CorrectProviderEventIsForwardedToRedisTest {
         KeycloakSessionFactory sessionFactory = Utils.createKeycloakSessionFactory();
         KeycloakSession session = sessionFactory.create();
         factory.postInit(sessionFactory);
-        try (JedisPooled jedis = new JedisPooled(redisURI)) {
+        try (RedisClient jedis = RedisClient.create(redisURI)) {
             // Act
             sessionFactory.publish(new UserModel.UserRemovedEvent() {
 

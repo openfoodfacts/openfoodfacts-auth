@@ -1,7 +1,6 @@
 package openfoodfacts.github.keycloak.events;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
@@ -9,16 +8,16 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 
 import openfoodfacts.github.keycloak.utils.UserAttributes;
-import redis.clients.jedis.JedisPooled;
+import redis.clients.jedis.RedisClient;
 import redis.clients.jedis.StreamEntryID;
 
-public class RedisClient implements AutoCloseable {
-    private static final Logger log = Logger.getLogger(RedisClient.class);
+public class EventClient implements AutoCloseable {
+    private static final Logger log = Logger.getLogger(EventClient.class);
 
-    private final JedisPooled jedis;
+    private final RedisClient jedis;
 
-    public RedisClient(final String url) {
-        this.jedis = new JedisPooled(url);
+    public EventClient(final String url) {
+        this.jedis = RedisClient.create(url);
     }
 
     public void postUserRegistered(final UserModel user, final RealmModel realm, final String clientId) {

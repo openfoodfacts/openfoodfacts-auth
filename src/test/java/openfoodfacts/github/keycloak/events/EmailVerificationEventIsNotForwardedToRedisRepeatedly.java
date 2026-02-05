@@ -39,7 +39,7 @@ public class EmailVerificationEventIsNotForwardedToRedisRepeatedly {
         KeycloakSession session = sessionFactory.create();
         factory.postInit(sessionFactory);
         EventListenerProvider eventListenerProvider = factory.create(session);
-        try (JedisPooled jedis = new JedisPooled(redisURI)) {
+        try (RedisClient jedis = RedisClient.create(redisURI)) {
             // Act
             eventListenerProvider.onEvent(new Event() {
 
