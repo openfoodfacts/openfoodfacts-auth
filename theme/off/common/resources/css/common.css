@@ -31,11 +31,11 @@
     --off-other-background: var(--latte);
 
     --off-primary-action: var(--chocolate);
-    --off-primary-action-hover: #622000; /* TBA */
+    --off-primary-action-hover: var(--cortado);
     --off-primary-button-text: var(--white);
 
     --off-secondary-action: var(--cappuccino);
-    --off-secondary-action-hover :#cfac9e; /* TBA */
+    --off-secondary-action-hover: var(--latte);
     --off-secondary-button-text: var(--black);
 
     --off-input-background: var(--cappuccino);
@@ -53,14 +53,14 @@
         --off-other-background: var(--cortado);
 
         --off-primary-action: var(--white);
-        /* --off-primary-action-hover: #622000; /* TBA */
+        --off-primary-action-hover: var(--cappuccino);
         --off-primary-button-text: var(--black);
 
-        --off-secondary-action: var(--macchiato);
-        /* --off-secondary-action-hover :#cfac9e; /* TBA */
+        --off-secondary-action: var(--cortado);
+        --off-secondary-action-hover: var(--macchiato);
         --off-secondary-button-text: var(--white);
 
-        --off-input-background: var(--macchiato);
+        --off-input-background: var(--cortado);
 
         --off-notification-background: var(--cappuccino);
 
