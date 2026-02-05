@@ -25,7 +25,7 @@ import openfoodfacts.github.keycloak.utils.UserAttributes;
 public class OpenFoodFactsEventListenerProviderFactory implements EventListenerProviderFactory {
     private static final Logger log = Logger.getLogger(OpenFoodFactsEventListenerProviderFactory.class);
 
-    private RedisClient client;
+    private EventClient client;
 
     @Override
     public EventListenerProvider create(final KeycloakSession keycloakSession) {
@@ -151,7 +151,7 @@ public class OpenFoodFactsEventListenerProviderFactory implements EventListenerP
         if (redisUrl != null && !redisUrl.trim().isEmpty()) {
             if (!redisUrl.startsWith("redis://"))
                 redisUrl = "redis://" + redisUrl;
-            this.client = new RedisClient(redisUrl);
+            this.client = new EventClient(redisUrl);
         } else {
             log.warn("REDIS_URL not specified");
         }
