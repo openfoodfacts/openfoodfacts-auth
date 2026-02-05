@@ -1,8 +1,8 @@
 import test, { expect } from "@playwright/test";
 import { clickEmailVerifyLink, forgotPasswordLink, getLastEmail, gotoHome, registerLink, registerSnapshotUser, selectDummyLocale } from "./test-helper";
 
-const setDesktop = async(page) => await page.setViewportSize({width: 1500, height: 1010});
-const setMobile = async(page) => await page.setViewportSize({width: 400, height: 1010});
+const setDesktop = async(page) => await page.setViewportSize({width: 1500, height: 1000});
+const setMobile = async(page) => await page.setViewportSize({width: 400, height: 1000});
 test("login", async ({ page }) => {
     await setDesktop(page);
     await gotoHome(page);
