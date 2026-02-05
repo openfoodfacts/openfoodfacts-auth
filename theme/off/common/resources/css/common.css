@@ -41,6 +41,8 @@
     --off-input-background: var(--cappuccino);
 
     --off-notification-background: var(--mocha);
+
+    --off-logo: url('../img/off-logo-horizontal-light.svg');
 }
 
 /* Dark mode */
@@ -61,6 +63,8 @@
         --off-input-background: var(--macchiato);
 
         --off-notification-background: var(--cappuccino);
+
+        --off-logo: url('../img/off-logo-horizontal-dark.svg');
     }
 }
 
