@@ -10,5 +10,6 @@ Note that the messages in the theme/off/common/messages folder are refreshed aut
 
 Only the messages in the src/messages folder should be translated with Crowdin.
 
-See the root [README](../README.md) for details of specific templates that have been overridden that need to be checked when applying Keycloak updates.
+See the `refresh_themes` target in the `Makefile` for the list of specific templates that have been overridden that need to be checked when applying Keycloak updates.
 
+Colors are derived from https://www.figma.com/design/nFMjewFAOa8c4ahtob7CAB/Mobile-App-Design--Quentin-?node-id=6633-23473&p=f

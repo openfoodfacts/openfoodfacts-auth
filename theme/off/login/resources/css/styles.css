@@ -15,12 +15,13 @@
 
 .pf-v5-c-login {
     background-color: var(--off-other-background);
-    background-image: url('../img/off-logo-horizontal-light.svg');
+    background-image: var(--off-logo);
     background-size: auto 48px;
     background-position: 18px 18px;
     background-repeat: no-repeat;
     align-items: start;
 }
+
 .pf-v5-c-login__container {
     margin-top: 65px;
     /* Ensure remains centred on wide screens */
