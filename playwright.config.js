@@ -38,7 +38,19 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            /* Suggestions from here: https://github.com/microsoft/playwright/issues/20097#issuecomment-1382672908 */
+            '--font-render-hinting=none',
+            '--disable-skia-runtime-opts',
+            '--disable-font-subpixel-positioning',
+            '--disable-lcd-text',
+            '--hide-scrollbars',
+          ]
+        }
+      },
     },
 
     {
@@ -86,7 +98,7 @@ module.exports = defineConfig({
     toHaveScreenshot: { 
       /* This figure is by trial and error to minimize false positives when running tests locally
         Note the reference images are created in the GitHub action by logging a `/update-screenshots` comment */
-      maxDiffPixels: process.env.CI ? 0 : 7000,
+      maxDiffPixels: process.env.CI ? 0 : 5000,
 
       /* The following ensures we pick up background color block changes 
       without being so fussy as to detect subtle shadow changes */
