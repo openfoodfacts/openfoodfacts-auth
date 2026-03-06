@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.2...v0.2.3) (2026-03-06)
+
+
+### Bug Fixes
+
+* update Redis URL in container deployment workflow ([#333](https://github.com/openfoodfacts/openfoodfacts-auth/issues/333)) ([5e8f4ef](https://github.com/openfoodfacts/openfoodfacts-auth/commit/5e8f4efab1ccebf8b57bdb9a9c307c0583a01a9d))
+
 ## [0.2.2](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.1...v0.2.2) (2026-02-09)
 
 
