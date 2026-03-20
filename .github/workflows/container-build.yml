@@ -34,13 +34,13 @@ jobs:
           envFile: '.env'
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -50,7 +50,7 @@ jobs:
         run: make pre_build
 
       - name: Build and export Docker dev image to tar
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
@@ -59,7 +59,7 @@ jobs:
           outputs: type=docker,dest=${{ runner.temp }}/image.tar
 
       - name: Upload image artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: image
           path: ${{ runner.temp }}/image.tar
@@ -77,7 +77,7 @@ jobs:
       - name: Install dependencies
         run: make init
       - name: Download previously built image
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: image
           path: ${{ runner.temp }}
@@ -93,7 +93,7 @@ jobs:
       - name: Run Playwright tests
         run: make test
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-results
@@ -121,13 +121,13 @@ jobs:
           envFile: '.env'
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -135,7 +135,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -148,7 +148,7 @@ jobs:
         run: make pre_build
 
       - name: Build and push Docker multi-platform image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
@@ -159,7 +159,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker testcontainer multi-platform image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
