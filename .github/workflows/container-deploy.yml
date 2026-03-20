@@ -127,6 +127,10 @@ jobs:
           echo "RESTART_POLICY=always" >> .env
           echo "COMMON_NET_NAME=${{ env.COMMON_NET_NAME }}" >> .env
 
+          echo "KC_TELEMETRY_ENDPOINT=http://127.0.0.1:4317 " >> .env
+          echo "KC_TRACING_ENABLED=true" >> .env
+          echo "KC_TELEMETRY_LOGS_ENABLED=false" >> .env
+
     - name: Create staging database and user
       if: matrix.env == 'off-auth-net'
       uses: appleboy/ssh-action@master

@@ -46,7 +46,9 @@ ENTRYPOINT [ "/opt/keycloak/bin/kc.sh", "start", "--optimized", "--http-enabled=
 FROM base
 # Production image. This is also used for dev. Health and metrics don't seem to add too much to the startup time
 
-RUN /opt/keycloak/bin/kc.sh build --db=postgres --health-enabled=true --metrics-enabled=true
+RUN /opt/keycloak/bin/kc.sh build --db=postgres --health-enabled=true --metrics-enabled=true \
+    --features=opentelemetry-logs \
+    --tracing-enabled=true --telemetry-logs-enabled=true
 
 # Need quite a long grace period for startup because of running migrations
 HEALTHCHECK --start-period=300s --interval=1s CMD timeout 1s bash -c 'test -f /tmp/health && :> /dev/tcp/localhost/8080'

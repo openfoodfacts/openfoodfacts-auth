@@ -1,5 +1,8 @@
 services:
   keycloak:
+    # Runtime environment variables for Keycloak. These are read from .env and
+    # can be overridden per-deployment (docker-compose override files, CI, or
+    # container runtime environment).
     environment:
       - KC_DB_URL_HOST
       - KC_DB_USERNAME
@@ -16,6 +19,9 @@ services:
       - SMTP_USER
       - SMTP_PASSWORD
       - KC_LOG_LEVEL
+      - KC_TELEMETRY_ENDPOINT
+      - KC_TRACING_ENABLED
+      - KC_TELEMETRY_LOGS_ENABLED
     ports:
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_HTTP_PORT}:8080"
       - "${KEYCLOAK_EXPOSE}${KEYCLOAK_MANAGEMENT_PORT}:9000"
