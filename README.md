@@ -166,6 +166,21 @@ http://auth.openfoodfacts.localhost:5604/?clientId=test-client&clientSecret=test
 
 If you create a new user account you will need to validate the email address used. The validation email can be found in SMTP4Dev here: http://localhost:5605/
 
+## Viewing logs & traces (Grafana / otel-lgtm)
+
+We run a local OpenTelemetry collector + Grafana for development using the `grafana/otel-lgtm` image (see `deps/openfoodfacts-shared-services/docker-compose-run.yml`). The collector exposes OTLP on gRPC `4317` and HTTP `4318`; Grafana is available at `http://localhost:3000`.
+
+Keycloak is configured to export telemetry to the collector when `KC_TELEMETRY_ENDPOINT` points at `http://otel-collector:4317` (this is set in `.env` by default). To inspect telemetry locally:
+
+- Open Grafana: `http://localhost:3000` and use Explore or the Traces/Logs views to query recent traces and logs.
+- Tail collector logs for debugging:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose-run.yml logs -f otel-collector
+```
+
+These development tools are for local debugging only — production telemetry are shipped to the central monitoring platform.
+
 # Environment
 
 The settings in `.env` are designed to support the default local setup. Use `.envrc` to override settings locally. Descriptions of each field are included in the `.env` file.
