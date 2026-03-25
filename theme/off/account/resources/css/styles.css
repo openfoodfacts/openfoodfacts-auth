@@ -8,6 +8,15 @@
     background-color: var(--off-other-background);
 }
 
+/* Hide logo and use dark mode one iof applicable */
+.pf-v5-c-masthead__brand {
+    background-image: var(--off-logo);
+    background-size: contain;
+}
+img._brand_1gmge_1 {
+    visibility: hidden;
+}
+
 .pf-v5-c-masthead .pf-v5-c-button.pf-m-plain,
 .pf-v5-c-menu-toggle.pf-m-plain:not(.pf-m-text) {
     color: var(--off-primary-action);

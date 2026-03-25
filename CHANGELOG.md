@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.2.2](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.1...v0.2.2) (2026-02-09)
+
+
+### Bug Fixes
+
+* Better dark mode colours ([#323](https://github.com/openfoodfacts/openfoodfacts-auth/issues/323)) ([b51b98c](https://github.com/openfoodfacts/openfoodfacts-auth/commit/b51b98ca84abfb7c57c4d93882f0aa32543dcbf1))
+* Replace escaped HTML characters with literals in messages ([#318](https://github.com/openfoodfacts/openfoodfacts-auth/issues/318)) ([49a9f83](https://github.com/openfoodfacts/openfoodfacts-auth/commit/49a9f83baf0c8d19f740518c8d3919f6a59fb94a))
+* Staging and dev colours make it difficult to test theming ([#321](https://github.com/openfoodfacts/openfoodfacts-auth/issues/321)) ([867b9d9](https://github.com/openfoodfacts/openfoodfacts-auth/commit/867b9d9889c155eb5988de1116b88f11bc88e00b))
+
+
+### Translations
+
+* New Crowdin translations to review and merge ([#303](https://github.com/openfoodfacts/openfoodfacts-auth/issues/303)) ([d803c8f](https://github.com/openfoodfacts/openfoodfacts-auth/commit/d803c8f616e11d31e18f9259101c701096e06193))
+* New Crowdin translations to review and merge ([#304](https://github.com/openfoodfacts/openfoodfacts-auth/issues/304)) ([89b32e0](https://github.com/openfoodfacts/openfoodfacts-auth/commit/89b32e06ffc2cde45b4b4390eb147720c5dfd86d))
+* New Crowdin translations to review and merge ([#306](https://github.com/openfoodfacts/openfoodfacts-auth/issues/306)) ([2dde3e8](https://github.com/openfoodfacts/openfoodfacts-auth/commit/2dde3e86b88f129a62fcf39db4c4adb7ebdccc82))
+* New Crowdin translations to review and merge ([#307](https://github.com/openfoodfacts/openfoodfacts-auth/issues/307)) ([1f136a8](https://github.com/openfoodfacts/openfoodfacts-auth/commit/1f136a8868736883c52d47d54374772cce5d431a))
+* New Crowdin translations to review and merge ([#309](https://github.com/openfoodfacts/openfoodfacts-auth/issues/309)) ([a842232](https://github.com/openfoodfacts/openfoodfacts-auth/commit/a8422326d84e51e676cedca577a8a2dd8e4a03ac))
+* New Crowdin translations to review and merge ([#320](https://github.com/openfoodfacts/openfoodfacts-auth/issues/320)) ([23eb3e2](https://github.com/openfoodfacts/openfoodfacts-auth/commit/23eb3e2e0ae32de53ee1920b6c1d440e710ace9e))
+
+
+### Technical
+
+* **deps-dev:** bump lodash from 4.17.21 to 4.17.23 ([#310](https://github.com/openfoodfacts/openfoodfacts-auth/issues/310)) ([95a842d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/95a842da1c23651c77fce2081fb57ef39c14c627))
+* **deps-dev:** bump the maven-dev group with 2 updates ([#298](https://github.com/openfoodfacts/openfoodfacts-auth/issues/298)) ([a331ae6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/a331ae64920e77142e15450ee0c01b0ae34c41d8))
+* **deps-dev:** bump the maven-dev group with 2 updates ([#312](https://github.com/openfoodfacts/openfoodfacts-auth/issues/312)) ([07e1d61](https://github.com/openfoodfacts/openfoodfacts-auth/commit/07e1d610d52ff61e463cfe0c5aebe7134db41c71))
+* **deps-dev:** bump the npm-dev group with 17 updates ([#313](https://github.com/openfoodfacts/openfoodfacts-auth/issues/313)) ([7ec0521](https://github.com/openfoodfacts/openfoodfacts-auth/commit/7ec0521dd66cc5f41e9b6e791c2fff7053542986))
+* **deps-dev:** bump the npm-dev group with 30 updates ([#300](https://github.com/openfoodfacts/openfoodfacts-auth/issues/300)) ([584d053](https://github.com/openfoodfacts/openfoodfacts-auth/commit/584d0530331d7c4b73b821d7962ec9d2f0c55c04))
+* **deps:** bump keycloak.version from 26.5.0 to 26.5.1 ([#308](https://github.com/openfoodfacts/openfoodfacts-auth/issues/308)) ([e4aebd9](https://github.com/openfoodfacts/openfoodfacts-auth/commit/e4aebd9d07ab81406d6dcac6ce4a7666a4feb556))
+* **deps:** bump org.keycloak:keycloak-services from 26.4.7 to 26.5.0 ([#305](https://github.com/openfoodfacts/openfoodfacts-auth/issues/305)) ([965a6ee](https://github.com/openfoodfacts/openfoodfacts-auth/commit/965a6ee532ad771afa14b0de2ef946fa88f8f5e9))
+* **deps:** bump the github-actions group with 4 updates ([#299](https://github.com/openfoodfacts/openfoodfacts-auth/issues/299)) ([5c6c56b](https://github.com/openfoodfacts/openfoodfacts-auth/commit/5c6c56b67511badae55f380e84704313647a3d02))
+* **deps:** bump the maven-production group with 7 updates ([#311](https://github.com/openfoodfacts/openfoodfacts-auth/issues/311)) ([21afb9d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/21afb9d22093224c7784fa8d29c7d5ad47d2678a))
+* **deps:** bump the maven-production group with 8 updates ([#289](https://github.com/openfoodfacts/openfoodfacts-auth/issues/289)) ([fe3869a](https://github.com/openfoodfacts/openfoodfacts-auth/commit/fe3869a322e10c13594e21f81f742126f8620481))
+
 ## [0.2.1](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.0...v0.2.1) (2025-12-15)
 
 
