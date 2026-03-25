@@ -3523,6 +3523,9 @@
       "wo": "Bermuda",
       "yo": "Bẹ̀rmúdà",
       "zh": "百慕大"
+    },
+    "osm_relation": {
+      "en": "1993208"
     }
   },
   "en:bhutan": {
@@ -4497,6 +4500,9 @@
       "vi": "Lãnh thổ Ấn Độ Dương thuộc Anh",
       "yo": "Agbègbè Òkun Índíà Brítánì",
       "zh": "英屬印度洋領地"
+    },
+    "osm_relation": {
+      "en": "1993867"
     }
   },
   "en:british-virgin-islands": {
@@ -8227,6 +8233,9 @@
       "za": "Ganggoj Minzcuj Gunghozgoz",
       "zh": "刚果民主共和国",
       "zu": "IRiphabliki Labantu weKongo"
+    },
+    "osm_relation": {
+      "en": "192795"
     }
   },
   "en:denmark": {
@@ -8382,6 +8391,9 @@
       "zh": "丹麦",
       "zu": "IDenimaki"
     },
+    "osm_relation": {
+      "en": "50046"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -8520,6 +8532,9 @@
       "yo": "Djìbútì",
       "zh": "吉布提",
       "zu": "IJibuthi"
+    },
+    "osm_relation": {
+      "en": "192801"
     }
   },
   "en:dominica": {
@@ -8642,6 +8657,9 @@
       "wo": "Dominika",
       "yo": "Dòmíníkà",
       "zh": "多米尼克"
+    },
+    "osm_relation": {
+      "en": "307823"
     }
   },
   "en:dominican-republic": {
@@ -8767,6 +8785,9 @@
       "yi": "דאמיניקאנישע רעפובליק",
       "yo": "Orílẹ̀òmìnira Dómíníkì",
       "zh": "多明尼加共和國"
+    },
+    "osm_relation": {
+      "en": "307828"
     }
   },
   "en:east-germany": {
@@ -8988,6 +9009,9 @@
       "yi": "עקוואדאר",
       "yo": "Ẹ̀kùàdọ̀r",
       "zh": "厄瓜多尔"
+    },
+    "osm_relation": {
+      "en": "108089"
     }
   },
   "en:egypt": {
@@ -9140,6 +9164,9 @@
       "yo": "Ẹ́gíptì",
       "zh": "埃及",
       "zu": "IGibhithe"
+    },
+    "osm_relation": {
+      "en": "1473947"
     }
   },
   "en:el-salvador": {
@@ -9270,6 +9297,9 @@
       "yo": "El Salfador",
       "zh": "萨尔瓦多",
       "zu": "El Salvador"
+    },
+    "osm_relation": {
+      "en": "1520612"
     }
   },
   "en:equatorial-guinea": {
@@ -9400,6 +9430,9 @@
       "yo": "Guinea Alágedeméjì",
       "zh": "赤道几内亚",
       "zu": "IGini Enkabazwe"
+    },
+    "osm_relation": {
+      "en": "192791"
     }
   },
   "en:eritrea": {
@@ -9541,6 +9574,9 @@
       "yo": "Ẹritrẹ́à",
       "zh": "厄立特里亚",
       "zu": "I-Eritrea"
+    },
+    "osm_relation": {
+      "en": "296961"
     }
   },
   "en:estonia": {
@@ -9692,6 +9728,9 @@
       "yo": "Estóníà",
       "zh": "爱沙尼亚",
       "zu": "I-Estoniya"
+    },
+    "osm_relation": {
+      "en": "79510"
     },
     "regional_entity": {
       "en": "european-union"
@@ -9846,6 +9885,9 @@
       "yo": "Ethiópíà",
       "zh": "埃塞俄比亚",
       "zu": "I-Ithiopia"
+    },
+    "osm_relation": {
+      "en": "192800"
     }
   },
   "en:european-union": {
@@ -10073,6 +10115,9 @@
       "yi": "פאלקלאנד אינזלען",
       "yo": "Àwọn Erékùṣù Falkland",
       "zh": "福克兰群岛"
+    },
+    "osm_relation": {
+      "en": "2185374"
     }
   },
   "en:faroe-islands": {
@@ -10184,6 +10229,9 @@
       "wo": "Duni Faarow",
       "yo": "Àwọn Erékùṣù Fàróè",
       "zh": "法罗群岛"
+    },
+    "osm_relation": {
+      "en": "52939"
     }
   },
   "en:federated-states-of-micronesia": {
@@ -10304,6 +10352,9 @@
       "wo": "Mikroneesi",
       "yo": "Mikronésíà",
       "zh": "密克罗尼西亚群岛"
+    },
+    "osm_relation": {
+      "en": "571802"
     }
   },
   "en:fiji": {
@@ -10436,6 +10487,9 @@
       "yo": "Fíjì",
       "zh": "斐濟",
       "zu": "IFiji"
+    },
+    "osm_relation": {
+      "en": "571747"
     }
   },
   "en:finland": {
@@ -10593,6 +10647,9 @@
       "za": "Finlan",
       "zh": "芬兰",
       "zu": "IFinlandi"
+    },
+    "osm_relation": {
+      "en": "54224"
     },
     "regional_entity": {
       "en": "european-union"
@@ -10758,6 +10815,9 @@
       "za": "Fazgoz",
       "zh": "法国",
       "zu": "IFulansi"
+    },
+    "osm_relation": {
+      "en": "2202162"
     },
     "regional_entity": {
       "en": "european-union"
@@ -11172,6 +11232,9 @@
       "yo": "Gàbọ̀n",
       "zh": "加蓬",
       "zu": "IGaboni"
+    },
+    "osm_relation": {
+      "en": "192793"
     }
   },
   "en:galmudug": {
@@ -11340,6 +11403,9 @@
       "yo": "Gámbíà",
       "zh": "冈比亚",
       "zu": "IGambia"
+    },
+    "osm_relation": {
+      "en": "192774"
     }
   },
   "en:georgia": {
@@ -11481,6 +11547,9 @@
       "yi": "גרוזיע",
       "yo": "Georgia",
       "zh": "格鲁吉亚"
+    },
+    "osm_relation": {
+      "en": "28699"
     }
   },
   "en:germany": {
@@ -11652,6 +11721,9 @@
       "zh": "德国",
       "zu": "IJalimani"
     },
+    "osm_relation": {
+      "en": "51477"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -11801,6 +11873,9 @@
       "yo": "Ghánà",
       "zh": "加纳",
       "zu": "IGana"
+    },
+    "osm_relation": {
+      "en": "192781"
     }
   },
   "en:gibraltar": {
@@ -11911,6 +11986,9 @@
       "yi": "גיבראלטאר",
       "yo": "Gibraltar",
       "zh": "直布罗陀"
+    },
+    "osm_relation": {
+      "en": "1278736"
     }
   },
   "en:greece": {
@@ -12067,6 +12145,9 @@
       "zh": "希腊",
       "zu": "IGreki"
     },
+    "osm_relation": {
+      "en": "192307"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -12192,6 +12273,9 @@
       "yi": "גרינלאנד",
       "yo": "Grínlándì",
       "zh": "格陵兰"
+    },
+    "osm_relation": {
+      "en": "2184073"
     }
   },
   "en:grenada": {
@@ -12316,6 +12400,9 @@
       "yo": "Grẹ̀nádà",
       "za": "Gwzlinznazdaz",
       "zh": "格林纳达"
+    },
+    "osm_relation": {
+      "en": "550727"
     }
   },
   "en:guadeloupe": {
@@ -12649,6 +12736,9 @@
       "yo": "Guatẹmálà",
       "zh": "危地马拉",
       "zu": "Guatemala"
+    },
+    "osm_relation": {
+      "en": "1521463"
     }
   },
   "en:guernsey": {
@@ -12745,6 +12835,9 @@
       "vi": "Guernsey",
       "yo": "Guernsey",
       "zh": "根西岛"
+    },
+    "osm_relation": {
+      "en": "6571872"
     }
   },
   "en:guinea": {
@@ -12884,6 +12977,9 @@
       "yo": "Guinea",
       "zh": "几内亚",
       "zu": "IGini"
+    },
+    "osm_relation": {
+      "en": "192778"
     }
   },
   "en:guinea-bissau": {
@@ -13020,6 +13116,9 @@
       "yo": "Guinea-Bissau",
       "zh": "幾內亞比索",
       "zu": "IGini Bisawu"
+    },
+    "osm_relation": {
+      "en": "192776"
     }
   },
   "en:guyana": {
@@ -13150,6 +13249,9 @@
       "yi": "גויאנע",
       "yo": "Gùyánà",
       "zh": "圭亚那"
+    },
+    "osm_relation": {
+      "en": "287083"
     }
   },
   "en:haiti": {
@@ -13282,6 +13384,9 @@
       "yi": "האיטי",
       "yo": "Hàítì",
       "zh": "海地"
+    },
+    "osm_relation": {
+      "en": "307829"
     }
   },
   "en:heard-island-and-mcdonald-islands": {
@@ -13485,6 +13590,9 @@
       "yo": "Họ̀ndúràs",
       "zh": "洪都拉斯",
       "zu": "Honduras"
+    },
+    "osm_relation": {
+      "en": "287670"
     }
   },
   "en:hong-kong": {
@@ -13763,6 +13871,9 @@
       "yo": "Húngárì",
       "zh": "匈牙利"
     },
+    "osm_relation": {
+      "en": "21335"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -13919,6 +14030,9 @@
       "yo": "Íslándì",
       "zh": "冰岛",
       "zu": "I-Ayisilandi"
+    },
+    "osm_relation": {
+      "en": "299133"
     }
   },
   "en:india": {
@@ -14082,6 +14196,9 @@
       "za": "Yindu",
       "zh": "印度",
       "zu": "INdiya"
+    },
+    "osm_relation": {
+      "en": "304716"
     }
   },
   "en:indonesia": {
@@ -14234,6 +14351,9 @@
       "yo": "Indonésíà",
       "za": "Yindunizsihya",
       "zh": "印度尼西亚"
+    },
+    "osm_relation": {
+      "en": "304751"
     }
   },
   "en:iran": {
@@ -14381,6 +14501,9 @@
       "za": "Iran",
       "zh": "伊朗",
       "zu": "I-Irani"
+    },
+    "osm_relation": {
+      "en": "304938"
     }
   },
   "en:iraq": {
@@ -14523,6 +14646,9 @@
       "yo": "Irak",
       "zh": "伊拉克",
       "zu": "I-Iraki"
+    },
+    "osm_relation": {
+      "en": "304934"
     }
   },
   "en:iraqi-kurdistan": {
@@ -14715,6 +14841,9 @@
       "zh": "爱尔兰共和国",
       "zu": "I-Ayilendi"
     },
+    "osm_relation": {
+      "en": "62273"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -14816,6 +14945,9 @@
       "vi": "Đảo Man",
       "yo": "Erékùṣù ilẹ̀ Man",
       "zh": "曼島"
+    },
+    "osm_relation": {
+      "en": "62269"
     }
   },
   "en:israel": {
@@ -14963,6 +15095,9 @@
       "yo": "Ísráẹ́lì",
       "zh": "以色列",
       "zu": "Isreyili"
+    },
+    "osm_relation": {
+      "en": "1473946"
     }
   },
   "en:italy": {
@@ -15129,6 +15264,9 @@
       "zh": "意大利",
       "zu": "ITaliya"
     },
+    "osm_relation": {
+      "en": "365331"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -15263,6 +15401,9 @@
       "yi": "דזשאמייקע",
       "yo": "Jamáíkà",
       "zh": "牙买加"
+    },
+    "osm_relation": {
+      "en": "555017"
     }
   },
   "en:jan-mayen": {
@@ -15494,6 +15635,9 @@
       "za": "Nditbonj",
       "zh": "日本",
       "zu": "IJapani"
+    },
+    "osm_relation": {
+      "en": "382313"
     }
   },
   "en:jersey": {
@@ -15587,6 +15731,9 @@
       "vi": "Jersey",
       "yo": "Jersey",
       "zh": "澤西島"
+    },
+    "osm_relation": {
+      "en": "1711283"
     }
   },
   "en:jordan": {
@@ -15719,6 +15866,9 @@
       "yi": "יארדאניע",
       "yo": "Jọ́rdánì",
       "zh": "约旦"
+    },
+    "osm_relation": {
+      "en": "184818"
     }
   },
   "en:kazakhstan": {
@@ -15864,6 +16014,9 @@
       "yo": "Kàsàkstán",
       "za": "Hahsazgwswhdanj",
       "zh": "哈萨克斯坦"
+    },
+    "osm_relation": {
+      "en": "214665"
     }
   },
   "en:kenya": {
@@ -16009,6 +16162,9 @@
       "yo": "Kẹ́nyà",
       "zh": "肯尼亚",
       "zu": "IKenya"
+    },
+    "osm_relation": {
+      "en": "192798"
     }
   },
   "en:kiribati": {
@@ -16130,6 +16286,9 @@
       "wo": "Kiribati",
       "yo": "Kìrìbátì",
       "zh": "基里巴斯"
+    },
+    "osm_relation": {
+      "en": "571178"
     }
   },
   "en:kosovo": {
@@ -16143,6 +16302,9 @@
       "bg": "Косово",
       "en": "Kosovo",
       "it": "Kosovo"
+    },
+    "osm_relation": {
+      "en": "2088990"
     }
   },
   "en:kuwait": {
@@ -16275,6 +16437,9 @@
       "yi": "קואווייט",
       "yo": "Kuwaiti",
       "zh": "科威特"
+    },
+    "osm_relation": {
+      "en": "305099"
     }
   },
   "en:kyrgyzstan": {
@@ -16407,6 +16572,9 @@
       "yi": "קירגיזסטאן",
       "yo": "Kirgistani",
       "zh": "吉尔吉斯斯坦"
+    },
+    "osm_relation": {
+      "en": "178009"
     }
   },
   "en:laos": {
@@ -16542,6 +16710,9 @@
       "yo": "Láọ̀s",
       "za": "Lao",
       "zh": "老挝"
+    },
+    "osm_relation": {
+      "en": "49903"
     }
   },
   "en:latvia": {
@@ -16691,6 +16862,9 @@
       "zh": "拉脫維亞",
       "zu": "ILatviya"
     },
+    "osm_relation": {
+      "en": "72594"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -16827,6 +17001,9 @@
       "yi": "לבנון",
       "yo": "Lẹ́bánọ́nì",
       "zh": "黎巴嫩"
+    },
+    "osm_relation": {
+      "en": "184843"
     }
   },
   "en:lesotho": {
@@ -16962,6 +17139,9 @@
       "yo": "Lèsóthò",
       "zh": "莱索托",
       "zu": "OSotho"
+    },
+    "osm_relation": {
+      "en": "2093234"
     }
   },
   "en:liberia": {
@@ -17097,6 +17277,9 @@
       "yo": "Làìbéríà",
       "zh": "利比里亚",
       "zu": "ILiberia"
+    },
+    "osm_relation": {
+      "en": "192780"
     }
   },
   "en:libya": {
@@ -17241,6 +17424,9 @@
       "yo": "Líbyà",
       "zh": "利比亚",
       "zu": "ILibiya"
+    },
+    "osm_relation": {
+      "en": "192758"
     }
   },
   "en:liechtenstein": {
@@ -17379,6 +17565,9 @@
       "yi": "ליכטנשטיין",
       "yo": "Líktẹ́nstáìnì",
       "zh": "列支敦斯登"
+    },
+    "osm_relation": {
+      "en": "1155955"
     }
   },
   "en:lithuania": {
@@ -17543,6 +17732,9 @@
       "zh": "立陶宛",
       "zu": "ILithuwaniya"
     },
+    "osm_relation": {
+      "en": "4474651"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -17689,6 +17881,9 @@
       "yi": "לוקסעמבורג",
       "yo": "Lúksẹ́mbọ̀rg",
       "zh": "卢森堡"
+    },
+    "osm_relation": {
+      "en": "2171347"
     },
     "regional_entity": {
       "en": "european-union"
@@ -17949,6 +18144,9 @@
       "yo": "Madagáskàr",
       "zh": "马达加斯加",
       "zu": "IMadagasika"
+    },
+    "osm_relation": {
+      "en": "447325"
     }
   },
   "en:malawi": {
@@ -18084,6 +18282,9 @@
       "yo": "Màláwì",
       "zh": "马拉维",
       "zu": "IMalawi"
+    },
+    "osm_relation": {
+      "en": "195290"
     }
   },
   "en:malaysia": {
@@ -18221,6 +18422,9 @@
       "yo": "Malaysia",
       "za": "Majlaizsihya",
       "zh": "马来西亚"
+    },
+    "osm_relation": {
+      "en": "2108121"
     }
   },
   "en:maldives": {
@@ -18349,6 +18553,9 @@
       "wo": "Maldiif",
       "yo": "Àwọn Maldive",
       "zh": "马尔代夫"
+    },
+    "osm_relation": {
+      "en": "536773"
     }
   },
   "en:mali": {
@@ -18488,6 +18695,9 @@
       "yo": "Málì",
       "zh": "马里共和国",
       "zu": "IMali"
+    },
+    "osm_relation": {
+      "en": "192785"
     }
   },
   "en:malta": {
@@ -18636,6 +18846,9 @@
       "zh": "马耳他",
       "zu": "IMalta"
     },
+    "osm_relation": {
+      "en": "365307"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -18755,6 +18968,9 @@
       "wo": "Duni Marshall",
       "yo": "Àwọn Erékùṣù Marshall",
       "zh": "馬紹爾群島"
+    },
+    "osm_relation": {
+      "en": "571771"
     }
   },
   "en:martinique": {
@@ -18994,6 +19210,9 @@
       "yo": "Mauritáníà",
       "zh": "毛里塔尼亚",
       "zu": "IMoritaniya"
+    },
+    "osm_relation": {
+      "en": "192763"
     }
   },
   "en:mauritius": {
@@ -19126,6 +19345,9 @@
       "yo": "Mọ́rísì",
       "zh": "毛里求斯",
       "zu": "IMorishisi"
+    },
+    "osm_relation": {
+      "en": "535828"
     }
   },
   "en:mayotte": {
@@ -19370,6 +19592,9 @@
       "yo": "Mẹ́ksíkò",
       "zh": "墨西哥",
       "zu": "IMekisiko"
+    },
+    "osm_relation": {
+      "en": "114686"
     }
   },
   "en:moldova": {
@@ -19509,6 +19734,9 @@
       "yi": "מאלדאווע",
       "yo": "Móldófà",
       "zh": "摩尔多瓦"
+    },
+    "osm_relation": {
+      "en": "58974"
     }
   },
   "en:monaco": {
@@ -19646,6 +19874,9 @@
       "yi": "מאנאקא",
       "yo": "Mónakò",
       "zh": "摩纳哥"
+    },
+    "osm_relation": {
+      "en": "1124039"
     }
   },
   "en:mongolia": {
@@ -19789,6 +20020,9 @@
       "yo": "Mòngólíà",
       "za": "Mungzguj",
       "zh": "蒙古国"
+    },
+    "osm_relation": {
+      "en": "161033"
     }
   },
   "en:montenegro": {
@@ -19927,6 +20161,9 @@
       "yi": "מאנטענעגרא",
       "yo": "Montenẹ́grò",
       "zh": "蒙特內哥羅"
+    },
+    "osm_relation": {
+      "en": "53296"
     }
   },
   "en:montserrat": {
@@ -20018,6 +20255,9 @@
       "wo": "Montserrat",
       "yo": "Montserrat",
       "zh": "蒙塞拉特島"
+    },
+    "osm_relation": {
+      "en": "537257"
     }
   },
   "en:morocco": {
@@ -20155,6 +20395,9 @@
       "yo": "Mòrókò",
       "zh": "摩洛哥",
       "zu": "IMorokho"
+    },
+    "osm_relation": {
+      "en": "3630439"
     }
   },
   "en:mozambique": {
@@ -20292,6 +20535,9 @@
       "yo": "Mòsámbìk",
       "zh": "莫桑比克",
       "zu": "IMozambiki"
+    },
+    "osm_relation": {
+      "en": "195273"
     }
   },
   "en:myanmar": {
@@ -20432,6 +20678,9 @@
       "yo": "Myanmar",
       "za": "Mienjdien",
       "zh": "缅甸"
+    },
+    "osm_relation": {
+      "en": "50371"
     }
   },
   "en:nakhchivan-autonomous-republic": {
@@ -20632,6 +20881,9 @@
       "yo": "Nàmíbíà",
       "zh": "纳米比亚",
       "zu": "INamibhiya"
+    },
+    "osm_relation": {
+      "en": "195266"
     }
   },
   "en:nauru": {
@@ -20758,6 +21010,9 @@
       "wo": "Nauru",
       "yo": "Nàúrù",
       "zh": "諾魯"
+    },
+    "osm_relation": {
+      "en": "571804"
     }
   },
   "en:nepal": {
@@ -20900,6 +21155,9 @@
       "yi": "נעפאל",
       "yo": "Nepal",
       "zh": "尼泊尔"
+    },
+    "osm_relation": {
+      "en": "184633"
     }
   },
   "en:netherlands": {
@@ -21055,6 +21313,9 @@
       "yo": "Nẹ́dálándì",
       "zh": "荷蘭",
       "zu": "Netherlands"
+    },
+    "osm_relation": {
+      "en": "2323309"
     },
     "regional_entity": {
       "en": "european-union"
@@ -21294,6 +21555,9 @@
       "za": "Saen Saelanz",
       "zh": "新西兰",
       "zu": "INyuzilandi"
+    },
+    "osm_relation": {
+      "en": "556706"
     }
   },
   "en:nicaragua": {
@@ -21424,6 +21688,9 @@
       "yo": "Nikarágúà",
       "zh": "尼加拉瓜",
       "zu": "Nicaragua"
+    },
+    "osm_relation": {
+      "en": "287666"
     }
   },
   "en:niger": {
@@ -21559,6 +21826,9 @@
       "yo": "Nìjẹ̀r",
       "zh": "尼日尔",
       "zu": "INayighe"
+    },
+    "osm_relation": {
+      "en": "192786"
     }
   },
   "en:nigeria": {
@@ -21703,6 +21973,9 @@
       "za": "Nizywlihya",
       "zh": "奈及利亞",
       "zu": "INigeria"
+    },
+    "osm_relation": {
+      "en": "192787"
     }
   },
   "en:niue": {
@@ -21797,6 +22070,9 @@
       "wo": "Niwe",
       "yo": "Niue",
       "zh": "紐埃"
+    },
+    "osm_relation": {
+      "en": "1558556"
     }
   },
   "en:norfolk-island": {
@@ -22018,6 +22294,9 @@
       "yi": "צפון קארעע",
       "yo": "Kòréà Àríwá",
       "zh": "朝鲜民主主义人民共和国"
+    },
+    "osm_relation": {
+      "en": "192734"
     }
   },
   "en:north-macedonia": {
@@ -22157,6 +22436,9 @@
       "yi": "רעפובליק פון מאקעדאניע",
       "yo": "Orílẹ̀-èdè Olómìnira ilẹ̀ Makẹdóníà",
       "zh": "北马其顿"
+    },
+    "osm_relation": {
+      "en": "53293"
     }
   },
   "en:northern-mariana-islands": {
@@ -22413,6 +22695,9 @@
       "za": "Nozveih",
       "zh": "挪威",
       "zu": "INoki"
+    },
+    "osm_relation": {
+      "en": "2978650"
     }
   },
   "en:oman": {
@@ -22544,6 +22829,9 @@
       "yi": "אמאן",
       "yo": "Oman",
       "zh": "阿曼"
+    },
+    "osm_relation": {
+      "en": "305138"
     }
   },
   "en:pakistan": {
@@ -22689,6 +22977,9 @@
       "yo": "Pakístàn",
       "zh": "巴基斯坦",
       "zu": "IPakistani"
+    },
+    "osm_relation": {
+      "en": "307573"
     }
   },
   "en:palau": {
@@ -22807,6 +23098,9 @@
       "wo": "Palau",
       "yo": "Páláù",
       "zh": "帛琉"
+    },
+    "osm_relation": {
+      "en": "571805"
     }
   },
   "en:palestinian-territories": {
@@ -22975,6 +23269,9 @@
       "yo": "Panamá",
       "zh": "巴拿马",
       "zu": "Panama"
+    },
+    "osm_relation": {
+      "en": "287668"
     }
   },
   "en:papua-new-guinea": {
@@ -23097,6 +23394,9 @@
       "wo": "Papuwaasi-Gine-Gu-Bees",
       "yo": "Papua Guinea Titun",
       "zh": "巴布亚新几内亚"
+    },
+    "osm_relation": {
+      "en": "307866"
     }
   },
   "en:paraguay": {
@@ -23228,6 +23528,9 @@
       "yi": "פאראגוויי",
       "yo": "Paragúáì",
       "zh": "巴拉圭"
+    },
+    "osm_relation": {
+      "en": "287077"
     }
   },
   "en:peru": {
@@ -23377,6 +23680,9 @@
       "yo": "Perú",
       "zh": "秘鲁",
       "zu": "Peru"
+    },
+    "osm_relation": {
+      "en": "288247"
     }
   },
   "en:philippines": {
@@ -23514,6 +23820,9 @@
       "yo": "Filipínì",
       "za": "Feihlizbinh",
       "zh": "菲律宾"
+    },
+    "osm_relation": {
+      "en": "443174"
     }
   },
   "en:pitcairn": {
@@ -23603,6 +23912,9 @@
       "yi": "פיטקארן",
       "yo": "Àwọn Erékùsù Pitcairn",
       "zh": "皮特凯恩群岛"
+    },
+    "osm_relation": {
+      "en": "2185375"
     }
   },
   "en:poland": {
@@ -23766,6 +24078,9 @@
       "zh": "波兰",
       "zu": "IPolandi"
     },
+    "osm_relation": {
+      "en": "49715"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -23923,6 +24238,9 @@
       "yo": "Pọ́rtúgàl",
       "zh": "葡萄牙",
       "zu": "IPhothugali"
+    },
+    "osm_relation": {
+      "en": "295480"
     },
     "regional_entity": {
       "en": "european-union"
@@ -24173,6 +24491,9 @@
       "yi": "קאטאר",
       "yo": "Katar",
       "zh": "卡塔尔"
+    },
+    "osm_relation": {
+      "en": "3832630"
     }
   },
   "en:republic-of-the-congo": {
@@ -24303,6 +24624,9 @@
       "yo": "Orílẹ̀-èdè Olómìnira ilẹ̀ Kóngò",
       "zh": "刚果共和国",
       "zu": "IKongo"
+    },
+    "osm_relation": {
+      "en": "192794"
     }
   },
   "en:republika-srpska": {
@@ -24614,6 +24938,9 @@
       "yo": "Románíà",
       "zh": "羅馬尼亞"
     },
+    "osm_relation": {
+      "en": "90689"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -24795,6 +25122,9 @@
       "za": "Ezlozswh",
       "zh": "俄罗斯",
       "zu": "IRashiya"
+    },
+    "osm_relation": {
+      "en": "60189"
     }
   },
   "en:rwanda": {
@@ -24935,6 +25265,9 @@
       "yo": "Rùwándà",
       "zh": "卢旺达",
       "zu": "IRuwanda"
+    },
+    "osm_relation": {
+      "en": "171496"
     }
   },
   "en:saba": {
@@ -25127,6 +25460,9 @@
       "vi": "Saint Helena",
       "yo": "Saint Helena",
       "zh": "圣赫勒拿、阿森松与特里斯坦达库尼亚"
+    },
+    "osm_relation": {
+      "en": "1964272"
     }
   },
   "en:saint-kitts-and-nevis": {
@@ -25247,6 +25583,9 @@
       "wo": "Saint Kitts and Nevis",
       "yo": "Saint Kitts àti Nevis",
       "zh": "聖克里斯多福與尼維斯"
+    },
+    "osm_relation": {
+      "en": "536899"
     }
   },
   "en:saint-lucia": {
@@ -25364,6 +25703,9 @@
       "wo": "Saint Lucia",
       "yo": "Lùsíà Mímọ́",
       "zh": "圣卢西亚"
+    },
+    "osm_relation": {
+      "en": "550728"
     }
   },
   "en:saint-martin": {
@@ -25632,6 +25974,9 @@
       "wo": "Saint Vincent and the Grenadines",
       "yo": "Saint Vincent àti àwọn Grẹnadínì",
       "zh": "圣文森特和格林纳丁斯"
+    },
+    "osm_relation": {
+      "en": "550725"
     }
   },
   "en:samoa": {
@@ -25753,6 +26098,9 @@
       "wo": "Samowaa",
       "yo": "Sàmóà",
       "zh": "萨摩亚"
+    },
+    "osm_relation": {
+      "en": "1872673"
     }
   },
   "en:san-marino": {
@@ -25892,6 +26240,9 @@
       "yo": "San Màrínò",
       "zh": "圣马力诺",
       "zu": "USanti Marino"
+    },
+    "osm_relation": {
+      "en": "54624"
     }
   },
   "en:sao-tome-and-principe": {
@@ -26017,6 +26368,9 @@
       "yo": "Sao Tome àti Principe",
       "zh": "圣多美和普林西比",
       "zu": "ISawu Tome noPhrinitshipeyi"
+    },
+    "osm_relation": {
+      "en": "535880"
     }
   },
   "en:saudi-arabia": {
@@ -26157,6 +26511,9 @@
       "yi": "סאודי אראביע",
       "yo": "Sáúdí Arábíà",
       "zh": "沙特阿拉伯"
+    },
+    "osm_relation": {
+      "en": "307584"
     }
   },
   "en:senegal": {
@@ -26296,6 +26653,9 @@
       "yo": "Sẹ̀nẹ̀gàl",
       "zh": "塞内加尔",
       "zu": "ISenegal"
+    },
+    "osm_relation": {
+      "en": "192775"
     }
   },
   "en:serbia": {
@@ -26442,6 +26802,9 @@
       "yo": "Sérbíà",
       "zh": "塞尔维亚",
       "zu": "ISerbiya"
+    },
+    "osm_relation": {
+      "en": "1741311"
     }
   },
   "en:seychelles": {
@@ -26573,6 +26936,9 @@
       "yo": "Ṣèíhẹ́lẹ́sì",
       "zh": "塞舌尔",
       "zu": "IsiSeyisheli"
+    },
+    "osm_relation": {
+      "en": "536765"
     }
   },
   "en:sierra-leone": {
@@ -26708,6 +27074,9 @@
       "yo": "Siẹrra Léònè",
       "zh": "塞拉利昂",
       "zu": "ISiera Liyoni"
+    },
+    "osm_relation": {
+      "en": "192777"
     }
   },
   "en:singapore": {
@@ -26850,6 +27219,9 @@
       "yi": "סינגאפור",
       "yo": "Singapore",
       "zh": "新加坡"
+    },
+    "osm_relation": {
+      "en": "536780"
     }
   },
   "en:sint-eustatius": {
@@ -27120,6 +27492,9 @@
       "zh": "斯洛伐克",
       "zu": "ISlovaki"
     },
+    "osm_relation": {
+      "en": "14296"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -27270,6 +27645,9 @@
       "yo": "Sloféníà",
       "zh": "斯洛文尼亚"
     },
+    "osm_relation": {
+      "en": "218657"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -27393,6 +27771,9 @@
       "wo": "Duni Solomon",
       "yo": "Àwọn Erékùsù Sólómọ́nì",
       "zh": "所罗门群岛"
+    },
+    "osm_relation": {
+      "en": "1857436"
     }
   },
   "en:somalia": {
@@ -27534,6 +27915,9 @@
       "yo": "Sòmálíà",
       "zh": "索马里",
       "zu": "ISomalia"
+    },
+    "osm_relation": {
+      "en": "192799"
     }
   },
   "en:south-africa": {
@@ -27686,6 +28070,9 @@
       "yo": "Gúúsù Áfríkà",
       "zh": "南非",
       "zu": "IRiphabliki yaseNingizimu Afrika"
+    },
+    "osm_relation": {
+      "en": "1252792"
     }
   },
   "en:south-georgia-and-the-south-sandwich-islands": {
@@ -27776,6 +28163,9 @@
       "wo": "Jeoorji gu Bëj-saalum ak Duni Islaand yi Bëj-saalum",
       "yo": "Gúúsù Georgia àti Àwọn Erékùṣù Gúúsù Sandwich",
       "zh": "南喬治亞島與南桑威奇群島"
+    },
+    "osm_relation": {
+      "en": "1983628"
     }
   },
   "en:south-korea": {
@@ -27921,6 +28311,9 @@
       "yo": "Kòréà Gúúsù",
       "za": "Hanzgoz",
       "zh": "大韩民国"
+    },
+    "osm_relation": {
+      "en": "307756"
     }
   },
   "en:south-sudan": {
@@ -28043,6 +28436,9 @@
       "yo": "Gúúsù Sudan",
       "zh": "南蘇丹",
       "zu": "ISudan yaseNingizimu"
+    },
+    "osm_relation": {
+      "en": "1656678"
     }
   },
   "en:soviet-union": {
@@ -28323,6 +28719,9 @@
       "zh": "西班牙",
       "zu": "ISpeyini"
     },
+    "osm_relation": {
+      "en": "1311341"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -28462,6 +28861,9 @@
       "yi": "סרי לאנקא",
       "yo": "Sri Lanka",
       "zh": "斯里蘭卡"
+    },
+    "osm_relation": {
+      "en": "536807"
     }
   },
   "en:state-of-palestine": {
@@ -28677,6 +29079,9 @@
       "yi": "סודאן",
       "yo": "Sudan",
       "zh": "苏丹共和国"
+    },
+    "osm_relation": {
+      "en": "192789"
     }
   },
   "en:suriname": {
@@ -28805,6 +29210,9 @@
       "yi": "סורינאם",
       "yo": "Sùrìnámù",
       "zh": "蘇利南"
+    },
+    "osm_relation": {
+      "en": "287082"
     }
   },
   "en:svalbard-and-jan-mayen": {
@@ -28981,6 +29389,9 @@
       "yo": "Swásílándì",
       "zh": "斯威士兰",
       "zu": "ISwazilandi"
+    },
+    "osm_relation": {
+      "en": "88210"
     }
   },
   "en:sweden": {
@@ -29140,6 +29551,9 @@
       "zh": "瑞典",
       "zu": "ISwidi"
     },
+    "osm_relation": {
+      "en": "52822"
+    },
     "regional_entity": {
       "en": "european-union"
     }
@@ -29286,6 +29700,9 @@
       "yo": "Swítsàlandì",
       "za": "Nyeiqswq",
       "zh": "瑞士"
+    },
+    "osm_relation": {
+      "en": "51701"
     }
   },
   "en:syria": {
@@ -29425,6 +29842,9 @@
       "yi": "סיריע",
       "yo": "Síríà",
       "zh": "叙利亚"
+    },
+    "osm_relation": {
+      "en": "184840"
     }
   },
   "en:taiwan": {
@@ -29553,6 +29973,9 @@
       "yo": "Orílẹ̀-èdè Olómìnira ilẹ̀ Ṣáínà",
       "za": "Cunghvaz Minzgoz",
       "zh": "中華民國"
+    },
+    "osm_relation": {
+      "en": "449220"
     }
   },
   "en:tajikistan": {
@@ -29687,6 +30110,9 @@
       "yi": "טאדזשיקיסטאן",
       "yo": "Tajikistan",
       "zh": "塔吉克斯坦"
+    },
+    "osm_relation": {
+      "en": "214626"
     }
   },
   "en:tanzania": {
@@ -29834,6 +30260,9 @@
       "yo": "Tànsáníà",
       "zh": "坦桑尼亚",
       "zu": "ITanzania"
+    },
+    "osm_relation": {
+      "en": "195270"
     }
   },
   "en:thailand": {
@@ -29974,6 +30403,9 @@
       "yo": "Tháílàndì",
       "za": "Daigoz",
       "zh": "泰国"
+    },
+    "osm_relation": {
+      "en": "2067731"
     }
   },
   "en:the-bahamas": {
@@ -30104,6 +30536,9 @@
       "yi": "באהאמאס",
       "yo": "Àwọn Bàhámà",
       "zh": "巴哈马"
+    },
+    "osm_relation": {
+      "en": "547469"
     }
   },
   "en:timor-leste": {
@@ -30231,6 +30666,9 @@
       "yo": "Ìlàòrùn Timor",
       "za": "Doeng Divwnq",
       "zh": "东帝汶"
+    },
+    "osm_relation": {
+      "en": "305142"
     }
   },
   "en:togo": {
@@ -30370,6 +30808,9 @@
       "yo": "Tógò",
       "zh": "多哥",
       "zu": "ITogo"
+    },
+    "osm_relation": {
+      "en": "192782"
     }
   },
   "en:tokelau": {
@@ -30455,6 +30896,9 @@
       "wo": "Tokelau",
       "yo": "Tokelau",
       "zh": "托克劳群岛"
+    },
+    "osm_relation": {
+      "en": "2186600"
     }
   },
   "en:tonga": {
@@ -30578,6 +31022,9 @@
       "wo": "Tonga",
       "yo": "Tóngà",
       "zh": "東加"
+    },
+    "osm_relation": {
+      "en": "2186665"
     }
   },
   "en:trinidad-and-tobago": {
@@ -30695,6 +31142,9 @@
       "wo": "Tirinidaad ak Tobaago",
       "yo": "Trínídád àti Tòbágò",
       "zh": "千里達及托巴哥"
+    },
+    "osm_relation": {
+      "en": "555717"
     }
   },
   "en:tunisia": {
@@ -30833,6 +31283,9 @@
       "yo": "Tùnísíà",
       "zh": "突尼西亞",
       "zu": "ITunisia"
+    },
+    "osm_relation": {
+      "en": "192757"
     }
   },
   "en:turkey": {
@@ -30990,6 +31443,9 @@
       "za": "Dujwjgiz",
       "zh": "土耳其",
       "zu": "ITheki"
+    },
+    "osm_relation": {
+      "en": "174737"
     }
   },
   "en:turkmenistan": {
@@ -31124,6 +31580,9 @@
       "yi": "טורקמעניסטאן",
       "yo": "Turkmẹ́nìstán",
       "zh": "土库曼斯坦"
+    },
+    "osm_relation": {
+      "en": "223026"
     }
   },
   "en:turks-and-caicos-islands": {
@@ -31217,6 +31676,9 @@
       "wo": "Turks and Caicos Islands",
       "yo": "Àwọn Erékùṣù Turks àti Caicos",
       "zh": "特克斯和凯科斯群岛"
+    },
+    "osm_relation": {
+      "en": "547479"
     }
   },
   "en:tuvalu": {
@@ -31339,6 +31801,9 @@
       "wo": "Tuvalu",
       "yo": "Tufalu",
       "zh": "圖瓦盧"
+    },
+    "osm_relation": {
+      "en": "2177266"
     }
   },
   "en:uganda": {
@@ -31478,6 +31943,9 @@
       "yo": "Ùgándà",
       "zh": "乌干达",
       "zu": "IYuganda"
+    },
+    "osm_relation": {
+      "en": "192796"
     }
   },
   "en:ukraine": {
@@ -31627,6 +32095,9 @@
       "yi": "אוקראינע",
       "yo": "Ukréìn",
       "zh": "乌克兰"
+    },
+    "osm_relation": {
+      "en": "60199"
     }
   },
   "en:united-arab-emirates": {
@@ -31760,6 +32231,9 @@
       "yi": "פאראייניגטע אראבישע עמיראטן",
       "yo": "Àwọn Ẹ́mírétì Árábù Aṣọ̀kan",
       "zh": "阿拉伯联合酋长国"
+    },
+    "osm_relation": {
+      "en": "307763"
     }
   },
   "en:united-kingdom": {
@@ -31919,6 +32393,9 @@
     },
     "official_country_code_2": {
       "en": "GB"
+    },
+    "osm_relation": {
+      "en": "62149"
     }
   },
   "en:united-states": {
@@ -32091,6 +32568,9 @@
       "za": "Meijgoz",
       "zh": "美国",
       "zu": "IMelika"
+    },
+    "osm_relation": {
+      "en": "148838"
     }
   },
   "en:united-states-minor-outlying-islands": {
@@ -32286,6 +32766,9 @@
       "yi": "אורוגוויי",
       "yo": "Urugúáì",
       "zh": "乌拉圭"
+    },
+    "osm_relation": {
+      "en": "287072"
     }
   },
   "en:uzbekistan": {
@@ -32417,6 +32900,9 @@
       "yi": "אוזבעקיסטאן",
       "yo": "Ùsbẹ̀kìstán",
       "zh": "乌兹别克斯坦"
+    },
+    "osm_relation": {
+      "en": "196240"
     }
   },
   "en:vanuatu": {
@@ -32541,6 +33027,9 @@
       "wo": "Wanuatu",
       "yo": "Fanuatu",
       "zh": "瓦努阿图"
+    },
+    "osm_relation": {
+      "en": "2177246"
     }
   },
   "en:vatican-city": {
@@ -32685,6 +33174,9 @@
       "yo": "Ìlú Fatikan",
       "zh": "梵蒂冈",
       "zu": "Indolobha yaseVathikhani"
+    },
+    "osm_relation": {
+      "en": "36989"
     }
   },
   "en:venezuela": {
@@ -32824,6 +33316,9 @@
       "yo": "Fenesuela",
       "zh": "委內瑞拉",
       "zu": "Venezuela"
+    },
+    "osm_relation": {
+      "en": "272644"
     }
   },
   "en:vietnam": {
@@ -32983,6 +33478,9 @@
       "za": "Yiednamz",
       "zh": "越南",
       "zu": "IViyetnami"
+    },
+    "osm_relation": {
+      "en": "49915"
     }
   },
   "en:virgin-islands-of-the-united-states": {
@@ -33509,6 +34007,9 @@
       "yo": "Yemen",
       "zh": "也门",
       "zu": "IYemen"
+    },
+    "osm_relation": {
+      "en": "305092"
     }
   },
   "en:yugoslavia": {
@@ -33738,6 +34239,9 @@
       "yo": "Sámbíà",
       "zh": "赞比亚",
       "zu": "IZambiya"
+    },
+    "osm_relation": {
+      "en": "195271"
     }
   },
   "en:zimbabwe": {
@@ -33879,6 +34383,9 @@
       "yo": "Sìmbábúè",
       "zh": "辛巴威",
       "zu": "IZimbabwe"
+    },
+    "osm_relation": {
+      "en": "195272"
     }
   }
 }
