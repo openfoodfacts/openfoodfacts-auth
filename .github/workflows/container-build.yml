@@ -51,8 +51,7 @@ jobs:
 
       - name: Build and export Docker dev image to tar
         run: |
-          docker buildx bake dev \
-            --set IMAGE_NAME="$GITHUB_REPOSITORY" \
+          IMAGE_NAME="$GITHUB_REPOSITORY" docker buildx bake dev \
             --load
           docker save "$REGISTRY/$GITHUB_REPOSITORY:dev" > "${{ runner.temp }}/image.tar"
 
@@ -159,15 +158,13 @@ jobs:
               TAGS="${TAGS},$tag"
             done
             TAGS="${TAGS#,}"  # Remove leading comma
-            docker buildx bake \
+            IMAGE_NAME="$GITHUB_REPOSITORY" docker buildx bake \
               --set regular.tags="$TAGS" \
-              --set IMAGE_NAME="$GITHUB_REPOSITORY" \
               --push \
               ${{ matrix.target }}
           else
             # For testcontainer, use default tags from bake
-            docker buildx bake \
-              --set IMAGE_NAME="$GITHUB_REPOSITORY" \
+            IMAGE_NAME="$GITHUB_REPOSITORY" docker buildx bake \
               --push \
               ${{ matrix.target }}
           fi
