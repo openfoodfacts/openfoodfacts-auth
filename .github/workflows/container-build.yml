@@ -165,8 +165,8 @@ jobs:
         if: matrix.target == 'regular'
         id: regular_tags
         run: |
-          tags_csv="$(echo "${{ steps.meta.outputs.tags }}" | tr '\n' ',' | sed 's/,$//')"
-          echo "csv=$tags_csv" >> "$GITHUB_OUTPUT"
+          tags_json="$(printf '%s\n' "${{ steps.meta.outputs.tags }}" | jq -R . | jq -s -c .)"
+          echo "json=$tags_json" >> "$GITHUB_OUTPUT"
 
       - name: Build and push regular image
         if: matrix.target == 'regular'
@@ -178,7 +178,7 @@ jobs:
           targets: regular
           push: ${{ github.event_name != 'pull_request' }}
           set: |
-            regular.tags=${{ steps.regular_tags.outputs.csv }}
+            regular.tags=${{ steps.regular_tags.outputs.json }}
 
       - name: Build and push testcontainer image
         if: matrix.target == 'testcontainer'
