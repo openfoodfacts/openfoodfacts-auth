@@ -161,24 +161,17 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Compute regular tag list
-        if: matrix.target == 'regular'
-        id: regular_tags
-        run: |
-          tags_json="$(printf '%s\n' "${{ steps.meta.outputs.tags }}" | jq -R . | jq -s -c .)"
-          echo "json=$tags_json" >> "$GITHUB_OUTPUT"
-
       - name: Build and push regular image
         if: matrix.target == 'regular'
         uses: docker/bake-action@v6
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
-          files: docker-bake.hcl
+          files: |
+            docker-bake.hcl
+            ${{ steps.meta.outputs['bake-file-tags'] }}
           targets: regular
           push: ${{ github.event_name != 'pull_request' }}
-          set: |
-            regular.tags=${{ steps.regular_tags.outputs.json }}
 
       - name: Build and push testcontainer image
         if: matrix.target == 'testcontainer'
