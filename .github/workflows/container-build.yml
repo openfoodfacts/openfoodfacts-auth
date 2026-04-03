@@ -49,10 +49,17 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and export Docker dev image to tar
+      - name: Build dev image
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
+        with:
+          files: docker-bake.hcl
+          targets: dev
+          load: true
+
+      - name: Export Docker dev image to tar
         run: |
-          IMAGE_NAME="$GITHUB_REPOSITORY" docker buildx bake dev \
-            --load
           docker save "$REGISTRY/$GITHUB_REPOSITORY:dev" > "${{ runner.temp }}/image.tar"
 
       - name: Upload image artifact
@@ -153,20 +160,38 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and push ${{ matrix.target }} image
+      - name: Compute regular tag list
+        if: matrix.target == 'regular'
+        id: regular_tags
+        run: |
+          tags_csv="$(echo "${{ steps.meta.outputs.tags }}" | tr '\n' ',' | sed 's/,$//')"
+          echo "csv=$tags_csv" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push regular image
+        if: matrix.target == 'regular'
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
+        with:
+          files: docker-bake.hcl
+          targets: regular
+          push: true
+          set: |
+            regular.tags=${{ steps.regular_tags.outputs.csv }}
+
+      - name: Build and push testcontainer image
+        if: matrix.target == 'testcontainer'
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
+        with:
+          files: docker-bake.hcl
+          targets: testcontainer
+          push: true
+
+      - name: Sign ${{ matrix.target }} image
         run: |
           if [ "${{ matrix.target }}" = "regular" ]; then
-            # For regular image, use metadata-generated tags
-            TAGS=""
-            for tag in ${{ steps.meta.outputs.tags }}; do
-              TAGS="${TAGS},$tag"
-            done
-            TAGS="${TAGS#,}"  # Remove leading comma
-            IMAGE_NAME="$GITHUB_REPOSITORY" docker buildx bake \
-              --set regular.tags="$TAGS" \
-              --push \
-              ${{ matrix.target }}
-
             # Keyless sign immutable digest references for all published regular tags
             seen_digests=""
             for tag in ${{ steps.meta.outputs.tags }}; do
@@ -183,11 +208,6 @@ jobs:
               fi
             done
           else
-            # For testcontainer, use default tags from bake
-            IMAGE_NAME="$GITHUB_REPOSITORY" docker buildx bake \
-              --push \
-              ${{ matrix.target }}
-
             # Keyless sign immutable digest reference for testcontainer
             test_tag="$REGISTRY/$GITHUB_REPOSITORY:testcontainer"
             test_digest="$(docker buildx imagetools inspect "$test_tag" | awk '/^Digest:/ {print $2; exit}')"
