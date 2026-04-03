@@ -38,10 +38,17 @@ target "dev" {
   cache-to = ["type=registry,ref=${REGISTRY}/${IMAGE_NAME}:${BUILDCACHE_TAG},mode=max"]
 }
 
-// Regular production image - multi-platform with metadata
-target "regular" {
+// Shared settings for published images
+target "_published" {
   inherits = ["_common"]
   platforms = split(",", PLATFORMS)
+  sbom = true
+  provenance = "mode=max"
+}
+
+// Regular production image - multi-platform with metadata
+target "regular" {
+  inherits = ["_published"]
   tags = [
     "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}",
     "${REGISTRY}/${IMAGE_NAME}:latest"
@@ -52,9 +59,8 @@ target "regular" {
 
 // Testcontainer for integration testing - multi-platform
 target "testcontainer" {
-  inherits = ["_common"]
+  inherits = ["_published"]
   target = "testcontainer"
-  platforms = split(",", PLATFORMS)
   tags = ["${REGISTRY}/${IMAGE_NAME}:testcontainer"]
   cache-from = ["type=registry,ref=${REGISTRY}/${IMAGE_NAME}:${BUILDCACHE_TESTCONTAINER_TAG}"]
   cache-to = ["type=registry,ref=${REGISTRY}/${IMAGE_NAME}:${BUILDCACHE_TESTCONTAINER_TAG},mode=max"]
