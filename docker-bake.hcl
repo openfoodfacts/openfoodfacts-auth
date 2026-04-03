@@ -46,13 +46,17 @@ target "_published" {
   provenance = "mode=max"
 }
 
-// Regular production image - multi-platform with metadata
-target "regular" {
-  inherits = ["_published"]
+// Default metadata target - overridden in CI by docker/metadata-action bake file
+target "docker-metadata-action" {
   tags = [
     "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}",
     "${REGISTRY}/${IMAGE_NAME}:latest"
   ]
+}
+
+// Regular production image - multi-platform with metadata
+target "regular" {
+  inherits = ["_published", "docker-metadata-action"]
   cache-from = ["type=registry,ref=${REGISTRY}/${IMAGE_NAME}:${BUILDCACHE_TAG}"]
   cache-to = ["type=registry,ref=${REGISTRY}/${IMAGE_NAME}:${BUILDCACHE_TAG},mode=max"]
 }

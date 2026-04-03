@@ -54,6 +54,7 @@ jobs:
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
+          source: .
           files: docker-bake.hcl
           targets: dev
           load: true
@@ -167,9 +168,10 @@ jobs:
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
+          source: .
           files: |
             docker-bake.hcl
-            ${{ steps.meta.outputs['bake-file-tags'] }}
+            ${{ steps.meta.outputs.bake-file }}
           targets: regular
           push: ${{ github.event_name != 'pull_request' }}
 
@@ -179,6 +181,7 @@ jobs:
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
+          source: .
           files: docker-bake.hcl
           targets: testcontainer
           push: ${{ github.event_name != 'pull_request' }}
