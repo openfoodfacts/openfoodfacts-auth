@@ -118,6 +118,11 @@ jobs:
       id-token: write
       packages: write
 
+    strategy:
+      matrix:
+        target: [regular, testcontainer]
+      fail-fast: false
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -157,7 +162,8 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and push regular and testcontainer images
+      - name: Build and push regular image
+        if: matrix.target == 'regular'
         uses: docker/bake-action@v6
         env:
           IMAGE_NAME: ${{ github.repository }}
@@ -166,40 +172,51 @@ jobs:
           files: |
             docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
-          targets: regular,testcontainer
+          targets: regular
           push: ${{ github.event_name != 'pull_request' }}
           set: |
             ${{ github.event_name == 'pull_request' && 'regular.cache-to=' || '' }}
+
+      - name: Build and push testcontainer image
+        if: matrix.target == 'testcontainer'
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
+        with:
+          source: .
+          files: docker-bake.hcl
+          targets: testcontainer
+          push: ${{ github.event_name != 'pull_request' }}
+          set: |
             ${{ github.event_name == 'pull_request' && 'testcontainer.cache-to=' || '' }}
 
-      - name: Sign regular image
+      - name: Sign ${{ matrix.target }} image
         if: github.event_name != 'pull_request'
         run: |
-          # Keyless sign immutable digest references for all published regular tags
-          seen_digests=""
-          for tag in ${{ steps.meta.outputs.tags }}; do
-            digest="$(docker buildx imagetools inspect "$tag" | awk '/^Digest:/ {print $2; exit}')"
-            if [ -z "$digest" ]; then
-              echo "Failed to resolve digest for $tag" >&2
+          if [ "${{ matrix.target }}" = "regular" ]; then
+            # Keyless sign immutable digest references for all published regular tags
+            seen_digests=""
+            for tag in ${{ steps.meta.outputs.tags }}; do
+              digest="$(docker buildx imagetools inspect "$tag" | awk '/^Digest:/ {print $2; exit}')"
+              if [ -z "$digest" ]; then
+                echo "Failed to resolve digest for $tag" >&2
+                exit 1
+              fi
+
+              # Avoid signing the same digest multiple times when several tags point to it
+              if [[ " $seen_digests " != *" $digest "* ]]; then
+                cosign sign --yes "$tag@$digest"
+                seen_digests="$seen_digests $digest"
+              fi
+            done
+          else
+            # Keyless sign immutable digest reference for testcontainer
+            test_tag="$REGISTRY/$GITHUB_REPOSITORY:testcontainer"
+            test_digest="$(docker buildx imagetools inspect "$test_tag" | awk '/^Digest:/ {print $2; exit}')"
+            if [ -z "$test_digest" ]; then
+              echo "Failed to resolve digest for $test_tag" >&2
               exit 1
             fi
-
-            # Avoid signing the same digest multiple times when several tags point to it
-            if [[ " $seen_digests " != *" $digest "* ]]; then
-              cosign sign --yes "$tag@$digest"
-              seen_digests="$seen_digests $digest"
-            fi
-          done
-
-      - name: Sign testcontainer image
-        if: github.event_name != 'pull_request'
-        run: |
-          # Keyless sign immutable digest reference for testcontainer
-          test_tag="$REGISTRY/$GITHUB_REPOSITORY:testcontainer"
-          test_digest="$(docker buildx imagetools inspect "$test_tag" | awk '/^Digest:/ {print $2; exit}')"
-          if [ -z "$test_digest" ]; then
-            echo "Failed to resolve digest for $test_tag" >&2
-            exit 1
+            cosign sign --yes "$test_tag@$test_digest"
           fi
-          cosign sign --yes "$test_tag@$test_digest"
       
