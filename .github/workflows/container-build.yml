@@ -49,14 +49,19 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and export Docker dev image to tar
-        uses: docker/build-push-action@v7
+      - name: Build dev image
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
         with:
-          context: .
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
-          tags: ghcr.io/openfoodfacts/openfoodfacts-auth:dev
-          outputs: type=docker,dest=${{ runner.temp }}/image.tar
+          source: .
+          files: docker-bake.hcl
+          targets: dev
+          load: true
+
+      - name: Export Docker dev image to tar
+        run: |
+          docker save "$REGISTRY/$GITHUB_REPOSITORY:dev" > "${{ runner.temp }}/image.tar"
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v7
@@ -111,7 +116,13 @@ jobs:
     needs: test
     permissions:
       contents: read
+      id-token: write
       packages: write
+
+    strategy:
+      matrix:
+        target: [regular, testcontainer]
+      fail-fast: false
 
     steps:
       - name: Checkout
@@ -133,6 +144,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v6
@@ -147,30 +161,60 @@ jobs:
       - name: Prepare Docker build
         run: make pre_build
 
-      - name: Build and push Docker multi-platform image
-        uses: docker/build-push-action@v7
+      - name: Build and push regular image
+        if: matrix.target == 'regular'
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
         with:
-          context: .
-          push: true
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          source: .
+          files: |
+            docker-bake.hcl
+            ${{ steps.meta.outputs.bake-file }}
+          targets: regular
+          push: ${{ github.event_name != 'pull_request' }}
+          set: |
+            ${{ github.event_name == 'pull_request' && 'regular.cache-to=' || '' }}
 
-      - name: Build and push Docker testcontainer multi-platform image
-        uses: docker/build-push-action@v7
+      - name: Build and push testcontainer image
+        if: matrix.target == 'testcontainer'
+        uses: docker/bake-action@v6
+        env:
+          IMAGE_NAME: ${{ github.repository }}
         with:
-          context: .
-          push: true
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache-testcontainer,mode=max
-          platforms: linux/amd64,linux/arm64
-          target: testcontainer
-          tags: |
-            ghcr.io/openfoodfacts/openfoodfacts-auth:testcontainer
-          labels: |
-            org.opencontainers.image.version=testcontainer
-          # Need to set the description via an annotation as this is a multi-arch image (https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#adding-a-description-to-multi-arch-images)
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Keycloak Image for integration testing using a pre-loaded realm and test clients in a dev-file database
+          source: .
+          files: docker-bake.hcl
+          targets: testcontainer
+          push: ${{ github.event_name != 'pull_request' }}
+          set: |
+            ${{ github.event_name == 'pull_request' && 'testcontainer.cache-to=' || '' }}
+
+      - name: Sign ${{ matrix.target }} image
+        run: |
+          if [ "${{ matrix.target }}" = "regular" ]; then
+            # Keyless sign immutable digest references for all published regular tags
+            seen_digests=""
+            for tag in ${{ steps.meta.outputs.tags }}; do
+              digest="$(docker buildx imagetools inspect "$tag" | awk '/^Digest:/ {print $2; exit}')"
+              if [ -z "$digest" ]; then
+                echo "Failed to resolve digest for $tag" >&2
+                exit 1
+              fi
+
+              # Avoid signing the same digest multiple times when several tags point to it
+              if [[ " $seen_digests " != *" $digest "* ]]; then
+                cosign sign --yes "$tag@$digest"
+                seen_digests="$seen_digests $digest"
+              fi
+            done
+          else
+            # Keyless sign immutable digest reference for testcontainer
+            test_tag="$REGISTRY/$GITHUB_REPOSITORY:testcontainer"
+            test_digest="$(docker buildx imagetools inspect "$test_tag" | awk '/^Digest:/ {print $2; exit}')"
+            if [ -z "$test_digest" ]; then
+              echo "Failed to resolve digest for $test_tag" >&2
+              exit 1
+            fi
+            cosign sign --yes "$test_tag@$test_digest"
+          fi
       
