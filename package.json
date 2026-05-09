@@ -9,10 +9,10 @@
   "devDependencies": {
     "@asyncapi/cli": "^6.0.0",
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.5.0",
-    "dotenv": "^17.4.0",
+    "@types/node": "^25.6.2",
+    "dotenv": "^17.4.2",
     "json-stable-stringify": "^1.3.0",
-    "redis": "^5.11.0",
+    "redis": "^5.12.1",
     "xml2js": "^0.6.2"
   }
 }
