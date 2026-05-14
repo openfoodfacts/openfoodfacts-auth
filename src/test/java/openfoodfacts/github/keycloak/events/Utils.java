@@ -860,6 +860,16 @@ class Utils {
                     }
 
                     @Override
+                    public int getMaxSecondaryAuthFailures() {
+                        throw new UnsupportedOperationException("Unimplemented method 'getMaxSecondaryAuthFailures'");
+                    }
+
+                    @Override
+                    public void setMaxSecondaryAuthFailures(final int maxSecondaryAuthFailures) {
+                        throw new UnsupportedOperationException("Unimplemented method 'setMaxSecondaryAuthFailures'");
+                    }
+
+                    @Override
                     public boolean isVerifyEmail() {
                         return isVerifyEmail;
                     }
@@ -2035,6 +2045,16 @@ class Utils {
                     @Override
                     public void setAdminPermissionsClient(ClientModel client) {
                         throw new UnsupportedOperationException("Unimplemented method 'setAdminPermissionsClient'");
+                    }
+                    
+                    @Override
+                    public void setScimApiEnabled(boolean enabled) {
+                        throw new UnsupportedOperationException("Unimplemented method 'setScimApiEnabled'");
+                    }
+
+                    @Override
+                    public boolean isScimApiEnabled() {
+                        throw new UnsupportedOperationException("Unimplemented method 'isScimApiEnabled'");
                     }
                 };
 
