@@ -194,7 +194,8 @@ jobs:
           if [ "${{ matrix.target }}" = "regular" ]; then
             # Keyless sign immutable digest references for all published regular tags
             seen_digests=""
-            for tag in ${{ steps.meta.outputs.tags }}; do
+            tags="${{ steps.meta.outputs.tags }}"
+            for tag in $tags; do
               digest="$(docker buildx imagetools inspect "$tag" | awk '/^Digest:/ {print $2; exit}')"
               if [ -z "$digest" ]; then
                 echo "Failed to resolve digest for $tag" >&2
