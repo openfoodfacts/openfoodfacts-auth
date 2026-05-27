@@ -21,6 +21,44 @@ test("general layout", async ({ page }) => {
   await page.getByLabel('Producer or Brand Name (if applicable)').fill('carrefour');
 });
 
+test("username availability indicator", async ({ page, browserName }) => {
+  // Seed a known-existing user via the admin API so the "taken" assertion is deterministic.
+  // Browser-suffixed name keeps parallel runs from colliding.
+  const headers = await getKeycloakHeaders();
+  const takenUsername = `availability-taken-${browserName}`;
+  const existing = await (await fetch(`${keycloakUserUrl}?exact=true&username=${takenUsername}`, { headers })).json();
+  if (existing.length === 1) {
+    await fetch(`${keycloakUserUrl}/${existing[0].id}`, { headers, method: 'DELETE' });
+  }
+  await fetch(keycloakUserUrl, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      username: takenUsername,
+      enabled: true,
+      email: `${takenUsername}@openfoodfacts.org`,
+      emailVerified: true,
+      attributes: { name: takenUsername, locale: 'xx', country: 'world' },
+    }),
+  });
+
+  await gotoHome(page);
+  await registerLink(page).click();
+  await selectDummyLocale(page);
+
+  const usernameInput = page.getByLabel('^username^');
+  const indicator = page.locator('#username-availability');
+
+  // A freshly generated username can't exist in the DB.
+  const { userName: freshUsername } = generateRandomUser();
+  await usernameInput.fill(freshUsername);
+  await expect(indicator).toHaveText('^usernameAvailableMessage^');
+
+  // The seeded user must be reported as taken.
+  await usernameInput.fill(takenUsername);
+  await expect(indicator).toHaveText('^usernameExistsMessage^');
+});
+
 test("localization", async ({ page }) => {
   await gotoHome(page);
   await registerLink(page).click();
