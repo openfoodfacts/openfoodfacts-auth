@@ -103,6 +103,13 @@
 			<#list attribute.html5DataAnnotations as key, value>
 					data-${key}="${value}"
 			</#list>
+			<#-- OFF specific changes: expose translated availability messages on the username input -->
+			<#if attribute.name == 'username'>
+				data-msg-available="${msg('usernameAvailableMessage')}"
+				data-msg-taken="${msg('usernameExistsMessage')}"
+				data-msg-checking="${msg('usernameCheckingMessage')}"
+			</#if>
+			<#-- End of OFF specific changes -->
 		/>
 	</span>
 </#macro>
