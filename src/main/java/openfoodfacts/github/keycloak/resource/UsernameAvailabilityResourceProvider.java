@@ -1,6 +1,7 @@
 package openfoodfacts.github.keycloak.resource;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.keycloak.models.KeycloakSession;
@@ -42,22 +43,22 @@ public class UsernameAvailabilityResourceProvider implements RealmResourceProvid
     // Existence is checked before format on purpose: UserProfile validation in the REGISTRATION
     // context bundles the uniqueness check with format validators, which would conflate "taken"
     // and "invalid" if format ran first. Looking up the user up-front separates the two cleanly.
+    // Input is lowercased first to mirror Keycloak's own behavior on the registration form, which
+    // accepts mixed-case input and stores it lowercased.
     private String checkStatus(String username) {
         if (username == null || username.isEmpty()) {
             return "invalid";
         }
-        if (exists(username)) {
+        final String normalized = username.toLowerCase(Locale.ROOT);
+        if (exists(normalized)) {
             return "taken";
         }
-        return isFormatValid(username) ? "available" : "invalid";
+        return isFormatValid(normalized) ? "available" : "invalid";
     }
 
     // Delegates format / length / pattern checks to the validators configured
     // in runtime-scripts/users_profile.json — no rules are duplicated here.
     private boolean isFormatValid(String username) {
-        if (username == null) {
-            return false;
-        }
         final UserProfileProvider provider = session.getProvider(UserProfileProvider.class);
         final UserProfile profile = provider.create(
             UserProfileContext.REGISTRATION,

@@ -23,24 +23,24 @@ test("general layout", async ({ page }) => {
 
 test("username availability indicator", async ({ page, browserName }) => {
   // Seed a known-existing user via the admin API so the "taken" assertion is deterministic.
-  // Browser-suffixed name keeps parallel runs from colliding.
+  // Browser-suffixed name keeps parallel runs from colliding. If the user is already in the
+  // realm from a previous run, reuse it instead of recreating.
   const headers = await getKeycloakHeaders();
   const takenUsername = `availability-taken-${browserName}`;
   const existing = await (await fetch(`${keycloakUserUrl}?exact=true&username=${takenUsername}`, { headers })).json();
-  if (existing.length === 1) {
-    await fetch(`${keycloakUserUrl}/${existing[0].id}`, { headers, method: 'DELETE' });
+  if (existing.length === 0) {
+    await fetch(keycloakUserUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        username: takenUsername,
+        enabled: true,
+        email: `${takenUsername}@openfoodfacts.org`,
+        emailVerified: true,
+        attributes: { name: takenUsername, locale: 'xx', country: 'world' },
+      }),
+    });
   }
-  await fetch(keycloakUserUrl, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      username: takenUsername,
-      enabled: true,
-      email: `${takenUsername}@openfoodfacts.org`,
-      emailVerified: true,
-      attributes: { name: takenUsername, locale: 'xx', country: 'world' },
-    }),
-  });
 
   await gotoHome(page);
   await registerLink(page).click();
@@ -56,6 +56,11 @@ test("username availability indicator", async ({ page, browserName }) => {
 
   // The seeded user must be reported as taken.
   await usernameInput.fill(takenUsername);
+  await expect(indicator).toHaveText('^usernameExistsMessage^');
+
+  // Mixed-case input must be coerced to lowercase and still be reported as taken,
+  // matching how Keycloak's own registration form treats the value.
+  await usernameInput.fill(takenUsername.toUpperCase());
   await expect(indicator).toHaveText('^usernameExistsMessage^');
 
   // Malformed input must be flagged as invalid, not "already exists".
