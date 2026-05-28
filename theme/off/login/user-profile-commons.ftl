@@ -107,6 +107,7 @@
 			<#if attribute.name == 'username'>
 				data-msg-available="${msg('usernameAvailableMessage')}"
 				data-msg-taken="${msg('usernameExistsMessage')}"
+				data-msg-invalid="${msg('usernameInvalidMessage')}"
 				data-msg-checking="${msg('usernameCheckingMessage')}"
 			</#if>
 			<#-- End of OFF specific changes -->

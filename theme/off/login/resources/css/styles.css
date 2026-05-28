@@ -163,4 +163,7 @@ h1#kc-page-title {
 .username-availability--taken {
     color: var(--off-error-color);
 }
+.username-availability--invalid {
+    color: var(--off-error-color);
+}
 /* End of OFF specific changes */

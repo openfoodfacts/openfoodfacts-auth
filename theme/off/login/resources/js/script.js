@@ -38,6 +38,7 @@ function initUsernameAvailability() {
     const messages = {
         available: usernameInput.dataset.msgAvailable || '',
         taken: usernameInput.dataset.msgTaken || '',
+        invalid: usernameInput.dataset.msgInvalid || '',
         checking: usernameInput.dataset.msgChecking || '',
     };
 
@@ -63,7 +64,7 @@ function initUsernameAvailability() {
             if (!response.ok) return;
             const data = await response.json();
             if (value !== usernameInput.value) return;
-            setState(data.available ? 'available' : 'taken');
+            setState(data.status);
         } catch (e) {
             // Network error or aborted — fail silent; form submission will catch any real collision.
         }

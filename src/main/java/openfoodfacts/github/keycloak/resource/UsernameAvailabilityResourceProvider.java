@@ -31,12 +31,25 @@ public class UsernameAvailabilityResourceProvider implements RealmResourceProvid
     @Path("username-available")
     @Produces(MediaType.APPLICATION_JSON)
     public Response usernameAvailable(@QueryParam("u") String username) {
-        final boolean available = isFormatValid(username) && !exists(username);
+        final String status = checkStatus(username);
 
         final CacheControl noStore = new CacheControl();
         noStore.setNoStore(true);
 
-        return Response.ok(Map.of("available", available)).cacheControl(noStore).build();
+        return Response.ok(Map.of("status", status)).cacheControl(noStore).build();
+    }
+
+    // Existence is checked before format on purpose: UserProfile validation in the REGISTRATION
+    // context bundles the uniqueness check with format validators, which would conflate "taken"
+    // and "invalid" if format ran first. Looking up the user up-front separates the two cleanly.
+    private String checkStatus(String username) {
+        if (username == null || username.isEmpty()) {
+            return "invalid";
+        }
+        if (exists(username)) {
+            return "taken";
+        }
+        return isFormatValid(username) ? "available" : "invalid";
     }
 
     // Delegates format / length / pattern checks to the validators configured

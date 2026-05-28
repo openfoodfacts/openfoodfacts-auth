@@ -57,6 +57,10 @@ test("username availability indicator", async ({ page, browserName }) => {
   // The seeded user must be reported as taken.
   await usernameInput.fill(takenUsername);
   await expect(indicator).toHaveText('^usernameExistsMessage^');
+
+  // Malformed input must be flagged as invalid, not "already exists".
+  await usernameInput.fill('Bad!');
+  await expect(indicator).toHaveText('^usernameInvalidMessage^');
 });
 
 test("localization", async ({ page }) => {
