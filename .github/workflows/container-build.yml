@@ -58,6 +58,10 @@ jobs:
           files: docker-bake.hcl
           targets: dev
           load: true
+          # Skip cache-to on PRs: fork PRs can't authenticate to the org registry,
+          # and the regular / testcontainer push targets already follow the same pattern.
+          set: |
+            ${{ github.event_name == 'pull_request' && 'dev.cache-to=' || '' }}
 
       - name: Export Docker dev image to tar
         run: |

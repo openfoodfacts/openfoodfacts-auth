@@ -23,10 +23,10 @@ jobs:
         with:
           # Need this to ensure we don't get a detached head
           ref: ${{ github.head_ref }}
-          # We can't use GITHUB_TOKEN here because, github actions can't trigger actions
-          # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
-          # So this is a personal access token
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          # Prefer RELEASE_PLEASE_TOKEN so auto-commits trigger downstream workflows.
+          # Falls back to GITHUB_TOKEN on fork PRs where RELEASE_PLEASE_TOKEN isn't exposed —
+          # auto-commits will then require a manual workflow re-trigger.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
       # NodeJS is used to update the keycloak version
       - uses: actions/setup-node@v6
