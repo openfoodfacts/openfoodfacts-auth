@@ -21,6 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
+          # Check out from the PR's head repository so fork PRs work too — the branch
+          # named in github.head_ref only exists in the head repo, not the base.
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
           # Need this to ensure we don't get a detached head
           ref: ${{ github.head_ref }}
           # Prefer RELEASE_PLEASE_TOKEN so auto-commits trigger downstream workflows.
