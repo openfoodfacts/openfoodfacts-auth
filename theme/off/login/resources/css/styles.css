@@ -145,3 +145,25 @@
 h1#kc-page-title {
     margin-top: 0;
 }
+
+/* OFF specific changes: live username availability indicator */
+.username-availability {
+    min-height: 1.25em;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+}
+.username-availability--checking {
+    color: var(--off-text);
+    opacity: 0.7;
+    font-style: italic;
+}
+.username-availability--available {
+    color: var(--off-text);
+}
+.username-availability--taken {
+    color: var(--off-error-color);
+}
+.username-availability--invalid {
+    color: var(--off-error-color);
+}
+/* End of OFF specific changes */
