@@ -12,6 +12,8 @@ import org.keycloak.userprofile.UserProfile;
 import org.keycloak.userprofile.UserProfileContext;
 import org.keycloak.userprofile.UserProfileProvider;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -21,6 +23,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 public class UsernameAvailabilityResourceProvider implements RealmResourceProvider {
+
+    private enum Status {
+        AVAILABLE, INVALID, TAKEN;
+
+        @JsonValue
+        String toJson() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+    }
 
     private final KeycloakSession session;
 
@@ -32,7 +43,7 @@ public class UsernameAvailabilityResourceProvider implements RealmResourceProvid
     @Path("username-available")
     @Produces(MediaType.APPLICATION_JSON)
     public Response usernameAvailable(@QueryParam("u") String username) {
-        final String status = checkStatus(username);
+        final Status status = checkStatus(username);
 
         final CacheControl noStore = new CacheControl();
         noStore.setNoStore(true);
@@ -45,15 +56,15 @@ public class UsernameAvailabilityResourceProvider implements RealmResourceProvid
     // and "invalid" if format ran first. Looking up the user up-front separates the two cleanly.
     // Input is lowercased first to mirror Keycloak's own behavior on the registration form, which
     // accepts mixed-case input and stores it lowercased.
-    private String checkStatus(String username) {
+    private Status checkStatus(String username) {
         if (username == null || username.isEmpty()) {
-            return "invalid";
+            return Status.INVALID;
         }
         final String normalized = username.toLowerCase(Locale.ROOT);
         if (exists(normalized)) {
-            return "taken";
+            return Status.TAKEN;
         }
-        return isFormatValid(normalized) ? "available" : "invalid";
+        return isFormatValid(normalized) ? Status.AVAILABLE : Status.INVALID;
     }
 
     // Delegates format / length / pattern checks to the validators configured
