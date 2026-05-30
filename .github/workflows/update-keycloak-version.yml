@@ -11,6 +11,10 @@ env:
 
 jobs:
   update-keycloak-version:
+    # Skip on fork PRs: this workflow needs RELEASE_PLEASE_TOKEN and write access to the
+    # PR branch, neither of which is available from forks. Keycloak version bumps come
+    # from in-repo PRs anyway.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     permissions:
