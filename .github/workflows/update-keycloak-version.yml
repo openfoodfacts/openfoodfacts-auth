@@ -11,6 +11,10 @@ env:
 
 jobs:
   update-keycloak-version:
+    # Skip on fork PRs: this workflow needs RELEASE_PLEASE_TOKEN and write access to the
+    # PR branch, neither of which is available from forks. Keycloak version bumps come
+    # from in-repo PRs anyway.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     permissions:
@@ -21,15 +25,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          # Check out from the PR's head repository so fork PRs work too — the branch
-          # named in github.head_ref only exists in the head repo, not the base.
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
           # Need this to ensure we don't get a detached head
           ref: ${{ github.head_ref }}
-          # Prefer RELEASE_PLEASE_TOKEN so auto-commits trigger downstream workflows.
-          # Falls back to GITHUB_TOKEN on fork PRs where RELEASE_PLEASE_TOKEN isn't exposed —
-          # auto-commits will then require a manual workflow re-trigger.
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          # We can't use GITHUB_TOKEN here because, github actions can't trigger actions
+          # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
+          # So this is a personal access token
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
       # NodeJS is used to update the keycloak version
       - uses: actions/setup-node@v6

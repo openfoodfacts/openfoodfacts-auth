@@ -58,10 +58,10 @@ jobs:
           files: docker-bake.hcl
           targets: dev
           load: true
-          # Skip cache-to on PRs: fork PRs can't authenticate to the org registry,
-          # and the regular / testcontainer push targets already follow the same pattern.
+          # Fork PRs can't authenticate to the org registry; skip cache-to only on those
+          # so internal PRs still benefit from caching.
           set: |
-            ${{ github.event_name == 'pull_request' && 'dev.cache-to=' || '' }}
+            ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && 'dev.cache-to=' || '' }}
 
       - name: Export Docker dev image to tar
         run: |
