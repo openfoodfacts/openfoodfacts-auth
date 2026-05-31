@@ -113,6 +113,10 @@ jobs:
 
   # Only runs on push to main. Does the full multi-platform build (using above image to cache the linux/amd64 one)
   # and pushes the images to the registry
+  #
+  # ⚠️ The job name is referenced by container-deploy.yml via fountainhead/action-wait-for-check.
+  # The matrix strategy adds matrix values in parentheses, e.g. "push-images (regular)".
+  # If renaming or restructuring this job, update the check name in container-deploy.yml accordingly.
   push-images:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
