@@ -18,7 +18,7 @@
     <revision>26.6.2</revision>
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
-    <keycloak.version>26.6.2</keycloak.version>
+    <keycloak.version>26.6.3</keycloak.version>
     <junit.version>6.1.0</junit.version>
   </properties>
   <build>
