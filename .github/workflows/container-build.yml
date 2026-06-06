@@ -50,7 +50,7 @@ jobs:
         run: make pre_build
 
       - name: Build dev image
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@v7
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
@@ -113,6 +113,10 @@ jobs:
 
   # Only runs on push to main. Does the full multi-platform build (using above image to cache the linux/amd64 one)
   # and pushes the images to the registry
+  #
+  # ⚠️ The job name is referenced by container-deploy.yml via fountainhead/action-wait-for-check.
+  # The matrix strategy adds matrix values in parentheses, e.g. "push-images (regular)".
+  # If renaming or restructuring this job, update the check name in container-deploy.yml accordingly.
   push-images:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -167,7 +171,7 @@ jobs:
 
       - name: Build and push regular image
         if: matrix.target == 'regular'
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@v7
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
@@ -182,7 +186,7 @@ jobs:
 
       - name: Build and push testcontainer image
         if: matrix.target == 'testcontainer'
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@v7
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
