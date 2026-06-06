@@ -50,7 +50,7 @@ jobs:
         run: make pre_build
 
       - name: Build dev image
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@v7
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
@@ -171,7 +171,7 @@ jobs:
 
       - name: Build and push regular image
         if: matrix.target == 'regular'
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@v7
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
@@ -186,7 +186,7 @@ jobs:
 
       - name: Build and push testcontainer image
         if: matrix.target == 'testcontainer'
-        uses: docker/bake-action@v6
+        uses: docker/bake-action@v7
         env:
           IMAGE_NAME: ${{ github.repository }}
         with:
