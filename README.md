@@ -21,7 +21,9 @@ This is the preferred option for re-users that have their own backend where a cl
 * Root URL, Home URL, Valid redirect URLs, Valid post logout redirect URIs: As specified by the client
 * Web origins: +
 
-The following diagram shows a basic login flow followed by access to a Service that requires authentication:
+Securely share the randomly generated Client Secret with the client.
+
+These clients would use the [OIDC Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1) flow. The following diagram shows a basic login flow followed by access to a Service that requires authentication:
 
 ```mermaid
 sequenceDiagram
@@ -60,11 +62,11 @@ When the `access_token` expires the backend can request a new one using the `ref
 
 ## Public External Clients
 
-This applies to clients that do not have a backend, e.g. Single Page Applications (SPAs) with just static pages or mobile apps, where all data will be stored in the browser / mobile app. Note that great care must be taken when storing access tokens and refresh tokens in the browser, and most current advice is to use a backend for frontend model to store sensitive data, but we still support this option to keep our services as open as possible.
+This applies to re-users or other applications that do not have a backend, e.g. Single Page Applications (SPAs) with just static pages or mobile apps, where all data will be stored in the browser / mobile app. Note that great care must be taken when storing access tokens and refresh tokens in the browser, and most current advice is to use a backend for frontend model to store sensitive data, but we still support this option to keep our services as open as possible.
 
 Note that mobile apps should use an In App Browser to perform the authentication flow and not a "Web View" as the former is more secure and provides Single-Sign-On (SSO) support across all of the user's apps.
 
-The configuration in Keycloak is the same as for a private client, but Client authentication is disabled, so there is no client secret. In the following diagram the App actor could be the mobile app or just a web application's pages running in the browser. These types of app must use the Proof Key for Code Exchange (PKCE) login flow, which looks like this:
+The configuration in Keycloak is the same as for a private client, but Client authentication is disabled, so there is no client secret. In the following diagram the App actor could be the mobile app or just a web application's pages running in the browser. These types of app must use the [Proof Key for Code Exchange](https://datatracker.ietf.org/doc/html/rfc7636#section-4) (PKCE) login flow, which looks like this:
 
 ```mermaid
 sequenceDiagram
@@ -96,9 +98,40 @@ When the App wants to perform an action that uses an authenticated API then this
 
 When the `access_token` expires the App can request a new one using the `refresh_token` (flow not shown) which will work unless the user has logged out of that session. Note that `refresh_tokens` are rotated so the new `refresh_token` received after refreshing the `access_token` should replace the previous `refresh_token`.
 
+## Backend Service
+
+This configuration would apply to re-users applications that need to be able to perform authenticated operations in their own right (not on behalf of a user). It is the least preferred option as all contributions will be associated with the re-user app, rather than the specific user. However, re-users are still encouraged to provide the `app_uuid` parameter in updates to identify their specific user.
+
+Applications like this must have a backend to avoid storing sensitive information in the browser or mobile app. They authenticate with our APIs using an `access_token` that has been generated using their Client ID and Secret following the [OIDC Client Credentials Grant type](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4). The following diagram depicts a typical flow for an app that uses its own session cookies to identify users:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    Browser->>App Backend: Update protected resource
+    note over App Backend: Validate session cookie
+
+    opt No current access token
+        App Backend->>Keycloak: Client Credentials flow<br/>Using Client ID and Secret
+        Keycloak->>App Backend: Access token
+    end
+
+    App Backend->>Service: Authenticated API (with Access token)
+    Service-->>Keycloak: Validate Access token
+    Note over Service: Process request
+    Service->>App Backend: Success response
+    App Backend->>Browser: Success response
+```
+
+The Keycloak client configuration would look like this:
+
+* Client authentication: enabled
+* Authentication flows: Service account roles
+
+Securely share the randomly generated Client Secret with the client.
+
 ## Internal Backend Client
 
-This configuration would only be used for our internal clients (like Product Opener) that need to be able to perform authenticated operations in their own right (not on behalf of a user):
+This configuration would only be used for our internal clients (like Product Opener) that need to be able to perform authenticated operations in their own right (not on behalf of a user) and also require the ability to manage user information:
 
 * Client authentication: enabled
 * Authentication flows: Standard flow, Direct access grants, Service account roles
@@ -111,6 +144,16 @@ This configuration would only be used for our internal clients (like Product Ope
 Go to the service account user for the client (e.g. service-account-off) and join the "User management" group which will assign the realm-management:manage-users and realm-management:query-users roles.
 
 Securely share the randomly generated Client Secret with the client.
+
+# Deprecated Authentication Methods
+
+## User ids and Passwords
+
+Re-users and other applications should never have sight of a user's password so this method of authentication with the Open Food Facts APIs will eventually be deprecated.
+
+## Open Food Facts Session Cookies
+
+Re-users are encouraged to use secure session cookies with their own backends to identify their users. However, in order to be secure a session cookie must be flagged as `Secure`, `HttpOnly` with `SameSite=Strict`. This means that secure session cookies created on an `openfoodfacts` domain would not be available to re-user applicaitons on a different domain.
 
 # Configuring Keycloak Administrators
 
