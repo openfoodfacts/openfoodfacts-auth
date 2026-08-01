@@ -36,7 +36,7 @@ jobs:
           # Falls back to GITHUB_TOKEN on fork PRs where RELEASE_PLEASE_TOKEN isn't exposed —
           # the snapshot commit will land but the PR's checks need a manual re-trigger.
           token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
       - name: Install dependencies
