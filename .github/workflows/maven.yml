@@ -17,10 +17,10 @@ jobs:
         with:
           envFile: '.env'
 
-      - name: Set up JDK 21
+      - name: Set up JDK 215
         uses: actions/setup-java@v5.6.0
         with:
-          java-version: "21"
+          java-version: "25"
           distribution: "temurin"
           cache: maven
 
