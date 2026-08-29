@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createAndVerifyUser, createRedisClient, createUser, generateRandomUser, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, keycloakUserUrl, matchStyles, registerLink, selectDummyLocale } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, deleteEmails, generateRandomUser, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, keycloakUserUrl, matchStyles, registerLink, selectDummyLocale, clickEmailVerifyLink } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -189,6 +189,7 @@ test("migrated user with invalid email loaded with no messages", async ({page}) 
 });
 
 test("six character password accepted", async ({ page }) => {
+  await deleteEmails();
   await gotoHome(page);
   await registerLink(page).click();
 
@@ -196,19 +197,30 @@ test("six character password accepted", async ({ page }) => {
   await selectDummyLocale(page);
 
   const {userName, email} = generateRandomUser();
-  const password = 'aaaaaa';
   await page.getByLabel('^username^').fill(userName);
-  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
-  await page.getByLabel('^passwordConfirm^').fill(password);
   await page.getByLabel('^email^').fill(email);
 
   await page.getByRole("button", { name: "^doRegister^" }).click();
 
   // Verify email page will now load. Extend timeout to avoid test issues
   await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
+
+  const message = await getLastEmail(userName);
+  await clickEmailVerifyLink(page, message);
+
+  // Password setup page should now load
+  await expect(page.getByText('^updatePasswordTitle^')).toBeVisible();
+
+  const password = 'aaaaaa';
+  await page.getByLabel('^passwordNew^').fill(password);
+  await page.getByLabel('^passwordConfirm^').fill(password);
+  await page.getByRole("button", { name: "^doSubmit^" }).click();
+
+  await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
 });
 
 test("five character password not accepted", async ({ page }) => {
+  await deleteEmails();
   await gotoHome(page);
   await registerLink(page).click();
 
@@ -216,15 +228,25 @@ test("five character password not accepted", async ({ page }) => {
   await selectDummyLocale(page);
 
   const {userName, email} = generateRandomUser();
-  const password = '12345';
   await page.getByLabel('^username^').fill(userName);
-  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
-  await page.getByLabel('^passwordConfirm^').fill(password);
   await page.getByLabel('^email^').fill(email);
 
   await page.getByRole("button", { name: "^doRegister^" }).click();
 
   // Verify email page will now load. Extend timeout to avoid test issues
+  await expect(page.getByText('^emailVerifyTitle^')).toBeVisible();
+
+  const message = await getLastEmail(userName);
+  await clickEmailVerifyLink(page, message);
+
+  // Password setup page should now load
+  await expect(page.getByText('^updatePasswordTitle^')).toBeVisible();
+
+  const password = '12345';
+  await page.getByLabel('^passwordNew^').fill(password);
+  await page.getByLabel('^passwordConfirm^').fill(password);
+  await page.getByRole("button", { name: "^doSubmit^" }).click();
+
   await expect(page.getByText('^invalidPasswordMinLengthMessage 0=6^')).toBeVisible();
 });
 
