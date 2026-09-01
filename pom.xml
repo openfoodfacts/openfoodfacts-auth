@@ -18,7 +18,7 @@
     <revision>26.6.4</revision>
     <changelist>-SNAPSHOT</changelist>
     <sha1/>
-    <keycloak.version>26.6.4</keycloak.version>
+    <keycloak.version>26.7.2</keycloak.version>
     <junit.version>6.1.2</junit.version>
   </properties>
   <build>
@@ -141,7 +141,7 @@
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
-      <version>7.5.3</version>
+      <version>8.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
