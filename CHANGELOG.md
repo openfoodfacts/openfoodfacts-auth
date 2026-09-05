@@ -1,5 +1,96 @@
 # Changelog
 
+## [0.3.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.2...v0.3.0) (2026-09-05)
+
+
+### Features
+
+* live username availability feedback during signup ([#373](https://github.com/openfoodfacts/openfoodfacts-auth/issues/373)) ([15175a6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/15175a6a84093f6e375bb3de115cd938f9b98114))
+
+
+### Bug Fixes
+
+* **ci:** correct tag handling in Docker image digest resolution ([#371](https://github.com/openfoodfacts/openfoodfacts-auth/issues/371)) ([e17114e](https://github.com/openfoodfacts/openfoodfacts-auth/commit/e17114e02f803deb43215207e0983c1ff6ebb933))
+* **deps:** Update Keycloak version to 26.5.7 ([#351](https://github.com/openfoodfacts/openfoodfacts-auth/issues/351)) ([fdf0421](https://github.com/openfoodfacts/openfoodfacts-auth/commit/fdf0421ebdc0535fd9426588c267ae5be3bd5edc))
+* **deps:** Update Keycloak version to 26.6.1 ([#364](https://github.com/openfoodfacts/openfoodfacts-auth/issues/364)) ([fc808a6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/fc808a6b30239ed491c737bf9bccf9a08e4baf42))
+* update Redis URL in container deployment workflow ([#333](https://github.com/openfoodfacts/openfoodfacts-auth/issues/333)) ([5e8f4ef](https://github.com/openfoodfacts/openfoodfacts-auth/commit/5e8f4efab1ccebf8b57bdb9a9c307c0583a01a9d))
+
+
+### Translations
+
+* New Crowdin translations to review and merge ([#324](https://github.com/openfoodfacts/openfoodfacts-auth/issues/324)) ([b9abd25](https://github.com/openfoodfacts/openfoodfacts-auth/commit/b9abd25545ab8d31bbd6dcef50e209d985a68586))
+* New Crowdin translations to review and merge ([#355](https://github.com/openfoodfacts/openfoodfacts-auth/issues/355)) ([5ff7635](https://github.com/openfoodfacts/openfoodfacts-auth/commit/5ff763541544bf75a8b61dc673caa38f7c537dfa))
+* New Crowdin translations to review and merge ([#372](https://github.com/openfoodfacts/openfoodfacts-auth/issues/372)) ([443b3b9](https://github.com/openfoodfacts/openfoodfacts-auth/commit/443b3b9f7e58a7b0ea444c0e42157bccd22fb5ae))
+* New Crowdin translations to review and merge ([#392](https://github.com/openfoodfacts/openfoodfacts-auth/issues/392)) ([caae32d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/caae32dcfab49cef2f90ea6a12d116cfa681ad4e))
+* New Crowdin translations to review and merge. ([#411](https://github.com/openfoodfacts/openfoodfacts-auth/issues/411)) ([2d0d48e](https://github.com/openfoodfacts/openfoodfacts-auth/commit/2d0d48e7f37985f2c1c58363c5d484d8bd649bc9))
+
+
+### Technical
+
+* **deps-dev:** bump @aws-sdk/util-arn-parser from 3.972.3 to 3.972.39 ([#424](https://github.com/openfoodfacts/openfoodfacts-auth/issues/424)) ([10542cc](https://github.com/openfoodfacts/openfoodfacts-auth/commit/10542ccbb6ab1d229968fd0b962ba745fac4bd6e))
+* **deps-dev:** bump @protobufjs/fetch from 1.1.0 to 1.1.1 ([#423](https://github.com/openfoodfacts/openfoodfacts-auth/issues/423)) ([cd7668c](https://github.com/openfoodfacts/openfoodfacts-auth/commit/cd7668c738f69598301879fd59b969fb513a846c))
+* **deps-dev:** bump @smithy/util-config-provider from 4.2.2 to 4.5.2 ([#422](https://github.com/openfoodfacts/openfoodfacts-auth/issues/422)) ([e54dcfb](https://github.com/openfoodfacts/openfoodfacts-auth/commit/e54dcfb5312e7b47d4e5bc159ab3aa31857006d9))
+* **deps-dev:** bump @smithy/util-uri-escape from 4.2.2 to 4.5.2 ([#425](https://github.com/openfoodfacts/openfoodfacts-auth/issues/425)) ([6b0c239](https://github.com/openfoodfacts/openfoodfacts-auth/commit/6b0c2395d818962a1958787aac968f03760cfde6))
+* **deps-dev:** bump browserslist from 4.28.2 to 4.28.8 ([#428](https://github.com/openfoodfacts/openfoodfacts-auth/issues/428)) ([07b3eb9](https://github.com/openfoodfacts/openfoodfacts-auth/commit/07b3eb999c81e6ec1df44a513654198a30e4d73d))
+* **deps-dev:** bump dompurify from 3.3.1 to 3.3.3 ([#339](https://github.com/openfoodfacts/openfoodfacts-auth/issues/339)) ([f243e8d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/f243e8db2be0d278aaefdc56d96a69dbc7e6e7ee))
+* **deps-dev:** bump dompurify from 3.3.3 to 3.4.0 ([#352](https://github.com/openfoodfacts/openfoodfacts-auth/issues/352)) ([f781942](https://github.com/openfoodfacts/openfoodfacts-auth/commit/f781942097419caedabe7f80c7a0c35e2a822813))
+* **deps-dev:** bump dompurify from 3.4.11 to 3.4.12 ([#401](https://github.com/openfoodfacts/openfoodfacts-auth/issues/401)) ([6b06a14](https://github.com/openfoodfacts/openfoodfacts-auth/commit/6b06a14a1fecab3c989252058d7673f561716006))
+* **deps-dev:** bump dompurify from 3.4.12 to 3.4.13 ([#413](https://github.com/openfoodfacts/openfoodfacts-auth/issues/413)) ([461299e](https://github.com/openfoodfacts/openfoodfacts-auth/commit/461299ed31acf316af6401b82a46151b1b5d804b))
+* **deps-dev:** bump dompurify from 3.4.2 to 3.4.11 ([#385](https://github.com/openfoodfacts/openfoodfacts-auth/issues/385)) ([107bdc3](https://github.com/openfoodfacts/openfoodfacts-auth/commit/107bdc340014d4ad429768fe8445c32b1778a893))
+* **deps-dev:** bump fast-uri from 3.1.0 to 3.1.2 ([#362](https://github.com/openfoodfacts/openfoodfacts-auth/issues/362)) ([a162b13](https://github.com/openfoodfacts/openfoodfacts-auth/commit/a162b13414108021a5b3d3d2099a974d47752629))
+* **deps-dev:** bump fast-uri from 3.1.2 to 3.1.4 ([#402](https://github.com/openfoodfacts/openfoodfacts-auth/issues/402)) ([235cfa1](https://github.com/openfoodfacts/openfoodfacts-auth/commit/235cfa1a573e4b36026519f3a1dff9df1c9eeede))
+* **deps-dev:** bump fast-uri from 3.1.4 to 3.1.5 ([#410](https://github.com/openfoodfacts/openfoodfacts-auth/issues/410)) ([9817871](https://github.com/openfoodfacts/openfoodfacts-auth/commit/981787170ae76f3186c6eb65b7eabdc94625e261))
+* **deps-dev:** bump fast-uri from 3.1.5 to 3.1.7 ([#427](https://github.com/openfoodfacts/openfoodfacts-auth/issues/427)) ([b357467](https://github.com/openfoodfacts/openfoodfacts-auth/commit/b357467de81518243b725f859ba0268fa3afdba2))
+* **deps-dev:** bump fast-xml-builder from 1.1.4 to 1.2.0 ([#361](https://github.com/openfoodfacts/openfoodfacts-auth/issues/361)) ([79a45e2](https://github.com/openfoodfacts/openfoodfacts-auth/commit/79a45e2c0738cf4347879ac321dc9d528e4cb2db))
+* **deps-dev:** bump mermaid from 11.14.0 to 11.15.0 ([#365](https://github.com/openfoodfacts/openfoodfacts-auth/issues/365)) ([0d82822](https://github.com/openfoodfacts/openfoodfacts-auth/commit/0d82822a367296c8559ee167046d67c19f11f900))
+* **deps-dev:** bump mermaid from 11.15.0 to 11.16.1 ([#412](https://github.com/openfoodfacts/openfoodfacts-auth/issues/412)) ([b30df78](https://github.com/openfoodfacts/openfoodfacts-auth/commit/b30df78e850f7d53ab7ffe9299154c44add0e44d))
+* **deps-dev:** bump org.junit.jupiter:junit-jupiter-api ([#405](https://github.com/openfoodfacts/openfoodfacts-auth/issues/405)) ([2969cd9](https://github.com/openfoodfacts/openfoodfacts-auth/commit/2969cd9500d1bdde227bd8039f62a589ff7f91ec))
+* **deps-dev:** bump org.junit.jupiter:junit-jupiter-api from 6.1.2 to 6.1.3 ([#418](https://github.com/openfoodfacts/openfoodfacts-auth/issues/418)) ([0304f16](https://github.com/openfoodfacts/openfoodfacts-auth/commit/0304f1639353435694af77bf5dfdca4c9b23206c))
+* **deps-dev:** bump org.testcontainers:testcontainers ([#345](https://github.com/openfoodfacts/openfoodfacts-auth/issues/345)) ([8e31a45](https://github.com/openfoodfacts/openfoodfacts-auth/commit/8e31a458c426ae06efa1d342103e21110f2240d0))
+* **deps-dev:** bump org.testcontainers:testcontainers ([#358](https://github.com/openfoodfacts/openfoodfacts-auth/issues/358)) ([08bf47b](https://github.com/openfoodfacts/openfoodfacts-auth/commit/08bf47bd8af5ead2a0d68ff476e641c5e5c1fc62))
+* **deps-dev:** bump protobufjs from 7.5.4 to 7.5.5 ([#353](https://github.com/openfoodfacts/openfoodfacts-auth/issues/353)) ([05b2c4e](https://github.com/openfoodfacts/openfoodfacts-auth/commit/05b2c4e4e7a12c492b51d8088d7bf8a128f484c6))
+* **deps-dev:** bump qs from 6.14.1 to 6.15.0 ([#327](https://github.com/openfoodfacts/openfoodfacts-auth/issues/327)) ([18919ee](https://github.com/openfoodfacts/openfoodfacts-auth/commit/18919eeab33681508fda217e04c54a2261f26f44))
+* **deps-dev:** bump qs from 6.15.1 to 6.15.2 ([#370](https://github.com/openfoodfacts/openfoodfacts-auth/issues/370)) ([af0515e](https://github.com/openfoodfacts/openfoodfacts-auth/commit/af0515e02b691fe8c391983cedfc59faa4076c27))
+* **deps-dev:** bump simple-git from 3.30.0 to 3.33.0 ([#338](https://github.com/openfoodfacts/openfoodfacts-auth/issues/338)) ([46149a6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/46149a6ebaea61c5131278615b121c8b59c0b828))
+* **deps-dev:** bump the maven-dev group with 2 updates ([#387](https://github.com/openfoodfacts/openfoodfacts-auth/issues/387)) ([4869cb8](https://github.com/openfoodfacts/openfoodfacts-auth/commit/4869cb83bcb03f7792db94dc4cfb44c8d94fd701))
+* **deps-dev:** bump the maven-dev group with 3 updates ([#329](https://github.com/openfoodfacts/openfoodfacts-auth/issues/329)) ([738d5d0](https://github.com/openfoodfacts/openfoodfacts-auth/commit/738d5d02873387f089d8f8ffbc0a9dfff912d610))
+* **deps-dev:** bump the maven-dev group with 3 updates ([#377](https://github.com/openfoodfacts/openfoodfacts-auth/issues/377)) ([79c2017](https://github.com/openfoodfacts/openfoodfacts-auth/commit/79c201777c057d44c1998c934edfc4d79d134d70))
+* **deps-dev:** bump the npm-dev group across 1 directory with 37 updates ([#348](https://github.com/openfoodfacts/openfoodfacts-auth/issues/348)) ([db102c1](https://github.com/openfoodfacts/openfoodfacts-auth/commit/db102c19a4415cdab37362db548c55dd4a6a891b))
+* **deps-dev:** bump the npm-dev group across 1 directory with 5 updates ([#350](https://github.com/openfoodfacts/openfoodfacts-auth/issues/350)) ([68da717](https://github.com/openfoodfacts/openfoodfacts-auth/commit/68da717b93e688d50e1dfae979fa0d2a1c9d3313))
+* **deps-dev:** bump the npm-dev group across 1 directory with 62 updates ([#341](https://github.com/openfoodfacts/openfoodfacts-auth/issues/341)) ([ec79f6f](https://github.com/openfoodfacts/openfoodfacts-auth/commit/ec79f6ffd932a5df873df8ad141245248ebb898b))
+* **deps-dev:** bump the npm-dev group across 1 directory with 95 updates ([#363](https://github.com/openfoodfacts/openfoodfacts-auth/issues/363)) ([ccacf40](https://github.com/openfoodfacts/openfoodfacts-auth/commit/ccacf40615f7be81dc9eb7b5f79785fa0da11e32))
+* **deps-dev:** bump the npm-dev group with 33 updates ([#347](https://github.com/openfoodfacts/openfoodfacts-auth/issues/347)) ([b36dafc](https://github.com/openfoodfacts/openfoodfacts-auth/commit/b36dafcc931c14357a1f36fdf3f993fa47ce2919))
+* **deps-dev:** bump ws from 8.20.0 to 8.21.1 ([#397](https://github.com/openfoodfacts/openfoodfacts-auth/issues/397)) ([507bf5d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/507bf5dbdaf153a7acbd8974d43347f27618bcf1))
+* **deps:** bump @sigstore/core from 3.2.0 to 3.2.1 ([#395](https://github.com/openfoodfacts/openfoodfacts-auth/issues/395)) ([406aa19](https://github.com/openfoodfacts/openfoodfacts-auth/commit/406aa1938f7154fd510c8fcea44d2844776fa2f8))
+* **deps:** bump brace-expansion ([#408](https://github.com/openfoodfacts/openfoodfacts-auth/issues/408)) ([7b809fa](https://github.com/openfoodfacts/openfoodfacts-auth/commit/7b809fa35e8f64de341b9a1f1c797900f8b960cf))
+* **deps:** bump codecov/codecov-action in the github-actions group ([#346](https://github.com/openfoodfacts/openfoodfacts-auth/issues/346)) ([5811086](https://github.com/openfoodfacts/openfoodfacts-auth/commit/58110861031425031496ebb33de2ae902a635b83))
+* **deps:** bump ghcr.io/devcontainers/features/docker-in-docker ([#378](https://github.com/openfoodfacts/openfoodfacts-auth/issues/378)) ([19b4e1d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/19b4e1dae3e84fda80b83513d06c0003eed62aa5))
+* **deps:** bump ghcr.io/devcontainers/features/docker-in-docker ([#386](https://github.com/openfoodfacts/openfoodfacts-auth/issues/386)) ([1529c4f](https://github.com/openfoodfacts/openfoodfacts-auth/commit/1529c4fb70b1504189589ad35cd560fd00e3563d))
+* **deps:** bump ghcr.io/devcontainers/features/node ([#356](https://github.com/openfoodfacts/openfoodfacts-auth/issues/356)) ([d96523e](https://github.com/openfoodfacts/openfoodfacts-auth/commit/d96523e7cd36e4b70f0f45115cd3b253d3a00bd4))
+* **deps:** bump ip-address from 10.2.0 to 10.4.0 ([#409](https://github.com/openfoodfacts/openfoodfacts-auth/issues/409)) ([4479025](https://github.com/openfoodfacts/openfoodfacts-auth/commit/4479025b31c87a2fc348c1950d86faabea9bc313))
+* **deps:** bump jsonpath-plus from 7.2.0 to 10.3.0 ([#343](https://github.com/openfoodfacts/openfoodfacts-auth/issues/343)) ([21a1b17](https://github.com/openfoodfacts/openfoodfacts-auth/commit/21a1b17d799038f0dd24745be622742667fe2f65))
+* **deps:** bump keycloak.version from 26.6.3 to 26.6.4 ([#390](https://github.com/openfoodfacts/openfoodfacts-auth/issues/390)) ([06941fa](https://github.com/openfoodfacts/openfoodfacts-auth/commit/06941fa6a271fd54e9372eb34cd97f8810ce8b0c))
+* **deps:** bump org.keycloak:keycloak-services from 26.6.1 to 26.6.2 ([#369](https://github.com/openfoodfacts/openfoodfacts-auth/issues/369)) ([3226f44](https://github.com/openfoodfacts/openfoodfacts-auth/commit/3226f445e7693cb3f9fe08020c932d13aa3c9284))
+* **deps:** bump org.keycloak:keycloak-services from 26.6.2 to 26.6.3 ([#381](https://github.com/openfoodfacts/openfoodfacts-auth/issues/381)) ([3b494af](https://github.com/openfoodfacts/openfoodfacts-auth/commit/3b494aff7b3041de6c6dac254764728d01431ecd))
+* **deps:** bump picomatch ([#344](https://github.com/openfoodfacts/openfoodfacts-auth/issues/344)) ([cb61fe9](https://github.com/openfoodfacts/openfoodfacts-auth/commit/cb61fe90d00a44d429b4468af719e61f8e414ece))
+* **deps:** bump postcss-selector-parser ([#426](https://github.com/openfoodfacts/openfoodfacts-auth/issues/426)) ([9dca42c](https://github.com/openfoodfacts/openfoodfacts-auth/commit/9dca42cba36a02391a30f273d7d85b99780491e7))
+* **deps:** bump redis.clients:jedis ([#391](https://github.com/openfoodfacts/openfoodfacts-auth/issues/391)) ([2292dc4](https://github.com/openfoodfacts/openfoodfacts-auth/commit/2292dc464f35e635e0cafe34daf4da31ccf6c8da))
+* **deps:** bump redis.clients:jedis in the maven-production group ([#376](https://github.com/openfoodfacts/openfoodfacts-auth/issues/376)) ([92697cf](https://github.com/openfoodfacts/openfoodfacts-auth/commit/92697cf67c87e9a2c3a6bf94e2f04f7389bfec02))
+* **deps:** bump sigstore from 4.1.0 to 4.1.1 ([#396](https://github.com/openfoodfacts/openfoodfacts-auth/issues/396)) ([93103e6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/93103e6b41c08a3ba2e069cebde206df9f811110))
+* **deps:** bump the github-actions group across 1 directory with 8 updates ([#336](https://github.com/openfoodfacts/openfoodfacts-auth/issues/336)) ([e2c8c93](https://github.com/openfoodfacts/openfoodfacts-auth/commit/e2c8c93a42d0b51098bea63e9a6563fd32bb4542))
+* **deps:** bump the github-actions group with 2 updates ([#359](https://github.com/openfoodfacts/openfoodfacts-auth/issues/359)) ([400f8d8](https://github.com/openfoodfacts/openfoodfacts-auth/commit/400f8d85227959de779fe590b65587a0c8c99fd0))
+* **deps:** bump the github-actions group with 3 updates ([#389](https://github.com/openfoodfacts/openfoodfacts-auth/issues/389)) ([8445ca3](https://github.com/openfoodfacts/openfoodfacts-auth/commit/8445ca34897e5c0ac08526be7e8b4606863e4b72))
+* **deps:** bump the github-actions group with 3 updates ([#420](https://github.com/openfoodfacts/openfoodfacts-auth/issues/420)) ([72ff8b1](https://github.com/openfoodfacts/openfoodfacts-auth/commit/72ff8b1108a330c307fd1d8754fb76918a60a935))
+* **deps:** bump the github-actions group with 4 updates ([#379](https://github.com/openfoodfacts/openfoodfacts-auth/issues/379)) ([efc8878](https://github.com/openfoodfacts/openfoodfacts-auth/commit/efc887833bb4afc2df078c01d44a7d661db3920a))
+* **deps:** bump the github-actions group with 4 updates ([#406](https://github.com/openfoodfacts/openfoodfacts-auth/issues/406)) ([6e01efd](https://github.com/openfoodfacts/openfoodfacts-auth/commit/6e01efd2405c626f03a24c6a7fb8b48d1386c419))
+* **deps:** bump the maven-production group with 7 updates ([#328](https://github.com/openfoodfacts/openfoodfacts-auth/issues/328)) ([d9c8ef2](https://github.com/openfoodfacts/openfoodfacts-auth/commit/d9c8ef22b3ed0802b1f6635f25f9d6cd94fa2455))
+* **deps:** bump undici from 6.25.0 to 7.29.0 ([#400](https://github.com/openfoodfacts/openfoodfacts-auth/issues/400)) ([9c92ef3](https://github.com/openfoodfacts/openfoodfacts-auth/commit/9c92ef38b3e768a70016308b4889c5c251e4bc72))
+* **deps:** bump undici from 7.24.7 to 7.28.0 ([#398](https://github.com/openfoodfacts/openfoodfacts-auth/issues/398)) ([2467435](https://github.com/openfoodfacts/openfoodfacts-auth/commit/2467435e550402997e725e74b3de9a7db6bb9f5f))
+* More clarity on supported re-user authentication methods ([#380](https://github.com/openfoodfacts/openfoodfacts-auth/issues/380)) ([1f2d614](https://github.com/openfoodfacts/openfoodfacts-auth/commit/1f2d614b8add3db0eafa523d8dbd438c9116b0a2))
+* Refactor Docker image build process and add docker-bake configuration ([#349](https://github.com/openfoodfacts/openfoodfacts-auth/issues/349)) ([a4b2156](https://github.com/openfoodfacts/openfoodfacts-auth/commit/a4b2156e2392577c7ccf41ea15e15b789a420ffe))
+* support workflow runs on fork PRs ([#374](https://github.com/openfoodfacts/openfoodfacts-auth/issues/374)) ([9bd47c7](https://github.com/openfoodfacts/openfoodfacts-auth/commit/9bd47c774351825e54df48df3e150d078296c11d))
+* Update checkName for deployment job ([#375](https://github.com/openfoodfacts/openfoodfacts-auth/issues/375)) ([daf8da4](https://github.com/openfoodfacts/openfoodfacts-auth/commit/daf8da474efa347b5e29d94e9ca9c4b40c3d35a2))
+
 ## [0.2.2](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.1...v0.2.2) (2026-02-09)
 
 
