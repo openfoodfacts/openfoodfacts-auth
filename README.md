@@ -171,7 +171,7 @@ These will have full access to the Open Food Facts realm so can add new clients,
 
 # Events
 
-Keycloak will emit certain user events to Redis, documented [here](docs/events/openfoodfacts-auth.html)
+Keycloak will emit certain user events to Redis, documented [here](docs/events/openfoodfacts-auth.html).
 
 # Components of the Project
 

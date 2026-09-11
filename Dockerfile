@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.2
 
-FROM maven:3-eclipse-temurin-21 AS builder
+FROM maven:3-eclipse-temurin-25 AS builder
 # build a custom extensions for keycloak using maven
 
 WORKDIR /build

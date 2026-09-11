@@ -25,10 +25,10 @@ This is emitted when a user deletes their account. Product Opener uses this even
 A JDK is required along with Maven. The versions should match the builder image used in the `Dockerfile`, e.g.
 
 ```Dockerfile
-FROM maven:3-eclipse-temurin-21 AS builder
+FROM maven:3-eclipse-temurin-25 AS builder
 ```
 
-Uses Maven version 3 with version 21 of the JDK.
+Uses Maven version 3 with version 25 of the JDK.
 
 Note that if the `keycloak.version` property is changed you will need to run `make update_keycloak_version` to update the other version numbers in the `pom.xml` file and refresh themes and messages.
 
