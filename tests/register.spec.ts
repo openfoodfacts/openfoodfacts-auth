@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HELPER_TEXT } from "./expected-styles";
-import { createAndVerifyUser, createRedisClient, createUser, deleteEmails, generateRandomUser, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, keycloakUserUrl, matchStyles, registerLink, selectDummyLocale, clickEmailVerifyLink } from "./test-helper";
+import { createAndVerifyUser, createRedisClient, createUser, deleteEmails, generateRandomUser, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, keycloakUserUrl, matchStyles, registerLink, selectDummyLocale, clickEmailVerifyLink, setPassword } from "./test-helper";
 
 test("general layout", async ({ page }) => {
   await gotoHome(page);
@@ -209,12 +209,8 @@ test("six character password accepted", async ({ page }) => {
   await clickEmailVerifyLink(page, message);
 
   // Password setup page should now load
-  await expect(page.getByText('^updatePasswordTitle^')).toBeVisible();
-
   const password = 'aaaaaa';
-  await page.getByLabel('^passwordNew^').fill(password);
-  await page.getByLabel('^passwordConfirm^').fill(password);
-  await page.getByRole("button", { name: "^doSubmit^" }).click();
+  await setPassword(page, password);
 
   await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
 });
@@ -240,12 +236,8 @@ test("five character password not accepted", async ({ page }) => {
   await clickEmailVerifyLink(page, message);
 
   // Password setup page should now load
-  await expect(page.getByText('^updatePasswordTitle^')).toBeVisible();
-
   const password = '12345';
-  await page.getByLabel('^passwordNew^').fill(password);
-  await page.getByLabel('^passwordConfirm^').fill(password);
-  await page.getByRole("button", { name: "^doSubmit^" }).click();
+  await setPassword(page, password);
 
   await expect(page.getByText('^invalidPasswordMinLengthMessage 0=6^')).toBeVisible();
 });

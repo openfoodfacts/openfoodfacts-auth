@@ -1,5 +1,5 @@
 import test, { expect } from "@playwright/test";
-import { clickEmailVerifyLink, forgotPasswordLink, getLastEmail, gotoHome, registerLink, registerSnapshotUser, selectDummyLocale } from "./test-helper";
+import { clickEmailVerifyLink, forgotPasswordLink, getLastEmail, gotoHome, registerLink, registerSnapshotUser, selectDummyLocale, setPassword } from "./test-helper";
 
 const setDesktop = async(page) => await page.setViewportSize({width: 1500, height: 1000});
 const setMobile = async(page) => await page.setViewportSize({width: 400, height: 1000});
@@ -56,6 +56,9 @@ const setMobile = async(page) => await page.setViewportSize({width: 400, height:
         const snapshotUsername = await registerSnapshotUser(page, `account${suffix}`);
         const message = await getLastEmail(snapshotUsername);
         await clickEmailVerifyLink(page, message);
+        // Set the password for the newly registered user on the verification page
+        await setPassword(page, 'TestPassword123!');
+
         // Expand the delete account section
         await page.getByRole('button', {name: '^deleteAccount^'}).click();
 

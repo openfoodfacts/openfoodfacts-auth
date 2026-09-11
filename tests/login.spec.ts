@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
 import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, keycloakUserUrl, matchStyles, populateRegistrationForm } from "./test-helper";
+import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, keycloakUserUrl, matchStyles, populateRegistrationForm, setPassword } from "./test-helper";
 
 test("login page", async ({ page }) => {
   await gotoHome(page);
@@ -83,9 +83,7 @@ test("locale and country from app is respected", async ({ page }) => {
   await clickEmailVerifyLink(verifyPage, message);
 
   // Set the password for the newly registered user on the verification page
-  await verifyPage.getByLabel('^passwordNew^').fill('TestPassword123!');
-  await verifyPage.getByLabel('^passwordConfirm^').fill('TestPassword123!');
-  await verifyPage.getByRole('button', { name: "^doSubmit^" }).click();
+  await setPassword(verifyPage, 'TestPassword123!');
 
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
@@ -137,9 +135,7 @@ test("pkce login works", async ({ page }) => {
   await clickEmailVerifyLink(verifyPage, message);
 
   // Set the password for the newly registered user on the verification page
-  await verifyPage.getByLabel('^passwordNew^').fill('TestPassword123!');
-  await verifyPage.getByLabel('^passwordConfirm^').fill('TestPassword123!');
-  await verifyPage.getByRole('button', { name: "^doSubmit^" }).click();
+  await setPassword(verifyPage, 'TestPassword123!');
 
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
