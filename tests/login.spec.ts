@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, Locator } from "@playwright/test";
 import { INPUT_FIELD, LINK, PRIMARY_BUTTON, PRIMARY_BUTTON_HOVER } from "./expected-styles";
-import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, keycloakUserUrl, matchStyles, populateRegistrationForm } from "./test-helper";
+import { clickEmailVerifyLink, createRedisClient, getKeycloakHeaders, getLastEmail, getLocaleSelector, gotoHome, gotoTestPage, keycloakUserUrl, matchStyles, populateRegistrationForm, setPassword } from "./test-helper";
 
 test("login page", async ({ page }) => {
   await gotoHome(page);
@@ -82,6 +82,9 @@ test("locale and country from app is respected", async ({ page }) => {
   const verifyPage = await page.context().newPage();
   await clickEmailVerifyLink(verifyPage, message);
 
+  // Set the password for the newly registered user on the verification page
+  await setPassword(verifyPage, 'TestPassword123!');
+
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
   await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
@@ -130,6 +133,9 @@ test("pkce login works", async ({ page }) => {
   // Open a new tab to verify the email
   const verifyPage = await page.context().newPage();
   await clickEmailVerifyLink(verifyPage, message);
+
+  // Set the password for the newly registered user on the verification page
+  await setPassword(verifyPage, 'TestPassword123!');
 
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
