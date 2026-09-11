@@ -82,6 +82,11 @@ test("locale and country from app is respected", async ({ page }) => {
   const verifyPage = await page.context().newPage();
   await clickEmailVerifyLink(verifyPage, message);
 
+  // Set the password for the newly registered user on the verification page
+  await verifyPage.getByLabel('^passwordNew^').fill('TestPassword123!');
+  await verifyPage.getByLabel('^passwordConfirm^').fill('TestPassword123!');
+  await verifyPage.getByRole('button', { name: "^doSubmit^" }).click();
+
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
   await expect(verifyPage.getByLabel('preferred_username')).toHaveValue(userName);
@@ -130,6 +135,11 @@ test("pkce login works", async ({ page }) => {
   // Open a new tab to verify the email
   const verifyPage = await page.context().newPage();
   await clickEmailVerifyLink(verifyPage, message);
+
+  // Set the password for the newly registered user on the verification page
+  await verifyPage.getByLabel('^passwordNew^').fill('TestPassword123!');
+  await verifyPage.getByLabel('^passwordConfirm^').fill('TestPassword123!');
+  await verifyPage.getByRole('button', { name: "^doSubmit^" }).click();
 
   // Login should occur on the verify page.
   // Behavior on the original page is a bit unpredictable at the moment
