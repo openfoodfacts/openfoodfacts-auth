@@ -26,6 +26,7 @@ import org.keycloak.models.GroupProvider;
 import org.keycloak.models.IdentityProviderMapperModel;
 import org.keycloak.models.IdentityProviderModel;
 import org.keycloak.models.IdentityProviderStorageProvider;
+import org.keycloak.models.IssuedVerifiableCredentialModel;
 import org.keycloak.models.KeyManager;
 import org.keycloak.models.KeycloakContext;
 import org.keycloak.models.KeycloakSession;
@@ -41,6 +42,7 @@ import org.keycloak.models.RealmProvider;
 import org.keycloak.models.RequiredActionConfigModel;
 import org.keycloak.models.RequiredActionProviderModel;
 import org.keycloak.models.RequiredCredentialModel;
+import org.keycloak.models.RevokedTokenProvider;
 import org.keycloak.models.RoleModel;
 import org.keycloak.models.RoleProvider;
 import org.keycloak.models.SingleUseObjectProvider;
@@ -53,6 +55,7 @@ import org.keycloak.models.UserLoginFailureProvider;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.UserProvider;
 import org.keycloak.models.UserSessionProvider;
+import org.keycloak.models.UserVerifiableCredentialModel;
 import org.keycloak.models.WebAuthnPolicy;
 import org.keycloak.provider.InvalidationHandler.InvalidableObjectType;
 import org.keycloak.provider.Provider;
@@ -2614,6 +2617,71 @@ class Utils {
                         throw new UnsupportedOperationException("Unimplemented method 'getUserCredentialManager'");
                     }
 
+                    @Override
+                    public UserVerifiableCredentialModel addVerifiableCredential(String userId,
+                            UserVerifiableCredentialModel credentialModel) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'addVerifiableCredential'");
+                    }
+
+                    @Override
+                    public boolean removeVerifiableCredential(String userId, String clientScopeId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'removeVerifiableCredential'");
+                    }
+
+                    @Override
+                    public Stream<UserVerifiableCredentialModel> getVerifiableCredentialsByUser(String userId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'getVerifiableCredentialsByUser'");
+                    }
+
+                    @Override
+                    public UserVerifiableCredentialModel getVerifiableCredentialById(String id) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'getVerifiableCredentialById'");
+                    }
+
+                    @Override
+                    public UserVerifiableCredentialModel getVerifiableCredentialByClientScope(String userId,
+                            String clientScopeId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'getVerifiableCredentialByClientScope'");
+                    }
+
+                    @Override
+                    public UserVerifiableCredentialModel updateVerifiableCredential(String userId,
+                            String clientScopeId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'updateVerifiableCredential'");
+                    }
+
+                    @Override
+                    public IssuedVerifiableCredentialModel addIssuedVerifiableCredential(
+                            IssuedVerifiableCredentialModel issuedVc) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'addIssuedVerifiableCredential'");
+                    }
+
+                    @Override
+                    public Stream<IssuedVerifiableCredentialModel> getIssuedVerifiableCredentialsStreamByUser(
+                            String userId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'getIssuedVerifiableCredentialsStreamByUser'");
+                    }
+
+                    @Override
+                    public boolean removeIssuedVerifiableCredential(String credentialId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'removeIssuedVerifiableCredential'");
+                    }
+
+                    @Override
+                    public void removeExpiredIssuedVerifiableCredentials() {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'removeExpiredIssuedVerifiableCredentials'");
+                    }
+
                 };
             }
 
@@ -2650,6 +2718,12 @@ class Utils {
             @Override
             public IdentityProviderStorageProvider identityProviders() {
                 throw new UnsupportedOperationException("Unimplemented method 'identityProviders'");
+            }
+
+            @Override
+            public RevokedTokenProvider revokedTokens() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'revokedTokens'");
             }
 
         };
