@@ -5,7 +5,7 @@
  */ 
 
 import { writeFileSync, readFileSync, existsSync, readdirSync, copyFileSync, rmSync } from 'fs';
-import { getLanguages, isBundleSupported, languageFallbacks, languageTag, messageFileLanguageCode } from './utils.mjs';
+import { getLanguages, isBundleSupported, keycloakTranslationsFor, languageTag, messageFileLanguageCode } from './utils.mjs';
 import stringify from 'json-stable-stringify';
 
 const baseThemeDir = 'theme/theme';
@@ -108,12 +108,13 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
 
     // Add in translations from Keycloak for messages we are using. The loop is over the
     // bundles we have, not over the ones Keycloak has, so a Keycloak locale we do not carry
-    // no longer creates a file, and a variant of ours reads its base language's Keycloak
-    // translations when Keycloak has none of its own.
+    // no longer creates a file. keycloakTranslationsFor says which Keycloak bundles a code
+    // reads: its own, its base language's, and an alias where Keycloak names the language
+    // differently, such as zh_Hans for zh.
     for (const messageFile of readdirSync(offMessagesDir)) {
         const code = messageFileLanguageCode(messageFile);
         if (!code || code === 'en') continue;
-        const keycloakMessages = languageFallbacks(code).flatMap((l) => allKeycloakMessages[l] ?? []);
+        const keycloakMessages = keycloakTranslationsFor(code, allKeycloakMessages);
         if (!keycloakMessages.length) continue;
         const existingMessageFile = `${offMessagesDir}/${messageFile}`;
         const existingMessages = readFileSync(existingMessageFile, 'utf-8').split('\n');

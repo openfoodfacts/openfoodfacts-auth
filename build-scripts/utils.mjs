@@ -61,6 +61,29 @@ export function languageFallbacks(code) {
 }
 
 /**
+ * Keycloak bundles read on behalf of a code Keycloak ships nothing under. Keycloak has no
+ * messages_zh.properties, only zh_Hans and zh_Hant; our zh bundle, like the taxonomy's own
+ * name for zh, is Simplified Chinese, so it reads zh_Hans, which is also what the old two
+ * letter key gave it. Keys and values are codes in their canonical spelling.
+ */
+const keycloakAliases = {
+    zh: 'zh_Hans',
+};
+
+/**
+ * The Keycloak translations a bundle is seeded from, most specific first: the code's own,
+ * then its parents', each followed by its alias when it has one. pt_BR reads pt_BR then
+ * pt; zh reads zh_Hans; zh_Hant_TW reads zh_Hant_TW, zh_Hant, zh and only then zh_Hans. A
+ * code Keycloak has nothing for gives an empty list. allKeycloakMessages maps a code to
+ * the lines of Keycloak's bundles for it.
+ */
+export function keycloakTranslationsFor(code, allKeycloakMessages) {
+    return languageFallbacks(code)
+        .flatMap((l) => [ l, keycloakAliases[l] ].filter(Boolean))
+        .flatMap((l) => allKeycloakMessages[l] ?? []);
+}
+
+/**
  * The language code a message bundle is for, from its file name, whatever its length:
  * messages_pt.properties gives pt and messages_pt_BR.properties gives pt_BR. Reading a
  * fixed number of characters would collapse a variant onto its base language.

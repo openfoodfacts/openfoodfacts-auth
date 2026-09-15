@@ -5,6 +5,7 @@ import {
     baseLanguage,
     getLanguages,
     isBundleSupported,
+    keycloakTranslationsFor,
     languageFallbacks,
     languageTag,
     messageFileLanguageCode,
@@ -55,6 +56,25 @@ test('a bundle file name gives the whole code, not its first two letters', () =>
     assert.equal(messageFileLanguageCode('messages_zh_Hans.properties'), 'zh_Hans');
     assert.equal(messageFileLanguageCode('messages_xx.properties'), 'xx');
     assert.equal(messageFileLanguageCode('README.md'), undefined);
+});
+
+test('a bundle reads the Keycloak bundles of its code, of its parents and of their aliases', () => {
+    const keycloak = {
+        pt: ['greeting=Olá', 'farewell=Adeus'],
+        pt_BR: ['greeting=Oi'],
+        zh_Hans: ['greeting=你好'],
+        zh_Hant: ['greeting=您好'],
+    };
+    // Keycloak has no zh bundle: zh reads zh_Hans, as the old two letter key had it
+    assert.deepEqual(keycloakTranslationsFor('zh', keycloak), ['greeting=你好']);
+    // A script of its own comes before the alias of its base language
+    assert.deepEqual(keycloakTranslationsFor('zh_Hant_TW', keycloak), ['greeting=您好', 'greeting=你好']);
+    // A variant reads its own translations before its base language's
+    assert.deepEqual(keycloakTranslationsFor('pt_BR', keycloak), ['greeting=Oi', 'greeting=Olá', 'farewell=Adeus']);
+    assert.deepEqual(keycloakTranslationsFor('pt', keycloak), ['greeting=Olá', 'farewell=Adeus']);
+    // Keycloak has nothing for these
+    assert.deepEqual(keycloakTranslationsFor('sat', keycloak), []);
+    assert.deepEqual(keycloakTranslationsFor('not a code', keycloak), []);
 });
 
 test('a bundle is deleted only when the taxonomy can say its language is unsupported', () => {
