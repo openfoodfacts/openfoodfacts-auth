@@ -5,7 +5,7 @@
  */ 
 
 import { writeFileSync, readFileSync, existsSync, readdirSync, copyFileSync, rmSync } from 'fs';
-import { getLanguages } from './utils.mjs';
+import { getLanguages, baseLanguage, languageFallbacks, messageFileLanguageCode } from './utils.mjs';
 import stringify from 'json-stable-stringify';
 
 const baseThemeDir = 'theme/theme';
@@ -27,11 +27,14 @@ for (const theme of sourceThemes) {
         if (!existsSync(messagesDir)) continue;
         const messageFiles = readdirSync(messagesDir);
         for (const messageFile of messageFiles) {
-            const twoLetterIndex = messageFile.indexOf('messages_') + 9;
-            const twoLetterCode = messageFile.substring(twoLetterIndex, twoLetterIndex + 2);
-            if (!allKeycloakMessages[twoLetterCode])
-                allKeycloakMessages[twoLetterCode] = [];
-            allKeycloakMessages[twoLetterCode].push(...readFileSync(`${messagesDir}/${messageFile}`, 'utf-8').split('\n'));
+            // Keycloak ships bundles for variants too, such as messages_pt_BR.properties and
+            // messages_zh_Hans.properties: they are kept under their own code instead of being
+            // merged into the base language's
+            const code = messageFileLanguageCode(messageFile);
+            if (!code) continue;
+            if (!allKeycloakMessages[code])
+                allKeycloakMessages[code] = [];
+            allKeycloakMessages[code].push(...readFileSync(`${messagesDir}/${messageFile}`, 'utf-8').split('\n'));
         }
     }
 }
@@ -75,17 +78,17 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
         }
     }
 
-    // Delete any message files for languages we don't support
+    // Delete any message files for languages we don't support. A regional variant is kept
+    // as long as its base language is supported: which variants are enabled is not
+    // something the languages taxonomy can say.
     const messageFiles = readdirSync(offMessagesDir);
     for (const messageFile of messageFiles) {
-        const twoLetterIndex = messageFile.indexOf('messages_') + 9;
-        if (twoLetterIndex >= 9) {
-            const twoLetterCode = messageFile.substring(twoLetterIndex, twoLetterIndex + 2);
-            if (!sortedLanguageCodes.includes(twoLetterCode)) {
-                console.warn(`Deleted message file for unsupported language: ${messageFile}`);
-                rmSync(`${offMessagesDir}/${messageFile}`);
-            }
-        }
+        const code = messageFileLanguageCode(messageFile);
+        if (!code) continue;
+        if (sortedLanguageCodes.includes(code)) continue;
+        if (sortedLanguageCodes.includes(baseLanguage(code))) continue;
+        console.warn(`Deleted message file for unsupported language: ${messageFile}`);
+        rmSync(`${offMessagesDir}/${messageFile}`);
     }
 
     // Add dummy language to show property names
@@ -104,11 +107,17 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     countryAttribute.annotations.inputOptionLabels = countryOptions;
     writeFileSync(`${runtimeDir}/users_profile.json`, stringify(userProfile, {space: 2}));
 
-    // Add in translations from Keycloak for messages we are using
-    for (const [code, keycloakMessages] of Object.entries(allKeycloakMessages)) {
-        if (code === 'en') continue;
-        const existingMessageFile = `${offMessagesDir}/messages_${code}.properties`;
-        const existingMessages = existsSync(existingMessageFile) ? readFileSync(existingMessageFile, 'utf-8').split('\n') : [];
+    // Add in translations from Keycloak for messages we are using. The loop is over the
+    // bundles we have, not over the ones Keycloak has, so a Keycloak locale we do not carry
+    // no longer creates a file, and a variant of ours reads its base language's Keycloak
+    // translations when Keycloak has none of its own.
+    for (const messageFile of readdirSync(offMessagesDir)) {
+        const code = messageFileLanguageCode(messageFile);
+        if (!code || code === 'en') continue;
+        const keycloakMessages = languageFallbacks(code).flatMap((l) => allKeycloakMessages[l] ?? []);
+        if (!keycloakMessages.length) continue;
+        const existingMessageFile = `${offMessagesDir}/${messageFile}`;
+        const existingMessages = readFileSync(existingMessageFile, 'utf-8').split('\n');
 
         // Get rid of any blank line at the end (avoids unnecessary Crowdin diffs)
         const lastMessage = existingMessages.pop();

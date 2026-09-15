@@ -17,3 +17,9 @@ files:
     translation: /src/messages/messages_%two_letters_code%.properties
     escape_quotes: 1
     escape_special_characters: 0
+# Two letters cannot name a regional variant: without a mapping, Brazilian Portuguese and
+# European Portuguese would both be written to messages_pt.properties and the last one
+# synced would win. Keycloak names such a bundle messages_pt_BR.properties.
+languages_mapping:
+  two_letters_code:
+    pt-BR: pt_BR
