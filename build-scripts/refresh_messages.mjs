@@ -5,7 +5,7 @@
  */ 
 
 import { writeFileSync, readFileSync, existsSync, readdirSync, copyFileSync, rmSync } from 'fs';
-import { getLanguages, isBundleSupported, keycloakTranslationsFor, languageTag, messageFileLanguageCode } from './utils.mjs';
+import { getLanguages, inheritedMessageFile, isBundleSupported, keycloakTranslationsFor, languageTag, messageFileLanguageCode } from './utils.mjs';
 import stringify from 'json-stable-stringify';
 
 const baseThemeDir = 'theme/theme';
@@ -69,13 +69,16 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     const sortedCountryCodes = Object.entries(countryList).sort((a,b) => a[1].localeCompare(b[1])).map((entry) => entry[0]);
     const sortedLanguageCodes = Object.entries(languageList).sort((a,b) => a[1].localeCompare(b[1])).map((entry) => entry[0]);
     
-    // Check we have a messages file for every language we support
+    // Check we have a messages file for every language we support. A code that can inherit
+    // a catalog is left without one: seeding it from English would fill every key, which
+    // stops the Keycloak merge below from ever adding a translation, and hides the catalog
+    // it would have inherited. Crowdin writes the file on the first translation anyway.
     for (const code of sortedLanguageCodes) {
         const messageFile = `${offMessagesDir}/messages_${code}.properties`;
-        if (!existsSync(messageFile)) {
-            // Copy file from en
-            copyFileSync(sourceFile, messageFile);
-        }
+        if (existsSync(messageFile)) continue;
+        if (inheritedMessageFile(code, (file) => existsSync(file))) continue;
+        // Copy file from en
+        copyFileSync(sourceFile, messageFile);
     }
 
     // Delete any message files for languages we don't support. isBundleSupported says what

@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
     baseLanguage,
     getLanguages,
+    inheritedMessageFile,
     isBundleSupported,
     keycloakTranslationsFor,
     languageFallbacks,
@@ -101,6 +102,21 @@ test('the Santali bundle Crowdin writes survives the committed taxonomy', () => 
     assert.ok(!supported.includes('sat'), 'the taxonomy is expected to have no entry for sat');
     assert.equal(isBundleSupported(messageFileLanguageCode('messages_sat.properties'), supported), true);
     assert.equal(isBundleSupported(messageFileLanguageCode('messages_qq.properties'), supported), false);
+});
+
+test('a variant inherits the nearest catalog, and a base language inherits none', () => {
+    const present = [ 'src/messages/messages_pt.properties', 'src/messages/messages_zh_Hant.properties' ];
+    const exists = (file) => present.includes(file);
+    // A variant reads its base language's catalog rather than being seeded from English,
+    // which would fill every key and leave no room for a Keycloak translation
+    assert.equal(inheritedMessageFile('pt_BR', exists), 'src/messages/messages_pt.properties');
+    // The nearest ancestor wins
+    assert.equal(inheritedMessageFile('zh_Hant_TW', exists), 'src/messages/messages_zh_Hant.properties');
+    // A base language inherits nothing: English is its fallback, applied elsewhere
+    assert.equal(inheritedMessageFile('pt', exists), undefined);
+    // Nor does a variant whose ancestors have no catalog
+    assert.equal(inheritedMessageFile('fr_CA', exists), undefined);
+    assert.equal(inheritedMessageFile('not a code', exists), undefined);
 });
 
 test('a taxonomy code is normalized and named from its parents, not read raw', () => {

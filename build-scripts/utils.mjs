@@ -84,6 +84,20 @@ export function keycloakTranslationsFor(code, allKeycloakMessages) {
 }
 
 /**
+ * The bundle a code inherits its strings from, or undefined when it has to have one of its
+ * own. A regional or script variant reads the catalog of its nearest ancestor, so pt_BR
+ * shows the Portuguese strings until it has Brazilian ones. A base language inherits
+ * nothing: English is its fallback, and that is handled where the strings are read.
+ * `exists` says whether a path is there, so the caller decides what a path means.
+ */
+export function inheritedMessageFile(code, exists, directory = 'src/messages') {
+    return languageFallbacks(code)
+        .slice(1)
+        .map((language) => `${directory}/messages_${language}.properties`)
+        .find(exists);
+}
+
+/**
  * The language code a message bundle is for, from its file name, whatever its length:
  * messages_pt.properties gives pt and messages_pt_BR.properties gives pt_BR. Reading a
  * fixed number of characters would collapse a variant onto its base language.
