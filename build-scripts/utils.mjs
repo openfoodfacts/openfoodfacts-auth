@@ -2,10 +2,16 @@ import { readFileSync } from 'fs';
 
 /**
  * A language code is a two or three letter language, optionally followed by a script and a
- * region: pt, sco, pt_BR, zh_Hant, zh_Hant_TW. Keycloak names its own message bundles the
- * same way (messages_pt_BR.properties, messages_zh_Hans.properties), so that spelling is
- * used throughout this repository. The BCP-47 form, pt-BR, only belongs on the wire, in
- * the OIDC ui_locales parameter, and is the caller's business.
+ * region: pt, sco, pt_BR, zh_Hant, zh_Hant_TW.
+ *
+ * Keycloak spells such a code two ways, and so does this repository. A bundle file name
+ * takes the underscore, messages_pt_BR.properties: that is java.util.Locale#toString, and
+ * how Keycloak names its own bundles. It is the spelling used internally here, so that a
+ * code and the file it names agree. Everything Keycloak parses as a locale is a BCP-47 tag
+ * with a hyphen, pt-BR: the realm's supportedLocales, the locales= line of
+ * theme.properties, the locale_ label keys in the bundles and the OIDC ui_locales
+ * parameter. Locale.forLanguageTag("pt_BR") is the empty locale, so the underscore must
+ * not reach any of those; languageTag gives the tag for a code.
  */
 const languageCodePattern = /^[a-z]{2,3}(?:[-_][a-z]{4})?(?:[-_](?:[a-z]{2}|[0-9]{3}))?$/i;
 
@@ -21,6 +27,15 @@ export function normalizeLanguageCode(code) {
         ? subtag[0].toUpperCase() + subtag.slice(1).toLowerCase()
         : subtag.toUpperCase());
     return [ language.toLowerCase(), ...normalizedSubtags ].join('_');
+}
+
+/**
+ * The BCP-47 tag for a code, the spelling Keycloak parses: pt_BR gives pt-BR. Only a bundle
+ * file name keeps the underscore.
+ */
+export function languageTag(code) {
+    const normalized = normalizeLanguageCode(code);
+    return normalized ? normalized.replaceAll('_', '-') : undefined;
 }
 
 /** The language without its script or region: pt_BR gives pt, zh_Hant_TW gives zh. */

@@ -1,5 +1,5 @@
 import { writeFileSync, readFileSync, existsSync, mkdirSync, copyFileSync } from 'fs';
-import { getLanguages, languageFallbacks, normalizeLanguageCode } from './utils.mjs';
+import { getLanguages, languageFallbacks, languageTag, normalizeLanguageCode } from './utils.mjs';
 
 const themeDir = 'theme/off/common';
 
@@ -9,8 +9,10 @@ const {languages, languageList} = getLanguages();
 // Add dummy language for testing
 languageList.xx = 'xx';
 
+// Keycloak looks a locale's label up under locale_ followed by the realm's spelling of the
+// locale, the BCP-47 tag: locale_pt-BR, while the bundle is messages_pt_BR.properties
 const languageMessages =  '\n# The following are obtained from the OFF languages taxonomy\n' +
-    Object.entries(languageList).map(([key,value]) => `locale_${key}=${value}`).sort().join('\n');
+    Object.entries(languageList).map(([key,value]) => `locale_${languageTag(key)}=${value}`).sort().join('\n');
 
 mkdirSync(`${themeDir}/messages`, {recursive: true});
 for (const [ key, language ] of Object.entries(languages)) {

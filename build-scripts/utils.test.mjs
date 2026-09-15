@@ -6,6 +6,7 @@ import {
     getLanguages,
     isBundleSupported,
     languageFallbacks,
+    languageTag,
     messageFileLanguageCode,
     normalizeLanguageCode,
 } from './utils.mjs';
@@ -24,6 +25,15 @@ test('an unsupported code is rejected rather than guessed', () => {
     assert.equal(normalizeLanguageCode('not a code'), undefined);
     assert.equal(normalizeLanguageCode(''), undefined);
     assert.equal(normalizeLanguageCode(undefined), undefined);
+});
+
+test('Keycloak parses a locale as a BCP-47 tag, with a hyphen, whatever the bundle is named', () => {
+    assert.equal(languageTag('pt_BR'), 'pt-BR');
+    assert.equal(languageTag('pt-br'), 'pt-BR');
+    assert.equal(languageTag('zh_Hant_TW'), 'zh-Hant-TW');
+    assert.equal(languageTag('pt'), 'pt');
+    assert.equal(languageTag('xx'), 'xx');
+    assert.equal(languageTag('not a code'), undefined);
 });
 
 test('the base language drops the script and the region', () => {

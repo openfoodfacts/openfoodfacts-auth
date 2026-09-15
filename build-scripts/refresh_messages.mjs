@@ -5,7 +5,7 @@
  */ 
 
 import { writeFileSync, readFileSync, existsSync, readdirSync, copyFileSync, rmSync } from 'fs';
-import { getLanguages, isBundleSupported, languageFallbacks, messageFileLanguageCode } from './utils.mjs';
+import { getLanguages, isBundleSupported, languageFallbacks, languageTag, messageFileLanguageCode } from './utils.mjs';
 import stringify from 'json-stable-stringify';
 
 const baseThemeDir = 'theme/theme';
@@ -91,11 +91,13 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
     // Add dummy language to show property names
     sortedLanguageCodes.push('xx');
 
-    // Add the list of locales to the realm settings and theme template
+    // Add the list of locales to the realm settings and theme template. Keycloak parses
+    // these as BCP-47 tags, pt-BR, whereas the bundle is messages_pt_BR.properties
+    const supportedLocales = sortedLanguageCodes.map(languageTag);
     const realmSettings = JSON.parse(readFileSync(`${runtimeDir}/realm_settings_template.json`));
-    realmSettings.supportedLocales = sortedLanguageCodes;
+    realmSettings.supportedLocales = supportedLocales;
     writeFileSync(`${runtimeDir}/realm_settings_template.json`,stringify(realmSettings, {space: 2}));
-    writeFileSync(`${themeDir}/theme.properties`,`locales=${sortedLanguageCodes.join(',')}\n`);
+    writeFileSync(`${themeDir}/theme.properties`,`locales=${supportedLocales.join(',')}\n`);
 
     // Add the list of countries to the custom user property pick list
     const userProfile = JSON.parse(readFileSync(`${runtimeDir}/users_profile.json`));
