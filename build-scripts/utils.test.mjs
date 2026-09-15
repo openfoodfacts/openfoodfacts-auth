@@ -103,6 +103,21 @@ test('the Santali bundle Crowdin writes survives the committed taxonomy', () => 
     assert.equal(isBundleSupported(messageFileLanguageCode('messages_qq.properties'), supported), false);
 });
 
+test('a taxonomy code is normalized and named from its parents, not read raw', () => {
+    const {languageList} = getLanguages({
+        'en:unknown-language': { language_code_2: { en: 'xx' }, name: { en: 'Unknown' } },
+        'en:brazilian-portuguese': { language_code_2: { en: 'PT-br' }, name: { en: 'Brazilian Portuguese', pt: 'Português do Brasil' } },
+        'en:scots': { language_code_2: { en: 'sco' }, name: { en: 'Scots', sco: 'Scots leid' } },
+        'en:nameless': { language_code_2: { en: 'nl' } },
+        'en:codeless': { name: { en: 'No code' } },
+    });
+    assert.deepEqual(languageList, {
+        pt_BR: 'Português do Brasil',
+        sco: 'Scots leid',
+        nl: 'en:nameless',
+    });
+});
+
 test('the languages taxonomy still gives one name per language, with no collision', () => {
     const {languageList} = getLanguages();
     const codes = Object.keys(languageList);

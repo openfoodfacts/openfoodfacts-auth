@@ -115,9 +115,11 @@ export function isBundleSupported(code, supportedCodes) {
     return supportedCodes.includes(normalized) || supportedCodes.includes(base);
 }
 
-export function getLanguages() {
-    const languages = JSON.parse(readFileSync('build-scripts/languages.json'));
-
+/**
+ * The languages taxonomy and, from it, a name for every language keyed by its canonical
+ * code. The taxonomy is the committed copy unless one is passed, which the tests do.
+ */
+export function getLanguages(languages = JSON.parse(readFileSync('build-scripts/languages.json'))) {
     const languageList = {};
     for (const [ key, language ] of Object.entries(languages)) {
         if (key === 'en:unknown-language') continue;
