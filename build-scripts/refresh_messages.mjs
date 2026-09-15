@@ -5,7 +5,7 @@
  */ 
 
 import { writeFileSync, readFileSync, existsSync, readdirSync, copyFileSync, rmSync } from 'fs';
-import { getLanguages, baseLanguage, languageFallbacks, messageFileLanguageCode } from './utils.mjs';
+import { getLanguages, isBundleSupported, languageFallbacks, messageFileLanguageCode } from './utils.mjs';
 import stringify from 'json-stable-stringify';
 
 const baseThemeDir = 'theme/theme';
@@ -78,15 +78,12 @@ fetch('https://static.openfoodfacts.org/data/taxonomies/languages.json').then(as
         }
     }
 
-    // Delete any message files for languages we don't support. A regional variant is kept
-    // as long as its base language is supported: which variants are enabled is not
-    // something the languages taxonomy can say.
-    const messageFiles = readdirSync(offMessagesDir);
-    for (const messageFile of messageFiles) {
+    // Delete any message files for languages we don't support. isBundleSupported says what
+    // the languages taxonomy can and cannot decide about a bundle: a variant or a three
+    // letter language is never deleted on its word.
+    for (const messageFile of readdirSync(offMessagesDir)) {
         const code = messageFileLanguageCode(messageFile);
-        if (!code) continue;
-        if (sortedLanguageCodes.includes(code)) continue;
-        if (sortedLanguageCodes.includes(baseLanguage(code))) continue;
+        if (!code || isBundleSupported(code, sortedLanguageCodes)) continue;
         console.warn(`Deleted message file for unsupported language: ${messageFile}`);
         rmSync(`${offMessagesDir}/${messageFile}`);
     }

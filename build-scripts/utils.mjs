@@ -55,6 +55,28 @@ export function messageFileLanguageCode(fileName) {
     return match ? match[1] : undefined;
 }
 
+/**
+ * Whether a message bundle is kept, given the codes of the languages taxonomy. The taxonomy
+ * is the list of languages we support, but every one of its entries has an ISO 639-1 code,
+ * so it can only speak for two letter languages, and a bundle it cannot describe is not one
+ * it can condemn:
+ *  - a regional or script variant, pt_BR or zh_Hant, is kept while its base language is
+ *    supported. Which variants are enabled is not something the taxonomy can say.
+ *  - a three letter language, sat or sco, has no ISO 639-1 code and so no entry at all.
+ *    Crowdin writes such a bundle as soon as the language has one translation; deleting it
+ *    here would only have Crowdin write it back on the next sync.
+ * A two letter language the taxonomy does not list is one we no longer support, and its
+ * bundle is stale. The spelling of the file name does not decide: messages_PT.properties is
+ * the pt bundle, misnamed, and is kept, and messages_QQ.properties is stale all the same.
+ */
+export function isBundleSupported(code, supportedCodes) {
+    const normalized = normalizeLanguageCode(code);
+    if (!normalized) return false;
+    const base = baseLanguage(normalized);
+    if (base.length > 2) return true;
+    return supportedCodes.includes(normalized) || supportedCodes.includes(base);
+}
+
 export function getLanguages() {
     const languages = JSON.parse(readFileSync('build-scripts/languages.json'));
 

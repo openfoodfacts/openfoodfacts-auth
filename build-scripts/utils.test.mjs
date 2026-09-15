@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
     baseLanguage,
     getLanguages,
+    isBundleSupported,
     languageFallbacks,
     messageFileLanguageCode,
     normalizeLanguageCode,
@@ -44,6 +45,32 @@ test('a bundle file name gives the whole code, not its first two letters', () =>
     assert.equal(messageFileLanguageCode('messages_zh_Hans.properties'), 'zh_Hans');
     assert.equal(messageFileLanguageCode('messages_xx.properties'), 'xx');
     assert.equal(messageFileLanguageCode('README.md'), undefined);
+});
+
+test('a bundle is deleted only when the taxonomy can say its language is unsupported', () => {
+    const supported = ['en', 'pt', 'zh'];
+    // A two letter language is what the taxonomy lists, so it decides
+    assert.equal(isBundleSupported('pt', supported), true);
+    assert.equal(isBundleSupported('qq', supported), false);
+    // A variant follows its base language
+    assert.equal(isBundleSupported('pt_BR', supported), true);
+    assert.equal(isBundleSupported('zh_Hant_TW', supported), true);
+    assert.equal(isBundleSupported('qq_BR', supported), false);
+    // A three letter language has no ISO 639-1 code and so no taxonomy entry to be missing from
+    assert.equal(isBundleSupported('sat', supported), true);
+    assert.equal(isBundleSupported('sco', supported), true);
+    // The spelling of the file name does not decide, the language does
+    assert.equal(isBundleSupported('PT', supported), true);
+    assert.equal(isBundleSupported('pt-BR', supported), true);
+    assert.equal(isBundleSupported('QQ', supported), false);
+    assert.equal(isBundleSupported('not a code', supported), false);
+});
+
+test('the Santali bundle Crowdin writes survives the committed taxonomy', () => {
+    const supported = Object.keys(getLanguages().languageList);
+    assert.ok(!supported.includes('sat'), 'the taxonomy is expected to have no entry for sat');
+    assert.equal(isBundleSupported(messageFileLanguageCode('messages_sat.properties'), supported), true);
+    assert.equal(isBundleSupported(messageFileLanguageCode('messages_qq.properties'), supported), false);
 });
 
 test('the languages taxonomy still gives one name per language, with no collision', () => {
