@@ -28,8 +28,9 @@ for (const [ key, language ] of Object.entries(languages)) {
             continue;
         }
         const countryCode = country.country_code_2.en.toLowerCase();
+        // nameLanguages ends with English, which every country in the taxonomy is named in
         const localizedName = nameLanguages.map((l) => country.name[l]).find((name) => name);
-        const countryName = (localizedName ?? country.name.en).replaceAll("'","''");
+        const countryName = localizedName.replaceAll("'","''");
         countryMessages.push(`country_${countryCode}=${countryName}`);
     }
     // A variant without a catalog of its own uses the one of its base language
