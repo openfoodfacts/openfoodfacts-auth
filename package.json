@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Provides authentication services for Open Food Facts using Keycloak, backed by a PostgreSQL database",
   "scripts": {
-    "test:unit": "node --test build-scripts/"
+    "test:unit": "node --test build-scripts/*.test.mjs"
   },
   "keywords": [],
   "author": "Open Food Facts contributors",
