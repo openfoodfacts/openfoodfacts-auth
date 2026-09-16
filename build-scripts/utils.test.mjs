@@ -70,6 +70,8 @@ test('a bundle reads the Keycloak bundles of its code, of its parents and of the
     assert.deepEqual(keycloakTranslationsFor('zh', keycloak), ['greeting=你好']);
     // A script of its own comes before the alias of its base language
     assert.deepEqual(keycloakTranslationsFor('zh_Hant_TW', keycloak), ['greeting=您好', 'greeting=你好']);
+    // A bundle its base language's alias points back at is read once, not twice
+    assert.deepEqual(keycloakTranslationsFor('zh_Hans', keycloak), ['greeting=你好']);
     // A variant reads its own translations before its base language's
     assert.deepEqual(keycloakTranslationsFor('pt_BR', keycloak), ['greeting=Oi', 'greeting=Olá', 'farewell=Adeus']);
     assert.deepEqual(keycloakTranslationsFor('pt', keycloak), ['greeting=Olá', 'farewell=Adeus']);

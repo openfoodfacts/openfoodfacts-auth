@@ -74,13 +74,14 @@ const keycloakAliases = {
  * The Keycloak translations a bundle is seeded from, most specific first: the code's own,
  * then its parents', each followed by its alias when it has one. pt_BR reads pt_BR then
  * pt; zh reads zh_Hans; zh_Hant_TW reads zh_Hant_TW, zh_Hant, zh and only then zh_Hans. A
- * code Keycloak has nothing for gives an empty list. allKeycloakMessages maps a code to
- * the lines of Keycloak's bundles for it.
+ * bundle an alias points back at is read once, at the first place it is asked for: zh_Hans
+ * reads zh_Hans then zh, not zh_Hans twice. A code Keycloak has nothing for gives an empty
+ * list. allKeycloakMessages maps a code to the lines of Keycloak's bundles for it.
  */
 export function keycloakTranslationsFor(code, allKeycloakMessages) {
-    return languageFallbacks(code)
-        .flatMap((l) => [ l, keycloakAliases[l] ].filter(Boolean))
-        .flatMap((l) => allKeycloakMessages[l] ?? []);
+    const codes = languageFallbacks(code)
+        .flatMap((l) => [ l, keycloakAliases[l] ].filter(Boolean));
+    return [ ...new Set(codes) ].flatMap((l) => allKeycloakMessages[l] ?? []);
 }
 
 /**
