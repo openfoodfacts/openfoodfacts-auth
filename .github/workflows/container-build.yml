@@ -73,6 +73,19 @@ jobs:
           name: image
           path: ${{ runner.temp }}/image.tar
 
+  # Unit tests for the build scripts. They need no image, so this runs beside the build
+  test-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Run the build script unit tests
+        run: npm run test:unit
+
   # Run the playwright tests. Uses the dev image artifacts created in the build job
   test:
     needs: build

@@ -17,3 +17,12 @@ files:
     translation: /src/messages/messages_%two_letters_code%.properties
     escape_quotes: 1
     escape_special_characters: 0
+    # Two letters cannot name a regional variant: without a mapping, Brazilian Portuguese
+    # and European Portuguese would both be written to messages_pt.properties and the last
+    # one synced would win. Keycloak names such a bundle messages_pt_BR.properties. The
+    # mapping only applies to the file entry it is nested in. Every variant enabled in the
+    # Crowdin project needs an entry of its own here: zh-CN and zh-TW both give zh, sr-Cyrl
+    # gives sr, fr-CA gives fr, and an unmapped one would overwrite its base language.
+    languages_mapping:
+      two_letters_code:
+        pt-BR: pt_BR
