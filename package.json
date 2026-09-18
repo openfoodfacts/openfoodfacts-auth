@@ -7,7 +7,7 @@
   "author": "Open Food Facts contributors",
   "license": "AGPL-3.0-only",
   "devDependencies": {
-    "@asyncapi/cli": "^6.0.0",
+    "@asyncapi/cli": "^6.1.0",
     "@playwright/test": "^1.60.0",
     "@types/node": "^26.4.0",
     "dotenv": "^17.4.2",
