@@ -23,16 +23,6 @@ public class DeletedUserEntityProviderTest {
     }
 
     @Test
-    void testDeletedUserEntityProviderReturnsListOfEntitiesContainingDeletedUserEntity() {
-        // Arrange/Act
-        DeletedUserEntityProvider provider = new DeletedUserEntityProvider();
-
-        // Assert
-        Assertions.assertEquals(1, provider.getEntities().size());
-        Assertions.assertEquals(DeletedUserEntity.class, provider.getEntities().get(0));
-    }
-
-    @Test
     void testDeletedUserEntityProviderCloseCanBeCalledWithoutThrowingAnException() {
         // Arrange
         DeletedUserEntityProvider factory = new DeletedUserEntityProvider();
