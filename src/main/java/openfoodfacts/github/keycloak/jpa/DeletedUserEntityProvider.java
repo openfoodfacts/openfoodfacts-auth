@@ -17,6 +17,7 @@ public class DeletedUserEntityProvider implements JpaEntityProvider {
     }
 
     @Override
+    @SuppressWarnings("removal")
     public List<Class<?>> getEntities() {
         return Collections.<Class<?>>singletonList(DeletedUserEntity.class);
     }
