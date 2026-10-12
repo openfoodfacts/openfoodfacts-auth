@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.keycloak.Config.Scope;
@@ -2682,6 +2683,12 @@ class Utils {
                         throw new UnsupportedOperationException("Unimplemented method 'removeExpiredIssuedVerifiableCredentials'");
                     }
 
+                    @Override
+                    public boolean removeIssuedVerifiableCredential(String userId, String credentialId) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'removeIssuedVerifiableCredential'");
+                    }
+
                 };
             }
 
@@ -2724,6 +2731,18 @@ class Utils {
             public RevokedTokenProvider revokedTokens() {
                 // TODO Auto-generated method stub
                 throw new UnsupportedOperationException("Unimplemented method 'revokedTokens'");
+            }
+
+            @Override
+            public boolean isReadOnly() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'isReadOnly'");
+            }
+
+            @Override
+            public <T> T runAsReadOnly(Supplier<T> arg0) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'runAsReadOnly'");
             }
 
         };
