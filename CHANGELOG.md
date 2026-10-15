@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.3.0...v0.3.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* Incorrect PostgreSQL IP address for production ([#451](https://github.com/openfoodfacts/openfoodfacts-auth/issues/451)) ([fb42965](https://github.com/openfoodfacts/openfoodfacts-auth/commit/fb42965861ba8a0a6d5e5bba6d0bd65b9aad7910))
+
 ## [0.3.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.2...v0.3.0) (2026-10-12)
 
 
