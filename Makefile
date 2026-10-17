@@ -148,19 +148,19 @@ stop:
 DEPS=openfoodfacts-shared-services
 # Set the DEPS_DIR if it hasn't been set already
 ifeq ("${DEPS_DIR}","")
-	export DEPS_DIR="${PWD}"/deps
+	export DEPS_DIR="${PWD}/deps"
 endif
 
 # Run dependent projects
 run_deps: create_externals clone_deps
 	@for dep in ${DEPS} ; do \
-		cd "${DEPS_DIR}"/$$dep && $(MAKE) run; \
+		cd "${DEPS_DIR}/$$dep" && $(MAKE) run; \
 	done
 
 # Stop dependent projects
 stop_deps:
 	@for dep in ${DEPS} ; do \
-		cd "${DEPS_DIR}"/$$dep && ( $(MAKE) stop || env -i docker compose stop ) ; \
+		cd "${DEPS_DIR}/$$dep" && ( $(MAKE) stop || env -i docker compose stop ) ; \
 	done
 
 # Clone dependent projects without running them (used to pull in yml for tests)
@@ -168,10 +168,10 @@ clone_deps:
 	@mkdir -p "${DEPS_DIR}"; \
 	for dep in ${DEPS} ; do \
 		echo $$dep; \
-		if [ ! -d "${DEPS_DIR}"/$$dep ]; then \
+		if [ ! -d "${DEPS_DIR}/$$dep" ]; then \
 			git clone --filter=blob:none --sparse \
-				https://github.com/openfoodfacts/$$dep.git "${DEPS_DIR}"/$$dep; \
+				https://github.com/openfoodfacts/$$dep.git "${DEPS_DIR}/$$dep"; \
 		else \
-			cd "${DEPS_DIR}"/$$dep && git pull; \
+			cd "${DEPS_DIR}/$$dep" && git pull; \
 		fi; \
 	done
