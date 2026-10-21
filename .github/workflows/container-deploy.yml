@@ -103,6 +103,8 @@ jobs:
           # Set environment variables
           echo "KC_BOOTSTRAP_ADMIN_USERNAME=root" > .env
           echo "KC_BOOTSTRAP_ADMIN_PASSWORD=${{ secrets.KC_BOOTSTRAP_ADMIN_PASSWORD }}" >> .env
+          echo "KC_MIGRATIONS_USERNAME=migrations" >> .env
+          echo "KC_MIGRATIONS_PASSWORD=${{ secrets.KC_MIGRATIONS_PASSWORD }}" >> .env
           echo "KC_HOSTNAME=${{ env.KC_HOSTNAME }}" >> .env
           echo "KEYCLOAK_REALM_NAME=openfoodfacts" >> .env
           echo "COMPOSE_PROJECT_NAME=openfoodfacts-auth" >> .env
