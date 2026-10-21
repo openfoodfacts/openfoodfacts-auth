@@ -1,24 +1,42 @@
 function wait_for_keycloak() {
   local -r MAX_WAIT=120
-  local config_command
-  local wait_time
+  local wait_time=1
 
-  config_command="/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --user $KC_BOOTSTRAP_ADMIN_USERNAME --password $KC_BOOTSTRAP_ADMIN_PASSWORD --realm master"
-  wait_time=0
+  echo "$(date -u) *** Checking Keycloak status. ***"
 
-  # Waiting for the application to return a 200 status code.
-  until ${config_command}; do
-    if [[ ${wait_time} -ge ${MAX_WAIT} ]]; then
-      echo "$(date -u) *** The application service did not start within ${MAX_WAIT} seconds. Aborting. ***"
-      exit 1
-    else
-      echo "$(date -u) *** Waiting (${wait_time}/${MAX_WAIT}) ... ***"
-      sleep 1
-      ((++wait_time))
+  while [ $wait_time -le $MAX_WAIT ]; do
+    # Open a socket to the health check. Complicated syntax ensure connection refused errors don't appear in the logs
+    RESPONSE=$((exec 3<>/dev/tcp/127.0.0.1/9000 && printf "GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 && cat <&3) 2> /dev/null)
+
+    # If the socket opened successfully, RESPONSE will contain Keycloak's HTTP reply.
+    # We parse the variable instead of relying on active file descriptors.
+    if echo "$RESPONSE" | grep -q "HTTP/1.1 200 OK"; then
+        echo "$(date -u) *** Keycloak is now accepting requests. ***"
+        break
     fi
+
+    echo "$(date -u) *** Waiting (${wait_time}/${MAX_WAIT}) ... ***"
+    sleep 1
+    ((++wait_time))
   done
 
-  echo "$(date -u) *** Keycloak is now accepting requests. ***"
+  if [ $wait_time -gt $MAX_WAIT ]; then
+      echo "$(date -u) *** The application service did not start within ${MAX_WAIT} seconds. Aborting. ***"
+      exit 1
+  fi
+
+  if /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --user $KC_MIGRATIONS_USERNAME --password $KC_MIGRATIONS_PASSWORD --realm master &> /dev/null; then
+    echo "$(date -u) *** Logged in as $KC_MIGRATIONS_USERNAME ***"
+  else
+    if /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --user $KC_BOOTSTRAP_ADMIN_USERNAME --password $KC_BOOTSTRAP_ADMIN_PASSWORD --realm master &> /dev/null; then
+      echo "$(date -u) *** Logged in as $KC_BOOTSTRAP_ADMIN_USERNAME ***"
+      # TODO: Create realm here and create migration user with privileges
+    else
+      echo "$(date -u) *** Failed to log in"
+      exit 1
+    fi
+  fi
+  
 }
 
 # Docker healthcheck waits for this file to appear and for port to be open
@@ -105,7 +123,7 @@ if [[ "$KEYCLOAK_STARTUP" == "dev" ]] || [[ "$KEYCLOAK_STARTUP" == "test" ]]; th
   for CLIENT_ID in OFF test_client test_public_client
   do
     echo "$(date -u) *** Checking if client $CLIENT_ID exists ***"
-    EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r openfoodfacts  --fields clientId)
+    EXISTING_CLIENT=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r openfoodfacts  --fields clientId 2> /dev/null)
     if [[ "$EXISTING_CLIENT" == "[ ]" ]];then
       echo "$(date -u) *** Creating client $CLIENT_ID ***"
       /opt/keycloak/bin/kcadm.sh create clients -r openfoodfacts -f /opt/off/$CLIENT_ID.json
