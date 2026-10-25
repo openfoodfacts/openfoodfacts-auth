@@ -8,18 +8,23 @@
     "isVisible": "isLinkedAccountsEnabled"
   },
   {
+    "label": "verifiableCredentials",
+    "path": "verifiable-credentials",
+    "isVisible": "isOid4VciEnabled"
+  },
+  {
     "label": "groups",
     "path": "groups",
     "isVisible": "isViewGroupsEnabled"
   },
   {
+    "label": "organizations",
+    "path": "organizations",
+    "isVisible": "isViewOrganizationsEnabled"
+  },
+  {
     "label": "resources",
     "path": "resources",
     "isVisible": "isMyResourcesEnabled"
-  },
-  {
-    "label": "oid4vci",
-    "path": "oid4vci",
-    "isVisible":"isOid4VciEnabled"
   }
 ]

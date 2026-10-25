@@ -1,9 +1,9 @@
 # Note tried using dev-mem but is unpredictable when used in PO integration tests
 # dev-file also means we can pre-bake all of the configuration into the image
 echo "$(date -u) *** Building optimized Keycloak image ***"
-/opt/keycloak/bin/kc.sh build --db=dev-file
+/opt/keycloak/bin/kc.sh build --db=dev-file --health-enabled=true
 
-echo "$(date -u) *** Starting keycloak in configure testcontainer mode ***"
+echo "$(date -u) *** Starting keycloak in configure testcontainer mode. Ignore 'not PID 1' WARNINGS ***"
 # Start Keycloak as a background process. Capture the pid with $! so we can shut it down gracefully
 /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --cache=local --verbose &
 KEYCLOAK_PID=$!

@@ -11,6 +11,10 @@ env:
 
 jobs:
   update-keycloak-version:
+    # Skip on fork PRs: this workflow needs RELEASE_PLEASE_TOKEN and write access to the
+    # PR branch, neither of which is available from forks. Keycloak version bumps come
+    # from in-repo PRs anyway.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     permissions:
@@ -19,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           # Need this to ensure we don't get a detached head
           ref: ${{ github.head_ref }}
@@ -29,7 +33,7 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
       # NodeJS is used to update the keycloak version
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
 

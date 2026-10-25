@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.2
 
-FROM maven:3-eclipse-temurin-21 AS builder
+FROM maven:3-eclipse-temurin-25 AS builder
 # build a custom extensions for keycloak using maven
 
 WORKDIR /build
@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/root/.m2 set -x && \
     export SKIP_INTEGRATION_TESTS=true && \
     mvn -B package
 
-FROM quay.io/keycloak/keycloak:26.6.1 AS base
+FROM quay.io/keycloak/keycloak:26.8.0 AS base
 # Base image that the test and production images derive from.
 # Note the version number above is set by the update_keycloak_version.mjs script, so no need to edit manually
 
@@ -30,6 +30,8 @@ FROM base AS testcontainer
 
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=root
 ENV KC_BOOTSTRAP_ADMIN_PASSWORD=root-test-password
+ENV KC_MIGRATIONS_USERNAME=migrations
+ENV KC_MIGRATIONS_PASSWORD=test-migrations
 ENV KC_HOSTNAME_STRICT=false
 ENV KC_HOSTNAME_BACKCHANNEL_DYNAMIC=false
 ENV SMTP_SERVER=smtp

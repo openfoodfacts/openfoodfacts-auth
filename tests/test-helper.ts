@@ -65,8 +65,19 @@ export const createAndVerifyUser = async(page: Page, allFields = false) => {
   const {userName, password, email} = await createUser(page, allFields);
   const message = await getLastEmail(userName);
   await clickEmailVerifyLink(page, message);
+
+  await setPassword(page, password);
+
   await expect(page.getByText('^personalInfoDescription^')).toBeVisible();
   return {userName, password, email};
+}
+
+export const setPassword = async(page: Page, password: string) => {
+  // Set password on the update password required action page
+  await expect(page.getByText('^updatePasswordTitle^')).toBeVisible();
+  await page.getByLabel('^passwordNew^').fill(password);
+  await page.getByLabel('^passwordConfirm^').fill(password);
+  await page.getByRole("button", { name: "^doSubmit^" }).click();
 }
 
 // Selecting by label doesn't seem to work in the Github Workflow
@@ -126,8 +137,6 @@ export async function populateRegistrationForm(page: Page, allFields = false) {
 async function fillRegistrationForm(page, userName, password, email, allFields) {
   await page.getByLabel('^username^').fill(userName);
   await page.getByLabel('^name^').fill(`Test User ${userName}`);
-  await page.getByRole('textbox', { name: '^password^', exact: true }).fill(password);
-  await page.getByLabel('^passwordConfirm^').fill(password);
   await page.getByLabel('^email^').fill(email);
 
   if (allFields) {
