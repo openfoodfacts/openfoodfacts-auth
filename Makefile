@@ -21,7 +21,7 @@ build_languages:
 
 pre_build: build_languages
 # Generate a unique id for the build
-	cp -rf /proc/sys/kernel/random/uuid runtime-scripts/image_id
+	echo $$EPOCHSECONDS > runtime-scripts/image_version
 
 build: pre_build
 	docker compose build

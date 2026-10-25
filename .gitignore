@@ -14,3 +14,4 @@ node_modules
 /theme/off/common/messages/
 /deps/
 runtime-scripts/image_id
+runtime-scripts/image_version
