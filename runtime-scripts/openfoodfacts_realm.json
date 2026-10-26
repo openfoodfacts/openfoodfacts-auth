@@ -1404,6 +1404,55 @@
         "consent.screen.text": "${offlineAccessScopeConsentText}",
         "display.on.consent.screen": "true"
       }
+    },
+    {
+      "id": "14cdc9d1-0d26-4287-ac75-7fed2a366f23",
+      "name": "products:read",
+      "description": "Read product data via the Product Opener API",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "id": "3f0be871-27a4-403c-89b8-7a5fcecdab4d",
+          "name": "off-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "off-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "726c7670-331a-4506-b612-d84e16705c52",
+      "name": "products:write",
+      "description": "Create and edit product data via the Product Opener API",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true",
+        "consent.screen.text": "${productsWriteScopeConsentText}"
+      },
+      "protocolMappers": [
+        {
+          "id": "424dc65c-0ac6-4d12-8525-e2d14643098d",
+          "name": "off-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "off-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
     }
   ],
   "defaultDefaultClientScopes": [
