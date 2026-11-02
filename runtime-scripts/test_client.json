@@ -36,7 +36,6 @@
     "phone",
     "offline_access",
     "microprofile-jwt",
-    "products:read",
     "products:write"
   ],
   "protocol": "openid-connect",
