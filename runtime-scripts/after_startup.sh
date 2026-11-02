@@ -133,6 +133,66 @@ else
     echo "$(date -u) *** Test clients created ***"
   fi
 
+  # Migration: ensure the products:write client scope exists.
+  # The realm JSON import above only runs for new instances, so existing
+  # realms (staging, production, long-lived dev volumes) need this explicitly.
+  # All probes are idempotent: re-running against an up-to-date realm is a no-op.
+  echo "$(date -u) *** Ensuring products:write client scope ***"
+  SCOPE_LIST=$(/opt/keycloak/bin/kcadm.sh get client-scopes -r openfoodfacts --fields id,name 2> /dev/null)
+  PRODUCTS_WRITE_ID=$(echo "$SCOPE_LIST" | grep -B5 '"name"[ ]*:[ ]*"products:write"' | grep -o '"id"[ ]*:[ ]*"[^"]*"' | head -1 | cut -d'"' -f4)
+  PRODUCTS_READ_ID=$(echo "$SCOPE_LIST" | grep -B5 '"name"[ ]*:[ ]*"products:read"' | grep -o '"id"[ ]*:[ ]*"[^"]*"' | head -1 | cut -d'"' -f4)
+  if [[ -z "$PRODUCTS_WRITE_ID" ]]; then
+    echo "$(date -u) *** Creating products:write client scope ***"
+    /opt/keycloak/bin/kcadm.sh create client-scopes -r openfoodfacts -f /opt/off/products_write_scope.json
+    SCOPE_LIST=$(/opt/keycloak/bin/kcadm.sh get client-scopes -r openfoodfacts --fields id,name 2> /dev/null)
+    PRODUCTS_WRITE_ID=$(echo "$SCOPE_LIST" | grep -B5 '"name"[ ]*:[ ]*"products:write"' | grep -o '"id"[ ]*:[ ]*"[^"]*"' | head -1 | cut -d'"' -f4)
+  fi
+  if [[ -n "$PRODUCTS_WRITE_ID" ]]; then
+    echo "$(date -u) *** Ensuring products audience mapper ***"
+    MAPPERS=$(/opt/keycloak/bin/kcadm.sh get client-scopes/$PRODUCTS_WRITE_ID/protocol-mappers/models -r openfoodfacts 2> /dev/null)
+    if ! echo "$MAPPERS" | grep -q '"included.custom.audience"[ ]*:[ ]*"products"'; then
+      echo "$(date -u) *** Creating products audience mapper ***"
+      /opt/keycloak/bin/kcadm.sh create client-scopes/$PRODUCTS_WRITE_ID/protocol-mappers/models -r openfoodfacts -f /opt/off/products_write_audience_mapper.json
+    fi
+  else
+    echo "$(date -u) *** Failed to determine products:write scope id, skipping mapper and client setup ***"
+  fi
+
+  # Test clients created from an older JSON revision lack the new optional scope,
+  # as creation above is skipped when the client already exists. Fix up mappings.
+  # The products:read scope was dropped, so it is also removed from clients that
+  # already have it (e.g. dev volumes from the draft PR).
+  if [[ "$KEYCLOAK_STARTUP" == "dev" ]] || [[ "$KEYCLOAK_STARTUP" == "test" ]]; then
+    if [[ -n "$PRODUCTS_WRITE_ID" ]]; then
+      for CLIENT_ID in OFF test_client test_public_client
+      do
+        CLIENT_UUID=$(/opt/keycloak/bin/kcadm.sh get clients/?clientId=$CLIENT_ID -r openfoodfacts --fields id 2> /dev/null | grep -o '"id"[ ]*:[ ]*"[^"]*"' | head -1 | cut -d'"' -f4)
+        if [[ -n "$CLIENT_UUID" ]]; then
+          ASSIGNED_SCOPES=$(/opt/keycloak/bin/kcadm.sh get clients/$CLIENT_UUID/optional-client-scopes -r openfoodfacts --fields name 2> /dev/null)
+          if ! echo "$ASSIGNED_SCOPES" | grep -q '"name"[ ]*:[ ]*"products:write"'; then
+            echo "$(date -u) *** Assigning products:write scope to client $CLIENT_ID ***"
+            /opt/keycloak/bin/kcadm.sh update clients/$CLIENT_UUID/optional-client-scopes/$PRODUCTS_WRITE_ID -r openfoodfacts
+          fi
+          if echo "$ASSIGNED_SCOPES" | grep -q '"name"[ ]*:[ ]*"products:read"'; then
+            READ_SCOPE_ID=$(/opt/keycloak/bin/kcadm.sh get client-scopes -r openfoodfacts --fields id,name 2> /dev/null | grep -B5 '"name"[ ]*:[ ]*"products:read"' | grep -o '"id"[ ]*:[ ]*"[^"]*"' | head -1 | cut -d'"' -f4)
+            if [[ -n "$READ_SCOPE_ID" ]]; then
+              echo "$(date -u) *** Removing products:read scope from client $CLIENT_ID ***"
+              /opt/keycloak/bin/kcadm.sh delete clients/$CLIENT_UUID/optional-client-scopes/$READ_SCOPE_ID -r openfoodfacts
+            fi
+          fi
+        fi
+      done
+    fi
+  fi
+
+  # Finally delete the dropped products:read scope itself where it was already
+  # created. Client mappings above are removed first so this works regardless
+  # of whether Keycloak cascades the delete.
+  if [[ -n "$PRODUCTS_READ_ID" ]]; then
+    echo "$(date -u) *** Removing obsolete products:read client scope ***"
+    /opt/keycloak/bin/kcadm.sh delete client-scopes/$PRODUCTS_READ_ID -r openfoodfacts
+  fi
+
   # Can do further migrations here by comparing DEPLOYED_VERSION and CURRENT_VERSION
 
   cp /opt/off/image_version ~/off/deployed_image_version

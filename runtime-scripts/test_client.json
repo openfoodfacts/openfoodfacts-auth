@@ -35,7 +35,8 @@
     "address",
     "phone",
     "offline_access",
-    "microprofile-jwt"
+    "microprofile-jwt",
+    "products:write"
   ],
   "protocol": "openid-connect",
   "protocolMappers": [
