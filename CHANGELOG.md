@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.3.1](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.3.0...v0.3.1) (2026-11-13)
+
+
+### Bug Fixes
+
+* Add translations for password reset actions ([#466](https://github.com/openfoodfacts/openfoodfacts-auth/issues/466)) ([5189fd6](https://github.com/openfoodfacts/openfoodfacts-auth/commit/5189fd6d02e34af893aa0d62b64737e69864122b))
+* Incorrect PostgreSQL IP address for production ([#451](https://github.com/openfoodfacts/openfoodfacts-auth/issues/451)) ([fb42965](https://github.com/openfoodfacts/openfoodfacts-auth/commit/fb42965861ba8a0a6d5e5bba6d0bd65b9aad7910))
+* Run migrations as a specfic user rather than using the default root user ([#461](https://github.com/openfoodfacts/openfoodfacts-auth/issues/461)) ([1c43b7d](https://github.com/openfoodfacts/openfoodfacts-auth/commit/1c43b7d12664a80988326a11e21b41e07c880a2b))
+
+
+### Technical
+
+* Add language mappings to crowdin.yml ([#368](https://github.com/openfoodfacts/openfoodfacts-auth/issues/368)) ([6e15112](https://github.com/openfoodfacts/openfoodfacts-auth/commit/6e15112686edb6d99f584c53fdc7273e48434d16))
+* **deps-dev:** bump fast-uri from 3.1.8 to 3.1.9 ([#468](https://github.com/openfoodfacts/openfoodfacts-auth/issues/468)) ([395d7b5](https://github.com/openfoodfacts/openfoodfacts-auth/commit/395d7b546f5b8c2022f04cbc2e90bb64bc6fa76b))
+* **deps-dev:** bump qs from 6.16.0 to 6.17.1 ([#469](https://github.com/openfoodfacts/openfoodfacts-auth/issues/469)) ([1c79ac7](https://github.com/openfoodfacts/openfoodfacts-auth/commit/1c79ac7d3a56b510c05ac19b0365660d8d468e8b))
+* **deps-dev:** bump the maven-dev group with 3 updates ([#471](https://github.com/openfoodfacts/openfoodfacts-auth/issues/471)) ([960240b](https://github.com/openfoodfacts/openfoodfacts-auth/commit/960240bae407ee7c4d7e41c6b0995e8d7934050f))
+* **deps-dev:** bump the npm-dev group with 26 updates ([#473](https://github.com/openfoodfacts/openfoodfacts-auth/issues/473)) ([08b7c4f](https://github.com/openfoodfacts/openfoodfacts-auth/commit/08b7c4f4d1b2528c144d92586a9dfe82ecab132e))
+* **deps:** bump ip-address from 10.7.3 to 10.7.5 ([#464](https://github.com/openfoodfacts/openfoodfacts-auth/issues/464)) ([9e486a2](https://github.com/openfoodfacts/openfoodfacts-auth/commit/9e486a2fedfa94df349784192dfa61b5051a6ae3))
+* **deps:** bump the github-actions group with 2 updates ([#472](https://github.com/openfoodfacts/openfoodfacts-auth/issues/472)) ([6b6f60b](https://github.com/openfoodfacts/openfoodfacts-auth/commit/6b6f60bea93477b10c4a27f126fa9dc60f0f0529))
+* **deps:** bump undici from 6.28.1 to 6.29.1 ([#465](https://github.com/openfoodfacts/openfoodfacts-auth/issues/465)) ([4d841fb](https://github.com/openfoodfacts/openfoodfacts-auth/commit/4d841fb9f2e260d811b661ceee1129598e27191f))
+
 ## [0.3.0](https://github.com/openfoodfacts/openfoodfacts-auth/compare/v0.2.2...v0.3.0) (2026-10-12)
 
 
