@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout Repository"
-        uses: actions/checkout@v7
-      - uses: cardinalby/export-env-action@v2
+        uses: actions/checkout@v7.0.1
+      - uses: cardinalby/export-env-action@2.2.3
         with:
           envFile: '.env'
       - name: "Dependency Review"
