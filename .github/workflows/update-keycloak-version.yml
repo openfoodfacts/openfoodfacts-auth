@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           # Need this to ensure we don't get a detached head
           ref: ${{ github.head_ref }}
@@ -33,7 +33,7 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
       # NodeJS is used to update the keycloak version
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
 
@@ -44,6 +44,6 @@ jobs:
           make update_keycloak_version
 
       - name: Commit and push chnages from Keycloak upgrade
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: stefanzweifel/git-auto-commit-action@v7.2.1
         with:
           commit_message: 'Additional changes for Keycloak update'
