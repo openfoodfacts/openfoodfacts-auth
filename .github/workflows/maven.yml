@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
-      - uses: cardinalby/export-env-action@v2
+      - uses: cardinalby/export-env-action@2.2.3
         with:
           envFile: '.env'
 
@@ -34,5 +34,5 @@ jobs:
           slug: openfoodfacts/openfoodfacts-auth
 
       - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@a64327a7329c9939cf675e458452febe1894a70c
+        uses: advanced-security/maven-dependency-submission-action@v6.0.1
         if: github.event_name != 'pull_request'
