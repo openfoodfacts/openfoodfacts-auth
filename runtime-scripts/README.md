@@ -62,7 +62,7 @@ The import realm facility on startup loads the configuration from `openfoodfacts
 
 Note that these template files contain '%' placeholders which are used in the `after_startup.sh` script, so make sure that the order of these is not changed. Also note that the `refresh_messages` script updates these templates and will sort all object keys alphabetically for clearer diffs.
 
-If any specific migrations are needed that are not covered by realm settings and user profiles these can be added to the `after_startup.sh` script.
+If any specific migrations are needed that are not covered by realm settings and user profiles these can be added to the `after_startup.sh` script. For example, the `products:write` client scope (see `products_write_scope.json` and `products_write_audience_mapper.json`) is ensured idempotently there, as the realm JSON import only runs for new instances.
 
 Updates to the existing instance are done using a `migrations` user which is created when the realm is created. If this user needs to be created manually they should be created on the `master` realm with the following client roles on `openfoodfacts-realm`:
 

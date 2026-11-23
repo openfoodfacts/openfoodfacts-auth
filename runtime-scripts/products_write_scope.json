@@ -1,0 +1,10 @@
+{
+  "name": "products:write",
+  "description": "Create and edit product data via the Product Opener API",
+  "protocol": "openid-connect",
+  "attributes": {
+    "include.in.token.scope": "true",
+    "display.on.consent.screen": "true",
+    "consent.screen.text": "${productsWriteScopeConsentText}"
+  }
+}
